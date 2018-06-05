@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Registration!{% endblock %}
+
+{% block body %}
+    <div class="jumbotron">
+        <h1 class="display-4">First steps!</h1>
+        <p class="lead">In this step, please input all your officials that travel along with your competitors.</p>
+        <hr class="my-4">
+        <div>
+            {{ form_start(my_form) }}
+            {{ form_widget(my_form) }}
+            <input class="btn btn-primary btn-lg" type="submit"  value="Continue"/>
+            {{ form_end(my_form) }}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Registration!{% endblock %}
+
+{% block body %}
+    <div class="jumbotron">
+        <h1 class="display-4">First steps!</h1>
+        <p class="lead">In order to proceed with the registration, we will need a contact person. This information
+            is also required for later changes that might or might not be needed.</p>
+        <hr class="my-4">
+        <div>
+            {{ form_start(my_form) }}
+            {{ form_widget(my_form) }}
+            <input class="btn btn-primary btn-lg" type="submit"  value="Continue"/>
+            {{ form_end(my_form) }}
+        </div>
+    </div>
+{% endblock %}
