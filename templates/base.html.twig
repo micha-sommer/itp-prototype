@@ -27,7 +27,11 @@
                 <a class="nav-link" href="{{ path('welcome') }}">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ path('registration') }}">Start</a>
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    <a class="nav-link" href="{{ path('participants') }}">My Registration</a>
+                {% else %}
+                    <a class="nav-link" href="{{ path('registration') }}">Register</a>
+                {% endif %}
             </li>
             <li class="nav-item">
                 {% if is_granted('IS_AUTHENTICATED_FULLY') %}
@@ -35,6 +39,18 @@
                 {% else %}
                     <a class="nav-link" href="{{ path('login') }}">Login</a>
                 {% endif %}
+            </li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    <span class="navbar-text">
+                        Logged in as:
+                        {{ app.user.firstname|default('') }} {{ app.user.lastname|default('') }} ({{ app.user.club|default('') }})
+                    </span>
+                {% else %}
+                {% endif %}
+
             </li>
         </ul>
     </div>

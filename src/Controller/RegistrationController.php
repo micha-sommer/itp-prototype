@@ -7,6 +7,7 @@ use App\Form\RegistrationType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class RegistrationController extends AbstractController
@@ -14,6 +15,7 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/registration", name="registration")
      * @param Request $request
+     * @param UserPasswordEncoderInterface $passwordEncoder
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder)
@@ -36,11 +38,21 @@ class RegistrationController extends AbstractController
             $entityManager->persist($registration);
             $entityManager->flush();
 
-            dump($registration);
-            return $this->redirectToRoute('participants');
+            $token = new UsernamePasswordToken(
+                $registration,
+                $password,
+                'main',
+                $registration->getRoles()
+            );
+
+            $this->get('security.token_storage')->setToken($token);
+            $this->get('session')->set('_security_main', serialize($token));
+
+            $this->addFlash('success', 'You are now successfully registered!');
+
+            return $this->redirectToRoute('welcome');
         }
 
-        dump($form->isSubmitted());
 
         return $this->render('registration/registration.html.twig', [
             'my_form' => $form->createView()
