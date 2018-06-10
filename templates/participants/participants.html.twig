@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Participants!{% endblock %}
+
+{% block body %}
+    <div class="jumbotron">
+        <h1 class="display-4">Second step!</h1>
+        <p class="lead">Now we need your officials and competitors.</p>
+        <hr class="my-4">
+        <div>
+            {#{{ form_start(my_form) }}#}
+            {#{{ form_widget(my_form) }}#}
+            <input class="btn btn-primary btn-lg" type="submit"  value="Continue"/>
+            {#{{ form_end(my_form) }}#}
+        </div>
+    </div>
+{% endblock %}

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Registration
@@ -10,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="registrations")
  * @ORM\Entity
  */
-class Registration
+class Registration implements UserInterface, \Serializable
 {
     /**
      * @var int
@@ -45,7 +47,7 @@ class Registration
     /**
      * @var string|null
      *
-     * @ORM\Column(name="email", type="string", length=255, nullable=true)
+     * @ORM\Column(name="email", type="string", length=255, nullable=false)
      */
     private $email;
 
@@ -55,6 +57,20 @@ class Registration
      * @ORM\Column(name="telephone", type="string", length=255, nullable=true)
      */
     private $telephone;
+
+    /**
+     * @Assert\NotBlank()
+     * @Assert\Length(max=4096)
+     */
+    private $plainPassword;
+
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="password", type="string", length=64)
+     */
+    private $password;
 
     public function getId(): ?int
     {
@@ -122,4 +138,116 @@ class Registration
     }
 
 
+    /**
+     * Returns the roles granted to the user.
+     *
+     * <code>
+     * public function getRoles()
+     * {
+     *     return array('ROLE_USER');
+     * }
+     * </code>
+     *
+     * Alternatively, the roles might be stored on a ``roles`` property,
+     * and populated in any number of different ways when the user object
+     * is created.
+     *
+     * @return (Role|string)[] The user roles
+     */
+    public function getRoles()
+    {
+        return array('ROLE_USER');
+    }
+
+    /**
+     * Returns the password used to authenticate the user.
+     *
+     * This should be the encoded password. On authentication, a plain-text
+     * password will be salted, encoded, and then compared to this value.
+     *
+     * @return string The password
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    public function setPassword($password): void
+    {
+        $this->password = $password;
+    }
+
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword($plainPassword): void
+    {
+        $this->plainPassword = $plainPassword;
+    }
+
+    /**
+     * Returns the salt that was originally used to encode the password.
+     *
+     * This can return null if the password was not encoded using a salt.
+     *
+     * @return string|null The salt
+     */
+    public function getSalt()
+    {
+        // we use bcrypt, therefore no salt needed
+        return null;
+    }
+
+    /**
+     * Returns the username used to authenticate the user.
+     *
+     * @return string The username
+     */
+    public function getUsername(): ?string
+    {
+        return $this->email;
+    }
+
+    /**
+     * Removes sensitive data from the user.
+     *
+     * This is important if, at any given point, sensitive information like
+     * the plain-text password is stored on this object.
+     */
+    public function eraseCredentials(): void
+    {
+        // nothing to do!
+    }
+
+    /** @see \Serializable::serialize() */
+    public function serialize()
+    {
+        return serialize(
+            [
+                $this->id,
+                $this->firstName,
+                $this->lastName,
+                $this->email,
+                $this->club,
+                $this->password,
+            ]
+        );
+    }
+
+    /** @see \Serializable::unserialize()
+     * @param $serialized
+     */
+    public function unserialize($serialized): void
+    {
+        [
+            $this->id,
+            $this->firstName,
+            $this->lastName,
+            $this->email,
+            $this->club,
+            $this->password,
+        ] = unserialize($serialized, ['allowed_classes' => false]);
+    }
 }
