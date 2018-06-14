@@ -21,12 +21,7 @@ class RegistrationType extends AbstractType
             ->add('last_name', TextType::class)
             ->add('first_name', TextType::class)
             ->add('email', EmailType::class)
-            ->add('telephone', TelType::class, ['required' => false])
-            ->add('plainPassword', RepeatedType::class, [
-                'type' => PasswordType::class,
-                'first_options' => ['label' => 'Password'],
-                'second_options' => ['label' => 'Repeat Password'],
-            ]);
+            ->add('telephone', TelType::class, ['required' => false]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

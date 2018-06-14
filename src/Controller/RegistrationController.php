@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Registration;
 use App\Form\RegistrationType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -12,6 +14,40 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class RegistrationController extends AbstractController
 {
+
+    /**
+     * @Route("/registration/edit", name="edit_registration")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function edit(Request $request): \Symfony\Component\HttpFoundation\Response
+    {
+        $registration = $this->getUser();
+
+        if (!$registration) {
+            throw $this->createNotFoundException(
+                'No product found for id ' . $registration->getId()
+            );
+        }
+
+        // 1) build the form
+        $form = $this->createForm(RegistrationType::class, $registration);
+
+        // 2) handle the submit (will only happen on POST)
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            dump($registration);
+            $this->getDoctrine()->getManager()->flush();
+        }
+
+
+        return $this->render('registration/registration_edit.html.twig', [
+            'my_form' => $form->createView()
+        ]);
+    }
+
     /**
      * @Route("/registration", name="registration")
      * @param Request $request
@@ -24,6 +60,11 @@ class RegistrationController extends AbstractController
 
         // 1) build the form
         $form = $this->createForm(RegistrationType::class, $registration);
+        $form->add('plainPassword', RepeatedType::class, [
+            'type' => PasswordType::class,
+            'first_options' => ['label' => 'Password'],
+            'second_options' => ['label' => 'Repeat Password'],
+        ]);
 
         // 2) handle the submit (will only happen on POST)
         $form->handleRequest($request);

@@ -2,15 +2,14 @@
 
 namespace App\Entity;
 
-use App\Entity\Enum\GenderEnum;
-use App\Entity\Enum\GenderEnumextends;
+use App\Enum\GenderEnum;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Official
  *
  * @ORM\Table(name="officials")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="OfficialRepository")
  */
 class Official
 {
@@ -45,25 +44,32 @@ class Official
     private $role;
 
     /**
-     * @var string
+     * @var GenderEnum
      *
-     * @ORM\Column(name="gender", type="string", length=0, nullable=false)
+     * @ORM\Column(name="gender", type="string", length=0, nullable=false, columnDefinition="ENUM('male', 'female')") )
      */
     private $gender;
 
     /**
-     * @var \DateTime|null
+     * @var boolean|null
      *
-     * @ORM\Column(name="arrival", type="date", nullable=true)
+     * @ORM\Column(name="itc", type="boolean", nullable=false)
      */
-    private $arrival;
+    private $itc;
 
     /**
-     * @var \DateTime|null
+     * @var boolean|null
      *
-     * @ORM\Column(name="departure", type="date", nullable=true)
+     * @ORM\Column(name="friday", type="boolean", nullable=false)
      */
-    private $departure;
+    private $friday;
+
+    /**
+     * @var boolean|null
+     *
+     * @ORM\Column(name="saturday", type="boolean", nullable=false)
+     */
+    private $saturday;
 
     /**
      * @ORM\ManyToOne(targetEntity="Registration")
@@ -119,32 +125,7 @@ class Official
 
     public function setGender(string $gender): self
     {
-        $this->gender = new GenderEnum($gender);
-
-        return $this;
-    }
-
-    public function getArrival(): ?\DateTimeInterface
-    {
-        return $this->arrival;
-    }
-
-    public function setArrival(?\DateTimeInterface $arrival): self
-    {
-        $this->arrival = $arrival;
-
-        return $this;
-    }
-
-    public function getDeparture(): ?\DateTimeInterface
-    {
-        return $this->departure;
-    }
-
-    public function setDeparture(?\DateTimeInterface $departure): self
-    {
-        $this->departure = $departure;
-
+        $this->gender = $gender;
         return $this;
     }
 
@@ -154,6 +135,49 @@ class Official
     }
 
     public function setRegistrationId(int $registration): self
+    {
+        $this->registration = $registration;
+
+        return $this;
+    }
+
+    public function getItc(): ?bool
+    {
+        return $this->itc;
+    }
+
+    public function setItc(bool $itc): self
+    {
+        $this->itc = $itc;
+
+        return $this;
+    }
+
+    public function getFriday(): ?bool
+    {
+        return $this->friday;
+    }
+
+    public function setFriday(bool $friday): self
+    {
+        $this->friday = $friday;
+
+        return $this;
+    }
+
+    public function getSaturday(): ?bool
+    {
+        return $this->saturday;
+    }
+
+    public function setSaturday(bool $saturday): self
+    {
+        $this->saturday = $saturday;
+
+        return $this;
+    }
+
+    public function setRegistration(?Registration $registration): self
     {
         $this->registration = $registration;
 

@@ -6,10 +6,9 @@
  * Time: 23:43
  */
 
-namespace App\Entity\Enum;
+namespace App\Enum;
 
-
-class GenderEnum extends SplEnum
+class GenderEnum
 {
     protected const __default = self::male;
 

@@ -59,7 +59,6 @@ class Registration implements UserInterface, \Serializable
     private $telephone;
 
     /**
-     * @Assert\NotBlank()
      * @Assert\Length(max=4096)
      */
     private $plainPassword;

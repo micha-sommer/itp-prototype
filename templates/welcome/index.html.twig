@@ -9,7 +9,11 @@
             <p class="lead">This is the new entry form for the registration process of International Thuringia Cup 2019.</p>
             <hr class="my-4">
             <p>The data should be very similar to what have been in the Excel sheet in previous years. Please proceed by clicking the button below.</p>
-            <a class="btn btn-primary btn-lg" href="{{ path('registration') }}" role="button">Let's start</a>
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                <a class="btn btn-primary btn-lg" href="{{ path('edit_registration') }}" role="button">Your registration</a>
+            {% else %}
+                <a class="btn btn-primary btn-lg" href="{{ path('registration') }}" role="button">Let's start</a>
+            {% endif %}
         </div>
     </div>
     </div>

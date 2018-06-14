@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Registration!{% endblock %}
+
+{% block body %}
+    <div class="jumbotron">
+        <h1 class="display-4">Changes needed?</h1>
+        <p class="lead">If you want to change your password, please go to TODO!.</p>
+        <hr class="my-4">
+        <div>
+            {{ form_start(my_form, {'method': 'POST'}) }}
+            {{ form_widget(my_form) }}
+            <input class="btn btn-primary btn-lg" type="submit"  value="Update"/>
+            {{ form_end(my_form) }}
+        </div>
+    </div>
+{% endblock %}
