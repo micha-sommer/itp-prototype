@@ -14,4 +14,9 @@ class GenderEnum
 
     public const male = 'male';
     public const female = 'female';
+
+    public function asArray(): array
+    {
+        return [male, female];
+    }
 }

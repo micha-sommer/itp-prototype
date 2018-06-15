@@ -2,6 +2,8 @@
   <dictionary name="mremm">
     <words>
       <w>bcrypt</w>
+      <w>jumbotron</w>
+      <w>thead</w>
       <w>unserialize</w>
     </words>
   </dictionary>

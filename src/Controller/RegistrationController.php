@@ -37,9 +37,9 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-            dump($registration);
             $this->getDoctrine()->getManager()->flush();
+            $this->redirectToRoute('officials');
+            dump('registration done');
         }
 
 

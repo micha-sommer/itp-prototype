@@ -41,13 +41,13 @@
             </li>
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('edit_registration') }}">My Contact Information</a>
+                    <a class="nav-link" href="{{ path('edit_registration') }}">Edit Contact Information</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('officials_listedit') }}">My Officials</a>
+                    <a class="nav-link" href="{{ path('officials') }}">Edit Officials</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('edit_competitors') }}">My Competitors</a>
+                    <a class="nav-link" href="{{ path('contestants') }}">Edit Contestants</a>
                 </li>
             {% else %}
                 <li class="nav-item">

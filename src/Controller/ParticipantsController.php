@@ -2,9 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\ContestantsList;
 use App\Entity\Official;
 use App\Entity\OfficialsList;
+use App\Form\ContestantsListType;
 use App\Form\OfficialsListType;
+use App\Repository\ContestantsRepository;
 use App\Repository\OfficialsRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,17 +17,17 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class ParticipantsController extends Controller
 {
     /**
-     * @Route("/all_officials", name="officials_listedit")
+     * @Route("/officials", name="officials")
      * @param Request $request
      * @param OfficialsRepository $officialsRepository
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listEditOfficials(Request $request, OfficialsRepository $officialsRepository): \Symfony\Component\HttpFoundation\Response
+    public function officials(Request $request, OfficialsRepository $officialsRepository): \Symfony\Component\HttpFoundation\Response
     {
-        $officialsDavor = $officialsRepository->findBy(['registration' => $this->getUser()]);
+        $officialsBefore = $officialsRepository->findBy(['registration' => $this->getUser()]);
 
         $officialsAfter = new OfficialsList();
-        $officialsAfter->setList(new ArrayCollection($officialsDavor));
+        $officialsAfter->setList(new ArrayCollection($officialsBefore));
 
         $form = $this->createForm(OfficialsListType::class, $officialsAfter);
 
@@ -36,7 +39,7 @@ class ParticipantsController extends Controller
             dump('valid');
 
             // check for deleted officials
-            foreach ($officialsDavor as $official) {
+            foreach ($officialsBefore as $official) {
                 if (false === $officialsAfter->getList()->contains($official)) {
                     dump('remove:'.$official->getId());
                     $em->remove($official);
@@ -45,58 +48,71 @@ class ParticipantsController extends Controller
 
             // check for added officials
             foreach ($officialsAfter->getList() as $official) {
-                if (false === \in_array($official, $officialsDavor, true)) {
+                if (false === \in_array($official, $officialsBefore, true)) {
                     dump('add:'.$official->getId());
                     $official->setRegistration($this->getUser());
                     $em->persist($official);
                 }
             }
             $em->flush();
-            $this->redirectToRoute('edit_competitors');
         }
         else {
             dump('not valid');
         }
 
 
-        return $this->render('participants/official_listedit.html.twig', [
+        return $this->render('participants/officials.html.twig', [
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/officials", name="officials_index")
-     * @param OfficialsRepository $officialsRepository
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function listOfficials(OfficialsRepository $officialsRepository): \Symfony\Component\HttpFoundation\Response
-    {
-        $officials = $officialsRepository->findBy(['registration' => $this->getUser()]);
-
-        dump($officials);
-
-        return $this->render('participants/officials_index.html.twig', [
-            'officials' => $officials,
-        ]);
-    }
-
-    /**
-     * @Route("/official/{id}", requirements={"id": "\d+"}, methods={"GET"}, name="official_edit")
-     * @param Official $official
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function editOfficial(Official $official)
-    {
-        return $this->render('participants/official_edit.html.twig');
-    }
-
-    /**
-     * @Route("/officials", name="edit_competitors")
+     * @Route("/contestants", name="contestants")
      * @param Request $request
+     * @param ContestantsRepository $contestantsRepository
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function editCompetitors(Request $request): \Symfony\Component\HttpFoundation\Response
+    public function contestants(Request $request, ContestantsRepository $contestantsRepository): \Symfony\Component\HttpFoundation\Response
     {
+        $contestantsBefore = $contestantsRepository->findBy(['registration' => $this->getUser()]);
 
+        $contestantsAfter = new ContestantsList();
+        $contestantsAfter->setList(new ArrayCollection($contestantsBefore));
+
+        $form = $this->createForm(ContestantsListType::class, $contestantsAfter);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+
+            dump('valid');
+
+            // check for deleted contestants
+            foreach ($contestantsBefore as $contestant) {
+                if (false === $contestantsAfter->getList()->contains($contestant)) {
+                    dump('remove:'.$contestant->getId());
+                    $em->remove($contestant);
+                }
+            }
+
+            // check for added contestants
+            foreach ($contestantsAfter->getList() as $contestant) {
+                if (false === \in_array($contestant, $contestantsBefore, true)) {
+                    dump('add:'.$contestant->getId());
+                    $contestant->setRegistration($this->getUser());
+                    $em->persist($contestant);
+                }
+            }
+            $em->flush();
+        }
+        else {
+            dump('not valid');
+        }
+
+
+        return $this->render('participants/contestants.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 }

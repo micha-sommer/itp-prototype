@@ -18,8 +18,8 @@ class RegistrationType extends AbstractType
     {
         $builder
             ->add('club', TextType::class)
-            ->add('last_name', TextType::class)
             ->add('first_name', TextType::class)
+            ->add('last_name', TextType::class)
             ->add('email', EmailType::class)
             ->add('telephone', TelType::class, ['required' => false]);
     }

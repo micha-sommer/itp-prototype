@@ -6,10 +6,10 @@
  * Time: 23:37
  */
 
-namespace App\Entity\Enum;
+namespace App\Enum;
 
 
-class WeightCategoryEnum extends SplEnum
+class WeightCategoryEnum
 {
     protected const __default = self::_40;
 
@@ -22,4 +22,19 @@ class WeightCategoryEnum extends SplEnum
     public const o70 = '+70';
     public const _78 = '-78';
     public const o78 = '+78';
+
+    public static function asArray(): array
+    {
+        return [
+            self::_40 => self::_40,
+            self::_44 => self::_44,
+            self::_52 => self::_52,
+            self::_57 => self::_57,
+            self::_63 => self::_63,
+            self::_70 => self::_70,
+            self::o70 => self::o70,
+            self::_78 => self::_78,
+            self::o78 => self::o78];
+    }
+
 }

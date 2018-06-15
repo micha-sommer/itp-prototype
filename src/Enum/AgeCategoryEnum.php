@@ -6,13 +6,21 @@
  * Time: 23:41
  */
 
-namespace App\Entity\Enum;
+namespace App\Enum;
 
 
-class AgeCategoryEnum extends SplEnum
+class AgeCategoryEnum
 {
     protected const __default = self::cadet;
 
     public const cadet = 'cadet';
     public const junior = 'junior';
+
+    public static function asArray(): array
+    {
+        return [
+            self::cadet => self::cadet,
+            self::junior => self::junior
+        ];
+    }
 }

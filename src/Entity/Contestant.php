@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Entity\Enum\AgeCategoryEnum;
 use App\Entity\Enum\WeightCategoryEnum;
 use Doctrine\ORM\Mapping as ORM;
+use phpDocumentor\Reflection\Types\Integer;
 
 /**
  * Contestant
@@ -38,39 +39,46 @@ class Contestant
     private $lastName;
 
     /**
-     * @var \DateTime
+     * @var string
      *
-     * @ORM\Column(name="year", type="date", nullable=false)
+     * @ORM\Column(name="year", type="string", length=4, nullable=false)
      */
     private $year;
 
     /**
-     * @var string
+     * @var WeightCategoryEnum
      *
-     * @ORM\Column(name="weight_category", type="string", length=0, nullable=false)
+     * @ORM\Column(name="weight_category", type="string", length=0, nullable=false, columnDefinition="ENUM('-40','-44','-48','-52','-57','-63','-70','+70','-78','+78')")
      */
     private $weightCategory;
 
     /**
-     * @var string
+     * @var AgeCategoryEnum
      *
-     * @ORM\Column(name="age_category", type="string", length=0, nullable=false)
+     * @ORM\Column(name="age_category", type="string", length=0, nullable=false, columnDefinition="ENUM('cadet', 'junior')")
      */
     private $ageCategory;
 
     /**
-     * @var \DateTime|null
+     * @var boolean|null
      *
-     * @ORM\Column(name="arrival", type="date", nullable=true)
+     * @ORM\Column(name="itc", type="boolean", nullable=false)
      */
-    private $arrival;
+    private $itc;
 
     /**
-     * @var \DateTime|null
+     * @var boolean|null
      *
-     * @ORM\Column(name="departure", type="date", nullable=true)
+     * @ORM\Column(name="friday", type="boolean", nullable=false)
      */
-    private $departure;
+    private $friday;
+
+    /**
+     * @var boolean|null
+     *
+     * @ORM\Column(name="saturday", type="boolean", nullable=false)
+     */
+    private $saturday;
 
     /**
      * @ORM\ManyToOne(targetEntity="Registration")
@@ -107,12 +115,12 @@ class Contestant
         return $this;
     }
 
-    public function getYear(): ?\DateTimeInterface
+    public function getYear(): ?string
     {
         return $this->year;
     }
 
-    public function setYear(\DateTimeInterface $year): self
+    public function setYear(string $year): self
     {
         $this->year = $year;
 
@@ -126,7 +134,7 @@ class Contestant
 
     public function setWeightCategory(string $weightCategory): self
     {
-        $this->weightCategory = new WeightCategoryEnum($weightCategory);
+        $this->weightCategory = $weightCategory;
 
         return $this;
     }
@@ -138,46 +146,56 @@ class Contestant
 
     public function setAgeCategory(string $ageCategory): self
     {
-        $this->ageCategory = new AgeCategoryEnum($ageCategory);
+        $this->ageCategory = $ageCategory;
 
         return $this;
     }
 
-    public function getArrival(): ?\DateTimeInterface
+    public function getItc(): ?bool
     {
-        return $this->arrival;
+        return $this->itc;
     }
 
-    public function setArrival(?\DateTimeInterface $arrival): self
+    public function setItc(bool $itc): self
     {
-        $this->arrival = $arrival;
+        $this->itc = $itc;
 
         return $this;
     }
 
-    public function getDeparture(): ?\DateTimeInterface
+    public function getFriday(): ?bool
     {
-        return $this->departure;
+        return $this->friday;
     }
 
-    public function setDeparture(?\DateTimeInterface $departure): self
+    public function setFriday(bool $friday): self
     {
-        $this->departure = $departure;
+        $this->friday = $friday;
 
         return $this;
     }
 
-    public function getRegistration(): ?int
+    public function getSaturday(): ?bool
+    {
+        return $this->saturday;
+    }
+
+    public function setSaturday(bool $saturday): self
+    {
+        $this->saturday = $saturday;
+
+        return $this;
+    }
+
+    public function getRegistration(): ?Registration
     {
         return $this->registration;
     }
 
-    public function setRegistration(int $registration): self
+    public function setRegistration(?Registration $registration): self
     {
         $this->registration = $registration;
 
         return $this;
     }
-
-
 }
