@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Contestant;
 use App\Entity\ContestantsList;
 use App\Entity\Official;
 use App\Entity\OfficialsList;
@@ -29,6 +30,10 @@ class ParticipantsController extends Controller
         $officialsAfter = new OfficialsList();
         $officialsAfter->setList(new ArrayCollection($officialsBefore));
 
+        if ($officialsAfter->getList()->isEmpty()) {
+            $officialsAfter->addOfficial(new Official());
+        }
+
         $form = $this->createForm(OfficialsListType::class, $officialsAfter);
 
         $form->handleRequest($request);
@@ -36,12 +41,9 @@ class ParticipantsController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
-            dump('valid');
-
             // check for deleted officials
             foreach ($officialsBefore as $official) {
                 if (false === $officialsAfter->getList()->contains($official)) {
-                    dump('remove:'.$official->getId());
                     $em->remove($official);
                 }
             }
@@ -49,17 +51,12 @@ class ParticipantsController extends Controller
             // check for added officials
             foreach ($officialsAfter->getList() as $official) {
                 if (false === \in_array($official, $officialsBefore, true)) {
-                    dump('add:'.$official->getId());
                     $official->setRegistration($this->getUser());
                     $em->persist($official);
                 }
             }
             $em->flush();
         }
-        else {
-            dump('not valid');
-        }
-
 
         return $this->render('participants/officials.html.twig', [
             'form' => $form->createView(),
@@ -79,6 +76,10 @@ class ParticipantsController extends Controller
         $contestantsAfter = new ContestantsList();
         $contestantsAfter->setList(new ArrayCollection($contestantsBefore));
 
+        if ($contestantsAfter->getList()->isEmpty()) {
+            $contestantsAfter->addContestant(new Contestant());
+        }
+
         $form = $this->createForm(ContestantsListType::class, $contestantsAfter);
 
         $form->handleRequest($request);
@@ -86,12 +87,10 @@ class ParticipantsController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
-            dump('valid');
 
             // check for deleted contestants
             foreach ($contestantsBefore as $contestant) {
                 if (false === $contestantsAfter->getList()->contains($contestant)) {
-                    dump('remove:'.$contestant->getId());
                     $em->remove($contestant);
                 }
             }
@@ -99,17 +98,12 @@ class ParticipantsController extends Controller
             // check for added contestants
             foreach ($contestantsAfter->getList() as $contestant) {
                 if (false === \in_array($contestant, $contestantsBefore, true)) {
-                    dump('add:'.$contestant->getId());
                     $contestant->setRegistration($this->getUser());
                     $em->persist($contestant);
                 }
             }
             $em->flush();
         }
-        else {
-            dump('not valid');
-        }
-
 
         return $this->render('participants/contestants.html.twig', [
             'form' => $form->createView(),

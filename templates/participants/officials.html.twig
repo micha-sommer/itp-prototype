@@ -4,6 +4,10 @@
 
 {% block javascripts %}
     <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+
         var $collectionHolder;
         var $removeFormButton = $('<td><button class="btn btn-danger" type="button"><strong>-</strong></button></td>');
 
@@ -48,7 +52,7 @@
             $collectionHolder.data('index', index + 1);
 
             // Display the form in the page in an li, before the "Add a tag" link td
-            var $newFormTr = $('<tr class="official"></tr>').append(newForm);
+            var $newFormTr = $('<tr class="table-warning official"></tr>').append(newForm);
 
             addTagFormDeleteLink($newFormTr);
 
@@ -78,14 +82,22 @@
     {{ form_start(form) }}
     <table class="table table-striped table-middle-aligned">
         <thead class="thead-dark">
+        <tr class="table-sm text-center">
+            <td class="bg-light" colspan="4"></td>
+            <th colspan="3">accommodation</th>
+            <td class="bg-light"></td>
+        </tr>
         <tr>
             <th class="text-center" scope="col">First Name</th>
             <th class="text-center" scope="col">Last Name</th>
             <th class="text-center" scope="col">Role</th>
             <th class="text-center" scope="col">m/w</th>
-            <th class="text-center" scope="col">ITC?</th>
             <th class="text-center" scope="col">Friday</th>
             <th class="text-center" scope="col">Saturday</th>
+            <th class="text-center" scope="col" data-toggle="tooltip" data-placement="top"
+                title="participation training camp">
+                <ins>ITC</ins>
+            </th>
             <th class="text-center" scope="col"></th>
         </tr>
         </thead>
@@ -94,9 +106,9 @@
                 {{ '<td class="text-center">'|e }}{{ form_widget(form.list.vars.prototype.last_name)|e }}   {{ '</td>'|e }}
                 {{ '<td class="text-center">'|e }}{{ form_widget(form.list.vars.prototype.role)|e }}        {{ '</td>'|e }}
                 {{ '<td class="text-center">'|e }}{{ form_widget(form.list.vars.prototype.gender)|e }}      {{ '</td>'|e }}
-                {{ '<td class="text-center">'|e }}{{ form_widget(form.list.vars.prototype.itc)|e }}         {{ '</td>'|e }}
                 {{ '<td class="text-center">'|e }}{{ form_widget(form.list.vars.prototype.friday)|e }}      {{ '</td>'|e }}
                 {{ '<td class="text-center">'|e }}{{ form_widget(form.list.vars.prototype.saturday)|e }}    {{ '</td>'|e }}
+                {{ '<td class="text-center">'|e }}{{ form_widget(form.list.vars.prototype.itc)|e }}         {{ '</td>'|e }}
             ">
         {% for official in form.list %}
             <tr class="official">
@@ -104,20 +116,20 @@
                 <td class="text-center">{{ form_widget(official.last_name) }}</td>
                 <td class="text-center">{{ form_widget(official.role) }}</td>
                 <td class="text-center">{{ form_widget(official.gender) }}</td>
-                <td class="text-center">{{ form_widget(official.itc) }}</td>
                 <td class="text-center">{{ form_widget(official.friday) }}</td>
                 <td class="text-center">{{ form_widget(official.saturday) }}</td>
+                <td class="text-center">{{ form_widget(official.itc) }}</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-    <div class="row">
-        <div class="col-auto mr-auto">
-            <button class="btn btn-primary btn-lg btn-success add-a-tag" type="button">Add an official</button>
-        </div>
-        <div class="col-auto">
-            <input class="btn btn-primary btn-lg" type="submit" value="Update"/>
-            <a href="{{ path('officials') }}" class="btn btn-primary btn-lg btn-warning" role="button">Cancel</a></div>
+    <div class="bg-light clearfix">
+        <button class="btn btn-primary btn-lg btn-success float-left add-a-tag" type="button">Add an official</button>
+        <input class="btn btn-primary btn-lg float-right" type="submit" data-toggle="tooltip" data-placement="top"
+               title="Saves all changes" value="Save"/>
+        <a href="{{ path('officials') }}" class="btn btn-primary btn-lg btn-warning float-right mr-1" role="button"
+           data-toggle="tooltip" data-placement="top"
+           title="Undo all changes since the last save.">Cancel</a>
     </div>
     {{ form_end(form) }}
 {% endblock %}
