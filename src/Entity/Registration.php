@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -59,10 +60,19 @@ class Registration implements UserInterface, \Serializable
     private $telephone;
 
     /**
+     * @var string | null
      * @Assert\Length(max=4096)
      */
     private $plainPassword;
 
+    /**
+     * @var string | null
+     * @Assert\Length(max=4096)
+     * @UserPassword(
+     *
+     * )
+     */
+    private $oldPassword;
 
     /**
      * @var string|null
@@ -186,6 +196,16 @@ class Registration implements UserInterface, \Serializable
         $this->plainPassword = $plainPassword;
     }
 
+    public function getOldPassword()
+    {
+        return $this->plainPassword;
+    }
+
+    public function setOldPassword($oldPassword): void
+    {
+        $this->oldPassword = $oldPassword;
+    }
+
     /**
      * Returns the salt that was originally used to encode the password.
      *
@@ -217,7 +237,7 @@ class Registration implements UserInterface, \Serializable
      */
     public function eraseCredentials(): void
     {
-        // nothing to do!
+        $this->setPlainPassword('');
     }
 
     /** @see \Serializable::serialize() */

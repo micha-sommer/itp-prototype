@@ -36,15 +36,23 @@ class RegistrationsRepository extends ServiceEntityRepository
     }
     */
 
-    /*
-    public function findOneBySomeField($value): ?Registration
+    public function findOneByEmail($email): ?Registration
     {
         return $this->createQueryBuilder('o')
-            ->andWhere('o.exampleField = :val')
-            ->setParameter('val', $value)
+            ->andWhere('o.email = :val')
+            ->setParameter('val', $email)
             ->getQuery()
             ->getOneOrNullResult()
         ;
     }
-    */
+
+    public function findOneById($id): ?Registration
+    {
+        return $this->createQueryBuilder('o')
+            ->andWhere('o.id = :val')
+            ->setParameter('val', $id)
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+    }
 }
