@@ -9,6 +9,7 @@
 namespace App\Form;
 
 
+use App\Entity\RegisteredUser;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -35,6 +36,8 @@ class ChangePasswordType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults([]);
+        $resolver->setDefaults([
+            'data_class' => RegisteredUser::class,
+        ]);
     }
 }
