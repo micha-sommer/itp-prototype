@@ -1,0 +1,121 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Transport!{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+
+        var $collectionHolder;
+        var $removeFormButton = $('<td><button class="btn btn-danger" type="button"><strong>-</strong></button></td>');
+
+        jQuery(document).ready(function () {
+
+            // Get the ul that holds the collection of tags
+            $collectionHolder = $('tbody.contestants');
+
+            // add a delete link to all of the existing tag form li elements
+            $collectionHolder.find('tr').each(function () {
+                addTagFormDeleteLink($(this));
+            });
+
+            // count the current form inputs we have (e.g. 2), use that as the new
+            // index when inserting a new item (e.g. 2)
+            $collectionHolder.data('index', $collectionHolder.find('tr').length);
+
+            var $addTagLink = $('button.add-a-tag');
+            $addTagLink.on('click', function (e) {
+                // prevent the link from creating a "#" on the URL
+                e.preventDefault();
+
+                // add a new tag form (see code block below)
+                addTagForm($collectionHolder, $addTagLink);
+            });
+
+
+        });
+
+        function addTagForm($collectionHolder) {
+            // Get the data-prototype explained earlier
+            var prototype = $collectionHolder.data('prototype');
+
+            // get the new index
+            var index = $collectionHolder.data('index');
+
+            // Replace '$$name$$' in the prototype's HTML to
+            // instead be a number based on how many items we have
+            var newForm = prototype.replace(/__name__/g, index);
+
+            // increase the index with one for the next item
+            $collectionHolder.data('index', index + 1);
+
+            // Display the form in the page in an li, before the "Add a tag" link td
+            var $newFormTr = $('<tr class="table-warning contestant"></tr>').append(newForm);
+
+            addTagFormDeleteLink($newFormTr);
+
+            $collectionHolder.append($newFormTr);
+        }
+
+        function addTagFormDeleteLink($tagFormTr) {
+            var $thisRemoveFormButton = $removeFormButton.clone();
+            $tagFormTr.append($thisRemoveFormButton);
+
+            $thisRemoveFormButton.on('click', function (e) {
+                // remove the li for the tag form
+                $tagFormTr.remove();
+            });
+        }
+    </script>
+{% endblock %}
+
+{% block body %}
+    <div class="jumbotron">
+    <h1 class="display-4">Do you need to be picked up somewhere!</h1>
+    <p class="lead">Please enter as much information as you have available for the time being.</p>
+
+    <hr class="my-4">
+
+    <h3> Your transportation </h3>
+
+    {{ form_start(arrival_form) }}
+    {{ form_start(departure_form) }}
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h4>Arrival</h4>
+                <input type="checkbox" id="arrivalCheckbox" name="arrivalCheckbox"
+                       aria-labelledby="arrivalCheckboxLabel" {% if arrival_checked %} checked {% endif %} >
+                <label id="arrivalCheckboxLabel" for="arrivalCheckbox">Transport needed for arrival?</label>
+                <hr class="mt-0 mb-2">
+
+                {{ form_widget(arrival_form) }}
+
+            </div>
+            <div class="col">
+                <h4>Departure</h4>
+                <input type="checkbox" id="departureCheckbox" name="departureCheckbox"
+                       aria-labelledby="departureCheckboxLabel" {% if departure_checked %} checked {% endif %}>
+                <label id="departureCheckboxLabel" for="departureCheckbox">Transport needed for departure?</label>
+                <hr class="mt-0 mb-2">
+
+                {{ form_widget(departure_form) }}
+
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-light clearfix">
+        <input class="btn btn-primary btn-lg float-right" type="submit" data-toggle="tooltip" data-placement="top"
+               title="Saves all changes" value="Save"/>
+        <a href="{{ path('transports') }}" class="btn btn-primary btn-lg btn-warning float-right mr-1" role="button"
+           data-toggle="tooltip" data-placement="top"
+           title="Undo all changes since the last save.">Cancel</a>
+    </div>
+
+    {{ form_end(arrival_form) }}
+    {{ form_end(departure_form) }}
+{% endblock %}

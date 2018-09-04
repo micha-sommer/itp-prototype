@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -70,6 +72,16 @@ class Registration implements UserInterface, \Serializable
      * @ORM\Column(name="password", type="string", length=64)
      */
     private $password;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Transport", mappedBy="registration")
+     */
+    private $transports;
+
+    public function __construct()
+    {
+        $this->transports = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -248,5 +260,36 @@ class Registration implements UserInterface, \Serializable
             $this->club,
             $this->password,
         ] = unserialize($serialized, ['allowed_classes' => false]);
+    }
+
+    /**
+     * @return Collection|Transport[]
+     */
+    public function getTransports(): Collection
+    {
+        return $this->transports;
+    }
+
+    public function addTransport(Transport $transport): self
+    {
+        if (!$this->transports->contains($transport)) {
+            $this->transports[] = $transport;
+            $transport->setRegistration($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTransport(Transport $transport): self
+    {
+        if ($this->transports->contains($transport)) {
+            $this->transports->removeElement($transport);
+            // set the owning side to null (unless already changed)
+            if ($transport->getRegistration() === $this) {
+                $transport->setRegistration(null);
+            }
+        }
+
+        return $this;
     }
 }

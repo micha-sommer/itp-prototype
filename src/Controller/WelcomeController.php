@@ -12,7 +12,7 @@ class WelcomeController extends AbstractController
     /**
      * @Route("/", name="welcome")
      */
-    public function welcome()
+    public function welcome(): \Symfony\Component\HttpFoundation\Response
     {
         return $this->render('welcome/index.html.twig', [
         ]);

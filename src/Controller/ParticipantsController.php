@@ -6,10 +6,13 @@ use App\Entity\Contestant;
 use App\Entity\ContestantsList;
 use App\Entity\Official;
 use App\Entity\OfficialsList;
+use App\Entity\Transport;
 use App\Form\ContestantsListType;
 use App\Form\OfficialsListType;
+use App\Form\TransportType;
 use App\Repository\ContestantsRepository;
 use App\Repository\OfficialsRepository;
+use App\Repository\TransportRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -107,6 +110,82 @@ class ParticipantsController extends Controller
 
         return $this->render('participants/contestants.html.twig', [
             'form' => $form->createView(),
+        ]);
+    }
+
+
+    /**
+     * @Route("/transports", name="transports")
+     * @param Request $request
+     * @param TransportRepository $transportRepository
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function transports(Request $request, TransportRepository $transportRepository): \Symfony\Component\HttpFoundation\Response
+    {
+        $arrival = $transportRepository->findOneBy(['registration' => $this->getUser(), 'isArrival' => true]);
+        $departure = $transportRepository->findOneBy(['registration' => $this->getUser(), 'isArrival' => false]);
+
+        $create_arrival = false;
+        $create_departure = false;
+
+        if ($arrival === null) {
+            $arrival = new Transport();
+            $arrival->setIsArrival(true);
+            $arrival->setRegistration($this->getUser());
+            $create_arrival = true;
+        }
+        if ($departure === null) {
+            $departure = new Transport();
+            $departure->setIsArrival(false);
+            $departure->setRegistration($this->getUser());
+            $create_departure = true;
+        }
+
+
+        $arrival_form = $this->get('form.factory')->createNamed('arrival', TransportType::class, $arrival);
+        $departure_form = $this->get('form.factory')->createNamed('departure', TransportType::class, $departure);
+
+        $arrival_form->handleRequest($request);
+        $departure_form->handleRequest($request);
+
+        $arrival_needed = $request->get('arrivalCheckbox') === 'on';
+        $departure_needed = $request->get('departureCheckbox') === 'on';
+
+        if ($departure_form->isSubmitted() && $departure_form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+
+            if ($departure_needed) {
+                if ($create_departure) {
+                    $entityManager->persist($departure);
+                    $create_departure = false;
+                }
+            } else if (!$create_departure) {
+                $entityManager->remove($departure);
+                $create_departure = true;
+            }
+            $entityManager->flush();
+        }
+        if ($arrival_form->isSubmitted() && $arrival_form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+
+            if ($arrival_needed) {
+                if ($create_arrival) {
+                    $entityManager->persist($arrival);
+                    $create_arrival = false;
+                }
+            } else if (!$create_arrival) {
+                $entityManager->remove($arrival);
+                $create_arrival = true;
+            }
+
+            $entityManager->flush();
+        }
+
+        return $this->render('participants/transports.html.twig', [
+            'arrival_checked' => !$create_arrival,
+            'departure_checked' => !$create_departure,
+            'arrival_form' => $arrival_form->createView(),
+            'departure_form' => $departure_form->createView()
         ]);
     }
 }

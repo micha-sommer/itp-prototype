@@ -25,9 +25,9 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/registration/edit", name="edit_registration")
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
-    public function edit(Request $request): \Symfony\Component\HttpFoundation\Response
+    public function edit(Request $request): Response
     {
         $registration = $this->getUser();
 
@@ -46,7 +46,6 @@ class RegistrationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
             $this->redirectToRoute('officials');
-            dump('registration done');
         }
 
 
@@ -62,7 +61,7 @@ class RegistrationController extends AbstractController
      * @param UserPasswordEncoderInterface $passwordEncoder
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function changePassword(Request $request, AuthenticationUtils $authenticationUtils, UserPasswordEncoderInterface $passwordEncoder, ValidatorInterface $validator): \Symfony\Component\HttpFoundation\Response
+    public function changePassword(Request $request, AuthenticationUtils $authenticationUtils, UserPasswordEncoderInterface $passwordEncoder): Response
     {
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
