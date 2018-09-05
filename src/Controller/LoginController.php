@@ -5,8 +5,10 @@ namespace App\Controller;
 
 use App\Form\LoginType;
 use App\Form\ForgotPasswordType;
+use App\Form\RegistrationType;
 use App\Repository\RegistrationsRepository;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
@@ -18,7 +20,7 @@ class LoginController extends Controller
      * @param AuthenticationUtils $authenticationUtils
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function login(AuthenticationUtils $authenticationUtils): \Symfony\Component\HttpFoundation\Response
+    public function login(AuthenticationUtils $authenticationUtils): Response
     {
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
@@ -42,7 +44,7 @@ class LoginController extends Controller
      * @param \Swift_Mailer $mailer
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function forgotPassword(Request $request, RegistrationsRepository $registrationsRepository, \Swift_Mailer $mailer): ?\Symfony\Component\HttpFoundation\Response
+    public function forgotPassword(Request $request, RegistrationsRepository $registrationsRepository, \Swift_Mailer $mailer): Response
     {
         $form = $this->createForm(ForgotPasswordType::class);
 
@@ -76,5 +78,18 @@ class LoginController extends Controller
         return $this->render('security/forgot_password.html.twig', [
             'my_form' => $form->createView()
         ]);
+    }
+
+    /**
+     * @Route("/admin", name="admin")
+     * @param Request $request
+     * @param RegistrationsRepository $registrationsRepository
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function admin(RegistrationsRepository $registrationsRepository) : Response
+    {
+        $registrations = $registrationsRepository->findAll();
+
+        return $this->render('security/admin.html.twig', [ 'registrations' => $registrations ]);
     }
 }

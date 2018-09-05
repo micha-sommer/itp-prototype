@@ -15,6 +15,7 @@ security:
             security: false
         main:
             anonymous: ~
+            switch_user: true
             form_login:
                 login_path: login
                 check_path: login
@@ -24,11 +25,13 @@ security:
             logout:
                 path:   /logout
                 target: /
-
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
+        - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/participants, roles: ROLE_USER }
         - { path: ^/officials, roles: ROLE_USER }
+        - { path: ^/transports, roles: ROLE_USER }
+        - { path: ^/registration/edit, roles: ROLE_USER }
         - { path: ^/registration/change_password, roles: ROLE_USER }
 #        - { path: ^/profile, roles: ROLE_USER }

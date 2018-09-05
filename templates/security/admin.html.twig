@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Login!{% endblock %}
+
+{% block body %}
+
+    <div class="jumbotron">
+        <h1 class="display-4">Admin</h1>
+        <hr class="my-4">
+        <table class="table table-striped">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">User Email</th>
+                <th scope="col">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for registration in registrations %}
+                <tr>
+                    <td>{{ registration.email }}</td>
+                    <td class="text-center">
+                        <a class="btn btn-info" role="button"
+                           data-toggle="tooltip" data-placement="top"
+                           title="Login as user"
+                           href="{{ path('welcome', {'_switch_user': registration.email }) }}">Login</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}
