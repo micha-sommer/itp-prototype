@@ -7,12 +7,13 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
-
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * Registration
  *
  * @ORM\Table(name="registrations")
  * @ORM\Entity
+ * @UniqueEntity("email")
  */
 class Registration implements UserInterface, \Serializable
 {
@@ -49,6 +50,7 @@ class Registration implements UserInterface, \Serializable
     /**
      * @var string|null
      *
+     * @Assert\Email()
      * @ORM\Column(name="email", type="string", length=255, nullable=false)
      */
     private $email;
