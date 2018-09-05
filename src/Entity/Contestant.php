@@ -81,8 +81,8 @@ class Contestant
     private $saturday;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Registration")
-     * @ORM\JoinColumn(name="registration_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Registration", inversedBy="contestants")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $registration;
 

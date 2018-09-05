@@ -36,12 +36,12 @@ class OfficialsList
         $this->list = $list;
     }
 
-    public function addOfficial(Official $official)
+    public function addOfficial(Official $official): void
     {
         $this->list->add($official);
     }
 
-    public function removeOfficial(Official $official)
+    public function removeOfficial(Official $official): void
     {
         $this->list->removeElement($official);
     }

@@ -2,12 +2,14 @@
 
 namespace App\Entity;
 
+use App\Enum\GenderEnum;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 /**
  * Registration
  *
@@ -76,13 +78,25 @@ class Registration implements UserInterface, \Serializable
     private $password;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Transport", mappedBy="registration")
+     * @ORM\OneToMany(targetEntity="App\Entity\Transport", mappedBy="registration", orphanRemoval=true)
      */
     private $transports;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Official", mappedBy="registration", orphanRemoval=true)
+     */
+    private $officials;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Contestant", mappedBy="registration", orphanRemoval=true)
+     */
+    private $contestants;
 
     public function __construct()
     {
         $this->transports = new ArrayCollection();
+        $this->officials = new ArrayCollection();
+        $this->contestants = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -167,9 +181,9 @@ class Registration implements UserInterface, \Serializable
      *
      * @return string[] The user roles
      */
-    public function getRoles() : array
+    public function getRoles(): array
     {
-        if($this->getEmail() === 'm.remmos@gmail.com') {
+        if ($this->getEmail() === 'm.remmos@gmail.com') {
             return array('ROLE_USER', 'ROLE_ADMIN', 'ROLE_ALLOWED_TO_SWITCH');
         }
         return array('ROLE_USER');
@@ -237,36 +251,6 @@ class Registration implements UserInterface, \Serializable
         $this->setPlainPassword('');
     }
 
-    /** @see \Serializable::serialize() */
-    public function serialize()
-    {
-        return serialize(
-            [
-                $this->id,
-                $this->firstName,
-                $this->lastName,
-                $this->email,
-                $this->club,
-                $this->password,
-            ]
-        );
-    }
-
-    /** @see \Serializable::unserialize()
-     * @param $serialized
-     */
-    public function unserialize($serialized): void
-    {
-        [
-            $this->id,
-            $this->firstName,
-            $this->lastName,
-            $this->email,
-            $this->club,
-            $this->password,
-        ] = unserialize($serialized, ['allowed_classes' => false]);
-    }
-
     /**
      * @return Collection|Transport[]
      */
@@ -296,5 +280,113 @@ class Registration implements UserInterface, \Serializable
         }
 
         return $this;
+    }
+
+    /**
+     * @return Collection|Official[]
+     */
+    public function getOfficials(): Collection
+    {
+        return $this->officials;
+    }
+
+    public function addOfficial(Official $official): self
+    {
+        if (!$this->officials->contains($official)) {
+            $this->officials[] = $official;
+            $official->setRegistration($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOfficial(Official $official): self
+    {
+        if ($this->officials->contains($official)) {
+            $this->officials->removeElement($official);
+            // set the owning side to null (unless already changed)
+            if ($official->getRegistration() === $this) {
+                $official->setRegistration(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Contestant[]
+     */
+    public function getContestants(): Collection
+    {
+        return $this->contestants;
+    }
+
+    public function addContestant(Contestant $contestant): self
+    {
+        if (!$this->contestants->contains($contestant)) {
+            $this->contestants[] = $contestant;
+            $contestant->setRegistration($this);
+        }
+
+        return $this;
+    }
+
+    public function removeContestant(Contestant $contestant): self
+    {
+        if ($this->contestants->contains($contestant)) {
+            $this->contestants->removeElement($contestant);
+            // set the owning side to null (unless already changed)
+            if ($contestant->getRegistration() === $this) {
+                $contestant->setRegistration(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getInvoice(): string
+    {
+        $officials = $this->getOfficials();
+        $femaleOfficials = $officials->filter(function (Official $official) {
+            return $official->getGender() === GenderEnum::female;
+        });
+        $maleOfficials = $officials->filter(function (Official $official) {
+            return $official->getGender() === GenderEnum::female;
+        });
+        $contestant = $this->getContestants();
+        return $officials->count() . '
+        ' . $femaleOfficials->count() . '
+        ' . $maleOfficials->count() . '
+        ' . $contestant->count();
+    }
+
+    /** @see \Serializable::serialize() */
+    public function serialize()
+    {
+        return serialize(
+            [
+                $this->id,
+                $this->firstName,
+                $this->lastName,
+                $this->email,
+                $this->club,
+                $this->password,
+            ]
+        );
+    }
+
+    /** @see \Serializable::unserialize()
+     * @param $serialized
+     */
+    public function unserialize($serialized): void
+    {
+        [
+            $this->id,
+            $this->firstName,
+            $this->lastName,
+            $this->email,
+            $this->club,
+            $this->password,
+        ] = unserialize($serialized, ['allowed_classes' => false]);
     }
 }

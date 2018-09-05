@@ -2,7 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b15ff6d0-e084-4860-b3ec-5ecacde079c8" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/src/Controller/LoginController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/LoginController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Contestant.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Contestant.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Official.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Official.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/OfficialsList.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/OfficialsList.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Registration.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Registration.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/security/admin.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/security/admin.html.twig" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -32,37 +37,38 @@
       <usages-collector id="statistics.lifecycle.project">
         <counts>
           <entry key="project.closed" value="2" />
+          <entry key="project.open.time.3" value="1" />
           <entry key="project.open.time.4" value="1" />
           <entry key="project.open.time.5" value="1" />
           <entry key="project.open.time.6" value="1" />
-          <entry key="project.opened" value="3" />
+          <entry key="project.opened" value="4" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="php" value="2227" />
-          <entry key="twig" value="764" />
+          <entry key="php" value="2236" />
+          <entry key="twig" value="765" />
           <entry key="yaml" value="66" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="PHP" value="2227" />
-          <entry key="Twig" value="764" />
+          <entry key="PHP" value="2236" />
+          <entry key="Twig" value="765" />
           <entry key="YAML" value="66" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="php" value="21" />
-          <entry key="twig" value="9" />
+          <entry key="php" value="22" />
+          <entry key="twig" value="10" />
           <entry key="yaml" value="3" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="PHP" value="21" />
-          <entry key="Twig" value="9" />
+          <entry key="PHP" value="22" />
+          <entry key="Twig" value="10" />
           <entry key="YAML" value="3" />
         </counts>
       </usages-collector>
@@ -73,13 +79,22 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Entity/Registration.php">
           <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="367">
+              <caret line="359" column="8" selection-start-line="359" selection-start-column="8" selection-end-line="359" selection-end-column="8" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/templates/security/admin.html.twig">
+          <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="255">
-              <caret line="15" column="4" selection-start-line="15" selection-start-column="4" selection-end-line="15" selection-end-column="4" />
+              <caret line="30" column="37" selection-start-line="30" selection-start-column="37" selection-end-line="30" selection-end-column="37" />
               <folding>
-                <element signature="e#30#78#0#PHP" expanded="true" />
+                <element signature="e#12#26#0#Twig" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -180,9 +195,9 @@
         <option value="$PROJECT_DIR$/src/Controller/LoginController.php" />
         <option value="$PROJECT_DIR$/templates/participants/officials.html.twig" />
         <option value="$PROJECT_DIR$/templates/base.html.twig" />
-        <option value="$PROJECT_DIR$/templates/security/admin.html.twig" />
         <option value="$PROJECT_DIR$/config/packages/security.yaml" />
         <option value="$PROJECT_DIR$/src/Entity/Registration.php" />
+        <option value="$PROJECT_DIR$/templates/security/admin.html.twig" />
       </list>
     </option>
   </component>
@@ -331,6 +346,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -399,7 +415,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -479,11 +494,12 @@
       <workItem from="1536052253085" duration="12000" />
       <workItem from="1536052281019" duration="12700000" />
       <workItem from="1536128937128" duration="6306000" />
+      <workItem from="1536153771030" duration="145000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="133858000" />
+    <option name="totallyTimeSpent" value="134003000" />
   </component>
   <component name="TodoView" selected-index="2">
     <todo-panel id="selected-file">
@@ -498,8 +514,8 @@
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.7027464" visible="true" weight="0.3219616" />
-      <window_info x="25" y="756" width="514" height="218" id="Structure" order="1" sideWeight="0.29725364" side_tool="true" visible="true" weight="0.3219616" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.70113087" visible="true" weight="0.32569295" />
+      <window_info active="true" x="25" y="756" width="514" height="218" id="Structure" order="1" sideWeight="0.29886913" side_tool="true" visible="true" weight="0.32569295" />
       <window_info id="Favorites" order="2" sideWeight="0.29501384" side_tool="true" weight="0.31823027" />
       <window_info anchor="bottom" id="Inspection Results" order="0" sideWeight="0.4989339" weight="0.32897604" />
       <window_info anchor="bottom" id="Message" order="1" />
@@ -709,9 +725,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2516">
           <caret line="163" column="9" selection-start-line="163" selection-start-column="9" selection-end-line="163" selection-end-column="9" />
-          <folding>
-            <element signature="e#34#64#0#PHP" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -809,21 +822,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="452">
           <caret line="92" column="48" selection-start-line="92" selection-start-column="48" selection-end-line="92" selection-end-column="48" />
-          <folding>
-            <element signature="e#35#58#0#PHP" expanded="true" />
-            <element signature="e#575#1182#0#PHP" />
-            <element signature="e#1450#2858#0#PHP" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/security/admin.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="41" selection-start-line="9" selection-start-column="41" selection-end-line="9" selection-end-column="41" />
-          <folding>
-            <element signature="e#12#26#0#Twig" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -843,10 +841,17 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Entity/Registration.php">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="367">
+          <caret line="359" column="8" selection-start-line="359" selection-start-column="8" selection-end-line="359" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/security/admin.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
-          <caret line="15" column="4" selection-start-line="15" selection-start-column="4" selection-end-line="15" selection-end-column="4" />
+          <caret line="30" column="37" selection-start-line="30" selection-start-column="37" selection-end-line="30" selection-end-column="37" />
           <folding>
-            <element signature="e#30#78#0#PHP" expanded="true" />
+            <element signature="e#12#26#0#Twig" expanded="true" />
           </folding>
         </state>
       </provider>

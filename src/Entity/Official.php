@@ -72,8 +72,8 @@ class Official
     private $saturday;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Registration")
-     * @ORM\JoinColumn(name="registration_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Registration", inversedBy="officials")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $registration;
 
@@ -129,11 +129,6 @@ class Official
         return $this;
     }
 
-    public function getRegistration(): ?Registration
-    {
-        return $this->registration;
-    }
-
     public function setRegistrationId(int $registration): self
     {
         $this->registration = $registration;
@@ -177,12 +172,15 @@ class Official
         return $this;
     }
 
+    public function getRegistration(): ?Registration
+    {
+        return $this->registration;
+    }
+
     public function setRegistration(?Registration $registration): self
     {
         $this->registration = $registration;
 
         return $this;
     }
-
-
 }

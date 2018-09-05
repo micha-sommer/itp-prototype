@@ -12,22 +12,34 @@
             <tr>
                 <th scope="col">User Email</th>
                 <th scope="col">Action</th>
+                <th scope="col">Rechnung</th>
             </tr>
             </thead>
             <tbody>
             {% for registration in registrations %}
                 <tr>
                     <td>{{ registration.email }}</td>
-                    <td class="text-center">
+                    <td>
                         <a class="btn btn-info" role="button"
                            data-toggle="tooltip" data-placement="top"
                            title="Login as user"
-                           href="{{ path('welcome', {'_switch_user': registration.email }) }}">Login</a>
+                           href="{{ path('welcome', {'_switch_user': registration.email }) }}">
+                            Login
+                        </a>
+                    </td>
+                    <td>
+                        <button class="btn" data-clipboard-action="copy" data-clipboard-text="{{ registration.invoice }}">
+                            <img src="{{ asset('images/clippy.svg') }}" width="32" alt="Copy to clipboard">
+                        </button>
                     </td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
     </div>
+    <script src="https://unpkg.com/clipboard@2.0.0/dist/clipboard.min.js"></script>
+    <script>
+        new ClipboardJS('.btn');
+    </script>
 
 {% endblock %}

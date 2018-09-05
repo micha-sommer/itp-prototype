@@ -82,14 +82,12 @@ class LoginController extends Controller
 
     /**
      * @Route("/admin", name="admin")
-     * @param Request $request
      * @param RegistrationsRepository $registrationsRepository
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function admin(RegistrationsRepository $registrationsRepository) : Response
     {
         $registrations = $registrationsRepository->findAll();
-
         return $this->render('security/admin.html.twig', [ 'registrations' => $registrations ]);
     }
 }
