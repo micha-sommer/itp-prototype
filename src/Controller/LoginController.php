@@ -5,7 +5,6 @@ namespace App\Controller;
 
 use App\Form\LoginType;
 use App\Form\ForgotPasswordType;
-use App\Form\RegistrationType;
 use App\Repository\RegistrationsRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
