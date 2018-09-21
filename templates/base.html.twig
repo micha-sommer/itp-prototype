@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html lang="{{ app.request.locale }}">
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Welcome!{% endblock %}</title>
     <link rel="stylesheet"
-          href="https://bootswatch.com/4/flatly/bootstrap.min.css">
+          href="https://bootswatch.com/4/flatly/bootstrap.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <style>
         .navbar-brand {
             padding: 0px; /* firefox bug fix */
@@ -36,43 +37,62 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                   aria-expanded="false" id="locales">
+                    <span class="fa fa-globe"></span>
+                    <span class="caret"></span>
+                    <span class="sr-only">{{ 'menu.choose_language'|trans }}</span>
+                </a>
+                <ul class="dropdown-menu locales" role="menu" aria-labelledby="locales">
+                    {% for locale in locales() %}
+                        <li {% if app.request.locale == locale.code %}
+                            aria-checked="true" class="active"
+                        {% else %}
+                            aria-checked="false"
+                        {% endif %} role="menuitem"><a
+                                    href="{{ path(app.request.get('_route', 'blog_index'), app.request.get('_route_params', [])|merge({_locale: locale.code})) }}">{{ locale.name|capitalize }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ path('welcome') }}">Home</a>
             </li>
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('edit_registration') }}">Edit Contact Information</a>
+                    <a class="nav-link" href="{{ path('edit_registration') }}">{{ 'menu.registration_edit'|trans }}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('officials') }}">Edit Officials</a>
+                    <a class="nav-link" href="{{ path('officials') }}">{{ 'menu.officials_edit'|trans }}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('contestants') }}">Edit Contestants</a>
+                    <a class="nav-link" href="{{ path('contestants') }}">{{ 'menu.contestants_edit'|trans }}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('transports') }}">Edit Transport</a>
+                    <a class="nav-link" href="{{ path('transports') }}">{{ 'menu.transport_edit'|trans }}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('change_password') }}">Change Password</a>
+                    <a class="nav-link" href="{{ path('change_password') }}">{{ 'menu.password_edit'|trans }}</a>
                 </li>
                 {% if is_granted('ROLE_ADMIN') %}
                     <li class="nav-item">
-                        <a class="nav-link badge-warning" href="{{ path('admin') }}">Admin</a>
+                        <a class="nav-link badge-warning" href="{{ path('admin') }}">{{ 'menu_admin'|trans }}</a>
                     </li>
                 {% endif %}
             {% else %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('registration') }}">Register</a>
+                    <a class="nav-link" href="{{ path('registration') }}">{{ 'menu_registration_new'|trans }}</a>
                 </li>
             {% endif %}
 
             <li class="nav-item">
                 {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
-                    <a class="nav-link badge-warning" href="{{ path('admin', {'_switch_user': '_exit'}) }}">Logout</a>
+                    <a class="nav-link badge-warning" href="{{ path('admin', {'_switch_user': '_exit'}) }}">{{ 'menu_logout'|trans }}</a>
                 {% elseif is_granted('IS_AUTHENTICATED_FULLY') %}
-                    <a class="nav-link" href="{{ path('logout') }}">Logout</a>
+                    <a class="nav-link" href="{{ path('logout') }}">{{ 'menu_logout'|trans }}</a>
                 {% else %}
-                    <a class="nav-link" href="{{ path('login') }}">Login</a>
+                    <a class="nav-link" href="{{ path('login') }}">{{ 'menu_login'|trans }}</a>
                 {% endif %}
             </li>
         </ul>
@@ -80,7 +100,7 @@
             <li class="nav-item">
                 {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                     <span class="navbar-text">
-                        Logged in as:
+                        {{ 'menu_logged_in_as'|trans }}
                         {{ app.user.firstname|default('') }} {{ app.user.lastname|default('') }}
                         ({{ app.user.club|default('') }})
                     </span>

@@ -19,7 +19,7 @@ class LoginController extends Controller
      * @param AuthenticationUtils $authenticationUtils
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function login(AuthenticationUtils $authenticationUtils): Response
+    public function login(AuthenticationUtils $authenticationUtils, $locales, $defaultLocale): Response
     {
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="de" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="ESFDRN3" resname="greeting.welcome">
+        <source>greeting.welcome</source>
+        <target>Hallo!</target>
+      </trans-unit>
+      <trans-unit id="SWM2jM." resname="menu.choose_language">
+        <source>menu.choose_language</source>
+        <target>Sprache wählen</target>
+      </trans-unit>
+      <trans-unit id="c.RovEX" resname="menu.registration_edit">
+        <source>menu.registration_edit</source>
+        <target>Kontaktinformationen ändern</target>
+      </trans-unit>
+      <trans-unit id="DC0Bu1O" resname="menu.officials_edit">
+        <source>menu.officials_edit</source>
+        <target>Offizielle ändern</target>
+      </trans-unit>
+      <trans-unit id="l3nC87n" resname="menu.contestants_edit">
+        <source>menu.contestants_edit</source>
+        <target>Wettkämpferinnen ändern</target>
+      </trans-unit>
+      <trans-unit id="QDPY7Ly" resname="menu.transport_edit">
+        <source>menu.transport_edit</source>
+        <target>Transport ändern</target>
+      </trans-unit>
+      <trans-unit id="jLoPMJq" resname="menu.password_edit">
+        <source>menu.password_edit</source>
+        <target>Passwort ändern</target>
+      </trans-unit>
+      <trans-unit id="nYQXRZL" resname="menu_admin">
+        <source>menu_admin</source>
+        <target>Admin</target>
+      </trans-unit>
+      <trans-unit id="Vjkd0GO" resname="menu_registration_new">
+        <source>menu_registration_new</source>
+        <target>Registrieren</target>
+      </trans-unit>
+      <trans-unit id="zhcSDte" resname="menu_logout">
+        <source>menu_logout</source>
+        <target>Abmelden</target>
+      </trans-unit>
+      <trans-unit id="Lr19MDJ" resname="menu_login">
+        <source>menu_login</source>
+        <target>Anmelden</target>
+      </trans-unit>
+      <trans-unit id="0gz5FFZ" resname="menu_logged_in_as">
+        <source>menu_logged_in_as</source>
+        <target>Anmeldet als:</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

@@ -5,14 +5,19 @@
 {% block body %}
     <div class="container">
         <div class="jumbotron">
-            <h1 class="display-4">Hello!</h1>
-            <p class="lead">This is the new entry form for the registration process of International Thuringia Cup 2019.</p>
+            <h1 class="display-4">{{ 'greeting.welcome'|trans|raw }}</h1>
+            <p class="lead">This is the new entry form for the registration process of International Thuringia Cup
+                2019.</p>
             <hr class="my-4">
-            <p>The data should be very similar to what have been in the Excel sheet in previous years. Please proceed by clicking the button below.</p>
+            <p>The data should be very similar to what have been in the Excel sheet in previous years. Please proceed by
+                clicking the button below.</p>
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                <a class="btn btn-primary btn-lg" href="{{ path('edit_registration') }}" role="button">Your contact information</a>
-                <a class="btn btn-primary btn-lg" href="{{ path('officials') }}" role="button">Your registered officials</a>
-                <a class="btn btn-primary btn-lg" href="{{ path('contestants') }}" role="button">Your registered contestants</a>
+                <a class="btn btn-primary btn-lg" href="{{ path('edit_registration') }}" role="button">Your contact
+                    information</a>
+                <a class="btn btn-primary btn-lg" href="{{ path('officials') }}" role="button">Your registered
+                    officials</a>
+                <a class="btn btn-primary btn-lg" href="{{ path('contestants') }}" role="button">Your registered
+                    contestants</a>
                 <a class="btn btn-primary btn-lg" href="{{ path('transports') }}" role="button">Your transports</a>
             {% else %}
                 <a class="btn btn-primary btn-lg" href="{{ path('registration') }}" role="button">Let's start</a>
@@ -20,11 +25,10 @@
             <hr class="my-4">
             <p>If you wish to contact us:</p>
             <p>Thüringer Judo-Verband e.V.<br/>
-            Schützenstraße 4<br/>
-            99096 Erfurt<br/>
-            <a href="mailto:info@thueringer-judoverband.de">info@thueringer-judoverband.de</a><br/>
+                Schützenstraße 4<br/>
+                99096 Erfurt<br/>
+                <a href="mailto:info@thueringer-judoverband.de">info@thueringer-judoverband.de</a><br/>
             </p>
         </div>
-    </div>
     </div>
 {% endblock %}
