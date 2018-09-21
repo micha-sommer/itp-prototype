@@ -1,33 +1,29 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Welcome!{% endblock %}
+{% block title %}{{ 'title.welcome'|trans }}{% endblock %}
 
 {% block body %}
     <div class="container">
         <div class="jumbotron">
             <h1 class="display-4">{{ 'greeting.welcome'|trans|raw }}</h1>
-            <p class="lead">This is the new entry form for the registration process of International Thuringia Cup
-                2019.</p>
+            <p class="lead">{{ 'greeting.top'|trans }}</p>
             <hr class="my-4">
-            <p>The data should be very similar to what have been in the Excel sheet in previous years. Please proceed by
-                clicking the button below.</p>
+            <p>{{ 'greeting.middle'|trans }}</p>
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                <a class="btn btn-primary btn-lg" href="{{ path('edit_registration') }}" role="button">Your contact
-                    information</a>
-                <a class="btn btn-primary btn-lg" href="{{ path('officials') }}" role="button">Your registered
-                    officials</a>
-                <a class="btn btn-primary btn-lg" href="{{ path('contestants') }}" role="button">Your registered
-                    contestants</a>
-                <a class="btn btn-primary btn-lg" href="{{ path('transports') }}" role="button">Your transports</a>
+                <a class="btn btn-primary btn-lg" href="{{ path('edit_registration') }}" role="button">{{ 'menu.registration_edit'|trans }}</a>
+                <a class="btn btn-primary btn-lg" href="{{ path('officials') }}" role="button">{{ 'menu.officials_edit'|trans }}</a>
+                <a class="btn btn-primary btn-lg" href="{{ path('contestants') }}" role="button">{{ 'menu.contestants_edit'|trans }}</a>
+                <a class="btn btn-primary btn-lg" href="{{ path('transports') }}" role="button">{{ 'menu.transport_edit'|trans }}</a>
             {% else %}
-                <a class="btn btn-primary btn-lg" href="{{ path('registration') }}" role="button">Let's start</a>
+                <a class="btn btn-primary btn-lg" href="{{ path('registration') }}" role="button">{{ 'start'|trans }}</a>
             {% endif %}
             <hr class="my-4">
-            <p>If you wish to contact us:</p>
+            <p>{{ 'greeting.contact_us'|trans }}</p>
             <p>Thüringer Judo-Verband e.V.<br/>
                 Schützenstraße 4<br/>
                 99096 Erfurt<br/>
-                <a href="mailto:info@thueringer-judoverband.de">info@thueringer-judoverband.de</a><br/>
+                <a class="fa fa-phone" href="tel:0049-0361-3731647"> +49 (0) 361 373 16 47</a><br/>
+                <a class="fa fa-envelope" href="mailto:info@thueringer-judoverband.de"> info@thueringer-judoverband.de</a><br/>
             </p>
         </div>
     </div>

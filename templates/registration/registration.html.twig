@@ -1,18 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Registration!{% endblock %}
+{% block title %}{{ 'title.registration_new'|trans }}!{% endblock %}
 
 {% block body %}
     <div class="jumbotron">
-        <h1 class="display-4">Register here!</h1>
-        <p class="lead">In order to proceed with the registration, we will need a contact person. This information
-            is also required for later changes that might or might not be needed. Once you've registered your club, you
-            can add officials (coaches, pysiotherapist etc.) and of course your contestants.</p>
+        <h1 class="display-4">{{ 'title.registration_new'|trans }}</h1>
+        <p class="lead">{{ 'description.registration_new'|trans|raw }}</p>
         <hr class="my-4">
         <div>
             {{ form_start(my_form) }}
             {{ form_widget(my_form) }}
-            <input class="btn btn-primary btn-lg" type="submit"  value="Register"/>
+            <input class="btn btn-primary btn-lg" type="submit"  value="{{ 'generic.register'|trans }}"/>
             {{ form_end(my_form) }}
         </div>
     </div>

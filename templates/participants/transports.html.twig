@@ -1,15 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Transport!{% endblock %}
+{% block title %}{{ 'title.transport'|trans }}!{% endblock %}
 
 {% block body %}
     <div class="jumbotron">
-    <h1 class="display-4">Do you need to be picked up somewhere?</h1>
-    <p class="lead">Please enter as much information as you have available for the time being.</p>
+    <h1 class="display-4">{{ 'title.transport'|trans }}</h1>
+    <p class="lead">{{ 'description.transport'|trans }}</p>
 
     <hr class="my-4">
-
-    <h3> Your transportation </h3>
 
     {{ form_start(arrival_form) }}
     {{ form_start(departure_form) }}
@@ -20,7 +18,7 @@
                 <h4>Arrival</h4>
                 <input type="checkbox" id="arrivalCheckbox" name="arrivalCheckbox"
                        aria-labelledby="arrivalCheckboxLabel" {% if arrival_checked %} checked {% endif %} >
-                <label id="arrivalCheckboxLabel" for="arrivalCheckbox">Transport needed for arrival?</label>
+                <label id="arrivalCheckboxLabel" for="arrivalCheckbox">{{ 'arrival_needed.transport'|trans }}</label>
                 <hr class="mt-0 mb-2">
 
                 {{ form_widget(arrival_form) }}
@@ -30,7 +28,7 @@
                 <h4>Departure</h4>
                 <input type="checkbox" id="departureCheckbox" name="departureCheckbox"
                        aria-labelledby="departureCheckboxLabel" {% if departure_checked %} checked {% endif %}>
-                <label id="departureCheckboxLabel" for="departureCheckbox">Transport needed for departure?</label>
+                <label id="departureCheckboxLabel" for="departureCheckbox">{{ 'departure_needed.transport'|trans }}</label>
                 <hr class="mt-0 mb-2">
 
                 {{ form_widget(departure_form) }}
@@ -41,10 +39,10 @@
 
     <div class="bg-light clearfix">
         <input class="btn btn-primary btn-lg float-right" type="submit" data-toggle="tooltip" data-placement="top"
-               title="Saves all changes" value="Save"/>
+               title="Saves all changes" value="{{ 'generic.save'|trans }}"/>
         <a href="{{ path('transports') }}" class="btn btn-primary btn-lg btn-warning float-right mr-1" role="button"
            data-toggle="tooltip" data-placement="top"
-           title="Undo all changes since the last save.">Cancel</a>
+           title="Undo all changes since the last save.">{{ 'generic.cancel'|trans}}</a>
     </div>
 
     {{ form_end(arrival_form) }}

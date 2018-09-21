@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Participants!{% endblock %}
+{% block title %}{{ 'title.contestants'|trans }}!{% endblock %}
 
 {% block javascripts %}
     <script>
@@ -73,31 +73,30 @@
 
 {% block body %}
     <div class="jumbotron">
-    <h1 class="display-4">Your registered contestants!</h1>
-    <p class="lead">Please enter as much information as you have available for the time being.</p>
+    <h1 class="display-4">{{ 'title.contestants'|trans }}!</h1>
+    <p class="lead">{{ 'description.contestants'|trans }}</p>
 
     <hr class="my-4">
 
-    <h3> Registered contestants </h3>
     {{ form_start(form) }}
     <table class="table table-striped table-middle-aligned">
         <thead class="thead-dark">
         <tr class="table-sm text-center">
             <td class="bg-light" colspan="5"></td>
-            <th colspan="3">accommodation</th>
+            <th colspan="3">{{ 'accommodation.participants'|trans }}</th>
             <td class="bg-light"></td>
         </tr>
         <tr>
-            <th class="text-center" scope="col">First Name</th>
-            <th class="text-center" scope="col">Last Name</th>
-            <th class="text-center" scope="col">Year</th>
-            <th class="text-center" scope="col">Weight</th>
-            <th class="text-center" scope="col">Age</th>
-            <th class="text-center" scope="col">Friday</th>
-            <th class="text-center" scope="col">Saturday</th>
+            <th class="text-center" scope="col">{{ 'first_name.participants'|trans }}</th>
+            <th class="text-center" scope="col">{{ 'last_name.participants'|trans }}</th>
+            <th class="text-center" scope="col">{{ 'year.contestants'|trans }}</th>
+            <th class="text-center" scope="col">{{ 'weight.contestants'|trans }}</th>
+            <th class="text-center" scope="col">{{ 'age.contestants'|trans }}</th>
+            <th class="text-center" scope="col">{{ 'friday.participants'|trans }}</th>
+            <th class="text-center" scope="col">{{ 'saturnday.participants'|trans }}</th>
             <th class="text-center" data-toggle="tooltip" data-placement="top"
-                title="participation training camp" scope="col">
-                <ins>ITC</ins>
+                title="{{ 'itc.tooltip.participants'|trans }}" scope="col">
+                <ins>{{ 'itc.participants'|trans }}</ins>
             </th>
             <th class="text-center" scope="col"></th>
         </tr>
@@ -128,12 +127,12 @@
     </table>
 
     <div class="bg-light clearfix">
-        <button class="btn btn-primary btn-lg btn-success float-left add-a-tag" type="button">Add a contestant</button>
+        <button class="btn btn-primary btn-lg btn-success float-left add-a-tag" type="button">{{ 'generic.add'|trans }}</button>
         <input class="btn btn-primary btn-lg float-right" type="submit" data-toggle="tooltip" data-placement="top"
-               title="Saves all changes" value="Save"/>
+               title="{{ 'generic.tooltip.save'|trans }}" value="{{ 'generic.save'|trans }}"/>
         <a href="{{ path('contestants') }}" class="btn btn-primary btn-lg btn-warning float-right mr-1" role="button"
            data-toggle="tooltip" data-placement="top"
-           title="Undo all changes since the last save.">Cancel</a>
+           title="{{ 'generic.tooltip.cancel'|trans }}">{{ 'generic.cancel'|trans }}</a>
     </div>
     {{ form_end(form) }}
 {% endblock %}

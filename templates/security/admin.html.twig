@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Login!{% endblock %}
+{% block title %}{{ 'title.admin'|trans }}!{% endblock %}
 
 {% block body %}
 
     <div class="jumbotron">
-        <h1 class="display-4">Admin</h1>
+        <h1 class="display-4">{{ 'title.admin'|trans }}</h1>
         <hr class="my-4">
         <table class="table table-striped">
             <thead class="thead-dark">
@@ -28,8 +28,10 @@
                         </a>
                     </td>
                     <td>
-                        <button class="btn" data-clipboard-action="copy" data-clipboard-text="{{ registration.invoice }}">
-                            <img src="{{ asset('images/clippy.svg') }}" width="32" alt="Copy to clipboard">
+                        <button class="btn btn-info" data-clipboard-action="copy" data-clipboard-text="{{ registration.invoice }}">
+                            <i class="fa fa-clipboard"></i>
+
+                            <!--img src="{{ asset('images/clippy.svg') }}" width="32" alt="Copy to clipboard"-->
                         </button>
                     </td>
                 </tr>
