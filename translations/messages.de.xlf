@@ -260,6 +260,34 @@
                 <source>age.contestants</source>
                 <target>Alter</target>
             </trans-unit>
+            <trans-unit id="generic.club">
+                <source>Club</source>
+                <target>Verein</target>
+            </trans-unit>
+            <trans-unit id="generic.first_name">
+                <source>First name</source>
+                <target>Vorname</target>
+            </trans-unit>
+            <trans-unit id="generic.last_name">
+                <source>Last name</source>
+                <target>Nachname</target>
+            </trans-unit>
+            <trans-unit id="generic.telephone">
+                <source>Telephone</source>
+                <target>Telefon</target>
+            </trans-unit>
+            <trans-unit id="generic.email">
+                <source>Email</source>
+                <target>Email</target>
+            </trans-unit>
+            <trans-unit id="generic.password">
+                <source>Password</source>
+                <target>Passwort</target>
+            </trans-unit>
+            <trans-unit id="generic.repeat_password">
+                <source>Repeat Password</source>
+                <target>Passwortwiederholung</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
