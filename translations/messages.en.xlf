@@ -290,6 +290,130 @@
                 <source>Repeat Password</source>
                 <target>Repeat Password</target>
             </trans-unit>
+            <trans-unit id="generic.old_password">
+                <source>Old password</source>
+                <target>Old Password</target>
+            </trans-unit>
+            <trans-unit id="generic.male">
+                <source>male</source>
+                <target>male</target>
+            </trans-unit>
+            <trans-unit id="generic.female">
+                <source>female</source>
+                <target>female</target>
+            </trans-unit>
+            <trans-unit id="generic.1998">
+                <source>1998</source>
+                <target>1998</target>
+            </trans-unit>
+            <trans-unit id="generic.1999">
+                <source>1999</source>
+                <target>1999</target>
+            </trans-unit>
+            <trans-unit id="generic.2000">
+                <source>2000</source>
+                <target>2000</target>
+            </trans-unit>
+            <trans-unit id="generic.2001">
+                <source>2001</source>
+                <target>2001</target>
+            </trans-unit>
+            <trans-unit id="generic.2002">
+                <source>2002</source>
+                <target>2002</target>
+            </trans-unit>
+            <trans-unit id="generic.2003">
+                <source>2003</source>
+                <target>2003</target>
+            </trans-unit>
+            <trans-unit id="generic._40">
+                <source>-40</source>
+                <target>-40</target>
+            </trans-unit>
+            <trans-unit id="generic._44">
+                <source>-44</source>
+                <target>-44</target>
+            </trans-unit>
+            <trans-unit id="generic._48">
+                <source>-48</source>
+                <target>-48</target>
+            </trans-unit>
+            <trans-unit id="generic._52">
+                <source>-52</source>
+                <target>-52</target>
+            </trans-unit>
+            <trans-unit id="generic._57">
+                <source>-57</source>
+                <target>-57</target>
+            </trans-unit>
+            <trans-unit id="generic._63">
+                <source>-63</source>
+                <target>-63</target>
+            </trans-unit>
+            <trans-unit id="generic._70">
+                <source>-70</source>
+                <target>-70</target>
+            </trans-unit>
+            <trans-unit id="generic.o70">
+                <source>+70</source>
+                <target>+70</target>
+            </trans-unit>
+            <trans-unit id="generic._78">
+                <source>-78</source>
+                <target>-78</target>
+            </trans-unit>
+            <trans-unit id="generic.o78">
+                <source>+78</source>
+                <target>+78</target>
+            </trans-unit>
+            <trans-unit id="generic.cadet">
+                <source>cadet</source>
+                <target>cadet</target>
+            </trans-unit>
+            <trans-unit id="generic.junior">
+                <source>junior</source>
+                <target>junior</target>
+            </trans-unit>
+            <trans-unit id="generic.date">
+                <source>Date</source>
+                <target>Date</target>
+            </trans-unit>
+            <trans-unit id="generic.year">
+                <source>Year</source>
+                <target>Year</target>
+            </trans-unit>
+            <trans-unit id="generic.month">
+                <source>Month</source>
+                <target>Month</target>
+            </trans-unit>
+            <trans-unit id="generic.day">
+                <source>Day</source>
+                <target>Day</target>
+            </trans-unit>
+            <trans-unit id="generic.time">
+                <source>Time</source>
+                <target>Time</target>
+            </trans-unit>
+            <trans-unit id="generic.hour">
+                <source>Hour</source>
+                <target>Hour</target>
+            </trans-unit>
+            <trans-unit id="generic.minute">
+                <source>Minute</source>
+                <target>Minute</target>
+            </trans-unit>
+            <trans-unit id="generic.place">
+                <source>Place</source>
+                <target>Place</target>
+            </trans-unit>
+            <trans-unit id="generic.information">
+                <source>Information</source>
+                <target>Information</target>
+            </trans-unit>
+            <trans-unit id="generic.comment">
+                <source>Comment</source>
+                <target>Comment</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
