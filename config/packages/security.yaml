@@ -14,7 +14,9 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
-            anonymous: ~
+            # this firewall applies to all URLs
+            pattern: ^/
+            anonymous: true
             switch_user: true
             form_login:
                 login_path: login
@@ -22,6 +24,7 @@ security:
                 username_parameter: login[email]
                 password_parameter: login[password]
                 default_target_path: welcome
+                csrf_token_generator: security.csrf.token_manager
 
             logout:
                 path:   /logout

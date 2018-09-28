@@ -15,8 +15,11 @@
         <div>
             {{ form_start(my_form) }}
             {{ form_widget(my_form) }}
+            <input type="hidden" name="_csrf_token"
+                   value="{{ csrf_token('authenticate') }}"/>
             <input class="btn btn-primary btn-lg" type="submit" value="{{ 'generic.login'|trans }}"/>
-            <a class="btn btn-link" href="{{ path('forgot_password') }}" role="button">{{ 'generic.forgot_password'|trans }}</a>
+            <a class="btn btn-link" href="{{ path('forgot_password') }}"
+               role="button">{{ 'generic.forgot_password'|trans }}</a>
             {{ form_end(my_form) }}
             {{ form_errors(my_form) }}
         </div>
