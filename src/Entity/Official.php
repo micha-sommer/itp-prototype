@@ -39,7 +39,7 @@ class Official
     /**
      * @var string|null
      *
-     * @ORM\Column(name="role", type="string", length=255, nullable=true)
+     * @ORM\Column(name="role", type="string", length=0, nullable=false, columnDefinition="ENUM('trainer', 'physio/psychotherapist', 'referee', 'others')") )
      */
     private $role;
 

@@ -18,7 +18,14 @@ class OfficialType extends AbstractType
         $builder
             ->add('first_name', TextType::class)
             ->add('last_name', TextType::class)
-            ->add('role', TextType::class)
+            ->add('role', ChoiceType::class, [
+                'choices' => [
+                    'trainer' => 'trainer',
+                    'physio/psychotherapist' => 'physio/psychotherapist',
+                    'referee' => 'referee',
+                    'others' => 'others'
+                ]
+            ])
             ->add('gender', ChoiceType::class, [
                 'choices' => [
                     'male' => 'male',
