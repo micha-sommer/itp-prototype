@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\RegisteredUser;
 use App\Entity\Registration;
 use App\Form\RegistrationType;
 use App\Form\ResetPasswordType;
@@ -13,7 +12,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -67,7 +65,6 @@ class RegistrationController extends AbstractController
         $error = $authenticationUtils->getLastAuthenticationError();
 
         $registration = $this->getUser();
-        $registeredUser = new RegisteredUser($registration);
 
         if (!$registration) {
             throw $this->createNotFoundException(
@@ -76,7 +73,7 @@ class RegistrationController extends AbstractController
         }
 
         // 1) build the form
-        $form = $this->createForm(ChangePasswordType::class, $registeredUser);
+        $form = $this->createForm(ChangePasswordType::class, $registration);
 
         // 2) handle the submit (will only happen on POST)
         $form->handleRequest($request);
@@ -84,7 +81,7 @@ class RegistrationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             // 3) Encode the password (you could also do this via Doctrine listener)
-            $password = $passwordEncoder->encodePassword($registeredUser, $registeredUser->getPlainPassword());
+            $password = $passwordEncoder->encodePassword($registration, $registration->getPlainPassword());
             $registration->setPassword($password);
 
             // 4) update the User!

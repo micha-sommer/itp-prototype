@@ -9,7 +9,7 @@
 namespace App\Form;
 
 
-use App\Entity\RegisteredUser;
+use App\Entity\Registration;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -21,9 +21,6 @@ class ChangePasswordType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('oldPassword', PasswordType::class, [
-                'always_empty' => true,
-            ])
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'first_options' => ['label' => 'Password', 'always_empty' => true],
@@ -37,7 +34,7 @@ class ChangePasswordType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => RegisteredUser::class,
+            'data_class' => Registration::class,
         ]);
     }
 }
