@@ -32,7 +32,13 @@ class OfficialType extends AbstractType
                     'female' => 'female'
                 ]
             ])
-            ->add('itc', CheckboxType::class, ['required' => false, 'label' => false])
+            ->add('itc', ChoiceType::class, [
+                'choices' => [
+                    'no' => 'no',
+                    'su-tu' => 'su-tu',
+                    'su-we' => 'su-we'
+                ]
+            ])
             ->add('friday', CheckboxType::class, ['required' => false, 'label' => false])
             ->add('saturday', CheckboxType::class, ['required' => false, 'label' => false]);
     }

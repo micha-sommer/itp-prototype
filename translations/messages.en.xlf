@@ -430,6 +430,18 @@
         <source>others</source>
         <target>others</target>
       </trans-unit>
+      <trans-unit id="k5Apjz_" resname="no">
+        <source>no</source>
+        <target>no</target>
+      </trans-unit>
+      <trans-unit id="Qkc_QCs" resname="su-tu">
+        <source>su-tu</source>
+        <target>su-tu</target>
+      </trans-unit>
+      <trans-unit id="q9_V61b" resname="su-we">
+        <source>su-we</source>
+        <target>su-we</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

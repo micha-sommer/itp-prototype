@@ -37,7 +37,7 @@ class Official
     private $lastName;
 
     /**
-     * @var string|null
+     * @var string
      *
      * @ORM\Column(name="role", type="string", length=0, nullable=false, columnDefinition="ENUM('trainer', 'physio/psychotherapist', 'referee', 'others')") )
      */
@@ -51,9 +51,9 @@ class Official
     private $gender;
 
     /**
-     * @var boolean|null
+     * @var string
      *
-     * @ORM\Column(name="itc", type="boolean", nullable=false)
+     * @ORM\Column(name="itc", type="string", length=0, nullable=false, columnDefinition="ENUM('no', 'su-tu', 'su-we')") )
      */
     private $itc;
 
@@ -111,7 +111,7 @@ class Official
         return $this->role;
     }
 
-    public function setRole(?string $role): self
+    public function setRole(string $role): self
     {
         $this->role = $role;
 
@@ -136,12 +136,12 @@ class Official
         return $this;
     }
 
-    public function getItc(): ?bool
+    public function getItc(): ?string
     {
         return $this->itc;
     }
 
-    public function setItc(bool $itc): self
+    public function setItc(string $itc): self
     {
         $this->itc = $itc;
 

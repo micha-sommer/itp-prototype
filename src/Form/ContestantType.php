@@ -21,12 +21,12 @@ class ContestantType extends AbstractType
             ->add('last_name', TextType::class)
             ->add('year', ChoiceType::class, [
                 'choices' => [
-                    '1998' => '1998',
-                    '1999' => '1999',
-                    '2000' => '2000',
-                    '2001' => '2001',
-                    '2002' => '2002',
-                    '2003' => '2003',
+                    1998 => '1998',
+                    1999 => '1999',
+                    2000 => '2000',
+                    2001 => '2001',
+                    2002 => '2002',
+                    2003 => '2003',
                 ]
             ])
             ->add('weight_category', ChoiceType::class, [
@@ -35,7 +35,13 @@ class ContestantType extends AbstractType
             ->add('age_category', ChoiceType::class, [
                 'choices' => AgeCategoryEnum::asArray()
             ])
-            ->add('itc', CheckboxType::class, ['required' => false, 'label' => false])
+            ->add('itc', ChoiceType::class, [
+                'choices' => [
+                    'no' => 'no',
+                    'su-tu' => 'su-tu',
+                    'su-we' => 'su-we',
+                ]
+            ])
             ->add('friday', CheckboxType::class, ['required' => false, 'label' => false])
             ->add('saturday', CheckboxType::class, ['required' => false, 'label' => false]);
     }

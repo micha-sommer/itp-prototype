@@ -428,6 +428,18 @@
         <source>others</source>
         <target>sonstiges</target>
       </trans-unit>
+      <trans-unit id="k5Apjz_" resname="no">
+        <source>no</source>
+        <target>nein</target>
+      </trans-unit>
+      <trans-unit id="Qkc_QCs" resname="su-tu">
+        <source>su-tu</source>
+        <target>So-Di</target>
+      </trans-unit>
+      <trans-unit id="q9_V61b" resname="su-we">
+        <source>su-we</source>
+        <target>So-Mi</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

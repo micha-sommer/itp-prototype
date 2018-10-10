@@ -60,9 +60,9 @@ class Contestant
     private $ageCategory;
 
     /**
-     * @var boolean|null
+     * @var string
      *
-     * @ORM\Column(name="itc", type="boolean", nullable=false)
+     * @ORM\Column(name="itc", type="string", length=0, nullable=false, columnDefinition="ENUM('no', 'su-tu', 'su-we')")
      */
     private $itc;
 
@@ -151,12 +151,12 @@ class Contestant
         return $this;
     }
 
-    public function getItc(): ?bool
+    public function getItc(): ?string
     {
         return $this->itc;
     }
 
-    public function setItc(bool $itc): self
+    public function setItc(string $itc): self
     {
         $this->itc = $itc;
 
