@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Enum\GenderEnum;
+use App\Enum\RooleEnum;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -37,23 +38,23 @@ class Official
     private $lastName;
 
     /**
-     * @var string
+     * @var RoleEnum
      *
-     * @ORM\Column(name="role", type="string", length=0, nullable=false, columnDefinition="ENUM('trainer', 'physio/psychotherapist', 'referee', 'others')") )
+     * @ORM\Column(name="role", type="string", length=0, nullable=false, columnDefinition="ENUM('trainer', 'physio/psychotherapist', 'referee', 'others')")
      */
     private $role;
 
     /**
      * @var GenderEnum
      *
-     * @ORM\Column(name="gender", type="string", length=0, nullable=false, columnDefinition="ENUM('male', 'female')") )
+     * @ORM\Column(name="gender", type="string", length=0, nullable=false, columnDefinition="ENUM('male', 'female')")
      */
     private $gender;
 
     /**
-     * @var string
+     * @var ITCEnum
      *
-     * @ORM\Column(name="itc", type="string", length=0, nullable=false, columnDefinition="ENUM('no', 'su-tu', 'su-we')") )
+     * @ORM\Column(name="itc", type="string", length=0, nullable=false, columnDefinition="ENUM('no', 'su-tu', 'su-we')")
      */
     private $itc;
 

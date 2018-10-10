@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Contestant;
 use App\Enum\AgeCategoryEnum;
+use App\Enum\ITCEnum;
 use App\Enum\WeightCategoryEnum;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -36,11 +37,7 @@ class ContestantType extends AbstractType
                 'choices' => AgeCategoryEnum::asArray()
             ])
             ->add('itc', ChoiceType::class, [
-                'choices' => [
-                    'no' => 'no',
-                    'su-tu' => 'su-tu',
-                    'su-we' => 'su-we',
-                ]
+                'choices' => ITCEnum::asArray()
             ])
             ->add('friday', CheckboxType::class, ['required' => false, 'label' => false])
             ->add('saturday', CheckboxType::class, ['required' => false, 'label' => false]);

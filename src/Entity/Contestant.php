@@ -2,10 +2,10 @@
 
 namespace App\Entity;
 
-use App\Entity\Enum\AgeCategoryEnum;
-use App\Entity\Enum\WeightCategoryEnum;
+use App\Enum\AgeCategoryEnum;
+use App\Enum\WeightCategoryEnum;
+use App\Enum\ITCEnum;
 use Doctrine\ORM\Mapping as ORM;
-use phpDocumentor\Reflection\Types\Integer;
 
 /**
  * Contestant
@@ -60,7 +60,7 @@ class Contestant
     private $ageCategory;
 
     /**
-     * @var string
+     * @var ITCEnum
      *
      * @ORM\Column(name="itc", type="string", length=0, nullable=false, columnDefinition="ENUM('no', 'su-tu', 'su-we')")
      */

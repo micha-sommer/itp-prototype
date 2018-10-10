@@ -92,6 +92,11 @@ class Registration implements UserInterface, \Serializable
      */
     private $contestants;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $comment;
+
     public function __construct()
     {
         $this->transports = new ArrayCollection();
@@ -388,5 +393,17 @@ class Registration implements UserInterface, \Serializable
             $this->club,
             $this->password,
         ] = unserialize($serialized, ['allowed_classes' => false]);
+    }
+
+    public function getComment(): ?string
+    {
+        return $this->comment;
+    }
+
+    public function setComment(?string $comment): self
+    {
+        $this->comment = $comment;
+
+        return $this;
     }
 }
