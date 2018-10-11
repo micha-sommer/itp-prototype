@@ -59,6 +59,9 @@ class ParticipantsController extends Controller
                 }
             }
             $em->flush();
+            if ($request->request->get('back')) {
+                return $this->redirectToRoute('welcome');
+            }
         }
 
         return $this->render('participants/officials.html.twig', [
@@ -90,7 +93,6 @@ class ParticipantsController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
-
             // check for deleted contestants
             foreach ($contestantsBefore as $contestant) {
                 if (false === $contestantsAfter->getList()->contains($contestant)) {
@@ -106,6 +108,9 @@ class ParticipantsController extends Controller
                 }
             }
             $em->flush();
+            if ($request->request->get('back')) {
+                return $this->redirectToRoute('welcome');
+            }
         }
 
         return $this->render('participants/contestants.html.twig', [
@@ -164,6 +169,10 @@ class ParticipantsController extends Controller
                 $create_departure = true;
             }
             $entityManager->flush();
+
+            if ($request->request->get('back')) {
+                return $this->redirectToRoute('welcome');
+            }
         }
         if ($arrival_form->isSubmitted() && $arrival_form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
@@ -179,6 +188,10 @@ class ParticipantsController extends Controller
             }
 
             $entityManager->flush();
+
+            if ($request->request->get('back')) {
+                return $this->redirectToRoute('welcome');
+            }
         }
 
         return $this->render('participants/transports.html.twig', [

@@ -224,6 +224,10 @@
         <source>generic.save</source>
         <target>Save</target>
       </trans-unit>
+      <trans-unit id="oBwxzQ2" resname="generic.save_and_back">
+        <source>generic.save_and_back</source>
+        <target>Save and finish</target>
+      </trans-unit>
       <trans-unit id="3oGXyiI" resname="generic.tooltip.cancel">
         <source>generic.tooltip.cancel</source>
         <target>Undo all changes since the last save.</target>

@@ -38,7 +38,9 @@
     </div>
 
     <div class="bg-light clearfix">
-        <input class="btn btn-primary btn-lg float-right" type="submit" data-toggle="tooltip" data-placement="top"
+        <input class="btn btn-secondary btn-lg float-right" name="back" type="submit" data-toggle="tooltip" data-placement="top"
+               title="{{ 'generic.tooltip.save'|trans }}" value="{{ 'generic.save_and_back'|trans }}"/>
+        <input class="btn btn-primary btn-lg float-right mr-1" type="submit" data-toggle="tooltip" data-placement="top"
                title="Saves all changes" value="{{ 'generic.save'|trans }}"/>
         <a href="{{ path('transports') }}" class="btn btn-primary btn-lg btn-warning float-right mr-1" role="button"
            data-toggle="tooltip" data-placement="top"

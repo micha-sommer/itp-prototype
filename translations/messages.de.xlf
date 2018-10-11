@@ -222,6 +222,10 @@
         <source>generic.save</source>
         <target>Speichern</target>
       </trans-unit>
+      <trans-unit id="oBwxzQ2" resname="generic.save_and_back">
+        <source>generic.save_and_back</source>
+        <target>Speichern und fertig</target>
+      </trans-unit>
       <trans-unit id="3oGXyiI" resname="generic.tooltip.cancel">
         <source>generic.tooltip.cancel</source>
         <target>Löscht Änderungen seit dem letzten Speichern.</target>
@@ -456,7 +460,6 @@
         <source>Departure</source>
         <target>Abreise</target>
       </trans-unit>
-
     </body>
   </file>
 </xliff>

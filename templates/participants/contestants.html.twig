@@ -128,7 +128,9 @@
 
     <div class="bg-light clearfix">
         <button class="btn btn-primary btn-lg btn-success float-left add-a-tag" type="button">{{ 'generic.add'|trans }}</button>
-        <input class="btn btn-primary btn-lg float-right" type="submit" data-toggle="tooltip" data-placement="top"
+        <input class="btn btn-secondary btn-lg float-right" name="back" type="submit" data-toggle="tooltip" data-placement="top"
+               title="{{ 'generic.tooltip.save'|trans }}" value="{{ 'generic.save_and_back'|trans }}"/>
+        <input class="btn btn-primary btn-lg float-right mr-1" type="submit" data-toggle="tooltip" data-placement="top"
                title="{{ 'generic.tooltip.save'|trans }}" value="{{ 'generic.save'|trans }}"/>
         <a href="{{ path('contestants') }}" class="btn btn-primary btn-lg btn-warning float-right mr-1" role="button"
            data-toggle="tooltip" data-placement="top"
