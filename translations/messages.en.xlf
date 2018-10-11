@@ -442,6 +442,22 @@
         <source>su-we</source>
         <target>su-we</target>
       </trans-unit>
+      <trans-unit id="HlV4Lwh" resname="date.date">
+        <source>date.date</source>
+        <target>m/d/Y</target>
+      </trans-unit>
+      <trans-unit id="y4ILLDv" resname="date.time">
+        <source>date.time</source>
+        <target>g:i a</target>
+      </trans-unit>
+      <trans-unit id="eUrbvGw" resname="Arrival">
+        <source>Arrival</source>
+        <target>Arrival</target>
+      </trans-unit>
+      <trans-unit id="g1aYOwc" resname="Departure">
+        <source>Departure</source>
+        <target>Departure</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -10,12 +10,106 @@
             <hr class="my-4">
             <p>{{ 'greeting.middle'|trans }}</p>
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                <a class="btn btn-primary btn-lg" href="{{ path('edit_registration') }}" role="button">{{ 'menu.registration_edit'|trans }}</a>
-                <a class="btn btn-primary btn-lg" href="{{ path('officials') }}" role="button">{{ 'menu.officials_edit'|trans }}</a>
-                <a class="btn btn-primary btn-lg" href="{{ path('contestants') }}" role="button">{{ 'menu.contestants_edit'|trans }}</a>
-                <a class="btn btn-primary btn-lg" href="{{ path('transports') }}" role="button">{{ 'menu.transport_edit'|trans }}</a>
+                <a class="btn btn-primary btn-lg" href="{{ path('edit_registration') }}"
+                   role="button">{{ 'menu.registration_edit'|trans }}</a>
+                <a class="btn btn-primary btn-lg" href="{{ path('officials') }}"
+                   role="button">{{ 'menu.officials_edit'|trans }}</a>
+                <a class="btn btn-primary btn-lg" href="{{ path('contestants') }}"
+                   role="button">{{ 'menu.contestants_edit'|trans }}</a>
+                <a class="btn btn-primary btn-lg" href="{{ path('transports') }}"
+                   role="button">{{ 'menu.transport_edit'|trans }}</a>
+                <hr class="my-3">
+                <h3>{{ officials.count }} Officials</h3>
+                <table class="table table-striped">
+                    <thead class="thead-dark">
+                    <th class="text-center" scope="col">{{ 'first_name.participants'|trans }}</th>
+                    <th class="text-center" scope="col">{{ 'last_name.participants'|trans }}</th>
+                    <th class="text-center" scope="col">{{ 'role.participants'|trans }}</th>
+                    <th class="text-center" scope="col">{{ 'gender.participants'|trans }}</th>
+                    <th class="text-center" scope="col">{{ 'friday.participants'|trans }}</th>
+                    <th class="text-center" scope="col">{{ 'saturnday.participants'|trans }}</th>
+                    <th class="text-center" scope="col" data-toggle="tooltip" data-placement="top"
+                        title="{{ 'itc.tooltip.participants'|trans }}">
+                        <ins>{{ 'itc.participants'|trans }}</ins>
+                    </th>
+                    <th class="text-center" scope="col"></th>
+                    </thead>
+                    <tbody>
+                    {% for official in officials %}
+                        <tr>
+                            <td>{{ official.firstName }}</td>
+                            <td> {{ official.lastName }}</td>
+                            <td>{{ official.role }}</td>
+                            <td>{{ official.gender }}</td>
+                            <td><input type="checkbox" disabled {% if official.friday %}checked{% endif %}/></td>
+                            <td><input type="checkbox" disabled {% if official.saturday %}checked{% endif %}/></td>
+                            <td>{{ official.itc }} </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <hr class="my-3">
+                <h3>{{ contestants.count }} Contestants</h3>
+                <table class="table table-striped">
+                    <thead class="thead-dark">
+                    <th class="text-center" scope="col">{{ 'first_name.participants'|trans }}</th>
+                    <th class="text-center" scope="col">{{ 'last_name.participants'|trans }}</th>
+                    <th class="text-center" scope="col">{{ 'year.contestants'|trans }}</th>
+                    <th class="text-center" scope="col">{{ 'weight.contestants'|trans }}</th>
+                    <th class="text-center" scope="col">{{ 'age.contestants'|trans }}</th>
+                    <th class="text-center" scope="col">{{ 'friday.participants'|trans }}</th>
+                    <th class="text-center" scope="col">{{ 'saturnday.participants'|trans }}</th>
+                    <th class="text-center" data-toggle="tooltip" data-placement="top"
+                        title="{{ 'itc.tooltip.participants'|trans }}" scope="col">
+                        <ins>{{ 'itc.participants'|trans }}</ins>
+                    </th>
+                    <th class="text-center" scope="col"></th>
+                    </thead>
+                    <tbody>
+                    {% for contestant in contestants %}
+                        <tr>
+                            <td>{{ contestant.firstName }}</td>
+                            <td> {{ contestant.lastName }}</td>
+                            <td>{{ contestant.year }}</td>
+                            <td>{{ contestant.weightCategory }}</td>
+                            <td>{{ contestant.ageCategory }} </td>
+                            <td><input type="checkbox" disabled {% if contestant.friday %}checked{% endif %}/></td>
+                            <td><input type="checkbox" disabled {% if contestant.saturday %}checked{% endif %}/></td>
+                            <td>{{ contestant.itc }} </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <hr class="my-3"/>
+                <h3>{{ 'title.transport'|trans }}</h3>
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+
+                            {% if arrival %}
+                                <h4>{{ 'Arrival'|trans }}</h4>
+                                <div>{{ 'Date'|trans }}: {{ arrival.date|date("date.date"|trans) }}</div>
+                                <div>{{ 'Time'|trans }}: {{ arrival.time|date("date.time"|trans) }}</div>
+                                <div>{{ 'Place'|trans }}: {{ arrival.place }}</div>
+                                <div>{{ 'Information'|trans }}: {{ arrival.information }}</div>
+                                <div>{{ 'Comment'|trans }}: {{ arrival.comment }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="col">
+                            {% if departure %}
+                                <h4>{{ 'Departure'|trans }}</h4>
+                                <div>{{ 'Date'|trans }}: {{ departure.date|date("date.date"|trans) }}</div>
+                                <div>{{ 'Time'|trans }}: {{ departure.time|date("date.time"|trans) }}</div>
+                                <div>{{ 'Place'|trans }}: {{ departure.place }}</div>
+                                <div>{{ 'Information'|trans }}: {{ departure.information }}</div>
+                                <div>{{ 'Comment'|trans }}: {{ departure.comment }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
             {% else %}
-                <a class="btn btn-primary btn-lg" href="{{ path('registration') }}" role="button">{{ 'start'|trans }}</a>
+                <a class="btn btn-primary btn-lg" href="{{ path('registration') }}"
+                   role="button">{{ 'start'|trans }}</a>
             {% endif %}
             <hr class="my-4">
             <p>{{ 'greeting.contact_us'|trans }}</p>
@@ -23,7 +117,8 @@
                 Schützenstraße 4<br/>
                 99096 Erfurt<br/>
                 <a class="fa fa-phone" href="tel:0049-0361-3731647"> +49 (0) 361 373 16 47</a><br/>
-                <a class="fa fa-envelope" href="mailto:info@thueringer-judoverband.de"> info@thueringer-judoverband.de</a><br/>
+                <a class="fa fa-envelope" href="mailto:info@thueringer-judoverband.de">
+                    info@thueringer-judoverband.de</a><br/>
             </p>
         </div>
     </div>

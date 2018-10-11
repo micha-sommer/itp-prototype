@@ -440,6 +440,23 @@
         <source>su-we</source>
         <target>So-Mi</target>
       </trans-unit>
+      <trans-unit id="HlV4Lwh" resname="date.date">
+        <source>date.date</source>
+        <target>d.m.Y</target>
+      </trans-unit>
+      <trans-unit id="y4ILLDv" resname="date.time">
+        <source>date.time</source>
+        <target>H:i</target>
+      </trans-unit>
+      <trans-unit id="eUrbvGw" resname="Arrival">
+        <source>Arrival</source>
+        <target>Anreise</target>
+      </trans-unit>
+      <trans-unit id="g1aYOwc" resname="Departure">
+        <source>Departure</source>
+        <target>Abreise</target>
+      </trans-unit>
+
     </body>
   </file>
 </xliff>

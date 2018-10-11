@@ -15,7 +15,7 @@
     <div class="container">
         <div class="row">
             <div class="col">
-                <h4>Arrival</h4>
+                <h4>{{ 'Arrival'|trans }}</h4>
                 <input type="checkbox" id="arrivalCheckbox" name="arrivalCheckbox"
                        aria-labelledby="arrivalCheckboxLabel" {% if arrival_checked %} checked {% endif %} >
                 <label id="arrivalCheckboxLabel" for="arrivalCheckbox">{{ 'arrival_needed.transport'|trans }}</label>
@@ -25,7 +25,7 @@
 
             </div>
             <div class="col">
-                <h4>Departure</h4>
+                <h4>{{ 'Departure'|trans }}</h4>
                 <input type="checkbox" id="departureCheckbox" name="departureCheckbox"
                        aria-labelledby="departureCheckboxLabel" {% if departure_checked %} checked {% endif %}>
                 <label id="departureCheckboxLabel" for="departureCheckbox">{{ 'departure_needed.transport'|trans }}</label>
