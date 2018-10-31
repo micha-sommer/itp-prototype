@@ -59,10 +59,12 @@ class LoginController extends Controller
                 $hash = hash('sha256', $registration->getPassword(), false);
                 $uid = $registration->getId();
                 $root = 'http://localhost:8000';
-                $link = $root . '/reset_password/' . $uid . '/' . $hash;
+                $locale = $request->getLocale();
+
+                $link = $root . '/' . $locale . '/reset_password/' . $uid . '/' . $hash;
 
                 $message = (new \Swift_Message('Forgot your password'))
-                    ->setFrom('m.remmos@gmail.com')
+                    ->setFrom('anmeldung@thueringer-judoverband.de')
                     ->setTo($registration->getEmail())
                     ->setBody($this->renderView('emails/forgot_password.html.twig', [
                         'registration' => $registration,

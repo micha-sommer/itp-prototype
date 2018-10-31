@@ -2,14 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\OfficialRepository;
-use App\Entity\Registration;
 use App\Entity\Transport;
-use App\Repository\ContestantsRepository;
-use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\User\User;
 
 class WelcomeController extends AbstractController
 {
