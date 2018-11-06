@@ -19,6 +19,25 @@ class OfficialsRepository extends ServiceEntityRepository
         parent::__construct($registry, Official::class);
     }
 
+
+    /**
+     * @param \DateTimeInterface $after
+     * @param \DateTimeInterface|null $before
+     * @return Official[] Returns an array of ChangeSet objects
+     */
+    public function findByDate(\DateTimeInterface $after, \DateTimeInterface $before = null): array
+    {
+        if ($before === null) {
+            $before = new \DateTime();
+        }
+        return $this->createQueryBuilder('o')
+            ->andWhere('o.timestamp BETWEEN :from AND :to')
+            ->setParameter('from', $after)
+            ->setParameter('to', $before)
+            ->orderBy('o.timestamp', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 //    /**
 //     * @return Official[] Returns an array of Official objects
 //     */

@@ -19,6 +19,25 @@ class TransportRepository extends ServiceEntityRepository
         parent::__construct($registry, Transport::class);
     }
 
+    /**
+     * @param \DateTimeInterface $after
+     * @param \DateTimeInterface|null $before
+     * @return Transport[] Returns an array of ChangeSet objects
+     */
+    public function findByDate(\DateTimeInterface $after, \DateTimeInterface $before = null): array
+    {
+        if ($before === null) {
+            $before = new \DateTime();
+        }
+        return $this->createQueryBuilder('t')
+            ->andWhere('t.timestamp BETWEEN :from AND :to')
+            ->setParameter('from', $after)
+            ->setParameter('to', $before)
+            ->orderBy('t.timestamp', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
 //    /**
 //     * @return Transport[] Returns an array of Transport objects
 //     */

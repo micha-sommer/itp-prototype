@@ -55,7 +55,9 @@ class ParticipantsController extends Controller
             foreach ($officialsAfter->getList() as $official) {
                 if (false === \in_array($official, $officialsBefore, true)) {
                     $official->setRegistration($this->getUser());
+                    $official->setTimestamp(new \DateTime());
                     $em->persist($official);
+                    $em->flush();
                 }
             }
             $em->flush();
@@ -104,6 +106,7 @@ class ParticipantsController extends Controller
             foreach ($contestantsAfter->getList() as $contestant) {
                 if (false === \in_array($contestant, $contestantsBefore, true)) {
                     $contestant->setRegistration($this->getUser());
+                    $contestant->setTimestamp(new \DateTime());
                     $em->persist($contestant);
                 }
             }
@@ -161,6 +164,7 @@ class ParticipantsController extends Controller
 
             if ($departure_needed) {
                 if ($create_departure) {
+                    $departure->setTimestamp(new \DateTime());
                     $entityManager->persist($departure);
                     $create_departure = false;
                 }
@@ -179,6 +183,7 @@ class ParticipantsController extends Controller
 
             if ($arrival_needed) {
                 if ($create_arrival) {
+                    $arrival->setTimestamp(new \DateTime());
                     $entityManager->persist($arrival);
                     $create_arrival = false;
                 }

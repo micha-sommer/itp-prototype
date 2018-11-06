@@ -78,6 +78,11 @@ class Official
      */
     private $registration;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $timestamp;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -181,6 +186,18 @@ class Official
     public function setRegistration(?Registration $registration): self
     {
         $this->registration = $registration;
+
+        return $this;
+    }
+
+    public function getTimestamp(): ?\DateTimeInterface
+    {
+        return $this->timestamp;
+    }
+
+    public function setTimestamp(\DateTimeInterface $timestamp): self
+    {
+        $this->timestamp = $timestamp;
 
         return $this;
     }

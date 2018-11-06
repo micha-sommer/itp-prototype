@@ -19,6 +19,25 @@ class RegistrationsRepository extends ServiceEntityRepository
         parent::__construct($registry, Registration::class);
     }
 
+    /**
+     * @param \DateTimeInterface $after
+     * @param \DateTimeInterface|null $before
+     * @return Registration[] Returns an array of Registrtion objects
+     */
+    public function findByDate(\DateTimeInterface $after, \DateTimeInterface $before = null): array
+    {
+        if ($before === null) {
+            $before = new \DateTime();
+        }
+        return $this->createQueryBuilder('r')
+            ->andWhere('r.timestamp BETWEEN :from AND :to')
+            ->setParameter('from', $after)
+            ->setParameter('to', $before)
+            ->orderBy('r.timestamp', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
 //    /**
 //     * @return Registration[] Returns an array of Registration objects
 //     */
@@ -42,8 +61,7 @@ class RegistrationsRepository extends ServiceEntityRepository
             ->andWhere('o.email = :val')
             ->setParameter('val', $email)
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getOneOrNullResult();
     }
 
     public function findOneById($id): ?Registration
@@ -52,7 +70,6 @@ class RegistrationsRepository extends ServiceEntityRepository
             ->andWhere('o.id = :val')
             ->setParameter('val', $id)
             ->getQuery()
-            ->getOneOrNullResult()
-            ;
+            ->getOneOrNullResult();
     }
 }

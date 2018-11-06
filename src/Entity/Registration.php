@@ -97,6 +97,11 @@ class Registration implements UserInterface, \Serializable
      */
     private $comment;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $timestamp;
+
     public function __construct()
     {
         $this->transports = new ArrayCollection();
@@ -403,6 +408,18 @@ class Registration implements UserInterface, \Serializable
     public function setComment(?string $comment): self
     {
         $this->comment = $comment;
+
+        return $this;
+    }
+
+    public function getTimestamp(): ?\DateTimeInterface
+    {
+        return $this->timestamp;
+    }
+
+    public function setTimestamp(\DateTimeInterface $timestamp): self
+    {
+        $this->timestamp = $timestamp;
 
         return $this;
     }

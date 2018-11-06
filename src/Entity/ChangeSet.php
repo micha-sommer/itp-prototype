@@ -36,6 +36,11 @@ class ChangeSet
      */
     private $timestamp;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $name_id;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -85,6 +90,18 @@ class ChangeSet
     public function setTimestamp(\DateTimeInterface $timestamp): self
     {
         $this->timestamp = $timestamp;
+
+        return $this;
+    }
+
+    public function getNameId(): ?int
+    {
+        return $this->name_id;
+    }
+
+    public function setNameId(?int $name_id): self
+    {
+        $this->name_id = $name_id;
 
         return $this;
     }

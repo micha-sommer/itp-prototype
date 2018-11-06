@@ -19,6 +19,25 @@ class ContestantsRepository extends ServiceEntityRepository
         parent::__construct($registry, Contestant::class);
     }
 
+    /**
+     * @param \DateTimeInterface $after
+     * @param \DateTimeInterface|null $before
+     * @return Contestant[] Returns an array of ChangeSet objects
+     */
+    public function findByDate(\DateTimeInterface $after, \DateTimeInterface $before = null): array
+    {
+        if ($before === null) {
+            $before = new \DateTime();
+        }
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.timestamp BETWEEN :from AND :to')
+            ->setParameter('from', $after)
+            ->setParameter('to', $before)
+            ->orderBy('c.timestamp', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
 //    /**
 //     * @return Contestant[] Returns an array of Contestant objects
 //     */

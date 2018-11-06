@@ -52,6 +52,11 @@ class Transport
      */
     private $isArrival;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $timestamp;
+
     public function getId()
     {
         return $this->id;
@@ -137,6 +142,18 @@ class Transport
     public function setIsArrival(bool $isArrival): self
     {
         $this->isArrival = $isArrival;
+
+        return $this;
+    }
+
+    public function getTimestamp(): ?\DateTimeInterface
+    {
+        return $this->timestamp;
+    }
+
+    public function setTimestamp(\DateTimeInterface $timestamp): self
+    {
+        $this->timestamp = $timestamp;
 
         return $this;
     }

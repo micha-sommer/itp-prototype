@@ -19,22 +19,25 @@ class ChangeSetRepository extends ServiceEntityRepository
         parent::__construct($registry, ChangeSet::class);
     }
 
-//    /**
-//     * @return ChangeSet[] Returns an array of ChangeSet objects
-//     */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @param \DateTimeInterface $after
+     * @param \DateTimeInterface|null $before
+     * @return ChangeSet[] Returns an array of ChangeSet objects
+     */
+    public function findByDate(\DateTimeInterface $after, \DateTimeInterface $before = null): array
     {
+        if ($before === null) {
+            $before = new \DateTime();
+        }
         return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
+            ->andWhere('c.timestamp BETWEEN :from AND :to')
+            ->setParameter('from', $after)
+            ->setParameter('to', $before)
+            ->orderBy('c.timestamp', 'ASC')
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
-    */
+
 
     /*
     public function findOneBySomeField($value): ?ChangeSet

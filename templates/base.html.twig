@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Welcome!{% endblock %}</title>
-    <link rel="icon" type="image/x-icon" href="{{ asset('images/logo_black.svg') }}" />
     <link rel="stylesheet"
           href="https://bootswatch.com/4/flatly/bootstrap.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
@@ -13,6 +12,7 @@
         }
     </style>
     {% block stylesheets %}{% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('images/logo_back.svg') }}" />
 </head>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

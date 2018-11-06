@@ -462,6 +462,14 @@
         <source>Departure</source>
         <target>Departure</target>
       </trans-unit>
+      <trans-unit id="OBP9B5A" resname="From date">
+        <source>From date</source>
+        <target>From date</target>
+      </trans-unit>
+      <trans-unit id="SFNIiJ." resname="To date">
+        <source>To date</source>
+        <target>To date</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
