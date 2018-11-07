@@ -69,7 +69,7 @@ class LoginController extends Controller
 
                 $hash = hash('sha256', $registration->getPassword(), false);
                 $uid = $registration->getId();
-                $root = 'http://localhost:8000';
+                $root = 'https://www.anmeldung.thueringer-judoverband.de';
                 $locale = $request->getLocale();
 
                 $link = $root . '/' . $locale . '/reset_password/' . $uid . '/' . $hash;
