@@ -123,8 +123,6 @@ class RegistrationController extends AbstractController
 
         $re_hash = hash('sha256', $registration->getPassword(), false);
 
-        dump($hash);
-        dump($re_hash);
 
         if (!$registration || $hash !== $re_hash) {
             throw $this->createNotFoundException(

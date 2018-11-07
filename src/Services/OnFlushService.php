@@ -22,19 +22,14 @@ class OnFlushService
 
     public function onFlush(OnFlushEventArgs $eventArgs): void
     {
-        dump('Check');
         $em = $eventArgs->getEntityManager();
-        dump('em');
         $uow = $em->getUnitOfWork();
-        dump('uow');
         $oldErrorReporting = error_reporting(0);
 
         foreach ($uow->getScheduledEntityUpdates() as $entity) {
-            dump('Update');
             $changeSet = new ChangeSet();
             $changeSet->setTimestamp(new \DateTime());
             $changeSet->setType('UPDATE');
-            dump($uow->getEntityChangeSet($entity));
 
             switch (true) {
                 case $entity instanceof Official:
@@ -61,7 +56,6 @@ class OnFlushService
         }
 
         foreach ($uow->getScheduledEntityDeletions() as $entity) {
-            dump('Deletion');
             $changeSet = new ChangeSet();
             $changeSet->setTimestamp(new \DateTime());
             $changeSet->setType('DROP');
@@ -82,7 +76,6 @@ class OnFlushService
                     $changeSet->setName('unknown');
                     break;
             }
-            dump($entity->getId());
             $changeSet->setNameId($entity->getId());
             $changeSet->setChangeSet('');
             $em->persist($changeSet);
@@ -113,6 +106,5 @@ class OnFlushService
             $uow->computeChangeSet($md, $changeSet);
         }
         error_reporting($oldErrorReporting);
-        dump('End');
     }
 }

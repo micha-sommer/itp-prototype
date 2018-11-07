@@ -112,8 +112,6 @@ class LoginController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $after = $form->getData()['from_date'];
             $before = $form->getData()['to_date'];
-            dump($after);
-            dump($before);
             $newRegistrations = $registrationsRepository->findByDate($after, $before);
             $newOfficials = $officialsRepository->findByDate($after, $before);
             $newContestants = $contestantsRepository->findByDate($after, $before);
