@@ -19,7 +19,7 @@
                 <a class="btn btn-primary btn-lg" href="{{ path('transports') }}"
                    role="button">{{ 'menu.transport_edit'|trans }}</a>
                 <hr class="my-3">
-                <h3>{{ officials.count }} Officials</h3>
+                <h3>{{ 'title.officials'|trans }}: {{ officials.count }}</h3>
                 <table class="table table-striped">
                     <thead class="thead-dark">
                     <th class="text-center" scope="col">{{ 'first_name.participants'|trans }}</th>
@@ -49,7 +49,7 @@
                     </tbody>
                 </table>
                 <hr class="my-3">
-                <h3>{{ contestants.count }} Contestants</h3>
+                <h3>{{ 'title.contestants'|trans }}: {{ contestants.count }}</h3>
                 <table class="table table-striped">
                     <thead class="thead-dark">
                     <th class="text-center" scope="col">{{ 'first_name.participants'|trans }}</th>

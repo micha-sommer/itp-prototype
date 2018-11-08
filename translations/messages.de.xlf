@@ -368,6 +368,10 @@
         <source>+78</source>
         <target>+78</target>
       </trans-unit>
+      <trans-unit id="V9iN_TV" resname="camp_only">
+        <source>camp_only</source>
+        <target>nur ITC</target>
+      </trans-unit>
       <trans-unit id="SXjB0hz" resname="cadet">
         <source>cadet</source>
         <target>U18</target>
@@ -467,6 +471,10 @@
       <trans-unit id="SFNIiJ." resname="To date">
         <source>To date</source>
         <target>Bis</target>
+      </trans-unit>
+      <trans-unit id="aFNIiJ." resname="Country">
+        <source>Country</source>
+        <target>Nation</target>
       </trans-unit>
     </body>
   </file>

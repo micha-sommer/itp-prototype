@@ -370,6 +370,10 @@
         <source>+78</source>
         <target>+78</target>
       </trans-unit>
+      <trans-unit id="V9iN_TV" resname="camp_only">
+        <source>camp_only</source>
+        <target>camp only</target>
+      </trans-unit>
       <trans-unit id="SXjB0hz" resname="cadet">
         <source>cadet</source>
         <target>cadet</target>
@@ -420,7 +424,7 @@
       </trans-unit>
       <trans-unit id="BuoXqJg" resname="trainer">
         <source>trainer</source>
-        <target>trainer</target>
+        <target>coach</target>
       </trans-unit>
       <trans-unit id="3pm7Wlg" resname="physio/psychotherapist">
         <source>physio/psychotherapist</source>
@@ -469,6 +473,10 @@
       <trans-unit id="SFNIiJ." resname="To date">
         <source>To date</source>
         <target>To date</target>
+      </trans-unit>
+      <trans-unit id="aFNIiJ." resname="Country">
+        <source>Country</source>
+        <target>Country</target>
       </trans-unit>
     </body>
   </file>

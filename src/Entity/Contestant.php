@@ -48,7 +48,7 @@ class Contestant
     /**
      * @var WeightCategoryEnum
      *
-     * @ORM\Column(name="weight_category", type="string", length=0, nullable=false, columnDefinition="ENUM('-40','-44','-48','-52','-57','-63','-70','+70','-78','+78')")
+     * @ORM\Column(name="weight_category", type="string", length=0, nullable=false, columnDefinition="ENUM('-40','-44','-48','-52','-57','-63','-70','+70','-78','+78','camp_only')")
      */
     private $weightCategory;
 

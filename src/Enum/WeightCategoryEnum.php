@@ -22,6 +22,7 @@ class WeightCategoryEnum
     public const o70 = '+70';
     public const _78 = '-78';
     public const o78 = '+78';
+    public const camp_only = 'camp_only';
 
     public static function asArray(): array
     {
@@ -34,7 +35,8 @@ class WeightCategoryEnum
             self::_70 => self::_70,
             self::o70 => self::o70,
             self::_78 => self::_78,
-            self::o78 => self::o78];
+            self::o78 => self::o78,
+            self::camp_only => self::camp_only];
     }
 
 }
