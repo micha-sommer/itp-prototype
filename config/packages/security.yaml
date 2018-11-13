@@ -39,4 +39,5 @@ security:
         - { path: ^/(%app_locales%)/registration/edit, roles: ROLE_USER }
         - { path: ^/(%app_locales%)/registration/delete/, roles: ROLE_ADMIN }
         - { path: ^/(%app_locales%)/registration/change_password, roles: ROLE_USER }
+        - { path: ^/(%app_locales%)/registration/send_confirmation/, roles: ROLE_USER }
 #        - { path: ^/profile, roles: ROLE_USER }

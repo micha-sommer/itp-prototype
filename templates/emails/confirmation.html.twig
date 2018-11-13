@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale }}">
+<body>
+
+<h1>
+    ITP Registration
+</h1>
+<h2>
+    {{ 'headline_confirmation_mail'|trans }}{{ now|date("Y-m-d H:i:s"|trans) }}
+</h2>
+<div>
+    <h3>{{ 'title.registration_edit'|trans }}:</h3>
+    <table border="1">
+        <tr>
+            <td>{{ 'ID'|trans }}:</td>
+            <td>{{ registration.id }}</td>
+        </tr>
+        <tr>
+            <td>{{ 'Club'|trans }}:</td>
+            <td>{{ registration.club }} ({{ registration.country }})</td>
+        </tr>
+        <tr>
+            <td>{{ 'Contact Person'|trans }}:</td>
+            <td>{{ registration.firstName }} {{ registration.lastName }}</td>
+        </tr>
+        <tr>
+            <td>{{ 'Telephone'|trans }}:</td>
+            <td>{{ registration.telephone }}</td>
+        </tr>
+        <tr>
+            <td>{{ 'Email'|trans }}:</td>
+            <td>{{ registration.email }}</td>
+        </tr>
+        <tr>
+            <td>{{ 'Comment'|trans }}:</td>
+            <td>{{ registration.comment }}</td>
+        </tr>
+    </table>
+</div>
+<hr/>
+<div>
+    <h3>{{ 'title.officials'|trans }}:</h3>
+    <table border="1">
+        <thead>
+        <th>{{ 'first_name.participants'|trans }}</th>
+        <th>{{ 'last_name.participants'|trans }}</th>
+        <th>{{ 'role.participants'|trans }}</th>
+        <th>{{ 'gender.participants'|trans }}</th>
+        <th>{{ 'friday.participants'|trans }}</th>
+        <th>{{ 'saturnday.participants'|trans }}</th>
+        <th>{{ 'itc.participants'|trans }}</th>
+        </thead>
+        <tbody>
+        {% for official in registration.officials %}
+            <tr>
+                <td>{{ official.firstName }}</td>
+                <td>{{ official.lastName }}</td>
+                <td>{{ official.role }}</td>
+                <td>{{ official.gender }}</td>
+                <td>{% if official.friday %}yes{% else %}no{% endif %}</td>
+                <td>{% if official.saturday %}yes{% else %}no{% endif %}</td>
+                <td>{{ official.itc }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+<hr/>
+<div>
+    <h3>{{ 'title.contestants'|trans }}:</h3>
+    <table border="1">
+        <thead>
+        <th>{{ 'first_name.participants'|trans }}</th>
+        <th>{{ 'last_name.participants'|trans }}</th>
+        <th>{{ 'year.contestants'|trans }}</th>
+        <th>{{ 'weight.contestants'|trans }}</th>
+        <th>{{ 'age.contestants'|trans }}</th>
+        <th>{{ 'friday.participants'|trans }}</th>
+        <th>{{ 'saturnday.participants'|trans }}</th>
+        <th>{{ 'itc.participants'|trans }}</th>
+        </thead>
+        <tbody>
+        {% for contestant in registration.contestants %}
+            <tr>
+                <td>{{ contestant.firstName }}</td>
+                <td>{{ contestant.lastName }}</td>
+                <td>{{ contestant.year }}</td>
+                <td>{{ contestant.weightCategory }}</td>
+                <td>{{ contestant.ageCategory }}</td>
+                <td>{% if contestant.friday %}yes{% else %}no{% endif %}</td>
+                <td>{% if contestant.saturday %}yes{% else %}no{% endif %}</td>
+                <td>{{ contestant.itc }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+<hr/>
+<div>
+    <h3>{{ 'title.transport'|trans }}:</h3>
+    <table border="1">
+        <thead>
+        <th>
+            {{ 'Arrival'|trans }}
+        </th>
+        <th>
+            {{ 'Departure'|trans }}
+        </th>
+        </thead>
+        <tbody>
+        <tr>
+            <td>
+                {% if arrival %}
+                    <div>{{ 'Date'|trans }}: {{ arrival.date|date("date.date"|trans) }}</div>
+                    <div>{{ 'Time'|trans }}: {{ arrival.time|date("date.time"|trans) }}</div>
+                    <div>{{ 'Place'|trans }}: {{ arrival.place }}</div>
+                    <div>{{ 'Information'|trans }}: {{ arrival.information }}</div>
+                    <div>{{ 'Comment'|trans }}: {{ arrival.comment }}</div>
+                {% endif %}
+            </td>
+            <td>
+                {% if departure %}
+                    <div>{{ 'Date'|trans }}: {{ departure.date|date("date.date"|trans) }}</div>
+                    <div>{{ 'Time'|trans }}: {{ departure.time|date("date.time"|trans) }}</div>
+                    <div>{{ 'Place'|trans }}: {{ departure.place }}</div>
+                    <div>{{ 'Information'|trans }}: {{ departure.information }}</div>
+                    <div>{{ 'Comment'|trans }}: {{ departure.comment }}</div>
+                {% endif %}
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

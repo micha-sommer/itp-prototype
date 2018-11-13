@@ -8,18 +8,45 @@
             <h1 class="display-4">{{ 'greeting.welcome'|trans|raw }}</h1>
             <p class="lead">{{ 'greeting.top'|trans }}</p>
             <hr class="my-4">
-            <p>{{ 'greeting.middle'|trans }}</p>
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                <a class="btn btn-primary btn-lg" href="{{ path('edit_registration') }}"
-                   role="button">{{ 'menu.registration_edit'|trans }}</a>
-                <a class="btn btn-primary btn-lg" href="{{ path('officials') }}"
-                   role="button">{{ 'menu.officials_edit'|trans }}</a>
-                <a class="btn btn-primary btn-lg" href="{{ path('contestants') }}"
-                   role="button">{{ 'menu.contestants_edit'|trans }}</a>
-                <a class="btn btn-primary btn-lg" href="{{ path('transports') }}"
-                   role="button">{{ 'menu.transport_edit'|trans }}</a>
+                <div class="bg-light clearfix">
+                    <a class="btn btn-primary float-left"
+                       href="{{ path('confirm_registration', {'uid': registration.id}) }}">
+                        {{ 'Send Confirmation Mail'|trans }}</a>
+                    <p class="float-right">{{ "now"|date("Y-m-d H:i:s"|trans) }}</p>
+
+                </div>
+                <h3><a href="{{ path('edit_registration') }}">{{ 'menu.registration_edit'|trans }}:</a></h3>
+                <table class="table table-sm">
+                    <tr>
+                        <td>{{ 'ID'|trans }}:</td>
+                        <td>{{ registration.id }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ 'Club'|trans }}:</td>
+                        <td>{{ registration.club }} ({{ registration.country }})</td>
+                    </tr>
+                    <tr>
+                        <td>{{ 'Contact Person'|trans }}:</td>
+                        <td>{{ registration.firstName }} {{ registration.lastName }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ 'Telephone'|trans }}:</td>
+                        <td>{{ registration.telephone }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ 'Email'|trans }}:</td>
+                        <td>{{ registration.email }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ 'Comment'|trans }}:</td>
+                        <td>{{ registration.comment }}</td>
+                    </tr>
+                </table>
                 <hr class="my-3">
-                <h3>{{ 'title.officials'|trans }}: {{ officials.count }}</h3>
+                <h3>
+                    <a href="{{ path('officials') }}">{{ 'menu.officials_edit'|trans }}</a>: {{ registration.officials.count }}
+                </h3>
                 <table class="table table-striped">
                     <thead class="thead-dark">
                     <th class="text-center" scope="col">{{ 'first_name.participants'|trans }}</th>
@@ -35,7 +62,7 @@
                     <th class="text-center" scope="col"></th>
                     </thead>
                     <tbody>
-                    {% for official in officials %}
+                    {% for official in registration.officials %}
                         <tr>
                             <td>{{ official.firstName }}</td>
                             <td> {{ official.lastName }}</td>
@@ -49,7 +76,9 @@
                     </tbody>
                 </table>
                 <hr class="my-3">
-                <h3>{{ 'title.contestants'|trans }}: {{ contestants.count }}</h3>
+                <h3>
+                    <a href="{{ path('contestants') }}">{{ 'menu.contestants_edit'|trans }}</a>: {{ registration.contestants.count }}
+                </h3>
                 <table class="table table-striped">
                     <thead class="thead-dark">
                     <th class="text-center" scope="col">{{ 'first_name.participants'|trans }}</th>
@@ -66,7 +95,7 @@
                     <th class="text-center" scope="col"></th>
                     </thead>
                     <tbody>
-                    {% for contestant in contestants %}
+                    {% for contestant in registration.contestants %}
                         <tr>
                             <td>{{ contestant.firstName }}</td>
                             <td> {{ contestant.lastName }}</td>
@@ -81,7 +110,7 @@
                     </tbody>
                 </table>
                 <hr class="my-3"/>
-                <h3>{{ 'title.transport'|trans }}</h3>
+                <h3><a href="{{ path('transports') }}">{{ 'menu.transport_edit'|trans }}</a></h3>
                 <div class="container">
                     <div class="row">
                         <div class="col">

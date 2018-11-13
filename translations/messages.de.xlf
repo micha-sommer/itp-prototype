@@ -472,9 +472,29 @@
         <source>To date</source>
         <target>Bis</target>
       </trans-unit>
-      <trans-unit id="aFNIiJ." resname="Country">
+      <trans-unit id="cB0CHQj" resname="Country">
         <source>Country</source>
         <target>Nation</target>
+      </trans-unit>
+      <trans-unit id="6fRLO63" resname="Y-m-d H:i:s">
+        <source>Y-m-d H:i:s</source>
+        <target>Y-m-d H:i:s</target>
+      </trans-unit>
+      <trans-unit id="OEOXHc." resname="ID">
+        <source>ID</source>
+        <target>ID</target>
+      </trans-unit>
+      <trans-unit id="Lv8mD_V" resname="Contact Person">
+        <source>Contact Person</source>
+        <target>Kontaktperson</target>
+      </trans-unit>
+      <trans-unit id="WFNUhVB" resname="Send Confirmation Mail">
+        <source>Send Confirmation Mail</source>
+        <target>Bestätigungsmail senden</target>
+      </trans-unit>
+      <trans-unit id="x.FyDpm" resname="headline_confirmation_mail">
+        <source>headline_confirmation_mail</source>
+        <target>Bestätigung der Registrierung vom </target>
       </trans-unit>
     </body>
   </file>

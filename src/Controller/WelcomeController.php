@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Registration;
 use App\Entity\Transport;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,14 +16,10 @@ class WelcomeController extends AbstractController
     {
         $registration = $this->getUser();
 
-        $officials = null;
-        $contestants = null;
         $arrival = null;
         $departure = null;
 
         if ($registration) {
-            $officials = $registration->getOfficials();
-            $contestants = $registration->getContestants();
             $arrival = $registration->getTransports()->filter(function (Transport $transport) {
                     return $transport->getIsArrival();
                 })->first();
@@ -32,8 +29,7 @@ class WelcomeController extends AbstractController
         }
 
         return $this->render('welcome/index.html.twig', [
-            'officials' => $officials,
-            'contestants' => $contestants,
+            'registration' => $registration,
             'arrival' => $arrival,
             'departure' => $departure,
         ]);

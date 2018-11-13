@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Registration;
+use App\Entity\Transport;
 use App\Form\RegistrationType;
 use App\Form\ResetPasswordType;
 use App\Form\ChangePasswordType;
@@ -61,7 +62,7 @@ class RegistrationController extends AbstractController
      * @param RegistrationsRepository $registrationsRepository
      * @return Response
      */
-    public function delete($uid, RegistrationsRepository $registrationsRepository) : Response
+    public function delete($uid, RegistrationsRepository $registrationsRepository): Response
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -70,6 +71,49 @@ class RegistrationController extends AbstractController
         $em->flush();
 
         return $this->redirectToRoute('admin');
+    }
+
+    /**
+     * @Route("/registration/send_confirmation/{uid}", name="confirm_registration")
+     * @param RegistrationsRepository $registrationsRepository
+     * @param $uid
+     * @param \Swift_Mailer $mailer
+     * @return Response
+     */
+    public function confirm(RegistrationsRepository $registrationsRepository, $uid, \Swift_Mailer $mailer): Response
+    {
+        $registration = $registrationsRepository->findOneById($uid);
+
+        if (!$registration) {
+            throw $this->createNotFoundException(
+                'No registration found for id ' . $uid
+            );
+        }
+
+        $arrival = $registration->getTransports()->filter(function (Transport $transport) {
+            return $transport->getIsArrival();
+        })->first();
+        $departure = $registration->getTransports()->filter(function (Transport $transport) {
+            return !$transport->getIsArrival();
+        })->first();
+
+        $now = new \DateTime();
+
+        $message = (new \Swift_Message())
+            ->setSubject('Registration Confirmation for ' .$registration->getClub().'('.$now->format('Y-m-d H:i:s').')')
+            ->setFrom(['anmeldung@thueringer-judoverband.de' => 'ITP Registration'])
+            ->setTo($this->getUser()->getEmail())
+            ->setCc(['anmeldung@thueringer-judoverband.de' => 'ITP Registration'])
+            ->setBody($this->renderView('emails/confirmation.html.twig', [
+                'registration' => $registration,
+                'now' => $now,
+                'arrival' => $arrival,
+                'departure' => $departure,
+            ]), 'text/html');
+
+        $mailer->send($message);
+
+        return $this->redirectToRoute('welcome');
     }
 
     /**
