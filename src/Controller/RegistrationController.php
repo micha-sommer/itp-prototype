@@ -7,6 +7,7 @@ use App\Form\RegistrationType;
 use App\Form\ResetPasswordType;
 use App\Form\ChangePasswordType;
 use App\Repository\RegistrationsRepository;
+use Psr\Container\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -52,6 +53,23 @@ class RegistrationController extends AbstractController
         return $this->render('registration/registration_edit.html.twig', [
             'my_form' => $form->createView()
         ]);
+    }
+
+    /**
+     * @Route("/registration/delete/{uid}", name="delete_registration")
+     * @param $uid
+     * @param RegistrationsRepository $registrationsRepository
+     * @return Response
+     */
+    public function delete($uid, RegistrationsRepository $registrationsRepository) : Response
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $registration = $registrationsRepository->findOneById($uid);
+        $em->remove($registration);
+        $em->flush();
+
+        return $this->redirectToRoute('admin');
     }
 
     /**

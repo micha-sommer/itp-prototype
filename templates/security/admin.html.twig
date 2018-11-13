@@ -14,38 +14,38 @@
         <table class="table table-striped">
             <thead class="thead-dark">
             <tr>
+                <th scope="col">ID</th>
+                <th scope="col"></th>
+                <th scope="col">Club</th>
                 <th scope="col">User Email</th>
+                <th scope="col">O</th>
+                <th scope="col">C</th>
                 <th scope="col">Action</th>
-                <th scope="col">Rechnung</th>
             </tr>
             </thead>
             <tbody>
             {% for registration in registrations %}
                 <tr>
+                    <td>{{ registration.id }}</td>
+                    <td>{{ registration.country }}</td>
+                    <td>{{ registration.club }}</td>
                     <td>{{ registration.email }}</td>
+                    <td>{{ registration.officials.count }}</td>
+                    <td>{{ registration.contestants.count }}</td>
                     <td>
                         <a class="btn btn-info" role="button"
                            data-toggle="tooltip" data-placement="top"
                            title="Login as user"
                            href="{{ path('welcome', {'_switch_user': registration.email }) }}">
-                            Login
+                            Angucken
                         </a>
-                    </td>
-                    <td>
-                        <button class="btn btn-info" data-clipboard-action="copy" data-clipboard-text="{{ registration.invoice }}">
-                            <i class="fa fa-clipboard"></i>
-
-                            <!--img src="{{ asset('images/clippy.svg') }}" width="32" alt="Copy to clipboard"-->
-                        </button>
+                        <a class="btn btn-danger" href="javascript:void(0)"
+                           onclick="if(confirm('Are you sure you want to delete {{ registration.club }} and all its registered officials, contestants, and transport ?')){window.location='{{ path('delete_registration', {'uid': registration.id}) }}';}"><i
+                                    class="fa fa-trash" aria-hidden="true"></i></a>
                     </td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
     </div>
-    <script src="https://unpkg.com/clipboard@2.0.0/dist/clipboard.min.js"></script>
-    <script>
-        new ClipboardJS('.btn');
-    </script>
-
 {% endblock %}
