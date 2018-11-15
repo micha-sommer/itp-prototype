@@ -38,6 +38,18 @@ class ContestantsRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findAllById($array): array
+    {
+        $query = $this->createQueryBuilder('c');
+
+        foreach ($array as $id) {
+            $query->orWhere('c.id = ' . $id);
+        }
+
+        return $query->getQuery()
+            ->getResult();
+    }
+
 //    /**
 //     * @return Contestant[] Returns an array of Contestant objects
 //     */

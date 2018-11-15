@@ -38,6 +38,18 @@ class TransportRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findAllById($array): array
+    {
+        $query = $this->createQueryBuilder('t');
+
+        foreach ($array as $id) {
+            $query->orWhere('t.id = ' . $id);
+        }
+
+        return $query->getQuery()
+            ->getResult();
+    }
+
 //    /**
 //     * @return Transport[] Returns an array of Transport objects
 //     */
