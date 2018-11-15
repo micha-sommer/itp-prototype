@@ -7,6 +7,9 @@
         <div class="jumbotron">
             <h1 class="display-4">{{ 'greeting.welcome'|trans|raw }}</h1>
             <p class="lead">{{ 'greeting.top'|trans }}</p>
+            {% if date(end_date, 'Europe/Paris') < date('now', 'Europe/Paris') %}
+            <div class="alert alert-danger" role="alert">Registration period ended</div>
+            {% endif %}
             <hr class="my-4">
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                 <div class="bg-light clearfix">
