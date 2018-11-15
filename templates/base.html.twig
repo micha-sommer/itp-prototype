@@ -5,14 +5,15 @@
     <title>{% block title %}Welcome!{% endblock %}</title>
     <link rel="stylesheet"
           href="https://bootswatch.com/4/flatly/bootstrap.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+          integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <style>
         .navbar-brand {
             padding: 0px; /* firefox bug fix */
         }
     </style>
     {% block stylesheets %}{% endblock %}
-    <link rel="icon" type="image/x-icon" href="{{ asset('images/logo_back.svg') }}" />
+    <link rel="icon" type="image/x-icon" href="{{ asset('images/logo_back.svg') }}"/>
 </head>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -30,26 +31,8 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <a class="navbar-brand" href="{{ path('welcome') }}">
-        <img src="{{ asset('images/logo_white.svg') }}" width="100" alt="ITP">
+        <img src="{{ asset('images/logo_white.svg') }}" width="100" alt="ITP"/>
     </a>
-    <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-           aria-expanded="false" id="locales">
-            <span class="fa fa-globe"></span>
-            <span class="sr-only">{{ 'menu.choose_language'|trans }}</span>
-        </a>
-        <ul class="dropdown-menu locales" role="menu" aria-labelledby="locales">
-            {% for locale in locales() %}
-                <li {% if app.request.locale == locale.code %}
-                    aria-checked="true" class="active"
-                {% else %}
-                    aria-checked="false"
-                {% endif %} role="menuitem"><a
-                            href="{{ path(app.request.get('_route', 'blog_index'), app.request.get('_route_params', [])|merge({_locale: locale.code})) }}">{{ locale.name|capitalize }}</a>
-                </li>
-            {% endfor %}
-        </ul>
-    </li>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -88,7 +71,8 @@
 
             <li class="nav-item">
                 {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
-                    <a class="nav-link badge-warning" href="{{ path('admin', {'_switch_user': '_exit'}) }}">{{ 'menu.logout'|trans }}</a>
+                    <a class="nav-link badge-warning"
+                       href="{{ path('admin', {'_switch_user': '_exit'}) }}">{{ 'menu.logout'|trans }}</a>
                 {% elseif is_granted('IS_AUTHENTICATED_FULLY') %}
                     <a class="nav-link" href="{{ path('logout') }}">{{ 'menu.logout'|trans }}</a>
                 {% else %}
@@ -97,6 +81,16 @@
             </li>
         </ul>
         <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="navbar-brand" href="{{ path(app.request.get('_route', 'welcome'), {_locale: 'de'}) }}">
+                    <img src="{{ asset('images/Flag_of_Germany.svg') }}" height="15" alt="DEU"/>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="navbar-brand" href="{{ path(app.request.get('_route', 'welcome'), {_locale: 'en'}) }}">
+                    <img src="{{ asset('images/Flag_of_the_United_Kingdom.svg') }}" height="15" alt="ENG"/>
+                </a>
+            </li>
             <li class="nav-item">
                 {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                     <span class="navbar-text">
