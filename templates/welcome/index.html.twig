@@ -8,7 +8,7 @@
             <h1 class="display-4">{{ 'greeting.welcome'|trans|raw }}</h1>
             <p class="lead">{{ 'greeting.top'|trans }}</p>
             {% if date(end_date, 'Europe/Paris') < date('now', 'Europe/Paris') %}
-            <div class="alert alert-danger" role="alert">Registration period ended</div>
+                <div class="alert alert-danger" role="alert">Registration period ended</div>
             {% endif %}
             <hr class="my-4">
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
@@ -142,6 +142,50 @@
             {% else %}
                 <a class="btn btn-primary btn-lg" href="{{ path('registration') }}"
                    role="button">{{ 'start'|trans }}</a>
+                <hr class="my-4">
+                <p><strong>{{ competitorsCount }}</strong> already registered athletes from <strong>{{ clubsCount }}</strong> clubs in the
+                    following categories:
+                </p>
+                <table class="table table-striped">
+                    <thead class="thead-dark">
+                    <th class="text-center" scope="col">{{ 'age.contestants'|trans }}</th>
+                    <th class="text-center" scope="col">{{ '-40'|trans }}</th>
+                    <th class="text-center" scope="col">{{ '-44'|trans }}</th>
+                    <th class="text-center" scope="col">{{ '-52'|trans }}</th>
+                    <th class="text-center" scope="col">{{ '-57'|trans }}</th>
+                    <th class="text-center" scope="col">{{ '-63'|trans }}</th>
+                    <th class="text-center" scope="col">{{ '-70'|trans }}</th>
+                    <th class="text-center" scope="col">{{ '+70'|trans }}</th>
+                    <th class="text-center" scope="col">{{ '-78'|trans }}</th>
+                    <th class="text-center" scope="col">{{ '+78'|trans }}</th>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class="text-center" scope="col">{{ 'cadet'|trans }}</td>
+                        <td class="text-center" scope="col">{{ categories[0] }}</td>
+                        <td class="text-center" scope="col">{{ categories[1] }}</td>
+                        <td class="text-center" scope="col">{{ categories[2] }}</td>
+                        <td class="text-center" scope="col">{{ categories[3] }}</td>
+                        <td class="text-center" scope="col">{{ categories[4] }}</td>
+                        <td class="text-center" scope="col">{{ categories[5] }}</td>
+                        <td class="text-center" scope="col">{{ categories[6] }}</td>
+                        <td class="text-center table-danger" scope="col">{{ categories[7] }}</td>
+                        <td class="text-center table-danger" scope="col">{{ categories[8] }}</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center" scope="col">{{ 'junior'|trans }}</td>
+                        <td class="text-center table-danger" scope="col">{{ categories[10] }}</td>
+                        <td class="text-center" scope="col">{{ categories[11] }}</td>
+                        <td class="text-center" scope="col">{{ categories[12] }}</td>
+                        <td class="text-center" scope="col">{{ categories[13] }}</td>
+                        <td class="text-center" scope="col">{{ categories[14] }}</td>
+                        <td class="text-center" scope="col">{{ categories[15] }}</td>
+                        <td class="text-center" scope="col">{{ categories[16] }}</td>
+                        <td class="text-center" scope="col">{{ categories[17] }}</td>
+                        <td class="text-center" scope="col">{{ categories[18] }}</td>
+                    </tr>
+                    </tbody>
+                </table>
             {% endif %}
             <hr class="my-4">
             <p>{{ 'greeting.contact_us'|trans }}</p>
