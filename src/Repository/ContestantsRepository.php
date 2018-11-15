@@ -3,6 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\Contestant;
+use App\Enum\AgeCategoryEnum;
+use App\Enum\WeightCategoryEnum;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -51,6 +53,18 @@ class ContestantsRepository extends ServiceEntityRepository
     }
 
 //    /**
+
+    public function countCategory(string $weight, string $age): int
+    {
+        return $this->createQueryBuilder('c')
+            ->select('COUNT(c.id)')
+            ->where('c.weightCategory = :weight')
+            ->andWhere('c.ageCategory = :age')
+            ->setParameter('weight',$weight)
+            ->setParameter('age',$age)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
 //     * @return Contestant[] Returns an array of Contestant objects
 //     */
     /*
