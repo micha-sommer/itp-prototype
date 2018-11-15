@@ -37,6 +37,7 @@
         </div>
     </div>
 
+    {% if is_granted('ROLE_PREVIOUS_ADMIN') or date(end_date, 'Europe/Paris') > date('now', 'Europe/Paris') %}
     <div class="bg-light clearfix">
         <input class="btn btn-secondary btn-lg float-right" name="back" type="submit" data-toggle="tooltip" data-placement="top"
                title="{{ 'generic.tooltip.save'|trans }}" value="{{ 'generic.save_and_back'|trans }}"/>
@@ -46,6 +47,7 @@
            data-toggle="tooltip" data-placement="top"
            title="Undo all changes since the last save.">{{ 'generic.cancel'|trans}}</a>
     </div>
+    {% endif %}
 
     {{ form_end(arrival_form) }}
     {{ form_end(departure_form) }}

@@ -38,6 +38,18 @@ class RegistrationsRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findAllById($array): array
+    {
+        $query = $this->createQueryBuilder('r');
+
+        foreach ($array as $id) {
+            $query->orWhere('r.id = ' . $id);
+        }
+
+        return $query->getQuery()
+            ->getResult();
+    }
+
 //    /**
 //     * @return Registration[] Returns an array of Registration objects
 //     */

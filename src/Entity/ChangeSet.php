@@ -17,7 +17,7 @@ class ChangeSet
     private $id;
 
     /**
-     * @ORM\Column(name="change_set", type="string", length=255)
+     * @ORM\Column(name="change_set", type="text", nullable=true)
      */
     private $changeSet;
 
@@ -40,6 +40,8 @@ class ChangeSet
      * @ORM\Column(type="integer", nullable=true)
      */
     private $name_id;
+
+    private $club;
 
     public function getId(): ?int
     {
@@ -104,5 +106,21 @@ class ChangeSet
         $this->name_id = $name_id;
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getClub() :string
+    {
+        return $this->club;
+    }
+
+    /**
+     * @param string $club
+     */
+    public function setClub(string $club): void
+    {
+        $this->club = $club;
     }
 }

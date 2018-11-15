@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TransportRepository")
  */
-class Transport
+class Transport implements \JsonSerializable
 {
     /**
      * @ORM\Id()
@@ -156,5 +156,10 @@ class Transport
         $this->timestamp = $timestamp;
 
         return $this;
+    }
+
+    public function jsonSerialize()
+    {
+        return get_object_vars($this);
     }
 }

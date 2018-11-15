@@ -12,6 +12,7 @@
     <h3>New Registrations:</h3>
     <table border="1">
         <thead>
+        <th>{{ 'When'|trans }}</th>
         <th>{{ 'Club'|trans }}</th>
         <th>{{ 'First name'|trans }}</th>
         <th>{{ 'Last name'|trans }}</th>
@@ -22,6 +23,7 @@
         <tbody>
         {% for newRegistration in newRegistrations %}
             <tr>
+                <td>{{ newRegistration.timestamp|date("Y-m-d H:i:s"|trans) }}</td>
                 <td>{{ newRegistration.club }}</td>
                 <td>{{ newRegistration.firstName }}</td>
                 <td>{{ newRegistration.lastName }}</td>
@@ -38,6 +40,7 @@
     <h3>New Officials:</h3>
     <table border="1">
         <thead>
+        <th>{{ 'When'|trans }}</th>
         <th>{{ 'Club'|trans }}</th>
         <th>{{ 'first_name.participants'|trans }}</th>
         <th>{{ 'last_name.participants'|trans }}</th>
@@ -50,6 +53,7 @@
         <tbody>
         {% for newOfficial in newOfficials %}
             <tr>
+                <td>{{ newOfficial.timestamp|date("Y-m-d H:i:s"|trans) }}</td>
                 <td>{{ newOfficial.registration.club }}</td>
                 <td>{{ newOfficial.firstName }}</td>
                 <td>{{ newOfficial.lastName }}</td>
@@ -68,6 +72,7 @@
     <h3>New Contestant:</h3>
     <table border="1">
         <thead>
+        <th>{{ 'When'|trans }}</th>
         <th>{{ 'Club'|trans }}</th>
         <th>{{ 'first_name.participants'|trans }}</th>
         <th>{{ 'last_name.participants'|trans }}</th>
@@ -81,6 +86,7 @@
         <tbody>
         {% for newContestant in newContestants %}
             <tr>
+                <td>{{ newContestant.timestamp|date("Y-m-d H:i:s"|trans) }}</td>
                 <td>{{ newContestant.registration.club }}</td>
                 <td>{{ newContestant.firstName }}</td>
                 <td>{{ newContestant.lastName }}</td>
@@ -100,6 +106,7 @@
     <h3>New Transport:</h3>
     <table border="1">
         <thead>
+        <th>{{ 'When'|trans }}</th>
         <th>{{ 'Club'|trans }}</th>
         <th>{{ 'Date'|trans }}</th>
         <th>{{ 'Time'|trans }}</th>
@@ -111,6 +118,7 @@
         <tbody>
         {% for newTransport in newTransports %}
             <tr>
+                <td>{{ newTransport.timestamp|date("Y-m-d H:i:s"|trans) }}</td>
                 <td>{{ newTransport.registration.club }}</td>
                 <td>{{ newTransport.date|date("date.date"|trans) }}</td>
                 <td>{{ newTransport.time|date("date.time"|trans) }}</td>
@@ -125,8 +133,100 @@
 </div>
 <hr/>
 <div>
+    <h3>Removed Officials:</h3>
+    <table border="1">
+        <thead>
+        <th>{{ 'When'|trans }}</th>
+        <th>{{ 'Club'|trans }}</th>
+        <th>{{ 'first_name.participants'|trans }}</th>
+        <th>{{ 'last_name.participants'|trans }}</th>
+        <th>{{ 'role.participants'|trans }}</th>
+        <th>{{ 'gender.participants'|trans }}</th>
+        <th>{{ 'friday.participants'|trans }}</th>
+        <th>{{ 'saturnday.participants'|trans }}</th>
+        <th>{{ 'itc.participants'|trans }}</th>
+        </thead>
+        {% for drop in droppedOfficials %}
+            <tr>
+                <td>{{ drop.timestamp|date("Y-m-d H:i:s"|trans) }}</td>
+                <td>{{ drop.registration.club }}</td>
+                <td>{{ drop.firstName }}</td>
+                <td>{{ drop.lastName }}</td>
+                <td>{{ drop.role }}</td>
+                <td>{{ drop.gender }}</td>
+                <td>{% if drop.friday %}yes{% else %}no{% endif %}</td>
+                <td>{% if drop.saturday %}yes{% else %}no{% endif %}</td>
+                <td>{{ drop.itc }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+<div>
+    <h3>Removed Contestants:</h3>
+    <table border="1">
+        <thead>
+        <th>{{ 'When'|trans }}</th>
+        <th>{{ 'Club'|trans }}</th>
+        <th>{{ 'first_name.participants'|trans }}</th>
+        <th>{{ 'last_name.participants'|trans }}</th>
+        <th>{{ 'year.contestants'|trans }}</th>
+        <th>{{ 'weight.contestants'|trans }}</th>
+        <th>{{ 'age.contestants'|trans }}</th>
+        <th>{{ 'friday.participants'|trans }}</th>
+        <th>{{ 'saturnday.participants'|trans }}</th>
+        <th>{{ 'itc.participants'|trans }}</th>
+        </thead>
+        {% for drop in droppedContestants %}
+            <tr>
+                <td>{{ drop.timestamp|date("Y-m-d H:i:s"|trans) }}</td>
+                <td>{{ drop.registration.club }}</td>
+                <td>{{ drop.firstName }}</td>
+                <td>{{ drop.lastName }}</td>
+                <td>{{ drop.year }}</td>
+                <td>{{ drop.weightCategory }}</td>
+                <td>{{ drop.ageCategory }}</td>
+                <td>{% if drop.friday %}yes{% else %}no{% endif %}</td>
+                <td>{% if drop.saturday %}yes{% else %}no{% endif %}</td>
+                <td>{{ drop.itc }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+<div>
+    <h3>Removed Transports:</h3>
+    <table border="1">
+        <thead>
+        <th>{{ 'When'|trans }}</th>
+        <th>{{ 'Club'|trans }}</th>
+        <th>{{ 'Date'|trans }}</th>
+        <th>{{ 'Time'|trans }}</th>
+        <th>{{ 'Place'|trans }}</th>
+        <th>{{ 'Information'|trans }}</th>
+        <th>{{ 'Comment'|trans }}</th>
+        <th>{{ 'Arrival'|trans }}</th>
+        </thead>
+        {% for drop in droppedTransports %}
+            <tr>
+                <td>{{ drop.timestamp|date("Y-m-d H:i:s"|trans) }}</td>
+                <td>{{ drop.registration.club }}</td>
+                <td>{{ drop.date|date("date.date"|trans) }}</td>
+                <td>{{ drop.time|date("date.time"|trans) }}</td>
+                <td>{{ drop.place }}</td>
+                <td>{{ drop.information }}</td>
+                <td>{{ drop.comment }}</td>
+                <td>{% if drop.isArrival %}yes{% else %}no{% endif %}</td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+<div>
+    <h3>Other Changes:</h3>
     {% for change in changes %}
+        <div>
+            [{{ change.timestamp|date("Y-m-d H:i:s"|trans) }}]:{{ change.club }} has changed {{ change.name }} {{ change.changeSet }}
+        </div>
     {% endfor %}
 </div>
+
 </body>
 </html>

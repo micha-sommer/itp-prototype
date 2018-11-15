@@ -38,6 +38,19 @@ class OfficialsRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findAllById($array): array
+    {
+        $query = $this->createQueryBuilder('o');
+
+        foreach ($array as $id) {
+            $query->orWhere('o.id = ' . $id);
+        }
+
+        return $query->getQuery()
+            ->getResult();
+    }
+
 //    /**
 //     * @return Official[] Returns an array of Official objects
 //     */

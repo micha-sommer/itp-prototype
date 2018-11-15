@@ -77,7 +77,10 @@ class OnFlushService
                     break;
             }
             $changeSet->setNameId($entity->getId());
-            $changeSet->setChangeSet('');
+            $json = \json_encode($entity);
+            //$club = '"club":"'.$entity->getRegistration()->getClub().'",';
+            //$json = substr_replace($json, $club, 1, 0);
+            $changeSet->setChangeSet($json);
             $em->persist($changeSet);
             $md = $em->getClassMetadata(\get_class($changeSet));
             $uow->computeChangeSet($md, $changeSet);
