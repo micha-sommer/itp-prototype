@@ -36,8 +36,6 @@ class WelcomeController extends AbstractController
             }
         }
 
-        dump($categories);
-
         if ($registration) {
             $arrival = $registration->getTransports()->filter(function (Transport $transport) {
                 return $transport->getIsArrival();
