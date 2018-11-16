@@ -143,46 +143,57 @@
                 <a class="btn btn-primary btn-lg" href="{{ path('registration') }}"
                    role="button">{{ 'start'|trans }}</a>
                 <hr class="my-4">
-                <p><strong>{{ competitorsCount }}</strong> already registered athletes from <strong>{{ clubsCount }}</strong> clubs in the
+                <p><strong>{{ categories['total'] }}</strong> already registered athletes from
+                    <strong>{{ clubsCount }}</strong> clubs in the
                     following categories:
                 </p>
                 <table class="table table-striped">
                     <thead class="thead-dark">
-                    <th class="text-center" scope="col">{{ 'age.contestants'|trans }}</th>
+                    <th class="text-center" scope="col">{{ 'cadet'|trans }}</th>
                     <th class="text-center" scope="col">{{ '-40'|trans }}</th>
                     <th class="text-center" scope="col">{{ '-44'|trans }}</th>
+                    <th class="text-center" scope="col">{{ '-48'|trans }}</th>
                     <th class="text-center" scope="col">{{ '-52'|trans }}</th>
                     <th class="text-center" scope="col">{{ '-57'|trans }}</th>
                     <th class="text-center" scope="col">{{ '-63'|trans }}</th>
                     <th class="text-center" scope="col">{{ '-70'|trans }}</th>
                     <th class="text-center" scope="col">{{ '+70'|trans }}</th>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class="text-center" scope="col">{{ categories['cadet']['total'] }}</td>
+                        <td class="text-center" scope="col">{{ categories['cadet']['-40'] }}</td>
+                        <td class="text-center" scope="col">{{ categories['cadet']['-44'] }}</td>
+                        <td class="text-center" scope="col">{{ categories['cadet']['-48'] }}</td>
+                        <td class="text-center" scope="col">{{ categories['cadet']['-52'] }}</td>
+                        <td class="text-center" scope="col">{{ categories['cadet']['-57'] }}</td>
+                        <td class="text-center" scope="col">{{ categories['cadet']['-63'] }}</td>
+                        <td class="text-center" scope="col">{{ categories['cadet']['-70'] }}</td>
+                        <td class="text-center" scope="col">{{ categories['cadet']['+70'] }}</td>
+                    </tr>
+                    </tbody>
+                    <thead class="thead-dark">
+                    <th class="text-center" scope="col">{{ 'junior'|trans }}</th>
+                    <th class="text-center" scope="col">{{ '-44'|trans }}</th>
+                    <th class="text-center" scope="col">{{ '-48'|trans }}</th>
+                    <th class="text-center" scope="col">{{ '-52'|trans }}</th>
+                    <th class="text-center" scope="col">{{ '-57'|trans }}</th>
+                    <th class="text-center" scope="col">{{ '-63'|trans }}</th>
+                    <th class="text-center" scope="col">{{ '-70'|trans }}</th>
                     <th class="text-center" scope="col">{{ '-78'|trans }}</th>
                     <th class="text-center" scope="col">{{ '+78'|trans }}</th>
                     </thead>
                     <tbody>
                     <tr>
-                        <td class="text-center" scope="col">{{ 'cadet'|trans }}</td>
-                        <td class="text-center" scope="col">{{ categories[0] }}</td>
-                        <td class="text-center" scope="col">{{ categories[1] }}</td>
-                        <td class="text-center" scope="col">{{ categories[2] }}</td>
-                        <td class="text-center" scope="col">{{ categories[3] }}</td>
-                        <td class="text-center" scope="col">{{ categories[4] }}</td>
-                        <td class="text-center" scope="col">{{ categories[5] }}</td>
-                        <td class="text-center" scope="col">{{ categories[6] }}</td>
-                        <td class="text-center table-danger" scope="col">{{ categories[7] }}</td>
-                        <td class="text-center table-danger" scope="col">{{ categories[8] }}</td>
-                    </tr>
-                    <tr>
-                        <td class="text-center" scope="col">{{ 'junior'|trans }}</td>
-                        <td class="text-center table-danger" scope="col">{{ categories[10] }}</td>
-                        <td class="text-center" scope="col">{{ categories[11] }}</td>
-                        <td class="text-center" scope="col">{{ categories[12] }}</td>
-                        <td class="text-center" scope="col">{{ categories[13] }}</td>
-                        <td class="text-center" scope="col">{{ categories[14] }}</td>
-                        <td class="text-center" scope="col">{{ categories[15] }}</td>
-                        <td class="text-center" scope="col">{{ categories[16] }}</td>
-                        <td class="text-center" scope="col">{{ categories[17] }}</td>
-                        <td class="text-center" scope="col">{{ categories[18] }}</td>
+                        <td class="text-center" scope="col">{{ categories['junior']['total'] }}</td>
+                        <td class="text-center" scope="col">{{ categories['junior']['-44'] }}</td>
+                        <td class="text-center" scope="col">{{ categories['junior']['-48'] }}</td>
+                        <td class="text-center" scope="col">{{ categories['junior']['-52'] }}</td>
+                        <td class="text-center" scope="col">{{ categories['junior']['-57'] }}</td>
+                        <td class="text-center" scope="col">{{ categories['junior']['-63'] }}</td>
+                        <td class="text-center" scope="col">{{ categories['junior']['-70'] }}</td>
+                        <td class="text-center" scope="col">{{ categories['junior']['-78'] }}</td>
+                        <td class="text-center" scope="col">{{ categories['junior']['+78'] }}</td>
                     </tr>
                     </tbody>
                 </table>

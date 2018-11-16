@@ -52,17 +52,23 @@ class ContestantsRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-//    /**
-
-    public function countCategory(string $weight, string $age): int
+    public function countCategory(string $age = null, string $weight = null): int
     {
-        return $this->createQueryBuilder('c')
-            ->select('COUNT(c.id)')
-            ->where('c.weightCategory = :weight')
-            ->andWhere('c.ageCategory = :age')
-            ->setParameter('weight',$weight)
-            ->setParameter('age',$age)
-            ->getQuery()
+        $query = $this->createQueryBuilder('c')
+            ->select('COUNT(c.id)');
+        if ($weight) {
+            $query->where('c.weightCategory = :weight')
+                ->setParameter('weight', $weight);
+        } else {
+            $query->where('c.weightCategory != :weight')
+                ->setParameter('weight', WeightCategoryEnum::camp_only);
+        }
+        if ($age) {
+            $query->andWhere('c.ageCategory = :age')
+                ->setParameter('age', $age);
+        }
+
+        return $query->getQuery()
             ->getSingleScalarResult();
     }
 //     * @return Contestant[] Returns an array of Contestant objects
