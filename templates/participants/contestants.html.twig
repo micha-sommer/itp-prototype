@@ -115,8 +115,8 @@
             <tr class="contestant">
                 <td class="text-center">{{ form_widget(contestant.first_name) }}</td>
                 <td class="text-center">{{ form_widget(contestant.last_name) }}</td>
-                <td class="text-center">{{ form_widget(contestant.year) }}</td>
-                <td class="text-center">{{ form_widget(contestant.weight_category) }}</td>
+                <td class="text-center">{{ form_widget(contestant.year) }}{{ form_errors(contestant.year) }}</td>
+                <td class="text-center">{{ form_widget(contestant.weight_category) }}{{ form_errors(contestant.weight_category) }}</td>
                 <td class="text-center">{{ form_widget(contestant.age_category) }}</td>
                 <td class="text-center">{{ form_widget(contestant.friday) }}</td>
                 <td class="text-center">{{ form_widget(contestant.saturday) }}</td>
@@ -143,5 +143,6 @@
         </div>
     {% endif %}
 
+    {{ form_errors(form) }}
     {{ form_end(form) }}
 {% endblock %}

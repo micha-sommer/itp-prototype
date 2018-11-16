@@ -198,11 +198,11 @@
       </trans-unit>
       <trans-unit id="t5OL_rt" resname="friday.participants">
         <source>friday.participants</source>
-        <target>Friday</target>
+        <target>Fr</target>
       </trans-unit>
       <trans-unit id="1L1j9vp" resname="saturnday.participants">
         <source>saturnday.participants</source>
-        <target>Saturnday</target>
+        <target>Sa</target>
       </trans-unit>
       <trans-unit id="PiPfUwC" resname="itc.tooltip.participants">
         <source>itc.tooltip.participants</source>
@@ -256,15 +256,15 @@
       </trans-unit>
       <trans-unit id="z9B0kcc" resname="year.contestants">
         <source>year.contestants</source>
-        <target>Year</target>
+        <target>Yea of birth</target>
       </trans-unit>
       <trans-unit id="t18npXH" resname="weight.contestants">
         <source>weight.contestants</source>
-        <target>Weight</target>
+        <target>Weight category</target>
       </trans-unit>
       <trans-unit id="mrtW4Zp" resname="age.contestants">
         <source>age.contestants</source>
-        <target>Age</target>
+        <target>Age category</target>
       </trans-unit>
       <trans-unit id="cugf6qi" resname="Club">
         <source>Club</source>
@@ -329,6 +329,10 @@
       <trans-unit id="d0Wbm5Q" resname="2003">
         <source>2003</source>
         <target>2003</target>
+      </trans-unit>
+      <trans-unit id="SDAp1SY" resname="2004">
+        <source>2004</source>
+        <target>2004</target>
       </trans-unit>
       <trans-unit id="JG9suQH" resname="-40">
         <source>-40</source>
@@ -497,6 +501,18 @@
       <trans-unit id="x.FyDpm" resname="headline_confirmation_mail">
         <source>headline_confirmation_mail</source>
         <target>Registration confirmation from </target>
+      </trans-unit>
+      <trans-unit id="z5x6oko" resname="When">
+        <source>When</source>
+        <target>When</target>
+      </trans-unit>
+      <trans-unit id="a5x6oko" resname="validYearAgeCombination">
+        <source>Year of birth does not match age category.</source>
+        <target>Year of birth does not match age category.</target>
+      </trans-unit>
+      <trans-unit id="a5x6dko" resname="validAgeWeightCombination">
+        <source>Year of birth does not match age category.</source>
+        <target>Year of birth does not match age category.</target>
       </trans-unit>
     </body>
   </file>

@@ -6,6 +6,7 @@ use App\Enum\AgeCategoryEnum;
 use App\Enum\WeightCategoryEnum;
 use App\Enum\ITCEnum;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Contestant
@@ -214,6 +215,30 @@ class Contestant implements \JsonSerializable
         $this->timestamp = $timestamp;
 
         return $this;
+    }
+
+    /**
+     * @Assert\IsTrue(message="Year of birth does not match age category.", payload="year")
+     * @return bool
+     */
+    public function isValidYearAgeCombination(): bool
+    {
+        if ($this->weightCategory === WeightCategoryEnum::camp_only) {
+            return true;
+        }
+        return \in_array($this->year, AgeCategoryEnum::getYears($this->ageCategory), true);
+    }
+
+    /**
+     * @Assert\IsTrue(message="Age category does not match weight category.", payload="weight")
+     * @return bool
+     */
+    public function isValidAgeWeightCombination(): bool
+    {
+        if ($this->weightCategory === WeightCategoryEnum::camp_only) {
+            return true;
+        }
+        return \in_array($this->weightCategory, AgeCategoryEnum::getWeightCategories($this->ageCategory), true);
     }
 
     /**

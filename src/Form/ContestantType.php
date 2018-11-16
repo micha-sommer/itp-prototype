@@ -22,12 +22,12 @@ class ContestantType extends AbstractType
             ->add('last_name', TextType::class)
             ->add('year', ChoiceType::class, [
                 'choices' => [
-                    1998 => '1998',
                     1999 => '1999',
                     2000 => '2000',
                     2001 => '2001',
                     2002 => '2002',
                     2003 => '2003',
+                    2004 => '2004',
                 ]
             ])
             ->add('weight_category', ChoiceType::class, [
@@ -46,7 +46,8 @@ class ContestantType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Contestant::class
+            'data_class' => Contestant::class,
+            'error_bubbling' => false,
         ]);
     }
 }
