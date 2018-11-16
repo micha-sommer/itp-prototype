@@ -196,11 +196,11 @@
       </trans-unit>
       <trans-unit id="t5OL_rt" resname="friday.participants">
         <source>friday.participants</source>
-        <target>Freitag</target>
+        <target>Fr</target>
       </trans-unit>
       <trans-unit id="1L1j9vp" resname="saturnday.participants">
         <source>saturnday.participants</source>
-        <target>Samstag</target>
+        <target>Sa</target>
       </trans-unit>
       <trans-unit id="PiPfUwC" resname="itc.tooltip.participants">
         <source>itc.tooltip.participants</source>
@@ -262,7 +262,7 @@
       </trans-unit>
       <trans-unit id="mrtW4Zp" resname="age.contestants">
         <source>age.contestants</source>
-        <target>Alter</target>
+        <target>Altersklasse</target>
       </trans-unit>
       <trans-unit id="cugf6qi" resname="Club">
         <source>Club</source>
@@ -327,6 +327,10 @@
       <trans-unit id="d0Wbm5Q" resname="2003">
         <source>2003</source>
         <target>2003</target>
+      </trans-unit>
+      <trans-unit id="SDAp1SY" resname="2004">
+        <source>2004</source>
+        <target>2004</target>
       </trans-unit>
       <trans-unit id="JG9suQH" resname="-40">
         <source>-40</source>
@@ -494,7 +498,31 @@
       </trans-unit>
       <trans-unit id="x.FyDpm" resname="headline_confirmation_mail">
         <source>headline_confirmation_mail</source>
-        <target>Bestätigung der Registrierung vom </target>
+        <target>Bestätigung der Registrierung vom</target>
+      </trans-unit>
+      <trans-unit id="z5x6oko" resname="When">
+        <source>When</source>
+        <target>Wann</target>
+      </trans-unit>
+      <trans-unit id="DBcyzZ5" resname="validYearAgeCombination">
+        <source>validYearAgeCombination</source>
+        <target>Geburtsjahr passt nicht zur Altersklasse.</target>
+      </trans-unit>
+      <trans-unit id="6clNZNU" resname="validAgeWeightCombination">
+        <source>validAgeWeightCombination</source>
+        <target>Altersklasse passt nicht zur Gewichtsklasse.</target>
+      </trans-unit>
+      <trans-unit id="owE8CCx" resname="invitation">
+        <source>invitation</source>
+        <target>Ausschreibung</target>
+      </trans-unit>
+      <trans-unit id="nf9dsiF" resname="about_us">
+        <source>about_us</source>
+        <target>Impressum</target>
+      </trans-unit>
+      <trans-unit id="pMxrwBq" resname="privacy">
+        <source>privacy</source>
+        <target>Datenschutz</target>
       </trans-unit>
     </body>
   </file>

@@ -14,9 +14,12 @@ use App\Repository\ContestantsRepository;
 use App\Repository\OfficialsRepository;
 use App\Repository\TransportRepository;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class ParticipantsController extends Controller
 {
@@ -75,9 +78,11 @@ class ParticipantsController extends Controller
      * @Route("/contestants", name="contestants")
      * @param Request $request
      * @param ContestantsRepository $contestantsRepository
+     * @param ValidatorInterface $validator
+     * @param TranslatorInterface $translator
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function contestants(Request $request, ContestantsRepository $contestantsRepository): \Symfony\Component\HttpFoundation\Response
+    public function contestants(Request $request, ContestantsRepository $contestantsRepository, ValidatorInterface $validator, TranslatorInterface $translator): \Symfony\Component\HttpFoundation\Response
     {
         $contestantsBefore = $contestantsRepository->findBy(['registration' => $this->getUser()]);
 
@@ -89,6 +94,8 @@ class ParticipantsController extends Controller
         }
 
         $form = $this->createForm(ContestantsListType::class, $contestantsAfter);
+
+        $errors = [];
 
         $form->handleRequest($request);
 
@@ -104,14 +111,29 @@ class ParticipantsController extends Controller
 
             // check for added contestants
             foreach ($contestantsAfter->getList() as $contestant) {
-                if (false === \in_array($contestant, $contestantsBefore, true)) {
-                    $contestant->setRegistration($this->getUser());
-                    $contestant->setTimestamp(new \DateTime());
-                    $em->persist($contestant);
-                }
+
+                $errors = $validator->validate($contestant);
+                if (\count($errors) > 0) {
+                    $em->detach($contestant);
+                    $forms = $form->get('list');
+                    foreach ($errors as $error) {
+                        if ($error->getPropertyPath() === 'validYearAgeCombination') {
+                            $formErrorInvalidAge = new FormError($translator->trans($error->getPropertyPath()));
+                            $forms[$contestantsAfter->getList()->indexOf($contestant)]->get('year')->addError($formErrorInvalidAge);
+                        } elseif ($error->getPropertyPath() === 'validAgeWeightCombination') {
+                            $formErrorInvalidAge = new FormError($translator->trans($error->getPropertyPath()));
+                            $forms[$contestantsAfter->getList()->indexOf($contestant)]->get('weight_category')->addError($formErrorInvalidAge);
+                        }
+                    }
+                } else
+                    if (false === \in_array($contestant, $contestantsBefore, true)) {
+                        $contestant->setRegistration($this->getUser());
+                        $contestant->setTimestamp(new \DateTime());
+                        $em->persist($contestant);
+                    }
             }
             $em->flush();
-            if ($request->request->get('back')) {
+            if (\count($errors) <= 0 && $request->request->get('back')) {
                 return $this->redirectToRoute('welcome');
             }
         }
