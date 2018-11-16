@@ -506,13 +506,25 @@
         <source>When</source>
         <target>When</target>
       </trans-unit>
-      <trans-unit id="a5x6oko" resname="validYearAgeCombination">
-        <source>Year of birth does not match age category.</source>
+      <trans-unit id="DBcyzZ5" resname="validYearAgeCombination">
+        <source>validYearAgeCombination</source>
         <target>Year of birth does not match age category.</target>
       </trans-unit>
-      <trans-unit id="a5x6dko" resname="validAgeWeightCombination">
-        <source>Year of birth does not match age category.</source>
+      <trans-unit id="6clNZNU" resname="validAgeWeightCombination">
+        <source>validAgeWeightCombination</source>
         <target>Year of birth does not match age category.</target>
+      </trans-unit>
+      <trans-unit id="owE8CCx" resname="invitation">
+        <source>invitation</source>
+        <target>invitation</target>
+      </trans-unit>
+      <trans-unit id="nf9dsiF" resname="about_us">
+        <source>about_us</source>
+        <target>about us</target>
+      </trans-unit>
+      <trans-unit id="pMxrwBq" resname="privacy">
+        <source>privacy</source>
+        <target>privacy</target>
       </trans-unit>
     </body>
   </file>
