@@ -15,6 +15,7 @@ class WeightCategoryEnum
 
     public const _40 = '-40';
     public const _44 = '-44';
+    public const _48 = '-48';
     public const _52 = '-52';
     public const _57 = '-57';
     public const _63 = '-63';
@@ -29,6 +30,7 @@ class WeightCategoryEnum
         return [
             self::_40 => self::_40,
             self::_44 => self::_44,
+            self::_48 => self::_48,
             self::_52 => self::_52,
             self::_57 => self::_57,
             self::_63 => self::_63,

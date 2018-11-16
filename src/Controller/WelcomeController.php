@@ -26,15 +26,16 @@ class WelcomeController extends AbstractController
         $departure = null;
 
         $registrationCount = \count($registrationsRepository->findAll());
-        $competitorsCount = 0;
-        $categories = [];
+
         foreach (AgeCategoryEnum::asArray() as $age) {
             foreach (WeightCategoryEnum::asArray() as $weight) {
-                $categoryCount = $contestantsRepository->countCategory($weight, $age);
-                $competitorsCount += $categoryCount;
-                $categories[] = $categoryCount;
+                $categories[$age][$weight] = $contestantsRepository->countCategory($age, $weight);
             }
         }
+
+        $categories[AgeCategoryEnum::cadet]['total'] = $contestantsRepository->countCategory(AgeCategoryEnum::cadet);
+        $categories[AgeCategoryEnum::junior]['total'] = $contestantsRepository->countCategory(AgeCategoryEnum::junior);
+        $categories['total'] = $contestantsRepository->countCategory();
 
         if ($registration) {
             $arrival = $registration->getTransports()->filter(function (Transport $transport) {
@@ -50,7 +51,6 @@ class WelcomeController extends AbstractController
             'arrival' => $arrival,
             'departure' => $departure,
             'clubsCount' => $registrationCount,
-            'competitorsCount' => $competitorsCount,
             'categories' => $categories,
         ]);
     }
