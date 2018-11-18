@@ -95,7 +95,7 @@ class ParticipantsController extends Controller
 
         $form = $this->createForm(ContestantsListType::class, $contestantsAfter);
 
-        $errors = [];
+        $has_errors = false;
 
         $form->handleRequest($request);
 
@@ -115,6 +115,7 @@ class ParticipantsController extends Controller
                 $errors = $validator->validate($contestant);
                 if (\count($errors) > 0) {
                     $em->detach($contestant);
+                    $has_errors = true;
                     $forms = $form->get('list');
                     foreach ($errors as $error) {
                         if ($error->getPropertyPath() === 'validYearAgeCombination') {
@@ -123,6 +124,9 @@ class ParticipantsController extends Controller
                         } elseif ($error->getPropertyPath() === 'validAgeWeightCombination') {
                             $formErrorInvalidAge = new FormError($translator->trans($error->getPropertyPath()));
                             $forms[$contestantsAfter->getList()->indexOf($contestant)]->get('weight_category')->addError($formErrorInvalidAge);
+                        } elseif ($error->getPropertyPath() === 'validCamp') {
+                            $formErrorInvalidAge = new FormError($translator->trans($error->getPropertyPath()));
+                            $forms[$contestantsAfter->getList()->indexOf($contestant)]->get('itc')->addError($formErrorInvalidAge);
                         }
                     }
                 } else
@@ -133,7 +137,7 @@ class ParticipantsController extends Controller
                     }
             }
             $em->flush();
-            if (\count($errors) <= 0 && $request->request->get('back')) {
+            if (!$has_errors && $request->request->get('back')) {
                 return $this->redirectToRoute('welcome');
             }
         }
