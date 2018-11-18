@@ -71,6 +71,22 @@ class ContestantsRepository extends ServiceEntityRepository
         return $query->getQuery()
             ->getSingleScalarResult();
     }
+
+    public function countCamp(string $age = null): int
+    {
+        $query = $this->createQueryBuilder('c')
+            ->select('COUNT(c.id)')
+            ->where('c.itc != :itc')
+            ->setParameter('itc', 'no');
+        if ($age) {
+            $query->andWhere('c.ageCategory = :age')
+                ->setParameter('age', $age);
+        }
+
+        return $query->getQuery()
+            ->getSingleScalarResult();
+    }
+
 //     * @return Contestant[] Returns an array of Contestant objects
 //     */
     /*

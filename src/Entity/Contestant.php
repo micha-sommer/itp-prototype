@@ -241,6 +241,16 @@ class Contestant implements \JsonSerializable
         return \in_array($this->weightCategory, AgeCategoryEnum::getWeightCategories($this->ageCategory), true);
     }
 
+
+    /**
+     * @Assert\IsTrue(message="Camp only doesn't make sense without participating in ITC.", payload="camp")
+     * @return bool
+     */
+    public function isValidCamp(): bool
+    {
+        return !($this->weightCategory === WeightCategoryEnum::camp_only && $this->itc === 'no');
+    }
+
     /**
      * Specify data which should be serialized to JSON
      * @link https://php.net/manual/en/jsonserializable.jsonserialize.php

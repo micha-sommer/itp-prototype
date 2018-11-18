@@ -34,8 +34,11 @@ class WelcomeController extends AbstractController
         }
 
         $categories[AgeCategoryEnum::cadet]['total'] = $contestantsRepository->countCategory(AgeCategoryEnum::cadet);
+        $categories[AgeCategoryEnum::cadet]['camp'] = $contestantsRepository->countCamp(AgeCategoryEnum::cadet);
         $categories[AgeCategoryEnum::junior]['total'] = $contestantsRepository->countCategory(AgeCategoryEnum::junior);
+        $categories[AgeCategoryEnum::junior]['camp'] = $contestantsRepository->countCamp(AgeCategoryEnum::junior);
         $categories['total'] = $contestantsRepository->countCategory();
+        $categories['camp'] = $contestantsRepository->countCamp();
 
         if ($registration) {
             $arrival = $registration->getTransports()->filter(function (Transport $transport) {

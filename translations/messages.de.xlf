@@ -512,6 +512,10 @@
         <source>validAgeWeightCombination</source>
         <target>Altersklasse passt nicht zur Gewichtsklasse.</target>
       </trans-unit>
+      <trans-unit id="8XZC4q8" resname="validCamp">
+        <source>validCamp</source>
+        <target>Bitte auch die Teilnahme am ITC auswählen!</target>
+      </trans-unit>
       <trans-unit id="owE8CCx" resname="invitation">
         <source>invitation</source>
         <target>Ausschreibung</target>
@@ -523,6 +527,11 @@
       <trans-unit id="pMxrwBq" resname="privacy">
         <source>privacy</source>
         <target>Datenschutz</target>
+      </trans-unit>
+      <trans-unit id="ozXArmr" resname="overview.contestants">
+        <source>overview.contestants</source>
+        <target><![CDATA[<strong>%total%</strong> registrierte Wettkämpferinnen von
+          <strong>%clubs%</strong> Vereinen/Nationen in den folgenden Klassen:]]></target>
       </trans-unit>
     </body>
   </file>

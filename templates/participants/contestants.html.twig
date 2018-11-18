@@ -120,7 +120,7 @@
                 <td class="text-center">{{ form_widget(contestant.age_category) }}</td>
                 <td class="text-center">{{ form_widget(contestant.friday) }}</td>
                 <td class="text-center">{{ form_widget(contestant.saturday) }}</td>
-                <td class="text-center">{{ form_widget(contestant.itc) }}</td>
+                <td class="text-center">{{ form_widget(contestant.itc) }} {{ form_errors(contestant.itc) }}</td>
             </tr>
         {% endfor %}
         </tbody>
