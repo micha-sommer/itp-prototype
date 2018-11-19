@@ -62,7 +62,7 @@
                         title="{{ 'itc.tooltip.participants'|trans }}">
                         <ins>{{ 'itc.participants'|trans }}</ins>
                     </th>
-                    <th class="text-center" scope="col"></th>
+                    <th class="text-center" scope="col">{{ 'Comment'|trans }}</th>
                     </thead>
                     <tbody>
                     {% for official in registration.officials %}
@@ -74,6 +74,7 @@
                             <td class="text-center"><input type="checkbox" disabled {% if official.friday %}checked{% endif %}/></td>
                             <td class="text-center"><input type="checkbox" disabled {% if official.saturday %}checked{% endif %}/></td>
                             <td class="text-center">{{ official.itc }} </td>
+                            <td class="text-center">{{ official.comment }} </td>
                         </tr>
                     {% endfor %}
                     </tbody>
@@ -95,7 +96,7 @@
                         title="{{ 'itc.tooltip.participants'|trans }}" scope="col">
                         <ins>{{ 'itc.participants'|trans }}</ins>
                     </th>
-                    <th class="text-center" scope="col"></th>
+                    <th class="text-center" scope="col">{{ 'Comment'|trans }}</th>
                     </thead>
                     <tbody>
                     {% for contestant in registration.contestants %}
@@ -108,6 +109,7 @@
                             <td class="text-center"><input type="checkbox" disabled {% if contestant.friday %}checked{% endif %}/></td>
                             <td class="text-center"><input type="checkbox" disabled {% if contestant.saturday %}checked{% endif %}/></td>
                             <td class="text-center">{{ contestant.itc }} </td>
+                            <td class="text-center">{{ contestant.comment }} </td>
                         </tr>
                     {% endfor %}
                     </tbody>

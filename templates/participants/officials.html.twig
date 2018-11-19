@@ -159,7 +159,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="exampleModalLabel">Add a comment</h4>
+                    <h4 class="modal-title" id="exampleModalLabel">{{ 'Add a comment'|trans }}</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                                 aria-hidden="true">&times;</span></button>
                 </div>
@@ -167,6 +167,7 @@
                     <form>
                         <div class="form-group">
                             <label for="comment-textarea" class="col-form-label">{{ 'Comment'|trans }}:</label>
+                            <label class="modal-body-name"></label>
                             <textarea class="form-control" id="comment-textarea"></textarea>
                         </div>
                     </form>
@@ -191,7 +192,7 @@
             // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
             // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
             var modal = $(this);
-            modal.find('.modal-title').text('Comment for ' + name);
+            modal.find('.modal-body-name').text(name);
             modal.find('.modal-body textarea').val(comment);
             modal.find('.modal-body textarea').attr('data-id', id);
         });

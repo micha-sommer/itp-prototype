@@ -536,6 +536,10 @@
           <strong>%clubs%</strong> clubs in the
           following categories:]]></target>
       </trans-unit>
+      <trans-unit id="ZqryVx2" resname="Add a comment">
+        <source>Add a comment</source>
+        <target>Add a comment</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

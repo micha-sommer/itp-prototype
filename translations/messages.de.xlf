@@ -533,6 +533,10 @@
         <target><![CDATA[<strong>%total%</strong> registrierte Wettkämpferinnen von
           <strong>%clubs%</strong> Vereinen/Nationen in den folgenden Klassen:]]></target>
       </trans-unit>
+      <trans-unit id="ZqryVx2" resname="Add a comment">
+        <source>Add a comment</source>
+        <target>Kommentar hinzufügen</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
