@@ -10,6 +10,7 @@
 
         var $collectionHolder;
         var $removeFormButton = $('<td><button class="btn btn-danger" type="button"><i class="fa fa-trash" aria-hidden="true"></i></button></td>');
+        var $commentFormButton = $('<td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#commentModal" data-comment=""><i class="fa fa-comment"></i></button></td>');
 
         jQuery(document).ready(function () {
 
@@ -18,6 +19,7 @@
 
             // add a delete link to all of the existing tag form li elements
             $collectionHolder.find('tr').each(function () {
+                addTagFormCommentLink($(this));
                 addTagFormDeleteLink($(this));
             });
 
@@ -33,8 +35,6 @@
                 // add a new tag form (see code block below)
                 addTagForm($collectionHolder, $addTagLink);
             });
-
-
         });
 
         function addTagForm($collectionHolder) {
@@ -54,9 +54,25 @@
             // Display the form in the page in an li, before the "Add a tag" link td
             var $newFormTr = $('<tr class="table-warning official"></tr>').append(newForm);
 
+            addTagFormCommentLink($newFormTr);
             addTagFormDeleteLink($newFormTr);
 
             $collectionHolder.append($newFormTr);
+        }
+
+        function addTagFormCommentLink($tagFormTr) {
+            var $thisCommentFormButton = $commentFormButton.clone();
+
+            var $commentHiddenType = $tagFormTr.find('input.hidden-comment');
+            var $button = $thisCommentFormButton.find('button');
+            $button.attr('data-comment', $commentHiddenType.attr('value'));
+            $button.attr('data-name', $tagFormTr.find('input.hidden-first_name').attr('value') + ' ' + $tagFormTr.find('input.hidden-last_name').attr('value'));
+            $button.attr('data-id', $commentHiddenType.attr('id'));
+
+            if ($button.attr('data-comment') !== '')
+                $button.removeClass('btn-primary').addClass('btn-success');
+
+            $tagFormTr.append($thisCommentFormButton);
         }
 
         function addTagFormDeleteLink($tagFormTr) {
@@ -98,6 +114,7 @@
                 <ins>{{ 'itc.participants'|trans }}</ins>
             </th>
             <th class="text-center" scope="col"></th>
+            <th class="text-center" scope="col"></th>
         </tr>
         </thead>
         <tbody class="officials" data-prototype="
@@ -107,7 +124,7 @@
                 {{ '<td class="text-center">'|e }}{{ form_widget(form.list.vars.prototype.gender)|e }}      {{ '</td>'|e }}
                 {{ '<td class="text-center">'|e }}{{ form_widget(form.list.vars.prototype.friday)|e }}      {{ '</td>'|e }}
                 {{ '<td class="text-center">'|e }}{{ form_widget(form.list.vars.prototype.saturday)|e }}    {{ '</td>'|e }}
-                {{ '<td class="text-center">'|e }}{{ form_widget(form.list.vars.prototype.itc)|e }}         {{ '</td>'|e }}
+                {{ '<td class="text-center">'|e }}{{ form_widget(form.list.vars.prototype.itc)|e }} {{ form_widget(form.list.vars.prototype.comment)|e }} {{ '</td>'|e }}
             ">
         {% for official in form.list %}
             <tr class="official">
@@ -117,7 +134,7 @@
                 <td class="text-center">{{ form_widget(official.gender) }}</td>
                 <td class="text-center">{{ form_widget(official.friday) }}</td>
                 <td class="text-center">{{ form_widget(official.saturday) }}</td>
-                <td class="text-center">{{ form_widget(official.itc) }}</td>
+                <td class="text-center">{{ form_widget(official.itc) }} {{ form_widget(official.comment) }} {{ form_row(form._token) }}</td>
             </tr>
         {% endfor %}
         </tbody>
@@ -137,5 +154,58 @@
                title="{{ 'generic.tooltip.cancel'|trans }}">{{ 'generic.cancel'|trans }}</a>
         </div>
     {% endif %}
+
+    <div class="modal fade" id="commentModal" tabindex="-1" role="dialog" aria-labelledby="commentModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="exampleModalLabel">Add a comment</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="comment-textarea" class="col-form-label">{{ 'Comment'|trans }}:</label>
+                            <textarea class="form-control" id="comment-textarea"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button id="modal-save" onclick="save()" type="button" class="btn btn-primary" data-dismiss="modal">
+                        Save
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     {{ form_end(form) }}
+
+    <script>
+        $('#commentModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget); // Button that triggered the modal
+            var comment = button.attr('data-comment'); // Extract info from data-* attributes
+            var id = button.data('id'); // Extract info from data-* attributes
+            var name = button.data('name'); // Extract info from data-* attributes
+            // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+            // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+            var modal = $(this);
+            modal.find('.modal-title').text('Comment for ' + name);
+            modal.find('.modal-body textarea').val(comment);
+            modal.find('.modal-body textarea').attr('data-id', id);
+        });
+
+        function save() {
+            var comment = $("#comment-textarea").val();
+            var id = $("#comment-textarea").attr('data-id');
+
+            var $button = $('button[data-id=' + id + ']');
+            if ($button.attr('data-comment') !== comment)
+                $button.removeClass('btn-primary').addClass('btn-warning');
+            $button.attr('data-comment', comment);
+            $('#' + id).attr('value', comment);
+        }
+
+    </script>
 {% endblock %}
