@@ -83,6 +83,11 @@ class Official implements \JsonSerializable
      */
     private $timestamp;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $comment;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -212,5 +217,17 @@ class Official implements \JsonSerializable
     public function jsonSerialize()
     {
         return get_object_vars($this);
+    }
+
+    public function getComment(): ?string
+    {
+        return $this->comment;
+    }
+
+    public function setComment(?string $comment): self
+    {
+        $this->comment = $comment;
+
+        return $this;
     }
 }
