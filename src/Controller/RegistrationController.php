@@ -245,6 +245,7 @@ class RegistrationController extends AbstractController
             'first_options' => ['label' => 'Password', 'always_empty' => true],
             'second_options' => ['label' => 'Repeat Password', 'always_empty' => true],
         ]);
+	$form->get('country')->setData('DE');
 
         // 2) handle the submit (will only happen on POST)
         $form->handleRequest($request);
