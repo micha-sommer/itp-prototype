@@ -256,7 +256,7 @@
       </trans-unit>
       <trans-unit id="z9B0kcc" resname="year.contestants">
         <source>year.contestants</source>
-        <target>Yea of birth</target>
+        <target>Year of birth</target>
       </trans-unit>
       <trans-unit id="t18npXH" resname="weight.contestants">
         <source>weight.contestants</source>
