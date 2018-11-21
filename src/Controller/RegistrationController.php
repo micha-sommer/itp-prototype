@@ -60,6 +60,7 @@ class RegistrationController extends AbstractController
      * @param $uid
      * @param RegistrationsRepository $registrationsRepository
      * @return Response
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function delete($uid, RegistrationsRepository $registrationsRepository): Response
     {
@@ -78,6 +79,7 @@ class RegistrationController extends AbstractController
      * @param $uid
      * @param \Swift_Mailer $mailer
      * @return Response
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function confirm(RegistrationsRepository $registrationsRepository, $uid, \Swift_Mailer $mailer): Response
     {
@@ -176,6 +178,7 @@ class RegistrationController extends AbstractController
      * @param RegistrationsRepository $registrationsRepository
      * @param UserPasswordEncoderInterface $passwordEncoder
      * @return Response
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public
     function resetPassword(Request $request, $uid, $hash, RegistrationsRepository $registrationsRepository, UserPasswordEncoderInterface $passwordEncoder): Response

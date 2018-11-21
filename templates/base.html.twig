@@ -81,10 +81,10 @@
             </li>
         </ul>
     </div>
-    <a class="navbar-brand ml-auto" href="{{ path(app.request.get('_route', 'welcome'), {_locale: 'de'}) }}">
+    <a class="navbar-brand ml-auto" href="{{ path(app.request.get('_route',  'welcome'), app.request.attributes.get('_route_params')|merge({_locale:'de'})) }}">
         <img src="{{ asset('images/Flag_of_Germany.svg') }}" height="15" alt="DEU"/>
     </a>
-    <a class="navbar-brand" href="{{ path(app.request.get('_route', 'welcome'), {_locale: 'en'}) }}">
+    <a class="navbar-brand" href="{{ path(app.request.get('_route',  'welcome'), app.request.attributes.get('_route_params')|merge({_locale:'en'})) }}">
         <img src="{{ asset('images/Flag_of_the_United_Kingdom.svg') }}" height="15" alt="ENG"/>
     </a>
     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
