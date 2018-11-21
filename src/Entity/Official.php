@@ -3,7 +3,8 @@
 namespace App\Entity;
 
 use App\Enum\GenderEnum;
-use App\Enum\RooleEnum;
+use App\Enum\ITCEnum;
+use App\Enum\RoleEnum;
 use Doctrine\ORM\Mapping as ORM;
 
 /**

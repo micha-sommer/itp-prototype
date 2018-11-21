@@ -17,6 +17,9 @@ class GenderEnum
 
     public static function asArray(): array
     {
-        return [male, female];
+        return [
+            self::male => self::male,
+            self::female => self::female
+        ];
     }
 }

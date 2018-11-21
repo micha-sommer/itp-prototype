@@ -3,7 +3,6 @@
 namespace App\Repository;
 
 use App\Entity\Contestant;
-use App\Enum\AgeCategoryEnum;
 use App\Enum\WeightCategoryEnum;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -40,6 +39,20 @@ class ContestantsRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * @param $id
+     * @return Contestant|null
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function findOneById($id): ?Contestant
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
     public function findAllById($array): array
     {
         $query = $this->createQueryBuilder('c');
@@ -52,6 +65,12 @@ class ContestantsRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * @param string|null $age
+     * @param string|null $weight
+     * @return int
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
     public function countCategory(string $age = null, string $weight = null): int
     {
         $query = $this->createQueryBuilder('c')
@@ -72,6 +91,11 @@ class ContestantsRepository extends ServiceEntityRepository
             ->getSingleScalarResult();
     }
 
+    /**
+     * @param string|null $age
+     * @return int
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
     public function countCamp(string $age = null): int
     {
         $query = $this->createQueryBuilder('c')

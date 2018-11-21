@@ -8,7 +8,6 @@ use App\Form\RegistrationType;
 use App\Form\ResetPasswordType;
 use App\Form\ChangePasswordType;
 use App\Repository\RegistrationsRepository;
-use Psr\Container\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -100,7 +99,7 @@ class RegistrationController extends AbstractController
         $now = new \DateTime();
 
         $message = (new \Swift_Message())
-            ->setSubject('Registration Confirmation for ' .$registration->getClub().'('.$now->format('Y-m-d H:i:s').')')
+            ->setSubject('Registration Confirmation for ' . $registration->getClub() . '(' . $now->format('Y-m-d H:i:s') . ')')
             ->setFrom(['anmeldung@thueringer-judoverband.de' => 'ITP Registration'])
             ->setTo($this->getUser()->getEmail())
             ->setCc(['anmeldung@thueringer-judoverband.de' => 'ITP Registration'])
@@ -183,12 +182,19 @@ class RegistrationController extends AbstractController
     {
         $registration = $registrationsRepository->findOneById($uid);
 
-        $re_hash = hash('sha256', $registration->getPassword(), false);
+        if ($registration) {
+            $re_hash = hash('sha256', $registration->getPassword(), false);
 
-
-        if (!$registration || $hash !== $re_hash) {
+            if ($hash !== $re_hash) {
+                throw $this->createNotFoundException(
+                    'Sorry, something went wrong. Please contact us if this error persists.'
+                );
+            }
+        }
+        else
+        {
             throw $this->createNotFoundException(
-                'Sorry, something went wrong. Please contact us if this error persists.'
+                "Sorry, this club doesn't exist"
             );
         }
 
@@ -245,7 +251,7 @@ class RegistrationController extends AbstractController
             'first_options' => ['label' => 'Password', 'always_empty' => true],
             'second_options' => ['label' => 'Repeat Password', 'always_empty' => true],
         ]);
-	$form->get('country')->setData('DE');
+        $form->get('country')->setData('DE');
 
         // 2) handle the submit (will only happen on POST)
         $form->handleRequest($request);

@@ -39,6 +39,20 @@ class OfficialsRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * @param $id
+     * @return Official|null
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function findOneById($id): ?Official
+    {
+        return $this->createQueryBuilder('o')
+            ->andWhere('o.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
     public function findAllById($array): array
     {
         $query = $this->createQueryBuilder('o');

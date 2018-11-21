@@ -3,7 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Official;
-use App\Entity\Enum\GenderEnum;
+use App\Enum\GenderEnum;
+use App\Enum\RoleEnum;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -20,18 +21,10 @@ class OfficialType extends AbstractType
             ->add('first_name', TextType::class, ['attr'=> ['class' => 'hidden-first_name']])
             ->add('last_name', TextType::class, ['attr'=> ['class' => 'hidden-last_name']])
             ->add('role', ChoiceType::class, [
-                'choices' => [
-                    'trainer' => 'trainer',
-                    'physio/psychotherapist' => 'physio/psychotherapist',
-                    'referee' => 'referee',
-                    'others' => 'others'
-                ]
+                'choices' => RoleEnum::asArray()
             ])
             ->add('gender', ChoiceType::class, [
-                'choices' => [
-                    'male' => 'male',
-                    'female' => 'female'
-                ]
+                'choices' => GenderEnum::asArray()
             ])
             ->add('itc', ChoiceType::class, [
                 'choices' => [

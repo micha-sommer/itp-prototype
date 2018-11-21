@@ -61,6 +61,8 @@ class AppExtension extends AbstractExtension
 
     /**
      * Transforms the given Markdown content into HTML content.
+     * @param string $content
+     * @return string
      */
     public function markdownToHtml(string $content): string
     {

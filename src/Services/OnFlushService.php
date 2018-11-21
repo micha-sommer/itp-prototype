@@ -15,11 +15,14 @@ use App\Entity\Official;
 use App\Entity\Registration;
 use App\Entity\Transport;
 use Doctrine\ORM\Event\OnFlushEventArgs;
-use Doctrine\ORM\Event\PostFlushEventArgs;
 
 class OnFlushService
 {
 
+    /**
+     * @param OnFlushEventArgs $eventArgs
+     * @throws \Doctrine\ORM\ORMException
+     */
     public function onFlush(OnFlushEventArgs $eventArgs): void
     {
         $em = $eventArgs->getEntityManager();

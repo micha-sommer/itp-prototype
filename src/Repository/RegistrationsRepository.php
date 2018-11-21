@@ -67,6 +67,11 @@ class RegistrationsRepository extends ServiceEntityRepository
     }
     */
 
+    /**
+     * @param $email
+     * @return Registration|null
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
     public function findOneByEmail($email): ?Registration
     {
         return $this->createQueryBuilder('o')
@@ -76,6 +81,12 @@ class RegistrationsRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
+
+    /**
+     * @param $id
+     * @return Registration|null
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
     public function findOneById($id): ?Registration
     {
         return $this->createQueryBuilder('o')

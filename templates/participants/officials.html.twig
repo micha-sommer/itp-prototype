@@ -6,11 +6,11 @@
     <script>
         $(function () {
             $('[data-toggle="tooltip"]').tooltip()
-        })
+        });
 
-        var $collectionHolder;
-        var $removeFormButton = $('<td><button class="btn btn-danger" type="button"><i class="fa fa-trash" aria-hidden="true"></i></button></td>');
-        var $commentFormButton = $('<td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#commentModal" data-comment=""><i class="fa fa-comment"></i></button></td>');
+        let  $collectionHolder;
+        let $removeFormButton = $('<td><button class="btn btn-danger" type="button"><i class="fa fa-trash" aria-hidden="true"></i></button></td>');
+        let $commentFormButton = $('<td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#commentModal" data-comment=""><i class="fa fa-comment"></i></button></td>');
 
         jQuery(document).ready(function () {
 
@@ -27,7 +27,7 @@
             // index when inserting a new item (e.g. 2)
             $collectionHolder.data('index', $collectionHolder.find('tr').length);
 
-            var $addTagLink = $('button.add-a-tag');
+            let $addTagLink = $('button.add-a-tag');
             $addTagLink.on('click', function (e) {
                 // prevent the link from creating a "#" on the URL
                 e.preventDefault();
@@ -39,20 +39,20 @@
 
         function addTagForm($collectionHolder) {
             // Get the data-prototype explained earlier
-            var prototype = $collectionHolder.data('prototype');
+            let prototype = $collectionHolder.data('prototype');
 
             // get the new index
-            var index = $collectionHolder.data('index');
+            let index = $collectionHolder.data('index');
 
             // Replace '$$name$$' in the prototype's HTML to
             // instead be a number based on how many items we have
-            var newForm = prototype.replace(/__name__/g, index);
+            let newForm = prototype.replace(/__name__/g, index);
 
             // increase the index with one for the next item
             $collectionHolder.data('index', index + 1);
 
             // Display the form in the page in an li, before the "Add a tag" link td
-            var $newFormTr = $('<tr class="table-warning official"></tr>').append(newForm);
+            let $newFormTr = $('<tr class="table-warning official"></tr>').append(newForm);
 
             addTagFormCommentLink($newFormTr);
             addTagFormDeleteLink($newFormTr);
@@ -61,10 +61,10 @@
         }
 
         function addTagFormCommentLink($tagFormTr) {
-            var $thisCommentFormButton = $commentFormButton.clone();
+            let $thisCommentFormButton = $commentFormButton.clone();
 
-            var $commentHiddenType = $tagFormTr.find('input.hidden-comment');
-            var $button = $thisCommentFormButton.find('button');
+            let $commentHiddenType = $tagFormTr.find('input.hidden-comment');
+            let $button = $thisCommentFormButton.find('button');
             $button.attr('data-comment', $commentHiddenType.attr('value'));
             $button.attr('data-name', $tagFormTr.find('input.hidden-first_name').attr('value') + ' ' + $tagFormTr.find('input.hidden-last_name').attr('value'));
             $button.attr('data-id', $commentHiddenType.attr('id'));
@@ -76,10 +76,10 @@
         }
 
         function addTagFormDeleteLink($tagFormTr) {
-            var $thisRemoveFormButton = $removeFormButton.clone();
+            let $thisRemoveFormButton = $removeFormButton.clone();
             $tagFormTr.append($thisRemoveFormButton);
 
-            $thisRemoveFormButton.on('click', function (e) {
+            $thisRemoveFormButton.on('click', function () {
                 // remove the li for the tag form
                 $tagFormTr.remove();
             });
@@ -95,7 +95,7 @@
     <hr class="my-4">
 
     {{ form_start(form) }}
-    <table class="table table-striped table-middle-aligned">
+    <table class="table table-middle-aligned">
         <thead class="thead-dark">
         <tr class="table-sm text-center">
             <td class="bg-light" colspan="4"></td>
@@ -185,23 +185,24 @@
 
     <script>
         $('#commentModal').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget); // Button that triggered the modal
-            var comment = button.attr('data-comment'); // Extract info from data-* attributes
-            var id = button.data('id'); // Extract info from data-* attributes
-            var name = button.data('name'); // Extract info from data-* attributes
+            let button = $(event.relatedTarget); // Button that triggered the modal
+            let comment = button.attr('data-comment'); // Extract info from data-* attributes
+            let id = button.data('id'); // Extract info from data-* attributes
+            let name = button.data('name'); // Extract info from data-* attributes
             // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
             // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-            var modal = $(this);
+            let modal = $(this);
             modal.find('.modal-body-name').text(name);
             modal.find('.modal-body textarea').val(comment);
             modal.find('.modal-body textarea').attr('data-id', id);
         });
 
         function save() {
-            var comment = $("#comment-textarea").val();
-            var id = $("#comment-textarea").attr('data-id');
+            let commentTextArea = $("#comment-textarea");
+            let comment = commentTextArea.val();
+            let id = commentTextArea.attr('data-id');
 
-            var $button = $('button[data-id=' + id + ']');
+            let $button = $('button[data-id=' + id + ']');
             if ($button.attr('data-comment') !== comment)
                 $button.removeClass('btn-primary').addClass('btn-warning');
             $button.attr('data-comment', comment);

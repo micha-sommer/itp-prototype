@@ -19,7 +19,6 @@ class RegistrationType extends AbstractType
         $builder
             ->add('club', TextType::class)
             ->add('country', CountryType::class, [
-                //'data' => 'DE',
                 'preferred_choices' => array('DE', 'UK', 'NL', 'KZ', 'AU', 'BR', 'JP', 'CH', 'SE', 'AT', 'BE', 'CA'),
                 ])
             ->add('first_name', TextType::class)

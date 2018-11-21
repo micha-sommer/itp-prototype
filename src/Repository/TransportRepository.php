@@ -38,6 +38,15 @@ class TransportRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findOneById($id): ?Transport
+    {
+        return $this->createQueryBuilder('t')
+            ->andWhere('t.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
     public function findAllById($array): array
     {
         $query = $this->createQueryBuilder('t');

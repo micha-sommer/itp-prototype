@@ -42,13 +42,15 @@
     <h3>{{ 'title.officials'|trans }}:</h3>
     <table border="1">
         <thead>
-        <th>{{ 'first_name.participants'|trans }}</th>
-        <th>{{ 'last_name.participants'|trans }}</th>
-        <th>{{ 'role.participants'|trans }}</th>
-        <th>{{ 'gender.participants'|trans }}</th>
-        <th>{{ 'friday.participants'|trans }}</th>
-        <th>{{ 'saturnday.participants'|trans }}</th>
-        <th>{{ 'itc.participants'|trans }}</th>
+        <tr>
+            <th>{{ 'first_name.participants'|trans }}</th>
+            <th>{{ 'last_name.participants'|trans }}</th>
+            <th>{{ 'role.participants'|trans }}</th>
+            <th>{{ 'gender.participants'|trans }}</th>
+            <th>{{ 'friday.participants'|trans }}</th>
+            <th>{{ 'saturnday.participants'|trans }}</th>
+            <th>{{ 'itc.participants'|trans }}</th>
+        </tr>
         </thead>
         <tbody>
         {% for official in registration.officials %}
@@ -70,14 +72,16 @@
     <h3>{{ 'title.contestants'|trans }}:</h3>
     <table border="1">
         <thead>
-        <th>{{ 'first_name.participants'|trans }}</th>
-        <th>{{ 'last_name.participants'|trans }}</th>
-        <th>{{ 'year.contestants'|trans }}</th>
-        <th>{{ 'weight.contestants'|trans }}</th>
-        <th>{{ 'age.contestants'|trans }}</th>
-        <th>{{ 'friday.participants'|trans }}</th>
-        <th>{{ 'saturnday.participants'|trans }}</th>
-        <th>{{ 'itc.participants'|trans }}</th>
+        <tr>
+            <th>{{ 'first_name.participants'|trans }}</th>
+            <th>{{ 'last_name.participants'|trans }}</th>
+            <th>{{ 'year.contestants'|trans }}</th>
+            <th>{{ 'weight.contestants'|trans }}</th>
+            <th>{{ 'age.contestants'|trans }}</th>
+            <th>{{ 'friday.participants'|trans }}</th>
+            <th>{{ 'saturnday.participants'|trans }}</th>
+            <th>{{ 'itc.participants'|trans }}</th>
+        </tr>
         </thead>
         <tbody>
         {% for contestant in registration.contestants %}
@@ -100,12 +104,16 @@
     <h3>{{ 'title.transport'|trans }}:</h3>
     <table border="1">
         <thead>
-        <th>
-            {{ 'Arrival'|trans }}
-        </th>
-        <th>
-            {{ 'Departure'|trans }}
-        </th>
+        <tr>
+            <th>
+                {{ 'Arrival'|trans }}
+            </th>
+        </tr>
+        <tr>
+            <th>
+                {{ 'Departure'|trans }}
+            </th>
+        </tr>
         </thead>
         <tbody>
         <tr>

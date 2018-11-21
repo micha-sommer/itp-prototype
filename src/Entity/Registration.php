@@ -198,10 +198,10 @@ class Registration implements UserInterface, \Serializable, \JsonSerializable
      */
     public function getRoles(): array
     {
-        if ($this->getEmail() === 'm.remmos@gmail.com' || $this->getEmail() === 'tonyste@web.de' || $this->getEmail() === 'webmaster@thueringer-judoverband.de') {
-            return array('ROLE_USER', 'ROLE_ADMIN', 'ROLE_ALLOWED_TO_SWITCH');
+        if (\in_array($this->getEmail(), ['m.remmos@gmail.com', 'tonyste@web.de', 'webmaster@thueringer-judoverband.de'], true)) {
+            return ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_ALLOWED_TO_SWITCH'];
         }
-        return array('ROLE_USER');
+        return ['ROLE_USER'];
     }
 
     /**
@@ -212,7 +212,7 @@ class Registration implements UserInterface, \Serializable, \JsonSerializable
      *
      * @return string The password
      */
-    public function getPassword()
+    public function getPassword() : ?string
     {
         return $this->password;
     }
@@ -239,7 +239,7 @@ class Registration implements UserInterface, \Serializable, \JsonSerializable
      *
      * @return string|null The salt
      */
-    public function getSalt()
+    public function getSalt() : ?string
     {
         // we use bcrypt, therefore no salt needed
         return null;

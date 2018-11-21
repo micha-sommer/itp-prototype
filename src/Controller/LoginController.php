@@ -6,7 +6,6 @@ namespace App\Controller;
 use App\Entity\ChangeSet;
 use App\Entity\Contestant;
 use App\Entity\Official;
-use App\Entity\Registration;
 use App\Entity\Transport;
 use App\Form\ChangeSetType;
 use App\Form\LoginType;
@@ -16,7 +15,6 @@ use App\Repository\ContestantsRepository;
 use App\Repository\OfficialsRepository;
 use App\Repository\RegistrationsRepository;
 use App\Repository\TransportRepository;
-use Symfony\Component\Dotenv\Exception\FormatException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -28,12 +26,21 @@ class LoginController extends Controller
     /**
      * @Route("/login", name="login")
      * @param AuthenticationUtils $authenticationUtils
+     * @param $locales
+     * @param $defaultLocale
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function login(AuthenticationUtils $authenticationUtils, $locales, $defaultLocale): Response
     {
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
+
+        // locales and defaultLocales must be used at least once in code. This block is to avoid them being maked as unused.
+        if ($locales === $defaultLocale && $locales !== $defaultLocale) {
+            throw $this->createNotFoundException(
+                'This should never happen.'
+            );
+        }
 
         $login_form = $this->createForm(LoginType::class);
 
@@ -47,12 +54,14 @@ class LoginController extends Controller
         ]);
     }
 
+
     /**
      * @Route("/forgot_password", name="forgot_password")
      * @param Request $request
      * @param RegistrationsRepository $registrationsRepository
      * @param \Swift_Mailer $mailer
      * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function forgotPassword(Request $request, RegistrationsRepository $registrationsRepository, \Swift_Mailer $mailer): Response
     {
@@ -118,18 +127,12 @@ class LoginController extends Controller
             $newTransports = $transportRepository->findByDate($after, $before);
             $changes = $changeSetRepository->findByDate($after, $before);
 
+            /*
+             * filter changes (only want drops of each repository)
+             */
             $officialsDrops = \array_filter($changes, function (ChangeSet $changeSet) {
                 return $changeSet->getType() === 'DROP' && $changeSet->getName() === 'official';
             });
-
-            $getObject = function (ChangeSet $changeSet) {
-                $obj = (object) \json_decode($changeSet->getChangeSet());
-                $obj->timestamp = $changeSet->getTimestamp();
-                return $obj;
-            };
-
-            $officialsDrops = \array_map($getObject, $officialsDrops);
-
             $contestantsDrops = \array_filter($changes, function (ChangeSet $changeSet) {
                 return $changeSet->getType() === 'DROP' && $changeSet->getName() === 'contestant';
             });
@@ -137,10 +140,21 @@ class LoginController extends Controller
                 return $changeSet->getType() === 'DROP' && $changeSet->getName() === 'transport';
             });
 
+            /*
+             * retrieve object from change set (and adjust timestamp)
+             */
+            $getObject = function (ChangeSet $changeSet) {
+                $obj = (object)\json_decode($changeSet->getChangeSet());
+                $obj->timestamp = $changeSet->getTimestamp();
+                return $obj;
+            };
+            $officialsDrops = \array_map($getObject, $officialsDrops);
+            $contestantsDrops = \array_map($getObject, $contestantsDrops);
+            $transportsDrops = \array_map($getObject, $transportsDrops);
+
             $registrationsChanges = \array_filter($changes, function (ChangeSet $changeSet) use ($newRegistrations) {
                 return $changeSet->getType() === 'UPDATE' && $changeSet->getName() === 'registration' && !\in_array($changeSet->getNameId(), $newRegistrations, true);
             });
-
             $officialsChanges = \array_filter($changes, function (ChangeSet $changeSet) use ($newOfficials) {
                 return $changeSet->getType() === 'UPDATE' && $changeSet->getName() === 'official' && !\in_array($changeSet->getNameId(), $newOfficials, true);
             });
@@ -153,22 +167,39 @@ class LoginController extends Controller
 
             $setClubRegistration = function (ChangeSet $changeSet) use ($registrationsRepository) {
                 $registration = $registrationsRepository->findOneById($changeSet->getNameId());
-                $changeSet->setClub($registration->getClub().'['.$registration->getId().']');
+                if ($registration) {
+                    $changeSet->setClub($registration->getClub() . '[' . $registration->getId() . ']');
+                }
                 return $changeSet;
             };
             $setClubOfficials = function (ChangeSet $changeSet) use ($officialsRepository) {
-                $registration = $officialsRepository->findOneById($changeSet->getNameId())->getRegistration();
-                $changeSet->setClub($registration->getClub().'['.$registration->getId().']');
+                $official = $officialsRepository->findOneById($changeSet->getNameId());
+                if ($official) {
+                    $registration = $official->getRegistration();
+                    if ($registration) {
+                        $changeSet->setClub($registration->getClub() . '[' . $registration->getId() . ']');
+                    }
+                }
                 return $changeSet;
             };
             $setClubContestants = function (ChangeSet $changeSet) use ($contestantsRepository) {
-                $registration = $contestantsRepository->findOneById($changeSet->getNameId())->getRegistration();
-                $changeSet->setClub($registration->getClub().'['.$registration->getId().']');
+                $contestant = $contestantsRepository->findOneById($changeSet->getNameId());
+                if ($contestant) {
+                    $registration = $contestant->getRegistration();
+                    if ($registration) {
+                        $changeSet->setClub($registration->getClub() . '[' . $registration->getId() . ']');
+                    }
+                }
                 return $changeSet;
             };
             $setClubTransport = function (ChangeSet $changeSet) use ($transportRepository) {
-                $registration = $transportRepository->findOneById($changeSet->getNameId())->getRegistration();
-                $changeSet->setClub($registration->getClub().'['.$registration->getId().']');
+                $transport = $transportRepository->findOneById($changeSet->getNameId());
+                if ($transport) {
+                    $registration = $transport->getRegistration();
+                    if ($registration) {
+                        $changeSet->setClub($registration->getClub() . '[' . $registration->getId() . ']');
+                    }
+                }
                 return $changeSet;
             };
 
@@ -177,7 +208,7 @@ class LoginController extends Controller
             $contestantsChanges = \array_map($setClubContestants, $contestantsChanges);
             $transportsChanges = \array_map($setClubTransport, $transportsChanges);
 
-            $changes = \array_merge($registrationsChanges, $officialsChanges,$contestantsChanges,$transportsChanges);
+            $changes = \array_merge($registrationsChanges, $officialsChanges, $contestantsChanges, $transportsChanges);
 
             usort($newOfficials, function (Official $a, Official $b) {
                 if (null === $a->getRegistration() && null === $b->getRegistration()) {
@@ -185,14 +216,12 @@ class LoginController extends Controller
                 }
                 return 0;
             });
-
             usort($newContestants, function (Contestant $a, Contestant $b) {
                 if (null === $a->getRegistration() && null === $b->getRegistration()) {
                     return $a->getRegistration()->getId() <=> $b->getRegistration()->getId();
                 }
                 return 0;
             });
-
             usort($newTransports, function (Transport $a, Transport $b) {
                 if (null === $a->getRegistration() && null === $b->getRegistration()) {
                     return $a->getRegistration()->getId() <=> $b->getRegistration()->getId();
@@ -214,10 +243,6 @@ class LoginController extends Controller
                     'droppedContestants' => $contestantsDrops,
                     'droppedTransports' => $transportsDrops,
                     'changes' => $changes,
-                    //'changedRegistrations' => $registrationsChanges,
-                    //'changedOfficials' => $officialsChanges,
-                    //'changedContestants' => $contestantsChanges,
-                    //'changedTransports' => $transportsChanges,
                 ]), 'text/html');
 
             $mailer->send($message);

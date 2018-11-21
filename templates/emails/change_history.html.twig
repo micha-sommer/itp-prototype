@@ -12,13 +12,15 @@
     <h3>New Registrations:</h3>
     <table border="1">
         <thead>
-        <th>{{ 'When'|trans }}</th>
-        <th>{{ 'Club'|trans }}</th>
-        <th>{{ 'First name'|trans }}</th>
-        <th>{{ 'Last name'|trans }}</th>
-        <th>{{ 'Email'|trans }}</th>
-        <th>{{ 'Telephone'|trans }}</th>
-        <th>{{ 'Comment'|trans }}</th>
+        <tr>
+            <th>{{ 'When'|trans }}</th>
+            <th>{{ 'Club'|trans }}</th>
+            <th>{{ 'First name'|trans }}</th>
+            <th>{{ 'Last name'|trans }}</th>
+            <th>{{ 'Email'|trans }}</th>
+            <th>{{ 'Telephone'|trans }}</th>
+            <th>{{ 'Comment'|trans }}</th>
+        </tr>
         </thead>
         <tbody>
         {% for newRegistration in newRegistrations %}
@@ -40,15 +42,17 @@
     <h3>New Officials:</h3>
     <table border="1">
         <thead>
-        <th>{{ 'When'|trans }}</th>
-        <th>{{ 'Club'|trans }}</th>
-        <th>{{ 'first_name.participants'|trans }}</th>
-        <th>{{ 'last_name.participants'|trans }}</th>
-        <th>{{ 'role.participants'|trans }}</th>
-        <th>{{ 'gender.participants'|trans }}</th>
-        <th>{{ 'friday.participants'|trans }}</th>
-        <th>{{ 'saturnday.participants'|trans }}</th>
-        <th>{{ 'itc.participants'|trans }}</th>
+        <tr>
+            <th>{{ 'When'|trans }}</th>
+            <th>{{ 'Club'|trans }}</th>
+            <th>{{ 'first_name.participants'|trans }}</th>
+            <th>{{ 'last_name.participants'|trans }}</th>
+            <th>{{ 'role.participants'|trans }}</th>
+            <th>{{ 'gender.participants'|trans }}</th>
+            <th>{{ 'friday.participants'|trans }}</th>
+            <th>{{ 'saturnday.participants'|trans }}</th>
+            <th>{{ 'itc.participants'|trans }}</th>
+        </tr>
         </thead>
         <tbody>
         {% for newOfficial in newOfficials %}
@@ -72,16 +76,18 @@
     <h3>New Contestant:</h3>
     <table border="1">
         <thead>
-        <th>{{ 'When'|trans }}</th>
-        <th>{{ 'Club'|trans }}</th>
-        <th>{{ 'first_name.participants'|trans }}</th>
-        <th>{{ 'last_name.participants'|trans }}</th>
-        <th>{{ 'year.contestants'|trans }}</th>
-        <th>{{ 'weight.contestants'|trans }}</th>
-        <th>{{ 'age.contestants'|trans }}</th>
-        <th>{{ 'friday.participants'|trans }}</th>
-        <th>{{ 'saturnday.participants'|trans }}</th>
-        <th>{{ 'itc.participants'|trans }}</th>
+        <tr>
+            <th>{{ 'When'|trans }}</th>
+            <th>{{ 'Club'|trans }}</th>
+            <th>{{ 'first_name.participants'|trans }}</th>
+            <th>{{ 'last_name.participants'|trans }}</th>
+            <th>{{ 'year.contestants'|trans }}</th>
+            <th>{{ 'weight.contestants'|trans }}</th>
+            <th>{{ 'age.contestants'|trans }}</th>
+            <th>{{ 'friday.participants'|trans }}</th>
+            <th>{{ 'saturnday.participants'|trans }}</th>
+            <th>{{ 'itc.participants'|trans }}</th>
+        </tr>
         </thead>
         <tbody>
         {% for newContestant in newContestants %}
@@ -106,14 +112,16 @@
     <h3>New Transport:</h3>
     <table border="1">
         <thead>
-        <th>{{ 'When'|trans }}</th>
-        <th>{{ 'Club'|trans }}</th>
-        <th>{{ 'Date'|trans }}</th>
-        <th>{{ 'Time'|trans }}</th>
-        <th>{{ 'Place'|trans }}</th>
-        <th>{{ 'Information'|trans }}</th>
-        <th>{{ 'Comment'|trans }}</th>
-        <th>{{ 'Arrival'|trans }}</th>
+        <tr>
+            <th>{{ 'When'|trans }}</th>
+            <th>{{ 'Club'|trans }}</th>
+            <th>{{ 'Date'|trans }}</th>
+            <th>{{ 'Time'|trans }}</th>
+            <th>{{ 'Place'|trans }}</th>
+            <th>{{ 'Information'|trans }}</th>
+            <th>{{ 'Comment'|trans }}</th>
+            <th>{{ 'Arrival'|trans }}</th>
+        </tr>
         </thead>
         <tbody>
         {% for newTransport in newTransports %}
@@ -136,15 +144,17 @@
     <h3>Removed Officials:</h3>
     <table border="1">
         <thead>
-        <th>{{ 'When'|trans }}</th>
-        <th>{{ 'Club'|trans }}</th>
-        <th>{{ 'first_name.participants'|trans }}</th>
-        <th>{{ 'last_name.participants'|trans }}</th>
-        <th>{{ 'role.participants'|trans }}</th>
-        <th>{{ 'gender.participants'|trans }}</th>
-        <th>{{ 'friday.participants'|trans }}</th>
-        <th>{{ 'saturnday.participants'|trans }}</th>
-        <th>{{ 'itc.participants'|trans }}</th>
+        <tr>
+            <th>{{ 'When'|trans }}</th>
+            <th>{{ 'Club'|trans }}</th>
+            <th>{{ 'first_name.participants'|trans }}</th>
+            <th>{{ 'last_name.participants'|trans }}</th>
+            <th>{{ 'role.participants'|trans }}</th>
+            <th>{{ 'gender.participants'|trans }}</th>
+            <th>{{ 'friday.participants'|trans }}</th>
+            <th>{{ 'saturnday.participants'|trans }}</th>
+            <th>{{ 'itc.participants'|trans }}</th>
+        </tr>
         </thead>
         {% for drop in droppedOfficials %}
             <tr>
@@ -165,16 +175,18 @@
     <h3>Removed Contestants:</h3>
     <table border="1">
         <thead>
-        <th>{{ 'When'|trans }}</th>
-        <th>{{ 'Club'|trans }}</th>
-        <th>{{ 'first_name.participants'|trans }}</th>
-        <th>{{ 'last_name.participants'|trans }}</th>
-        <th>{{ 'year.contestants'|trans }}</th>
-        <th>{{ 'weight.contestants'|trans }}</th>
-        <th>{{ 'age.contestants'|trans }}</th>
-        <th>{{ 'friday.participants'|trans }}</th>
-        <th>{{ 'saturnday.participants'|trans }}</th>
-        <th>{{ 'itc.participants'|trans }}</th>
+        <tr>
+            <th>{{ 'When'|trans }}</th>
+            <th>{{ 'Club'|trans }}</th>
+            <th>{{ 'first_name.participants'|trans }}</th>
+            <th>{{ 'last_name.participants'|trans }}</th>
+            <th>{{ 'year.contestants'|trans }}</th>
+            <th>{{ 'weight.contestants'|trans }}</th>
+            <th>{{ 'age.contestants'|trans }}</th>
+            <th>{{ 'friday.participants'|trans }}</th>
+            <th>{{ 'saturnday.participants'|trans }}</th>
+            <th>{{ 'itc.participants'|trans }}</th>
+        </tr>
         </thead>
         {% for drop in droppedContestants %}
             <tr>
@@ -196,14 +208,16 @@
     <h3>Removed Transports:</h3>
     <table border="1">
         <thead>
-        <th>{{ 'When'|trans }}</th>
-        <th>{{ 'Club'|trans }}</th>
-        <th>{{ 'Date'|trans }}</th>
-        <th>{{ 'Time'|trans }}</th>
-        <th>{{ 'Place'|trans }}</th>
-        <th>{{ 'Information'|trans }}</th>
-        <th>{{ 'Comment'|trans }}</th>
-        <th>{{ 'Arrival'|trans }}</th>
+        <tr>
+            <th>{{ 'When'|trans }}</th>
+            <th>{{ 'Club'|trans }}</th>
+            <th>{{ 'Date'|trans }}</th>
+            <th>{{ 'Time'|trans }}</th>
+            <th>{{ 'Place'|trans }}</th>
+            <th>{{ 'Information'|trans }}</th>
+            <th>{{ 'Comment'|trans }}</th>
+            <th>{{ 'Arrival'|trans }}</th>
+        </tr>
         </thead>
         {% for drop in droppedTransports %}
             <tr>
@@ -223,7 +237,8 @@
     <h3>Other Changes:</h3>
     {% for change in changes %}
         <div>
-            [{{ change.timestamp|date("Y-m-d H:i:s"|trans) }}]:{{ change.club }} has changed {{ change.name }} {{ change.changeSet }}
+            [{{ change.timestamp|date("Y-m-d H:i:s"|trans) }}]:{{ change.club }} has
+            changed {{ change.name }} {{ change.changeSet }}
         </div>
     {% endfor %}
 </div>

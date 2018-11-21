@@ -16,6 +16,7 @@ use App\Repository\TransportRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -29,7 +30,7 @@ class ParticipantsController extends Controller
      * @param OfficialsRepository $officialsRepository
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function officials(Request $request, OfficialsRepository $officialsRepository): \Symfony\Component\HttpFoundation\Response
+    public function officials(Request $request, OfficialsRepository $officialsRepository): Response
     {
         $officialsBefore = $officialsRepository->findBy(['registration' => $this->getUser()]);
 
@@ -82,7 +83,7 @@ class ParticipantsController extends Controller
      * @param TranslatorInterface $translator
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function contestants(Request $request, ContestantsRepository $contestantsRepository, ValidatorInterface $validator, TranslatorInterface $translator): \Symfony\Component\HttpFoundation\Response
+    public function contestants(Request $request, ContestantsRepository $contestantsRepository, ValidatorInterface $validator, TranslatorInterface $translator): Response
     {
         $contestantsBefore = $contestantsRepository->findBy(['registration' => $this->getUser()]);
 
@@ -154,7 +155,7 @@ class ParticipantsController extends Controller
      * @param TransportRepository $transportRepository
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function transports(Request $request, TransportRepository $transportRepository): \Symfony\Component\HttpFoundation\Response
+    public function transports(Request $request, TransportRepository $transportRepository): Response
     {
         $arrival = $transportRepository->findOneBy(['registration' => $this->getUser(), 'isArrival' => true]);
         $departure = $transportRepository->findOneBy(['registration' => $this->getUser(), 'isArrival' => false]);

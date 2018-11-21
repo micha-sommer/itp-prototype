@@ -15,6 +15,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ChangeSetType extends AbstractType
 {
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     * @throws \Exception
+     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
