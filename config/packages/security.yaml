@@ -32,12 +32,14 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        - { path: ^/(%app_locales%)/admin, roles: ROLE_ADMIN }
-        - { path: ^/(%app_locales%)/contestants, roles: ROLE_USER }
-        - { path: ^/(%app_locales%)/officials, roles: ROLE_USER }
-        - { path: ^/(%app_locales%)/transports, roles: ROLE_USER }
-        - { path: ^/(%app_locales%)/registration/edit, roles: ROLE_USER }
-        - { path: ^/(%app_locales%)/registration/delete/, roles: ROLE_ADMIN }
-        - { path: ^/(%app_locales%)/registration/change_password, roles: ROLE_USER }
-        - { path: ^/(%app_locales%)/registration/send_confirmation/, roles: ROLE_USER }
+        - { path: ^/(%app_locales%)/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+        - { path: ^/(%app_locales%)/admin, roles: ROLE_ADMIN, requires_channel: https }
+        - { path: ^/(%app_locales%)/contestants, roles: ROLE_USER, requires_channel: https }
+        - { path: ^/(%app_locales%)/officials, roles: ROLE_USER, requires_channel: https }
+        - { path: ^/(%app_locales%)/transports, roles: ROLE_USER, requires_channel: https }
+        - { path: ^/(%app_locales%)/registration, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+        - { path: ^/(%app_locales%)/registration/edit, roles: ROLE_USER, requires_channel: https }
+        - { path: ^/(%app_locales%)/registration/delete/, roles: ROLE_ADMIN, requires_channel: https }
+        - { path: ^/(%app_locales%)/registration/change_password, roles: ROLE_USER, requires_channel: https }
+        - { path: ^/(%app_locales%)/registration/send_confirmation/, roles: ROLE_USER, requires_channel: https }
 #        - { path: ^/profile, roles: ROLE_USER }

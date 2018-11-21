@@ -50,7 +50,7 @@
                 <h3>
                     <a href="{{ path('officials') }}">{{ 'menu.officials_edit'|trans }}</a>: {{ registration.officials.count }}
                 </h3>
-                <table class="table table-striped">
+                <table class="table">
                     <thead class="thead-dark">
                     <th scope="col">{{ 'first_name.participants'|trans }}</th>
                     <th scope="col">{{ 'last_name.participants'|trans }}</th>
@@ -83,7 +83,7 @@
                 <h3>
                     <a href="{{ path('contestants') }}">{{ 'menu.contestants_edit'|trans }}</a>: {{ registration.contestants.count }}
                 </h3>
-                <table class="table table-striped">
+                <table class="table">
                     <thead class="thead-dark">
                     <th scope="col">{{ 'first_name.participants'|trans }}</th>
                     <th scope="col">{{ 'last_name.participants'|trans }}</th>
@@ -146,7 +146,7 @@
                    role="button">{{ 'start'|trans }}</a>
                 <hr class="my-4">
                 <p>{{ 'overview.contestants'|trans({'%total%':categories['total'],'%clubs%':clubsCount })|raw }}</p>
-                <table class="table table-striped">
+                <table class="table">
                     <thead class="thead-dark">
                     <th class="text-center" scope="col">{{ 'cadet'|trans }}</th>
                     <th class="text-center" scope="col">{{ '-40'|trans }}</th>
