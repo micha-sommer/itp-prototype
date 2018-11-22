@@ -51,7 +51,7 @@
       </trans-unit>
       <trans-unit id="QYMTxlA" resname="menu.logged_in_as">
         <source>menu.logged_in_as</source>
-        <target>Anmeldet als:</target>
+        <target>Angemeldet als:</target>
       </trans-unit>
       <trans-unit id="XIxZe_L" resname="greeting.top">
         <source>greeting.top</source>
@@ -514,7 +514,7 @@
       </trans-unit>
       <trans-unit id="8XZC4q8" resname="validCamp">
         <source>validCamp</source>
-        <target>Bitte auch die Teilnahme am ITC auswählen!</target>
+        <target>Bitte auch die Teilnahme am Camp auswählen!</target>
       </trans-unit>
       <trans-unit id="owE8CCx" resname="invitation">
         <source>invitation</source>

@@ -512,11 +512,11 @@
       </trans-unit>
       <trans-unit id="6clNZNU" resname="validAgeWeightCombination">
         <source>validAgeWeightCombination</source>
-        <target>Year of birth does not match age category.</target>
+        <target>Weight category does not match age category.</target>
       </trans-unit>
       <trans-unit id="8XZC4q8" resname="validCamp">
         <source>validCamp</source>
-        <target>Please choose you ITC participation!</target>
+        <target>Please choose camp participation!</target>
       </trans-unit>
       <trans-unit id="owE8CCx" resname="invitation">
         <source>invitation</source>

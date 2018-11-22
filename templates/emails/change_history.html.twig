@@ -223,8 +223,8 @@
             <tr>
                 <td>{{ drop.timestamp|date("Y-m-d H:i:s"|trans) }}</td>
                 <td>{{ drop.registration.club }}</td>
-                <td>{{ drop.date|date("date.date"|trans) }}</td>
-                <td>{{ drop.time|date("date.time"|trans) }}</td>
+                <td>{{ drop.date.date|date("date.date"|trans) }}</td>
+                <td>{{ drop.time.date|date("date.time"|trans) }}</td>
                 <td>{{ drop.place }}</td>
                 <td>{{ drop.information }}</td>
                 <td>{{ drop.comment }}</td>
@@ -238,7 +238,7 @@
     {% for change in changes %}
         <div>
             [{{ change.timestamp|date("Y-m-d H:i:s"|trans) }}]:{{ change.club }} has
-            changed {{ change.name }} {{ change.changeSet }}
+            changed {{ change.name }}[{{ change.nameId }}] {{ change.changeSet }}
         </div>
     {% endfor %}
 </div>
