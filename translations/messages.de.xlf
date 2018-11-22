@@ -234,6 +234,14 @@
         <source>generic.cancel</source>
         <target>Abbrechen</target>
       </trans-unit>
+      <trans-unit id="E3YzV4X" resname="generic.yes">
+        <source>generic.yes</source>
+        <target>ja</target>
+      </trans-unit>
+      <trans-unit id="E2YzV4X" resname="generic.no">
+        <source>generic.no</source>
+        <target>nein</target>
+      </trans-unit>
       <trans-unit id="NbVIvci" resname="title.transport">
         <source>title.transport</source>
         <target>Transport</target>
@@ -496,9 +504,13 @@
         <source>Send Confirmation Mail</source>
         <target>Bestätigungsmail senden</target>
       </trans-unit>
+      <trans-unit id="nbVIvci" resname="title.confirmation">
+        <source>title.confirmation</source>
+        <target>Meldebestätigung Thüringenpokal 2019</target>
+      </trans-unit>
       <trans-unit id="x.FyDpm" resname="headline_confirmation_mail">
         <source>headline_confirmation_mail</source>
-        <target>Bestätigung der Registrierung vom</target>
+        <target>Bestätigung der Meldung vom</target>
       </trans-unit>
       <trans-unit id="z5x6oko" resname="When">
         <source>When</source>

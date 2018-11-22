@@ -236,6 +236,14 @@
         <source>generic.cancel</source>
         <target>Cancel</target>
       </trans-unit>
+      <trans-unit id="E3YzV4X" resname="generic.yes">
+        <source>generic.yes</source>
+        <target>yes</target>
+      </trans-unit>
+      <trans-unit id="E2YzV4X" resname="generic.no">
+        <source>generic.no</source>
+        <target>no</target>
+      </trans-unit>
       <trans-unit id="NbVIvci" resname="title.transport">
         <source>title.transport</source>
         <target>Transport</target>
@@ -497,6 +505,10 @@
       <trans-unit id="WFNUhVB" resname="Send Confirmation Mail">
         <source>Send Confirmation Mail</source>
         <target>Send Confirmation Mail</target>
+      </trans-unit>
+      <trans-unit id="nbVIvci" resname="title.confirmation">
+        <source>title.confirmation</source>
+        <target>Confirmation Thuringia Cup 2019</target>
       </trans-unit>
       <trans-unit id="x.FyDpm" resname="headline_confirmation_mail">
         <source>headline_confirmation_mail</source>

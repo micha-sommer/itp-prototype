@@ -3,10 +3,10 @@
 <body>
 
 <h1>
-    ITP Registration
+    {{ 'title.confirmation'|trans }}
 </h1>
 <h2>
-    {{ 'headline_confirmation_mail'|trans }}{{ now|date("Y-m-d H:i:s"|trans) }}
+    {{ 'headline_confirmation_mail'|trans }} {{ now|date("Y-m-d H:i:s"|trans) }}
 </h2>
 <div>
     <h3>{{ 'title.registration_edit'|trans }}:</h3>
@@ -57,11 +57,11 @@
             <tr>
                 <td>{{ official.firstName }}</td>
                 <td>{{ official.lastName }}</td>
-                <td>{{ official.role }}</td>
-                <td>{{ official.gender }}</td>
-                <td>{% if official.friday %}yes{% else %}no{% endif %}</td>
-                <td>{% if official.saturday %}yes{% else %}no{% endif %}</td>
-                <td>{{ official.itc }}</td>
+                <td>{{ official.role|trans }}</td>
+                <td>{{ official.gender|trans }}</td>
+                <td>{% if official.friday %}{{ 'generic.yes'|trans }}{% else %}{{ 'generic.no'|trans }}{% endif %}</td>
+                <td>{% if official.saturday %}{{ 'generic.yes'|trans }}{% else %}{{ 'generic.no'|trans }}{% endif %}</td>
+                <td>{{ official.itc|trans }}</td>
             </tr>
         {% endfor %}
         </tbody>
@@ -91,9 +91,9 @@
                 <td>{{ contestant.year }}</td>
                 <td>{{ contestant.weightCategory }}</td>
                 <td>{{ contestant.ageCategory }}</td>
-                <td>{% if contestant.friday %}yes{% else %}no{% endif %}</td>
-                <td>{% if contestant.saturday %}yes{% else %}no{% endif %}</td>
-                <td>{{ contestant.itc }}</td>
+                <td>{% if contestant.friday %}{{ 'generic.yes'|trans }}{% else %}{{ 'generic.no'|trans }}{% endif %}</td>
+                <td>{% if contestant.saturday %}{{ 'generic.yes'|trans }}{% else %}{{ 'generic.no'|trans }}{% endif %}</td>
+                <td>{{ contestant.itc|trans }}</td>
             </tr>
         {% endfor %}
         </tbody>

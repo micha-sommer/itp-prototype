@@ -17,6 +17,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class RegistrationController extends AbstractController
 {
@@ -78,10 +79,11 @@ class RegistrationController extends AbstractController
      * @param RegistrationsRepository $registrationsRepository
      * @param $uid
      * @param \Swift_Mailer $mailer
+     * @param TranslatorInterface $translator
      * @return Response
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function confirm(RegistrationsRepository $registrationsRepository, $uid, \Swift_Mailer $mailer): Response
+    public function confirm(RegistrationsRepository $registrationsRepository, $uid, \Swift_Mailer $mailer, TranslatorInterface $translator): Response
     {
         $registration = $registrationsRepository->findOneById($uid);
 
@@ -101,7 +103,7 @@ class RegistrationController extends AbstractController
         $now = new \DateTime();
 
         $message = (new \Swift_Message())
-            ->setSubject('Registration Confirmation for ' . $registration->getClub() . '(' . $now->format('Y-m-d H:i:s') . ')')
+            ->setSubject($translator->trans('title.confirmation') . ' '. $registration->getClub() . '(' . $now->format('Y-m-d H:i:s') . ')')
             ->setFrom(['anmeldung@thueringer-judoverband.de' => 'ITP Registration'])
             ->setTo($this->getUser()->getEmail())
             ->setCc(['anmeldung@thueringer-judoverband.de' => 'ITP Registration'])
@@ -193,9 +195,7 @@ class RegistrationController extends AbstractController
                     'Sorry, something went wrong. Please contact us if this error persists.'
                 );
             }
-        }
-        else
-        {
+        } else {
             throw $this->createNotFoundException(
                 "Sorry, this club doesn't exist"
             );

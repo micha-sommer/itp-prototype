@@ -17,6 +17,7 @@ class WelcomeController extends AbstractController
      * @param RegistrationsRepository $registrationsRepository
      * @param ContestantsRepository $contestantsRepository
      * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function welcome(RegistrationsRepository $registrationsRepository, ContestantsRepository $contestantsRepository): \Symfony\Component\HttpFoundation\Response
     {
