@@ -79,7 +79,7 @@
                             <td class="text-center"><input type="checkbox" disabled
                                                            {% if official.saturday %}checked{% endif %}
                                                            title="{{ 'saturnday.participants'|trans }}"/></td>
-                            <td class="text-center">{{ official.itc }} </td>
+                            <td class="text-center">{{ official.itc|trans }} </td>
                             <td class="text-center">{{ official.comment }} </td>
                         </tr>
                     {% endfor %}
@@ -120,7 +120,7 @@
                             <td class="text-center"><input type="checkbox" disabled
                                                            {% if contestant.saturday %}checked{% endif %}
                                                            title="{{ 'saturnday.participants'|trans }}"/></td>
-                            <td class="text-center">{{ contestant.itc }} </td>
+                            <td class="text-center">{{ contestant.itc|trans }} </td>
                             <td class="text-center">{{ contestant.comment }} </td>
                         </tr>
                     {% endfor %}

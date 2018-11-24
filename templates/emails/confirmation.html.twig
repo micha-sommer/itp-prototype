@@ -50,6 +50,7 @@
             <th>{{ 'friday.participants'|trans }}</th>
             <th>{{ 'saturnday.participants'|trans }}</th>
             <th>{{ 'itc.participants'|trans }}</th>
+            <th>{{ 'Comment'|trans }}</th>
         </tr>
         </thead>
         <tbody>
@@ -62,6 +63,7 @@
                 <td>{% if official.friday %}{{ 'generic.yes'|trans }}{% else %}{{ 'generic.no'|trans }}{% endif %}</td>
                 <td>{% if official.saturday %}{{ 'generic.yes'|trans }}{% else %}{{ 'generic.no'|trans }}{% endif %}</td>
                 <td>{{ official.itc|trans }}</td>
+                <td>{{ official.comment|trans }}</td>
             </tr>
         {% endfor %}
         </tbody>
@@ -81,6 +83,7 @@
             <th>{{ 'friday.participants'|trans }}</th>
             <th>{{ 'saturnday.participants'|trans }}</th>
             <th>{{ 'itc.participants'|trans }}</th>
+            <th>{{ 'Comment'|trans }}</th>
         </tr>
         </thead>
         <tbody>
@@ -94,6 +97,7 @@
                 <td>{% if contestant.friday %}{{ 'generic.yes'|trans }}{% else %}{{ 'generic.no'|trans }}{% endif %}</td>
                 <td>{% if contestant.saturday %}{{ 'generic.yes'|trans }}{% else %}{{ 'generic.no'|trans }}{% endif %}</td>
                 <td>{{ contestant.itc|trans }}</td>
+                <td>{{ contestant.comment|trans }}</td>
             </tr>
         {% endfor %}
         </tbody>
