@@ -114,6 +114,8 @@ class LoginController extends Controller
      */
     public function admin(Request $request, RegistrationsRepository $registrationsRepository, OfficialsRepository $officialsRepository, ContestantsRepository $contestantsRepository, TransportRepository $transportRepository, ChangeSetRepository $changeSetRepository, \Swift_Mailer $mailer): Response
     {
+        $showSentNotification = false;
+
         $form = $this->createForm(ChangeSetType::class);
 
         $form->handleRequest($request);
@@ -245,7 +247,7 @@ class LoginController extends Controller
                     'changes' => $changes,
                 ]), 'text/html');
 
-            $mailer->send($message);
+            $showSentNotification = $mailer->send($message);
 
             // unused code
             /*
@@ -268,7 +270,10 @@ class LoginController extends Controller
 
         $registrations = $registrationsRepository->findAll();
         return $this->render('security/admin.html.twig',
-            ['registrations' => $registrations,
-                'form' => $form->createView(),]);
+            [
+                'registrations' => $registrations,
+                'showSentNotification' => $showSentNotification,
+                'form' => $form->createView(),
+            ]);
     }
 }
