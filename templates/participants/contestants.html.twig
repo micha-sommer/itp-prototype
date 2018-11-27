@@ -52,7 +52,7 @@
             $collectionHolder.data('index', index + 1);
 
             // Display the form in the page in an li, before the "Add a tag" link td
-            let $newFormTr = $('<tr class="table-warning contestant"></tr>').append(newForm);
+            let $newFormTr = $('<tr class="table-secondary contestant"></tr>').append(newForm);
 
             addTagFormCommentLink($newFormTr);
             addTagFormDeleteLink($newFormTr);
@@ -101,7 +101,7 @@
         <tr class="table-sm text-center">
             <td class="bg-light" colspan="5"></td>
             <th colspan="3">{{ 'accommodation.participants'|trans }}</th>
-            <td class="bg-light"></td>
+            <td class="bg-light" colspan="2" ></td>
         </tr>
         <tr>
             <th class="text-center" scope="col">{{ 'first_name.participants'|trans }}</th>
