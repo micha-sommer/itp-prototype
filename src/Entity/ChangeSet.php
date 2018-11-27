@@ -41,7 +41,8 @@ class ChangeSet
      */
     private $name_id;
 
-    private $club;
+    private $object;
+    private $changeSetObject;
 
     public function getId(): ?int
     {
@@ -109,18 +110,32 @@ class ChangeSet
     }
 
     /**
-     * @return string
      */
-    public function getClub() :string
+    public function getObject()
     {
-        return $this->club;
+        return $this->object;
     }
 
     /**
-     * @param string $club
+     * @param $object
      */
-    public function setClub(string $club): void
+    public function setObject($object): void
     {
-        $this->club = $club;
+        $this->object = $object;
+    }
+
+    /**
+     */
+    public function getChangeSetObject()
+    {
+        return $this->changeSetObject;
+    }
+
+    /**
+     * @param $changeSetObject
+     */
+    public function setChangeSetObject($changeSetObject): void
+    {
+        $this->changeSetObject = $changeSetObject;
     }
 }

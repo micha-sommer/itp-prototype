@@ -37,7 +37,6 @@
         </tbody>
     </table>
 </div>
-<hr/>
 <div>
     <h3>New Officials:</h3>
     <table border="1">
@@ -52,6 +51,7 @@
             <th>{{ 'friday.participants'|trans }}</th>
             <th>{{ 'saturnday.participants'|trans }}</th>
             <th>{{ 'itc.participants'|trans }}</th>
+            <th>{{ 'Comment'|trans }}</th>
         </tr>
         </thead>
         <tbody>
@@ -66,12 +66,12 @@
                 <td>{% if newOfficial.friday %}yes{% else %}no{% endif %}</td>
                 <td>{% if newOfficial.saturday %}yes{% else %}no{% endif %}</td>
                 <td>{{ newOfficial.itc }}</td>
+                <td>{{ newOfficial.comment }}</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 </div>
-<hr/>
 <div>
     <h3>New Contestant:</h3>
     <table border="1">
@@ -87,6 +87,7 @@
             <th>{{ 'friday.participants'|trans }}</th>
             <th>{{ 'saturnday.participants'|trans }}</th>
             <th>{{ 'itc.participants'|trans }}</th>
+            <th>{{ 'Comment'|trans }}</th>
         </tr>
         </thead>
         <tbody>
@@ -102,12 +103,12 @@
                 <td>{% if newContestant.friday %}yes{% else %}no{% endif %}</td>
                 <td>{% if newContestant.saturday %}yes{% else %}no{% endif %}</td>
                 <td>{{ newContestant.itc }}</td>
+                <td>{{ newContestant.comment }}</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 </div>
-<hr/>
 <div>
     <h3>New Transport:</h3>
     <table border="1">
@@ -154,6 +155,7 @@
             <th>{{ 'friday.participants'|trans }}</th>
             <th>{{ 'saturnday.participants'|trans }}</th>
             <th>{{ 'itc.participants'|trans }}</th>
+            <th>{{ 'Comment'|trans }}</th>
         </tr>
         </thead>
         {% for drop in droppedOfficials %}
@@ -167,6 +169,7 @@
                 <td>{% if drop.friday %}yes{% else %}no{% endif %}</td>
                 <td>{% if drop.saturday %}yes{% else %}no{% endif %}</td>
                 <td>{{ drop.itc }}</td>
+                <td>{{ drop.comment }}</td>
             </tr>
         {% endfor %}
     </table>
@@ -186,6 +189,7 @@
             <th>{{ 'friday.participants'|trans }}</th>
             <th>{{ 'saturnday.participants'|trans }}</th>
             <th>{{ 'itc.participants'|trans }}</th>
+            <th>{{ 'Comment'|trans }}</th>
         </tr>
         </thead>
         {% for drop in droppedContestants %}
@@ -200,6 +204,7 @@
                 <td>{% if drop.friday %}yes{% else %}no{% endif %}</td>
                 <td>{% if drop.saturday %}yes{% else %}no{% endif %}</td>
                 <td>{{ drop.itc }}</td>
+                <td>{{ drop.comment }}</td>
             </tr>
         {% endfor %}
     </table>
@@ -233,15 +238,251 @@
         {% endfor %}
     </table>
 </div>
+<hr>
 <div>
-    <h3>Other Changes:</h3>
-    {% for change in changes %}
-        <div>
-            [{{ change.timestamp|date("Y-m-d H:i:s"|trans) }}]:{{ change.club }} has
-            changed {{ change.name }}[{{ change.nameId }}] {{ change.changeSet }}
-        </div>
-    {% endfor %}
+    <h3>Changed Registrations:</h3>
+    <table border="1">
+        <thead>
+        <tr>
+            <th>{{ 'When'|trans }}</th>
+            <th>{{ 'Club'|trans }}</th>
+            <th>{{ 'First name'|trans }}</th>
+            <th>{{ 'Last name'|trans }}</th>
+            <th>{{ 'Email'|trans }}</th>
+            <th>{{ 'Telephone'|trans }}</th>
+            <th>{{ 'Comment'|trans }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for change in registrationsChanges %}
+            <tr>
+                <td>{{ change.timestamp|date("Y-m-d H:i:s"|trans) }}</td>
+                <td>{{ change.object.club }}</td>
+                <td>
+                    {% if change.changeSetObject.firstName is defined %}
+                        {{ change.changeSetObject.firstName[0] }} -> {{ change.changeSetObject.firstName[1] }}
+                    {% endif %}
+                </td>
+                <td>
+                    {% if change.changeSetObject.lastName is defined %}
+                        {{ change.changeSetObject.lastName[0] }} => {{ change.changeSetObject.lastName[1] }}
+                    {% endif %}
+                </td>
+                <td>
+                    {% if change.changeSetObject.email is defined %}
+                        {{ change.changeSetObject.email[0] }} => {{ change.changeSetObject.email[1] }}
+                    {% endif %}
+                </td>
+                <td>
+                    {% if change.changeSetObject.telephone is defined %}
+                        {{ change.changeSetObject.telephone[0] }} -> {{ change.changeSetObject.telephone[1] }}
+                    {% endif %}
+                </td>
+                <td>
+                    {% if change.changeSetObject.comment is defined %}
+                        {{ change.changeSetObject.comment[0] }} -> {{ change.changeSetObject.comment[1] }}
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 </div>
+<div>
+    <h3>Changed Officials:</h3>
+    <table border="1">
+        <thead>
+        <tr>
+            <th>{{ 'When'|trans }}</th>
+            <th>{{ 'Club'|trans }}</th>
+            <th>{{ 'first_name.participants'|trans }}</th>
+            <th>{{ 'last_name.participants'|trans }}</th>
+            <th>{{ 'role.participants'|trans }}</th>
+            <th>{{ 'gender.participants'|trans }}</th>
+            <th>{{ 'friday.participants'|trans }}</th>
+            <th>{{ 'saturnday.participants'|trans }}</th>
+            <th>{{ 'itc.participants'|trans }}</th>
+            <th>{{ 'Comment'|trans }}</th>
+        </tr>
+        </thead>
+        {% for change in officialsChanges %}
+            <tr>
+                <td>{{ change.timestamp|date("Y-m-d H:i:s"|trans) }}</td>
+                <td>{{ change.object.registration.club }}</td>
+                <td>
+                    {% if change.changeSetObject.firstName is defined %}
+                        {{ change.changeSetObject.firstName[0] }} -> {{ change.changeSetObject.firstName[1] }}
+                    {% endif %}
+                </td>
+                <td>
+                    {% if change.changeSetObject.lastName is defined %}
+                        {{ change.changeSetObject.lastName[0] }} -> {{ change.changeSetObject.lastName[1] }}
+                    {% endif %}
+                </td>
+                <td>
+                    {% if change.changeSetObject.role is defined %}
+                        {{ change.changeSetObject.role[0] }} -> {{ change.changeSetObject.role[1] }}
+                    {% endif %}
+                </td>
+                <td>
+                    {% if change.changeSetObject.gender is defined %}
+                        {{ change.changeSetObject.gender[0] }} -> {{ change.changeSetObject.gender[1] }}
+                    {% endif %}
+                </td>
+                <td>
+                    {% if change.changeSetObject.friday is defined %}
+                        {% if change.changeSetObject.friday[0] %}yes{% else %}no{% endif %}
+                        ->
+                        {% if change.changeSetObject.friday[1] %}yes{% else %}no{% endif %}
+                    {% endif %}
+                </td>
+                <td>
+                    {% if change.changeSetObject.saturday is defined %}
+                        {% if change.changeSetObject.saturday[0] %}yes{% else %}no{% endif %}
+                        ->
+                        {% if change.changeSetObject.saturday[1] %}yes{% else %}no{% endif %}
+                    {% endif %}
+                </td>
+                <td>
+                    {% if change.changeSetObject.itc is defined %}
+                        {{ change.changeSetObject.itc[0] }} -> {{ change.changeSetObject.itc[1] }}
+                    {% endif %}
+                </td>
+                <td>
+                    {% if change.changeSetObject.comment is defined %}
+                        {{ change.changeSetObject.comment[0] }} -> {{ change.changeSetObject.comment[1] }}
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+<div>
+    <h3>Changed Contestants:</h3>
+    <table border="1">
+        <thead>
+        <tr>
+            <th>{{ 'When'|trans }}</th>
+            <th>{{ 'Club'|trans }}</th>
+            <th>{{ 'first_name.participants'|trans }}</th>
+            <th>{{ 'last_name.participants'|trans }}</th>
+            <th>{{ 'year.contestants'|trans }}</th>
+            <th>{{ 'weight.contestants'|trans }}</th>
+            <th>{{ 'age.contestants'|trans }}</th>
+            <th>{{ 'friday.participants'|trans }}</th>
+            <th>{{ 'saturnday.participants'|trans }}</th>
+            <th>{{ 'itc.participants'|trans }}</th>
+            <th>{{ 'Comment'|trans }}</th>
+        </tr>
+        </thead>
+        {% for change in contestantsChanges %}
+            <tr>
+                <td>{{ change.timestamp|date("Y-m-d H:i:s"|trans) }}</td>
+                <td>{{ change.object.registration.club }}</td>
+                <td>
+                    {% if change.changeSetObject.firstName is defined %}
+                        {{ change.changeSetObject.firstName[0] }} -> {{ change.changeSetObject.firstName[1] }}
+                    {% endif %}
+                </td>
+                <td>
+                    {% if change.changeSetObject.lastName is defined %}
+                        {{ change.changeSetObject.lastName[0] }} -> {{ change.changeSetObject.lastName[1] }}
+                    {% endif %}
+                </td>
+                <td>
+                    {% if change.changeSetObject.year is defined %}
+                        {{ change.changeSetObject.year[0] }} -> {{ change.changeSetObject.year[1] }}
+                    {% endif %}
+                </td>
+                <td>
+                    {% if change.changeSetObject.weightCategory is defined %}
+                        {{ change.changeSetObject.weightCategory[0] }} -> {{ change.changeSetObject.weightCategory[1] }}
+                    {% endif %}
+                </td>
+                <td>
+                    {% if change.changeSetObject.ageCategory is defined %}
+                        {{ change.changeSetObject.ageCategory[0] }} -> {{ change.changeSetObject.ageCategory[1] }}
+                    {% endif %}
+                </td>
+                <td>
+                    {% if change.changeSetObject.friday is defined %}
+                        {% if change.changeSetObject.friday[0] %}yes{% else %}no{% endif %}
+                        ->
+                        {% if change.changeSetObject.friday[1] %}yes{% else %}no{% endif %}
+                    {% endif %}
+                </td>
+                <td>
+                    {% if change.changeSetObject.saturday is defined %}
+                        {% if change.changeSetObject.saturday[0] %}yes{% else %}no{% endif %}
+                        ->
+                        {% if change.changeSetObject.saturday[1] %}yes{% else %}no{% endif %}
+                    {% endif %}
+                </td>
+                <td>
+                    {% if change.changeSetObject.itc is defined %}
+                        {{ change.changeSetObject.itc[0] }} -> {{ change.changeSetObject.itc[1] }}
+                    {% endif %}
+                </td>
+                <td>
+                    {% if change.changeSetObject.comment is defined %}
+                        {{ change.changeSetObject.comment[0] }} -> {{ change.changeSetObject.comment[1] }}
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+<div>
+    <h3>Changed Transports:</h3>
+    <table border="1">
+        <thead>
+        <tr>
+            <th>{{ 'When'|trans }}</th>
+            <th>{{ 'Club'|trans }}</th>
+            <th>{{ 'Arrival'|trans }}</th>
+            <th>{{ 'Date'|trans }}</th>
+            <th>{{ 'Time'|trans }}</th>
+            <th>{{ 'Place'|trans }}</th>
+            <th>{{ 'Information'|trans }}</th>
+            <th>{{ 'Comment'|trans }}</th>
+        </tr>
+        </thead>
+        {% for change in transportsChanges %}
+            <tr>
+                <td>{{ change.timestamp|date("Y-m-d H:i:s"|trans) }}</td>
+                <td>'{{ change.object.registration.club }}'</td>
+                <td>
+                    {% if change.object.isArrival %}yes{% else %}no{% endif %}
+                </td>
+                <td>
+                    {% if change.changeSetObject.date.date is defined %}
+                        {{ change.changeSetObject.date[0].date|date("date.date"|trans) }} -> {{ change.changeSetObject.date[1].date|date("date.date"|trans) }}
+                    {% endif %}
+                </td>
+                <td>
+                    {% if change.changeSetObject.time.date is defined %}
+                        {{ change.changeSetObject.time[0].date|date("date.time"|trans) }} -> {{ change.changeSetObject.time[1].date|date("date.time"|trans) }}
+                    {% endif %}
+                </td>
+                <td>
+                    {% if change.changeSetObject.place is defined %}
+                        {{ change.changeSetObject.place[0] }} -> {{ change.changeSetObject.place[1] }}
+                    {% endif %}
+                </td>
+                <td>
+                    {% if change.changeSetObject.information is defined %}
+                        {{ change.changeSetObject.information[0] }} -> {{ change.changeSetObject.information[1] }}
+                    {% endif %}
+                </td>
+                <td>
+                    {% if change.changeSetObject.comment is defined %}
+                        {{ change.changeSetObject.comment[0] }} -> {{ change.changeSetObject.comment[1] }}
+                    {% endif %}
+                </td>
 
+            </tr>
+        {% endfor %}
+    </table>
+</div>
 </body>
 </html>

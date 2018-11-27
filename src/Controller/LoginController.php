@@ -6,6 +6,7 @@ namespace App\Controller;
 use App\Entity\ChangeSet;
 use App\Entity\Contestant;
 use App\Entity\Official;
+use App\Entity\Registration;
 use App\Entity\Transport;
 use App\Form\ChangeSetType;
 use App\Form\LoginType;
@@ -142,6 +143,10 @@ class LoginController extends Controller
                 return $changeSet->getType() === 'DROP' && $changeSet->getName() === 'transport';
             });
 
+            $getId = function ($object) {
+                return $object->getId();
+            };
+
             /*
              * retrieve object from change set (and adjust timestamp)
              */
@@ -154,54 +159,41 @@ class LoginController extends Controller
             $contestantsDrops = \array_map($getObject, $contestantsDrops);
             $transportsDrops = \array_map($getObject, $transportsDrops);
 
-            $registrationsChanges = \array_filter($changes, function (ChangeSet $changeSet) use ($newRegistrations) {
-                return $changeSet->getType() === 'UPDATE' && $changeSet->getName() === 'registration' && !\in_array($changeSet->getNameId(), $newRegistrations, true);
+            $registrationsChanges = \array_filter($changes, function (ChangeSet $changeSet) use ($getId, $newRegistrations) {
+                return $changeSet->getType() === 'UPDATE' && $changeSet->getName() === 'registration' && !\in_array($changeSet->getNameId(), \array_map($getId ,$newRegistrations), true);
             });
-            $officialsChanges = \array_filter($changes, function (ChangeSet $changeSet) use ($newOfficials) {
-                return $changeSet->getType() === 'UPDATE' && $changeSet->getName() === 'official' && !\in_array($changeSet->getNameId(), $newOfficials, true);
+            $officialsChanges = \array_filter($changes, function (ChangeSet $changeSet) use ($getId, $newOfficials) {
+                return $changeSet->getType() === 'UPDATE' && $changeSet->getName() === 'official' && !\in_array($changeSet->getNameId(), \array_map($getId ,$newOfficials), true);
             });
-            $contestantsChanges = \array_filter($changes, function (ChangeSet $changeSet) use ($newContestants) {
-                return $changeSet->getType() === 'UPDATE' && $changeSet->getName() === 'contestant' && !\in_array($changeSet->getNameId(), $newContestants, true);
+            $contestantsChanges = \array_filter($changes, function (ChangeSet $changeSet) use ($getId, $newContestants) {
+                return $changeSet->getType() === 'UPDATE' && $changeSet->getName() === 'contestant' && !\in_array($changeSet->getNameId(), \array_map($getId ,$newContestants), true);
             });
-            $transportsChanges = \array_filter($changes, function (ChangeSet $changeSet) use ($newTransports) {
-                return $changeSet->getType() === 'UPDATE' && $changeSet->getName() === 'transport' && !\in_array($changeSet->getNameId(), $newTransports, true);
+            $transportsChanges = \array_filter($changes, function (ChangeSet $changeSet) use ($getId, $newTransports) {
+                return $changeSet->getType() === 'UPDATE' && $changeSet->getName() === 'transport' && !\in_array($changeSet->getNameId(), \array_map($getId ,$newTransports), true);
             });
 
             $setClubRegistration = function (ChangeSet $changeSet) use ($registrationsRepository) {
                 $registration = $registrationsRepository->findOneById($changeSet->getNameId());
-                if ($registration) {
-                    $changeSet->setClub($registration->getClub() . '[' . $registration->getId() . ']');
-                }
+                $changeSet->setChangeSetObject(\json_decode($changeSet->getChangeSet()));
+                $changeSet->setObject($registration);
                 return $changeSet;
             };
             $setClubOfficials = function (ChangeSet $changeSet) use ($officialsRepository) {
                 $official = $officialsRepository->findOneById($changeSet->getNameId());
-                if ($official) {
-                    $registration = $official->getRegistration();
-                    if ($registration) {
-                        $changeSet->setClub($registration->getClub() . '[' . $registration->getId() . ']');
-                    }
-                }
+                $changeSet->setChangeSetObject(\json_decode($changeSet->getChangeSet()));
+                $changeSet->setObject($official);
                 return $changeSet;
             };
             $setClubContestants = function (ChangeSet $changeSet) use ($contestantsRepository) {
                 $contestant = $contestantsRepository->findOneById($changeSet->getNameId());
-                if ($contestant) {
-                    $registration = $contestant->getRegistration();
-                    if ($registration) {
-                        $changeSet->setClub($registration->getClub() . '[' . $registration->getId() . ']');
-                    }
-                }
+                $changeSet->setChangeSetObject(\json_decode($changeSet->getChangeSet()));
+                $changeSet->setObject($contestant);
                 return $changeSet;
             };
             $setClubTransport = function (ChangeSet $changeSet) use ($transportRepository) {
                 $transport = $transportRepository->findOneById($changeSet->getNameId());
-                if ($transport) {
-                    $registration = $transport->getRegistration();
-                    if ($registration) {
-                        $changeSet->setClub($registration->getClub() . '[' . $registration->getId() . ']');
-                    }
-                }
+                $changeSet->setChangeSetObject(\json_decode($changeSet->getChangeSet()));
+                $changeSet->setObject($transport);
                 return $changeSet;
             };
 
@@ -209,8 +201,6 @@ class LoginController extends Controller
             $officialsChanges = \array_map($setClubOfficials, $officialsChanges);
             $contestantsChanges = \array_map($setClubContestants, $contestantsChanges);
             $transportsChanges = \array_map($setClubTransport, $transportsChanges);
-
-            $changes = \array_merge($registrationsChanges, $officialsChanges, $contestantsChanges, $transportsChanges);
 
             usort($newOfficials, function (Official $a, Official $b) {
                 if (null === $a->getRegistration() && null === $b->getRegistration()) {
@@ -244,6 +234,10 @@ class LoginController extends Controller
                     'droppedOfficials' => $officialsDrops,
                     'droppedContestants' => $contestantsDrops,
                     'droppedTransports' => $transportsDrops,
+                    'registrationsChanges' => $registrationsChanges,
+                    'officialsChanges' => $officialsChanges,
+                    'contestantsChanges' => $contestantsChanges,
+                    'transportsChanges' => $transportsChanges,
                     'changes' => $changes,
                 ]), 'text/html');
 
