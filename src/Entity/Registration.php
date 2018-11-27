@@ -212,7 +212,7 @@ class Registration implements UserInterface, \Serializable, \JsonSerializable
      *
      * @return string The password
      */
-    public function getPassword() : ?string
+    public function getPassword(): ?string
     {
         return $this->password;
     }
@@ -239,7 +239,7 @@ class Registration implements UserInterface, \Serializable, \JsonSerializable
      *
      * @return string|null The salt
      */
-    public function getSalt() : ?string
+    public function getSalt(): ?string
     {
         // we use bcrypt, therefore no salt needed
         return null;
@@ -451,5 +451,25 @@ class Registration implements UserInterface, \Serializable, \JsonSerializable
     public function jsonSerialize()
     {
         return \get_object_vars($this);
+    }
+
+    public function getArrival(): ?Transport
+    {
+        $first = $this->getTransports()->filter(function (Transport $transport) {
+            return $transport->getIsArrival();
+        });
+        if($first->isEmpty())
+            return null;
+        return $first->first();
+    }
+
+    public function getDeparture(): ?Transport
+    {
+        $first = $this->getTransports()->filter(function (Transport $transport) {
+            return !$transport->getIsArrival();
+        });
+        if($first->isEmpty())
+            return null;
+        return $first->first();
     }
 }

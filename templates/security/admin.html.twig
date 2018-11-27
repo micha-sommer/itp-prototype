@@ -20,6 +20,8 @@
                 <th scope="col">User Email</th>
                 <th scope="col">O</th>
                 <th scope="col">C</th>
+                <th scope="col"><i class="fa fa-plane-arrival"></i></th>
+                <th scope="col"><i class="fa fa-plane-departure"></i></th>
                 <th scope="col">Action</th>
             </tr>
             </thead>
@@ -32,6 +34,22 @@
                     <td>{{ registration.email }}</td>
                     <td>{{ registration.officials.count }}</td>
                     <td>{{ registration.contestants.count }}</td>
+                    <td>
+                        <input class="check-input" type="checkbox" disabled
+                                {% if registration.arrival %}
+                                    checked
+                                {% endif %}
+
+                                title="Arrival"
+                        >
+                    </td>
+                    <td>
+                        <input class="check-input" type="checkbox" disabled
+                                {% if registration.departure %}
+                                    checked
+                                {% endif %}
+                        />
+                    </td>
                     <td>
                         <a class="btn btn-info" role="button"
                            data-toggle="tooltip" data-placement="top"
