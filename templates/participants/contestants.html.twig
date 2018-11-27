@@ -129,6 +129,7 @@
                 {{ '<td class="text-center">'|e }}{{ form_widget(form.list.vars.prototype.saturday)|e }}        {{ '</td>'|e }}
                 {{ '<td class="text-center">'|e }}{{ form_widget(form.list.vars.prototype.itc)|e }} {{ form_widget(form.list.vars.prototype.comment)|e }} {{ '</td>'|e }}
             ">
+        {{ form_row(form._token) }}
         {% for contestant in form.list %}
             <tr class="contestant">
                 <td class="text-center">{{ form_widget(contestant.first_name) }}</td>
@@ -138,7 +139,7 @@
                 <td class="text-center">{{ form_widget(contestant.age_category) }}</td>
                 <td class="text-center">{{ form_widget(contestant.friday) }}</td>
                 <td class="text-center">{{ form_widget(contestant.saturday) }}</td>
-                <td class="text-center">{{ form_widget(contestant.itc) }} {{ form_errors(contestant.itc) }} {{ form_widget(contestant.comment) }} {{ form_row(form._token) }}</td>
+                <td class="text-center">{{ form_widget(contestant.itc) }} {{ form_errors(contestant.itc) }} {{ form_widget(contestant.comment) }}</td>
             </tr>
         {% endfor %}
         </tbody>

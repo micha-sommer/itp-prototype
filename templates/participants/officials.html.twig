@@ -126,6 +126,7 @@
                 {{ '<td class="text-center">'|e }}{{ form_widget(form.list.vars.prototype.saturday)|e }}    {{ '</td>'|e }}
                 {{ '<td class="text-center">'|e }}{{ form_widget(form.list.vars.prototype.itc)|e }} {{ form_widget(form.list.vars.prototype.comment)|e }} {{ '</td>'|e }}
             ">
+        {{ form_row(form._token) }}
         {% for official in form.list %}
             <tr class="official">
                 <td class="text-center">{{ form_widget(official.first_name) }}</td>
@@ -134,7 +135,7 @@
                 <td class="text-center">{{ form_widget(official.gender) }}</td>
                 <td class="text-center">{{ form_widget(official.friday) }}</td>
                 <td class="text-center">{{ form_widget(official.saturday) }}</td>
-                <td class="text-center">{{ form_widget(official.itc) }} {{ form_widget(official.comment) }} {{ form_row(form._token) }}</td>
+                <td class="text-center">{{ form_widget(official.itc) }} {{ form_widget(official.comment) }}</td>
             </tr>
         {% endfor %}
         </tbody>

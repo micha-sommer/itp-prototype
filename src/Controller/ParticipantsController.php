@@ -82,6 +82,7 @@ class ParticipantsController extends Controller
      * @param ValidatorInterface $validator
      * @param TranslatorInterface $translator
      * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Exception
      */
     public function contestants(Request $request, ContestantsRepository $contestantsRepository, ValidatorInterface $validator, TranslatorInterface $translator): Response
     {
@@ -154,6 +155,7 @@ class ParticipantsController extends Controller
      * @param Request $request
      * @param TransportRepository $transportRepository
      * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Exception
      */
     public function transports(Request $request, TransportRepository $transportRepository): Response
     {
