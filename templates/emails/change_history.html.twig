@@ -246,6 +246,7 @@
         <tr>
             <th>{{ 'When'|trans }}</th>
             <th>{{ 'Club'|trans }}</th>
+            <th>{{ 'Country'|trans }}</th>
             <th>{{ 'First name'|trans }}</th>
             <th>{{ 'Last name'|trans }}</th>
             <th>{{ 'Email'|trans }}</th>
@@ -256,8 +257,27 @@
         <tbody>
         {% for change in registrationsChanges %}
             <tr>
-                <td>{{ change.timestamp|date("Y-m-d H:i:s"|trans) }}</td>
-                <td>{{ change.object.club }}</td>
+                <td>
+                    {{ change.timestamp|date("Y-m-d H:i:s"|trans) }}
+                </td>
+                {% if change.changeSetObject.club is defined %}
+                    <td bgcolor="orange">
+                        {{ change.changeSetObject.club[0] }} -> {{ change.changeSetObject.club[1] }}
+                    </td>
+                {% else %}
+                    <td>
+                        {{ change.object.club }}
+                    </td>
+                {% endif %}
+                {% if change.changeSetObject.country is defined %}
+                    <td bgcolor="orange">
+                        {{ change.changeSetObject.country[0] }} -> {{ change.changeSetObject.country[1] }}
+                    </td>
+                {% else %}
+                    <td>
+                        {{ change.object.country }}
+                    </td>
+                {% endif %}
                 {% if change.changeSetObject.firstName is defined %}
                     <td bgcolor="orange">
                         {{ change.changeSetObject.firstName[0] }} -> {{ change.changeSetObject.firstName[1] }}
