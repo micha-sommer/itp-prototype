@@ -23,6 +23,7 @@ class ChangeSetRepository extends ServiceEntityRepository
      * @param \DateTimeInterface $after
      * @param \DateTimeInterface|null $before
      * @return ChangeSet[] Returns an array of ChangeSet objects
+     * @throws \Exception
      */
     public function findByDate(\DateTimeInterface $after, \DateTimeInterface $before = null): array
     {

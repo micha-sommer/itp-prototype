@@ -29,6 +29,7 @@ class ParticipantsController extends Controller
      * @param Request $request
      * @param OfficialsRepository $officialsRepository
      * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Exception
      */
     public function officials(Request $request, OfficialsRepository $officialsRepository): Response
     {
@@ -202,10 +203,6 @@ class ParticipantsController extends Controller
                 $create_departure = true;
             }
             $entityManager->flush();
-
-            if ($request->request->get('back')) {
-                return $this->redirectToRoute('welcome');
-            }
         }
         if ($arrival_form->isSubmitted() && $arrival_form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
@@ -220,12 +217,11 @@ class ParticipantsController extends Controller
                 $entityManager->remove($arrival);
                 $create_arrival = true;
             }
-
             $entityManager->flush();
+        }
 
-            if ($request->request->get('back')) {
-                return $this->redirectToRoute('welcome');
-            }
+        if ($request->request->get('back')) {
+            return $this->redirectToRoute('welcome');
         }
 
         return $this->render('participants/transports.html.twig', [

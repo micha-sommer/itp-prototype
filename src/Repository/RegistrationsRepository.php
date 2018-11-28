@@ -23,6 +23,7 @@ class RegistrationsRepository extends ServiceEntityRepository
      * @param \DateTimeInterface $after
      * @param \DateTimeInterface|null $before
      * @return Registration[] Returns an array of Registrtion objects
+     * @throws \Exception
      */
     public function findByDate(\DateTimeInterface $after, \DateTimeInterface $before = null): array
     {

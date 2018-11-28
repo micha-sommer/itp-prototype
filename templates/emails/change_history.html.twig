@@ -258,31 +258,52 @@
             <tr>
                 <td>{{ change.timestamp|date("Y-m-d H:i:s"|trans) }}</td>
                 <td>{{ change.object.club }}</td>
-                <td>
-                    {% if change.changeSetObject.firstName is defined %}
+                {% if change.changeSetObject.firstName is defined %}
+                    <td bgcolor="orange">
                         {{ change.changeSetObject.firstName[0] }} -> {{ change.changeSetObject.firstName[1] }}
-                    {% endif %}
-                </td>
-                <td>
-                    {% if change.changeSetObject.lastName is defined %}
-                        {{ change.changeSetObject.lastName[0] }} => {{ change.changeSetObject.lastName[1] }}
-                    {% endif %}
-                </td>
-                <td>
-                    {% if change.changeSetObject.email is defined %}
+                    </td>
+                {% else %}
+                    <td>
+                        {{ change.object.firstName }}
+                    </td>
+                {% endif %}
+                {% if change.changeSetObject.lastName is defined %}
+                    <td bgcolor="orange">
+                        {{ change.changeSetObject.lastName[0] }}
+                        => {{ change.changeSetObject.lastName[1] }}
+                    </td>
+                {% else %}
+                    <td>
+                        {{ change.object.lastName }}
+                    </td>
+                {% endif %}
+                {% if change.changeSetObject.email is defined %}
+                    <td bgcolor="orange">
                         {{ change.changeSetObject.email[0] }} => {{ change.changeSetObject.email[1] }}
-                    {% endif %}
-                </td>
-                <td>
-                    {% if change.changeSetObject.telephone is defined %}
+                    </td>
+                {% else %}
+                    <td>
+                        {{ change.object.email }}
+                    </td>
+                {% endif %}
+                {% if change.changeSetObject.telephone is defined %}
+                    <td bgcolor="orange">
                         {{ change.changeSetObject.telephone[0] }} -> {{ change.changeSetObject.telephone[1] }}
-                    {% endif %}
-                </td>
-                <td>
-                    {% if change.changeSetObject.comment is defined %}
+                    </td>
+                {% else %}
+                    <td>
+                        {{ change.object.telephone }}
+                    </td>
+                {% endif %}
+                {% if change.changeSetObject.comment is defined %}
+                    <td bgcolor="orange">
                         {{ change.changeSetObject.comment[0] }} -> {{ change.changeSetObject.comment[1] }}
-                    {% endif %}
-                </td>
+                    </td>
+                {% else %}
+                    <td>
+                        {{ change.object.comment }}
+                    </td>
+                {% endif %}
             </tr>
         {% endfor %}
         </tbody>
@@ -309,50 +330,82 @@
             <tr>
                 <td>{{ change.timestamp|date("Y-m-d H:i:s"|trans) }}</td>
                 <td>{{ change.object.registration.club }}</td>
-                <td>
-                    {% if change.changeSetObject.firstName is defined %}
+                {% if change.changeSetObject.firstName is defined %}
+                    <td bgcolor="orange">
                         {{ change.changeSetObject.firstName[0] }} -> {{ change.changeSetObject.firstName[1] }}
-                    {% endif %}
-                </td>
-                <td>
-                    {% if change.changeSetObject.lastName is defined %}
+                    </td>
+                {% else %}
+                    <td>
+                        {{ change.object.firstName }}
+                    </td>
+                {% endif %}
+                {% if change.changeSetObject.lastName is defined %}
+                    <td bgcolor="orange">
                         {{ change.changeSetObject.lastName[0] }} -> {{ change.changeSetObject.lastName[1] }}
-                    {% endif %}
-                </td>
-                <td>
-                    {% if change.changeSetObject.role is defined %}
+                    </td>
+                {% else %}
+                    <td>
+                        {{ change.object.lastName }}
+                    </td>
+                {% endif %}
+                {% if change.changeSetObject.role is defined %}
+                    <td bgcolor="orange">
                         {{ change.changeSetObject.role[0] }} -> {{ change.changeSetObject.role[1] }}
-                    {% endif %}
-                </td>
-                <td>
-                    {% if change.changeSetObject.gender is defined %}
+                    </td>
+                {% else %}
+                    <td>
+                        {{ change.object.role }}
+                    </td>
+                {% endif %}
+                {% if change.changeSetObject.gender is defined %}
+                    <td bgcolor="orange">
                         {{ change.changeSetObject.gender[0] }} -> {{ change.changeSetObject.gender[1] }}
-                    {% endif %}
-                </td>
-                <td>
-                    {% if change.changeSetObject.friday is defined %}
+                    </td>
+                {% else %}
+                    <td>
+                        {{ change.object.gender }}
+                    </td>
+                {% endif %}
+                {% if change.changeSetObject.friday is defined %}
+                    <td bgcolor="orange">
                         {% if change.changeSetObject.friday[0] %}yes{% else %}no{% endif %}
                         ->
                         {% if change.changeSetObject.friday[1] %}yes{% else %}no{% endif %}
-                    {% endif %}
-                </td>
-                <td>
-                    {% if change.changeSetObject.saturday is defined %}
+                    </td>
+                {% else %}
+                    <td>
+                        {% if change.object.friday %}yes{% else %}no{% endif %}
+                    </td>
+                {% endif %}
+                {% if change.changeSetObject.saturday is defined %}
+                    <td bgcolor="orange">
                         {% if change.changeSetObject.saturday[0] %}yes{% else %}no{% endif %}
                         ->
                         {% if change.changeSetObject.saturday[1] %}yes{% else %}no{% endif %}
-                    {% endif %}
-                </td>
-                <td>
-                    {% if change.changeSetObject.itc is defined %}
+                    </td>
+                {% else %}
+                    <td>
+                        {% if change.object.saturday %}yes{% else %}no{% endif %}
+                    </td>
+                {% endif %}
+                {% if change.changeSetObject.itc is defined %}
+                    <td bgcolor="orange">
                         {{ change.changeSetObject.itc[0] }} -> {{ change.changeSetObject.itc[1] }}
-                    {% endif %}
-                </td>
-                <td>
-                    {% if change.changeSetObject.comment is defined %}
+                    </td>
+                {% else %}
+                    <td>
+                        {{ change.object.itc }}
+                    </td>
+                {% endif %}
+                {% if change.changeSetObject.comment is defined %}
+                    <td bgcolor="orange">
                         {{ change.changeSetObject.comment[0] }} -> {{ change.changeSetObject.comment[1] }}
-                    {% endif %}
-                </td>
+                    </td>
+                {% else %}
+                    <td>
+                        {{ change.object.comment }}
+                    </td>
+                {% endif %}
             </tr>
         {% endfor %}
     </table>
@@ -379,55 +432,91 @@
             <tr>
                 <td>{{ change.timestamp|date("Y-m-d H:i:s"|trans) }}</td>
                 <td>{{ change.object.registration.club }}</td>
-                <td>
-                    {% if change.changeSetObject.firstName is defined %}
+                {% if change.changeSetObject.firstName is defined %}
+                    <td bgcolor="orange">
                         {{ change.changeSetObject.firstName[0] }} -> {{ change.changeSetObject.firstName[1] }}
-                    {% endif %}
-                </td>
-                <td>
-                    {% if change.changeSetObject.lastName is defined %}
+                    </td>
+                {% else %}
+                    <td>
+                        {{ change.object.firstName }}
+                    </td>
+                {% endif %}
+                {% if change.changeSetObject.lastName is defined %}
+                    <td bgcolor="orange">
                         {{ change.changeSetObject.lastName[0] }} -> {{ change.changeSetObject.lastName[1] }}
-                    {% endif %}
-                </td>
-                <td>
-                    {% if change.changeSetObject.year is defined %}
+                    </td>
+                {% else %}
+                    <td>
+                        {{ change.object.lastName }}
+                    </td>
+                {% endif %}
+                {% if change.changeSetObject.year is defined %}
+                    <td bgcolor="orange">
                         {{ change.changeSetObject.year[0] }} -> {{ change.changeSetObject.year[1] }}
-                    {% endif %}
-                </td>
-                <td>
-                    {% if change.changeSetObject.weightCategory is defined %}
+                    </td>
+                {% else %}
+                    <td>
+                        {{ change.object.year }}
+                    </td>
+                {% endif %}
+                {% if change.changeSetObject.weightCategory is defined %}
+                    <td bgcolor="orange">
                         {{ change.changeSetObject.weightCategory[0] }} -> {{ change.changeSetObject.weightCategory[1] }}
-                    {% endif %}
-                </td>
-                <td>
-                    {% if change.changeSetObject.ageCategory is defined %}
+                    </td>
+                {% else %}
+                    <td>
+                        {{ change.object.weightCategory }}
+                    </td>
+                {% endif %}
+                {% if change.changeSetObject.ageCategory is defined %}
+                    <td bgcolor="orange">
                         {{ change.changeSetObject.ageCategory[0] }} -> {{ change.changeSetObject.ageCategory[1] }}
-                    {% endif %}
-                </td>
-                <td>
-                    {% if change.changeSetObject.friday is defined %}
+                    </td>
+                {% else %}
+                    <td>
+                        {{ change.object.ageCategory }}
+                    </td>
+                {% endif %}
+                {% if change.changeSetObject.friday is defined %}
+                    <td bgcolor="orange">
                         {% if change.changeSetObject.friday[0] %}yes{% else %}no{% endif %}
                         ->
                         {% if change.changeSetObject.friday[1] %}yes{% else %}no{% endif %}
-                    {% endif %}
-                </td>
-                <td>
-                    {% if change.changeSetObject.saturday is defined %}
+                    </td>
+                {% else %}
+                    <td>
+                        {% if change.object.friday %}yes{% else %}no{% endif %}
+                    </td>
+                {% endif %}
+                {% if change.changeSetObject.saturday is defined %}
+                    <td bgcolor="orange">
                         {% if change.changeSetObject.saturday[0] %}yes{% else %}no{% endif %}
                         ->
                         {% if change.changeSetObject.saturday[1] %}yes{% else %}no{% endif %}
-                    {% endif %}
-                </td>
-                <td>
-                    {% if change.changeSetObject.itc is defined %}
+                    </td>
+                {% else %}
+                    <td>
+                        {% if change.object.saturday %}yes{% else %}no{% endif %}
+                    </td>
+                {% endif %}
+                {% if change.changeSetObject.itc is defined %}
+                    <td bgcolor="orange">
                         {{ change.changeSetObject.itc[0] }} -> {{ change.changeSetObject.itc[1] }}
-                    {% endif %}
-                </td>
-                <td>
-                    {% if change.changeSetObject.comment is defined %}
+                    </td>
+                {% else %}
+                    <td>
+                        {{ change.object.itc }}
+                    </td>
+                {% endif %}
+                {% if change.changeSetObject.comment is defined %}
+                    <td bgcolor="orange">
                         {{ change.changeSetObject.comment[0] }} -> {{ change.changeSetObject.comment[1] }}
-                    {% endif %}
-                </td>
+                    </td>
+                {% else %}
+                    <td>
+                        {{ change.object.comment }}
+                    </td>
+                {% endif %}
             </tr>
         {% endfor %}
     </table>
@@ -454,32 +543,53 @@
                 <td>
                     {% if change.object.isArrival %}yes{% else %}no{% endif %}
                 </td>
-                <td>
-                    {% if change.changeSetObject.date.date is defined %}
-                        {{ change.changeSetObject.date[0].date|date("date.date"|trans) }} -> {{ change.changeSetObject.date[1].date|date("date.date"|trans) }}
-                    {% endif %}
-                </td>
-                <td>
-                    {% if change.changeSetObject.time.date is defined %}
-                        {{ change.changeSetObject.time[0].date|date("date.time"|trans) }} -> {{ change.changeSetObject.time[1].date|date("date.time"|trans) }}
-                    {% endif %}
-                </td>
-                <td>
-                    {% if change.changeSetObject.place is defined %}
+                {% if change.changeSetObject.date.date is defined %}
+                    <td bgcolor="orange">
+                        {{ change.changeSetObject.date[0].date|date("date.date"|trans) }}
+                        -> {{ change.changeSetObject.date[1].date|date("date.date"|trans) }}
+                    </td>
+                {% else %}
+                    <td>
+                        {{ change.object.date|date("date.date"|trans) }}
+                    </td>
+                {% endif %}
+                {% if change.changeSetObject.time.date is defined %}
+                    <td bgcolor="orange">
+                        {{ change.changeSetObject.time[0].date|date("date.time"|trans) }}
+                        -> {{ change.changeSetObject.time[1].date|date("date.time"|trans) }}
+                    </td>
+                {% else %}
+                    <td>
+                        {{ change.object.time|date("date.time"|trans) }}
+                    </td>
+                {% endif %}
+                {% if change.changeSetObject.place is defined %}
+                    <td bgcolor="orange">
                         {{ change.changeSetObject.place[0] }} -> {{ change.changeSetObject.place[1] }}
-                    {% endif %}
-                </td>
-                <td>
-                    {% if change.changeSetObject.information is defined %}
+                    </td>
+                {% else %}
+                    <td>
+                        {{ change.object.place }}
+                    </td>
+                {% endif %}
+                {% if change.changeSetObject.information is defined %}
+                    <td bgcolor="orange">
                         {{ change.changeSetObject.information[0] }} -> {{ change.changeSetObject.information[1] }}
-                    {% endif %}
-                </td>
-                <td>
-                    {% if change.changeSetObject.comment is defined %}
+                    </td>
+                {% else %}
+                    <td>
+                        {{ change.object.information }}
+                    </td>
+                {% endif %}
+                {% if change.changeSetObject.comment is defined %}
+                    <td>
                         {{ change.changeSetObject.comment[0] }} -> {{ change.changeSetObject.comment[1] }}
-                    {% endif %}
-                </td>
-
+                    </td>
+                {% else %}
+                    <td>
+                        {{ change.object.comment }}
+                    </td>
+                {% endif %}
             </tr>
         {% endfor %}
     </table>

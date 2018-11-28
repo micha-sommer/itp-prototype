@@ -25,11 +25,11 @@ class ChangeSetType extends AbstractType
         $builder
             ->add('from_date', DateTimeType::class, [
                 'date_widget' => 'single_text',
-                'data' => (new \DateTime())->sub(new \DateInterval('P1D')),
+                'data' => (new \DateTime())->sub(new \DateInterval('P1D'))->setTime(0,0,0),
             ])
             ->add('to_date', DateTimeType::class, [
                 'date_widget' => 'single_text',
-                'data' => new \DateTime(),
+                'data' => (new \DateTime())->setTime(0,0,0),
             ]);
     }
 

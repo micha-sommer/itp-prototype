@@ -23,6 +23,7 @@ class TransportRepository extends ServiceEntityRepository
      * @param \DateTimeInterface $after
      * @param \DateTimeInterface|null $before
      * @return Transport[] Returns an array of ChangeSet objects
+     * @throws \Exception
      */
     public function findByDate(\DateTimeInterface $after, \DateTimeInterface $before = null): array
     {
@@ -38,6 +39,11 @@ class TransportRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * @param $id
+     * @return Transport|null
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
     public function findOneById($id): ?Transport
     {
         return $this->createQueryBuilder('t')
