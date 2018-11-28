@@ -66,7 +66,7 @@ class Registration implements UserInterface, \Serializable, \JsonSerializable
 
     /**
      * @var string | null
-     * @Assert\Length(max=4096)
+     * @Assert\Length(max=24)
      */
     private $plainPassword;
 
