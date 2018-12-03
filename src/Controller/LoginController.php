@@ -4,6 +4,7 @@ namespace App\Controller;
 
 
 use App\Entity\ChangeSet;
+use App\Entity\Registration;
 use App\Form\ChangeSetType;
 use App\Form\LoginType;
 use App\Form\ForgotPasswordType;
@@ -279,7 +280,9 @@ class LoginController extends Controller
             //*/
         }
 
-        $registrations = $registrationsRepository->findAll();
+        $registrations = \array_filter($registrationsRepository->findAll(), function (Registration $registration) {
+            return $registration->getId() > 0;
+        });
         return $this->render('security/admin.html.twig',
             [
                 'registrations' => $registrations,

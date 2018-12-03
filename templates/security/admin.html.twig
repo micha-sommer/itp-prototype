@@ -20,12 +20,20 @@
         <table class="table">
             <thead class="thead-dark">
             <tr>
+                <td colspan="5"></td>
+                <th class="text-center" colspan="4">Übernachtungen</th>
+                <td colspan="3"></td>
+            </tr>
+            <tr>
                 <th scope="col">ID</th>
                 <th scope="col"></th>
                 <th scope="col">Club</th>
-                <th scope="col">User Email</th>
                 <th scope="col">O</th>
                 <th scope="col">C</th>
+                <th scope="col">Fri</th>
+                <th scope="col">Sat</th>
+                <th scope="col">Tue</th>
+                <th scope="col">Wed</th>
                 <th scope="col"><i class="fa fa-plane-arrival"></i></th>
                 <th scope="col"><i class="fa fa-plane-departure"></i></th>
                 <th scope="col">Action</th>
@@ -37,9 +45,13 @@
                     <td>{{ registration.id }}</td>
                     <td>{{ registration.country }}</td>
                     <td>{{ registration.club }}</td>
-                    <td>{{ registration.email }}</td>
                     <td>{{ registration.officials.count }}</td>
                     <td>{{ registration.contestants.count }}</td>
+                    <td>{{ registration.overnightFridayCount }}</td>
+                    <td>{{ registration.overnightSaturndayCount }}</td>
+                    <td>{{ registration.iTCToTuesdayCount }}</td>
+                    <td>{{ registration.iTCToWednesdayCount }}</td>
+
                     <td>
                         <input class="check-input" type="checkbox" disabled
                                 {% if registration.arrival %}

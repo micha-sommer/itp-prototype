@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Enum\GenderEnum;
+use App\Enum\ITCEnum;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -458,7 +459,7 @@ class Registration implements UserInterface, \Serializable, \JsonSerializable
         $first = $this->getTransports()->filter(function (Transport $transport) {
             return $transport->getIsArrival();
         });
-        if($first->isEmpty())
+        if ($first->isEmpty())
             return null;
         return $first->first();
     }
@@ -468,8 +469,53 @@ class Registration implements UserInterface, \Serializable, \JsonSerializable
         $first = $this->getTransports()->filter(function (Transport $transport) {
             return !$transport->getIsArrival();
         });
-        if($first->isEmpty())
+        if ($first->isEmpty())
             return null;
         return $first->first();
+    }
+
+    public function getOvernightFridayCount(): int
+    {
+        $numOfficials = $this->officials->filter(function (Official $official) {
+            return $official->getFriday();
+        })->count();
+        $numContestants = $this->contestants->filter(function (Contestant $contestant) {
+            return $contestant->getFriday();
+        })->count();
+        return $numOfficials + $numContestants;
+    }
+
+    public function getOvernightSaturndayCount(): int
+    {
+        $numOfficials = $this->officials->filter(function (Official $official) {
+            return $official->getSaturday();
+        })->count();
+        $numContestants = $this->contestants->filter(function (Contestant $contestant) {
+            return $contestant->getSaturday();
+        })->count();
+        return $numOfficials + $numContestants;
+
+    }
+
+    public function getITCToTuesdayCount(): int
+    {
+        $numOfficials = $this->officials->filter(function (Official $official) {
+            return $official->getItc() === ITCEnum::tillTuesday;
+        })->count();
+        $numContestants = $this->contestants->filter(function (Contestant $contestant) {
+            return $contestant->getItc() === ITCEnum::tillTuesday;
+        })->count();
+        return $numOfficials + $numContestants;
+    }
+
+    public function getITCToWednesdayCount(): int
+    {
+        $numOfficials = $this->officials->filter(function (Official $official) {
+            return $official->getItc() === ITCEnum::tillWednesday;
+        })->count();
+        $numContestants = $this->contestants->filter(function (Contestant $contestant) {
+            return $contestant->getItc() === ITCEnum::tillWednesday;
+        })->count();
+        return $numOfficials + $numContestants;
     }
 }
