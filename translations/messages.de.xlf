@@ -160,7 +160,7 @@
       </trans-unit>
       <trans-unit id="Bupc.IR" resname="title.contestants">
         <source>title.contestants</source>
-        <target>Wettkämferinnen</target>
+        <target>Wettkämpferinnen</target>
       </trans-unit>
       <trans-unit id="fNT_rHH" resname="description.contestants">
         <source>description.contestants</source>
