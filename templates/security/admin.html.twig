@@ -58,7 +58,7 @@
                                     checked
                                 {% endif %}
 
-                                title="Arrival"
+                               title="Arrival"
                         >
                     </td>
                     <td>
@@ -89,5 +89,31 @@
             {% endfor %}
             </tbody>
         </table>
+
+        <p>
+            <a class="btn btn-primary" data-toggle="collapse" href="#collapseJSON" role="button" aria-expanded="false"
+               aria-controls="collapseJSON">
+                Thomas' Export
+            </a>
+        </p>
+        <div class="collapse" id="collapseJSON">
+            <button class="btn clipboard" data-clipboard-action="copy" data-clipboard-text="{{ allContestants }}">
+                Contestants CSV
+            </button>
+            <button class="btn clipboard" data-clipboard-action="copy" data-clipboard-text="{{ allOfficials }}">
+                Officials CSV
+            </button>
+            <button class="btn clipboard" data-clipboard-action="copy" data-clipboard-text="{{ allContestantsJSON }}">
+                Contestants JSON
+            </button>
+            <button class="btn clipboard" data-clipboard-action="copy" data-clipboard-text="{{ allOfficialsJSON }}">
+                Officials JSON
+            </button>
+        </div>
+
+        <script src="https://unpkg.com/clipboard@2.0.0/dist/clipboard.min.js"></script>
+        <script>
+            new ClipboardJS('.clipboard');
+        </script>
     </div>
 {% endblock %}

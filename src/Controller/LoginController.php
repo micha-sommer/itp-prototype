@@ -4,6 +4,8 @@ namespace App\Controller;
 
 
 use App\Entity\ChangeSet;
+use App\Entity\Contestant;
+use App\Entity\Official;
 use App\Entity\Registration;
 use App\Form\ChangeSetType;
 use App\Form\LoginType;
@@ -122,6 +124,7 @@ class LoginController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $after = $form->getData()['from_date'];
             $before = $form->getData()['to_date'];
+
             $newRegistrations = $registrationsRepository->findByDate($after, $before);
             $newOfficials = $officialsRepository->findByDate($after, $before);
             $newContestants = $contestantsRepository->findByDate($after, $before);
@@ -287,7 +290,66 @@ class LoginController extends Controller
             [
                 'registrations' => $registrations,
                 'showSentNotification' => $showSentNotification,
+                'allOfficialsJSON' => \json_encode($officialsRepository->findAll()),
+                'allOfficials' => self::officialsToCVS($officialsRepository->findAll()),
+                'allContestantsJSON' => \json_encode($contestantsRepository->findAll()),
+                'allContestants' => self::contestantsToCVS($contestantsRepository->findAll()),
                 'form' => $form->createView(),
             ]);
     }
+
+
+    private static function contestantsToCVS(array $contestants): string
+    {
+        return \implode("\n", \array_map(function (Contestant $contestant) {
+            return self::contestantToCVS($contestant);
+        }, $contestants));
+    }
+
+    private
+    static function contestantToCVS(Contestant $contestant): string
+    {
+        $data = [
+            $contestant->getRegistration()->getId(),
+            $contestant->getRegistration()->getCountry(),
+            $contestant->getRegistration()->getClub(),
+            $contestant->getLastName(),
+            $contestant->getFirstName(),
+            $contestant->getYear(),
+            $contestant->getWeightCategory(),
+            $contestant->getAgeCategory(),
+            $contestant->getItc(),
+            $contestant->getComment(),
+        ];
+
+        return \implode(',', $data);
+    }
+
+
+    private
+    static function officialsToCVS(array $officials): string
+    {
+        return \implode("\n", \array_map(function (Official $official) {
+            return self::officialToCVS($official);
+        }, $officials));
+    }
+
+    private
+    static function officialToCVS(Official $official): string
+    {
+        $data = [
+            $official->getRegistration()->getId(),
+            $official->getRegistration()->getCountry(),
+            $official->getRegistration()->getClub(),
+            $official->getLastName(),
+            $official->getFirstName(),
+            $official->getRole(),
+            $official->getGender(),
+            $official->getItc(),
+            $official->getComment(),
+        ];
+
+        return \implode(',', $data);
+    }
+
 }
