@@ -360,7 +360,7 @@ class LoginController extends Controller
             $official->getGender(),
             $official->getItc(),
             '',
-            '"' . preg_replace("/\r|\n/", '', $official->getComment()) . '"',,
+            '"' . preg_replace("/\r|\n/", '', $official->getComment()) . '"',
         ];
 
         return \implode(',', $data);
