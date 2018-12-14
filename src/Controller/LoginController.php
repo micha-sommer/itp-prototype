@@ -291,35 +291,42 @@ class LoginController extends Controller
                 'registrations' => $registrations,
                 'showSentNotification' => $showSentNotification,
                 'allOfficialsJSON' => \json_encode($officialsRepository->findAll()),
-                'allOfficials' => self::officialsToCVS($officialsRepository->findAll()),
+                'allOfficials' => $this->officialsToCVS($officialsRepository->findAll()),
                 'allContestantsJSON' => \json_encode($contestantsRepository->findAll()),
-                'allContestants' => self::contestantsToCVS($contestantsRepository->findAll()),
+                'allContestants' => $this->contestantsToCVS($contestantsRepository->findAll()),
                 'form' => $form->createView(),
             ]);
     }
 
 
-    private static function contestantsToCVS(array $contestants): string
+    private function contestantsToCVS(array $contestants): string
     {
-        return \implode("\n", \array_map(function (Contestant $contestant) {
-            return self::contestantToCVS($contestant);
+        $contestants = \array_filter($contestants, function (Contestant $contestant) {
+            return $contestant->getRegistration()->getId() > 0;
+        });
+
+        $path = $this->get('kernel')->getRootDir();
+        $codes = \json_decode(\file_get_contents($path . '/../public/data/ISO3166-1-Alpha-2_to_IOC.json'));
+        return \implode("\n", \array_map(function (Contestant $contestant) use ($codes) {
+            return self::contestantToCVS($contestant, $codes);
         }, $contestants));
     }
 
-    private
-    static function contestantToCVS(Contestant $contestant): string
+    private static function contestantToCVS(Contestant $contestant, $codes): string
     {
         $data = [
             $contestant->getRegistration()->getId(),
-            $contestant->getRegistration()->getCountry(),
+            $codes ? $codes->{$contestant->getRegistration()->getCountry()} : $contestant->getRegistration()->getCountry(),
             $contestant->getRegistration()->getClub(),
             $contestant->getLastName(),
             $contestant->getFirstName(),
             $contestant->getYear(),
             $contestant->getWeightCategory(),
             $contestant->getAgeCategory(),
+            '',
             $contestant->getItc(),
-            $contestant->getComment(),
+            '',
+            '"' . $contestant->getComment() . '"',
         ];
 
         return \implode(',', $data);
@@ -327,26 +334,33 @@ class LoginController extends Controller
 
 
     private
-    static function officialsToCVS(array $officials): string
+    function officialsToCVS(array $officials): string
     {
-        return \implode("\n", \array_map(function (Official $official) {
-            return self::officialToCVS($official);
+        $officials = \array_filter($officials, function (Official $official) {
+            return $official->getRegistration()->getId() > 0;
+        });
+        $path = $this->get('kernel')->getRootDir();
+        $codes = \json_decode(\file_get_contents($path . '/../public/data/ISO3166-1-Alpha-2_to_IOC.json'));
+        return \implode("\n", \array_map(function (Official $official) use ($codes) {
+            return self::officialToCVS($official, $codes);
         }, $officials));
     }
 
-    private
-    static function officialToCVS(Official $official): string
+    private static function officialToCVS(Official $official, $codes = null): string
     {
+
         $data = [
             $official->getRegistration()->getId(),
-            $official->getRegistration()->getCountry(),
+            $codes ? $codes->{$official->getRegistration()->getCountry()} : $official->getRegistration()->getCountry(),
             $official->getRegistration()->getClub(),
             $official->getLastName(),
             $official->getFirstName(),
             $official->getRole(),
+            '', '',
             $official->getGender(),
             $official->getItc(),
-            $official->getComment(),
+            '',
+            preg_replace("/\r|\n/", "", $official->getComment()),
         ];
 
         return \implode(',', $data);
