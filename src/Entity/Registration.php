@@ -199,7 +199,7 @@ class Registration implements UserInterface, \Serializable, \JsonSerializable
      */
     public function getRoles(): array
     {
-        if (\in_array($this->getEmail(), ['m.remmos@gmail.com', 'tonyste@web.de', 'webmaster@thueringer-judoverband.de'], true)) {
+        if (\in_array($this->getEmail(), ['m.remmos@gmail.com', 'info@thueringer-judoverband.de', 'webmaster@thueringer-judoverband.de'], true)) {
             return ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_ALLOWED_TO_SWITCH'];
         }
         return ['ROLE_USER'];
