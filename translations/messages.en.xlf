@@ -116,7 +116,7 @@
       <trans-unit id="7yQfzS4" resname="description.top.forgot_password">
         <source>description.top.forgot_password</source>
         <target>Please enter your email address that has been used to register your club/association/union and
-                    we'll send an link to reset your password.
+                    we'll send a mail with a link to reset your password.
                 </target>
       </trans-unit>
       <trans-unit id="BD2pNS9" resname="generic.reset_password">
