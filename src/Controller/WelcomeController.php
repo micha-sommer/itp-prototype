@@ -26,7 +26,7 @@ class WelcomeController extends AbstractController
         $arrival = null;
         $departure = null;
 
-        $registrationCount = \count($registrationsRepository->findAll());
+        $registrationCount = \count($registrationsRepository->findAll()) - 4;
 
         foreach (AgeCategoryEnum::asArray() as $age) {
             foreach (WeightCategoryEnum::asArray() as $weight) {
