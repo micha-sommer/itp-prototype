@@ -284,7 +284,7 @@ class LoginController extends Controller
         }
 
         $registrations = \array_filter($registrationsRepository->findAll(), function (Registration $registration) {
-	    return !\in_array($registration->getId(), [-1, -2, -3], true);
+	        return !\in_array($registration->getId(), [-1, -2, -3], true);
         });
         return $this->render('security/admin.html.twig',
             [
