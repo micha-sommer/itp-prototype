@@ -557,6 +557,22 @@
         <source>Print</source>
         <target>Drucken</target>
       </trans-unit>
+      <trans-unit id="raJR0Ph" resname="alert.accomondation">
+        <source>alert.accomondation</source>
+        <target>
+          <![CDATA[
+            <p>
+              Die Anzahl der uns zur Verfügung stehenden Unterkünfte ist auf Grund der hohen Teilnehmerzahl sehr knapp.
+              Sollten Sie jetzt noch Übernachtungen buchen, können wir diese nicht garantieren.
+              Kontaktieren Sie uns bitte bei Fragen.
+              <br/>
+              <a class="fa fa-phone" href="tel:0049-0361-3731647"> +49 (0) 361 373 16 47</a> oder
+                  <a class="fa fa-envelope" href="mailto:info@thueringer-judoverband.de">
+                      info@thueringer-judoverband.de</a>
+            </p>
+          ]]>
+        </target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

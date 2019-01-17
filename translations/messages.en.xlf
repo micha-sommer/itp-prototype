@@ -560,6 +560,21 @@
         <source>Print</source>
         <target>Print</target>
       </trans-unit>
+      <trans-unit id="raJR0Ph" resname="alert.accomondation">
+        <source>alert.accomondation</source>
+        <target>
+          <![CDATA[
+            <p>
+              The remain amount of available accomondation is very limited. We cannot garantee accomondatation if you add new ones from now on.
+              In case of questions, please don't hesitate to contact us.
+              <br/>
+              <a class="fa fa-phone" href="tel:0049-0361-3731647"> +49 (0) 361 373 16 47</a> or
+                  <a class="fa fa-envelope" href="mailto:info@thueringer-judoverband.de">
+                      info@thueringer-judoverband.de</a>
+            </p>
+          ]]>
+        </target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
