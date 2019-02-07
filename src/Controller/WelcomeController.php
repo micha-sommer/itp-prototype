@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Registration;
 use App\Entity\Transport;
 use App\Enum\AgeCategoryEnum;
 use App\Enum\WeightCategoryEnum;
@@ -26,7 +27,11 @@ class WelcomeController extends AbstractController
         $arrival = null;
         $departure = null;
 
-        $registrationCount = \count($registrationsRepository->findAll()) - 4;
+        $filterFunction = function (Registration $registration){
+            return \count($registration->getContestants())>0;
+        };
+
+        $registrationCount = \count(\array_filter($registrationsRepository->findAll(), $filterFunction));
 
         foreach (AgeCategoryEnum::asArray() as $age) {
             foreach (WeightCategoryEnum::asArray() as $weight) {
