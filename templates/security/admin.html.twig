@@ -40,6 +40,20 @@
             </tr>
             </thead>
             <tbody>
+                <tr>
+                    <td>&sum;</td>
+                    <td></td>
+                    <td>{{ countRegistrations }}</td>
+                    <td>{{ countOfficials }}</td>
+                    <td>{{ countContestants }}</td>
+                    <td class="table-active">{{ countFri }}</td>
+                    <td class="table-active">{{ countSat }}</td>
+                    <td class="table-active">{{ countITCtillTu }}</td>
+                    <td class="table-active">{{ countITCtillWe }}</td>
+                    <td>{{ countArrivals }}</td>
+                    <td>{{ countDepartures }}</td>
+                    <td></td>
+                </tr>
             {% for registration in registrations %}
                 <tr>
                     <td>{{ registration.id }}</td>

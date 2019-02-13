@@ -286,6 +286,17 @@ class LoginController extends Controller
         $registrations = \array_filter($registrationsRepository->findAll(), function (Registration $registration) {
 	        return !\in_array($registration->getId(), [-1, -2, -3], true);
         });
+
+        $countRegistrations = \count($registrations);
+        $countOfficials = $officialsRepository->count([]);
+        $countContestants = $contestantsRepository->count([]);
+        $countFri = $officialsRepository->count(['friday' => 'true']) + $contestantsRepository->count(['friday' => 'true']);
+        $countSat = $officialsRepository->count(['saturday' => 'true']) + $contestantsRepository->count(['saturday' => 'true']);
+        $countITCtillTu = $officialsRepository->count(['itc' => 'su-tu']) + $contestantsRepository->count(['itc' => 'su-tu']);
+        $countITCtillWe = $officialsRepository->count(['itc' => 'su-we']) + $contestantsRepository->count(['itc' => 'su-we']);
+        $countArrivals = $transportRepository->count(['isArrival' => 'true']);
+        $countDepartures = $transportRepository->count(['isArrival' => 'false']);
+
         return $this->render('security/admin.html.twig',
             [
                 'registrations' => $registrations,
@@ -294,6 +305,15 @@ class LoginController extends Controller
                 'allOfficials' => $this->officialsToCVS($officialsRepository->findAll()),
                 'allContestantsJSON' => \json_encode($contestantsRepository->findAll()),
                 'allContestants' => $this->contestantsToCVS($contestantsRepository->findAll()),
+                'countRegistrations' => $countRegistrations,
+                'countOfficials' => $countOfficials,
+                'countContestants' => $countContestants,
+                'countFri' => $countFri,
+                'countSat' => $countSat,
+                'countITCtillTu' => $countITCtillTu,
+                'countITCtillWe' => $countITCtillWe,
+                'countArrivals' => $countArrivals,
+                'countDepartures' => $countDepartures,
                 'form' => $form->createView(),
             ]);
     }
