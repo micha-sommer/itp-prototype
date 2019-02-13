@@ -290,12 +290,12 @@ class LoginController extends Controller
         $countRegistrations = \count($registrations);
         $countOfficials = $officialsRepository->count([]);
         $countContestants = $contestantsRepository->count([]);
-        $countFri = $officialsRepository->count(['friday' => 'TRUE']) + $contestantsRepository->count(['friday' => 'TRUE']);
-        $countSat = $officialsRepository->count(['saturday' => 'TRUE']) + $contestantsRepository->count(['saturday' => 'TRUE']);
+        $countFri = $officialsRepository->count(['friday' => true]) + $contestantsRepository->count(['friday' => true]);
+        $countSat = $officialsRepository->count(['saturday' => true]) + $contestantsRepository->count(['saturday' => true]);
         $countITCtillTu = $officialsRepository->count(['itc' => 'su-tu']) + $contestantsRepository->count(['itc' => 'su-tu']);
         $countITCtillWe = $officialsRepository->count(['itc' => 'su-we']) + $contestantsRepository->count(['itc' => 'su-we']);
-        $countArrivals = $transportRepository->count(['isArrival' => 'TRUE']);
-        $countDepartures = $transportRepository->count(['isArrival' => 'FALSE']);
+        $countArrivals = $transportRepository->count(['isArrival' => true]);
+        $countDepartures = $transportRepository->count(['isArrival' => false]);
 
         return $this->render('security/admin.html.twig',
             [
