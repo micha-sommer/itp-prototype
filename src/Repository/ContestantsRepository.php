@@ -112,6 +112,18 @@ class ContestantsRepository extends ServiceEntityRepository
             ->getSingleScalarResult();
     }
 
+    /**
+     * Counts entities by a set of criteria.
+     *
+     * @param  array|\Doctrine\Common\Collections\Criteria $criteria
+     *
+     * @return int The cardinality of the objects that match the given criteria.
+     */
+    public function _count($criteria) : int
+    {
+        return $this->_em->getUnitOfWork()->getEntityPersister($this->_entityName)->count($criteria);
+    }
+
 //     * @return Contestant[] Returns an array of Contestant objects
 //     */
     /*
