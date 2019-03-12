@@ -10,9 +10,9 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="1777"
+   width="1000"
    height="1000"
-   viewBox="0 0 1777 1000"
+   viewBox="0 0 1000 1000"
    id="svg2"
    version="1.1"
    inkscape:version="0.92.2 (5c3e80d, 2017-08-06)"
@@ -267,7 +267,7 @@
      transform="translate(0,-52.36216)">
     <g
        id="g3773"
-       transform="matrix(3.7247192,0,0,3.5815474,285.08021,142.78531)">
+       transform="matrix(3.7247192,0,0,3.5815474,-111.16737,70.4969)">
       <g
          id="g3779"
          transform="matrix(1.638437,0,0,1.4954167,10.452228,-101.37036)"
