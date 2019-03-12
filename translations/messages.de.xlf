@@ -557,10 +557,11 @@
         <source>Print</source>
         <target>Drucken</target>
       </trans-unit>
-      <trans-unit id="raJR0Ph" resname="alert.accomondation">
+      <trans-unit id="DYHByyX" resname="alert.accomondation">
         <source>alert.accomondation</source>
         <target>
           <![CDATA[
+          
             <p>
               Die Anzahl der uns zur Verfügung stehenden Unterkünfte ist auf Grund der hohen Teilnehmerzahl sehr knapp.
               Sollten Sie jetzt noch Übernachtungen buchen, können wir diese nicht garantieren.
@@ -570,8 +571,13 @@
                   <a class="fa fa-envelope" href="mailto:info@thueringer-judoverband.de">
                       info@thueringer-judoverband.de</a>
             </p>
-          ]]>
-        </target>
+          
+        ]]></target>
+      </trans-unit>
+      <trans-unit id="G4pfh5p" resname="alert.deadline">
+        <source>alert.deadline</source>
+        <target>Der Meldeschluss ist verstrichen!!!
+          Beachten Sie, dass das Anmelden weiterer Kämpferinnen mit der Berechnung einer erhöhten Startgebühr einhergeht.</target>
       </trans-unit>
     </body>
   </file>

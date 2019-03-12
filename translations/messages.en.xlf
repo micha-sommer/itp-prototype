@@ -560,10 +560,11 @@
         <source>Print</source>
         <target>Print</target>
       </trans-unit>
-      <trans-unit id="raJR0Ph" resname="alert.accomondation">
+      <trans-unit id="DYHByyX" resname="alert.accomondation">
         <source>alert.accomondation</source>
         <target>
           <![CDATA[
+          
             <p>
               The remain amount of available accomondation is very limited. We cannot garantee accomondatation if you add new ones from now on.
               In case of questions, please don't hesitate to contact us.
@@ -572,8 +573,12 @@
                   <a class="fa fa-envelope" href="mailto:info@thueringer-judoverband.de">
                       info@thueringer-judoverband.de</a>
             </p>
-          ]]>
-        </target>
+          
+        ]]></target>
+      </trans-unit>
+      <trans-unit id="G4pfh5p" resname="alert.deadline">
+        <source>alert.deadline</source>
+        <target>The deadline for registrations has passed. Please note that additional competitors will be charged with an increased registration fee.</target>
       </trans-unit>
     </body>
   </file>
