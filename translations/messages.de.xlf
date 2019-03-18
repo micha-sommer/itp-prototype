@@ -579,6 +579,10 @@
         <target>Der Meldeschluss ist verstrichen!!!
           Beachten Sie, dass das Anmelden weiterer Kämpferinnen mit der Berechnung einer erhöhten Startgebühr einhergeht.</target>
       </trans-unit>
+      <trans-unit id="vURcRit" resname="overview">
+        <source>overview</source>
+        <target>Hier ist die Übersicht:</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

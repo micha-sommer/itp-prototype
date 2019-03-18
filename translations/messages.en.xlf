@@ -580,6 +580,10 @@
         <source>alert.deadline</source>
         <target>The deadline for registrations has passed. Please note that additional competitors will be charged with an increased registration fee.</target>
       </trans-unit>
+      <trans-unit id="vURcRit" resname="overview">
+        <source>overview</source>
+        <target>This is an overview of the category:</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
