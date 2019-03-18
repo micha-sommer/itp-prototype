@@ -581,7 +581,7 @@
       </trans-unit>
       <trans-unit id="vURcRit" resname="overview">
         <source>overview</source>
-        <target>Hier ist die Übersicht:</target>
+        <target>Hier ist die vorläufige Übersicht:</target>
       </trans-unit>
     </body>
   </file>

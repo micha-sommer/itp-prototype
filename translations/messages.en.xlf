@@ -582,7 +582,8 @@
       </trans-unit>
       <trans-unit id="vURcRit" resname="overview">
         <source>overview</source>
-        <target>This is an overview of the category:</target>
+        <target>
+          This is a preliminary overview of the category:</target>
       </trans-unit>
     </body>
   </file>
