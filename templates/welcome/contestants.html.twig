@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'title.welcome'|trans }}{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="jumbotron">
+            <h1 class="display-4">{{ age }} {{ weight }}</h1>
+            <p class="lead">
+                This is an overview of the category:
+            </p>
+            <hr class="my-4">
+            <table class="table table-middle-aligned">
+                <thead class="thead-dark">
+                    <tr>
+                        <th class="text-left">{{ 'first_name.participants'|trans }}</th>
+                        <th class="text-left">{{ 'last_name.participants'|trans }}</th>
+                        <th class="text-left">{{ 'Club'|trans }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for contestant in contestants %}
+                    <tr>
+                        <td>{{ contestant.firstName }}</td>
+                        <td>{{ contestant.lastName }}</td>
+                        <td>{{ contestant.registration.club }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
