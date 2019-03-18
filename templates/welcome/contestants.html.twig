@@ -16,6 +16,7 @@
                         <th class="text-left">{{ 'first_name.participants'|trans }}</th>
                         <th class="text-left">{{ 'last_name.participants'|trans }}</th>
                         <th class="text-left">{{ 'Club'|trans }}</th>
+                        <th class="text-left">{{ 'Country'|trans }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -24,6 +25,7 @@
                         <td>{{ contestant.firstName }}</td>
                         <td>{{ contestant.lastName }}</td>
                         <td>{{ contestant.registration.club }}</td>
+                        <td>{{ contestant.registration.country }}</td>
                     </tr>
                 {% endfor %}
                 </tbody>
