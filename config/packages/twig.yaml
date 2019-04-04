@@ -8,6 +8,6 @@ twig:
 
     globals:
         #end_date is when you last can enter competitors etc.
-        end_date: 'March 21, 2019 23:59'
+        end_date: 'March 19, 2020 23:59'
         #deadline is from when increased registration fee is charged.
-        deadline: 'March 12, 2019 23:59'
+        deadline: 'March 10, 2020 23:59'

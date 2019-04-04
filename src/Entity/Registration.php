@@ -108,6 +108,12 @@ class Registration implements UserInterface, \Serializable, \JsonSerializable
      */
     private $country;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Invoice", mappedBy="registration", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $invoice;
+
     public function __construct()
     {
         $this->transports = new ArrayCollection();
@@ -360,22 +366,6 @@ class Registration implements UserInterface, \Serializable, \JsonSerializable
         return $this;
     }
 
-    public function getInvoice(): string
-    {
-        $officials = $this->getOfficials();
-        $femaleOfficials = $officials->filter(function (Official $official) {
-            return $official->getGender() === GenderEnum::female;
-        });
-        $maleOfficials = $officials->filter(function (Official $official) {
-            return $official->getGender() === GenderEnum::female;
-        });
-        $contestant = $this->getContestants();
-        return $officials->count() . '
-        ' . $femaleOfficials->count() . '
-        ' . $maleOfficials->count() . '
-        ' . $contestant->count();
-    }
-
     /** @see \Serializable::serialize() */
     public function serialize()
     {
@@ -391,8 +381,8 @@ class Registration implements UserInterface, \Serializable, \JsonSerializable
         );
     }
 
-    /** @see \Serializable::unserialize()
-     * @param $serialized
+    /** @param $serialized
+     * @see \Serializable::unserialize()
      */
     public function unserialize($serialized): void
     {
@@ -518,4 +508,22 @@ class Registration implements UserInterface, \Serializable, \JsonSerializable
         })->count();
         return $numOfficials + $numContestants;
     }
+
+    public function setInvoice(Invoice $invoice): self
+    {
+        $this->invoice = $invoice;
+
+        // set the owning side of the relation if necessary
+        if ($this !== $invoice->getRegistration()) {
+            $invoice->setRegistration($this);
+        }
+
+        return $this;
+    }
+
+    public function getInvoice(): ?Invoice
+    {
+        return $this->invoice;
+    }
+
 }
