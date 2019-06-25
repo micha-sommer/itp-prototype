@@ -28,7 +28,7 @@ class LoginController extends Controller
      * @param AuthenticationUtils $authenticationUtils
      * @param $locales
      * @param $defaultLocale
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function login(AuthenticationUtils $authenticationUtils, $locales, $defaultLocale): Response
     {
