@@ -114,6 +114,11 @@ class Registration implements UserInterface, \Serializable, \JsonSerializable
      */
     private $invoice;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $invoice_address;
+
     public function __construct()
     {
         $this->transports = new ArrayCollection();
@@ -524,6 +529,18 @@ class Registration implements UserInterface, \Serializable, \JsonSerializable
     public function getInvoice(): ?Invoice
     {
         return $this->invoice;
+    }
+
+    public function getInvoiceAddress(): ?string
+    {
+        return $this->invoice_address;
+    }
+
+    public function setInvoiceAddress(?string $invoice_address): self
+    {
+        $this->invoice_address = $invoice_address;
+
+        return $this;
     }
 
 }

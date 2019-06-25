@@ -25,6 +25,7 @@ class RegistrationType extends AbstractType
             ->add('last_name', TextType::class)
             ->add('email', EmailType::class)
             ->add('telephone', TelType::class, ['required' => false])
+            ->add('invoice_address', TextareaType::class, ['required' => false])
             ->add('comment', TextareaType::class, ['required' => false]);
     }
 

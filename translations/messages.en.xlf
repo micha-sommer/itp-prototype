@@ -294,6 +294,10 @@
         <source>Email</source>
         <target>Email</target>
       </trans-unit>
+      <trans-unit id="e0iIBJs" resname="Invoice address">
+        <source>Invoice address</source>
+        <target>Invoice Address</target>
+      </trans-unit>
       <trans-unit id="588_9PF" resname="Password">
         <source>Password</source>
         <target>Password</target>
