@@ -23,7 +23,7 @@ class InvoicePosition
     private $item;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Invoice", inversedBy="multiplier")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Invoice", inversedBy="invoicePositions")
      * @ORM\JoinColumn(nullable=false)
      */
     private $invoice;
