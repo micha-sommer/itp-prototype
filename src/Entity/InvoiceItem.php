@@ -26,11 +26,6 @@ class InvoiceItem
      */
     private $amountEuro;
 
-    /**
-     * @ORM\Column(type="smallint")
-     */
-    private $amountCent;
-
     public function getId(): ?int
     {
         return $this->id;
@@ -56,18 +51,6 @@ class InvoiceItem
     public function setAmountEuro(int $amountEuro): self
     {
         $this->amountEuro = $amountEuro;
-
-        return $this;
-    }
-
-    public function getAmountCent(): ?int
-    {
-        return $this->amountCent;
-    }
-
-    public function setAmountCent(int $amountCent): self
-    {
-        $this->amountCent = $amountCent;
 
         return $this;
     }

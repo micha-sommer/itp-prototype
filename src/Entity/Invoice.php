@@ -19,7 +19,7 @@ class Invoice
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Registration", inversedBy="invoice", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="App\Entity\Registration", inversedBy="invoice", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $registration;
@@ -30,24 +30,19 @@ class Invoice
     private $paidCashEuro;
 
     /**
-     * @ORM\Column(type="smallint")
-     */
-    private $paidCashCent;
-
-    /**
      * @ORM\Column(type="integer")
      */
     private $paidBankEuro;
 
     /**
-     * @ORM\Column(type="smallint")
-     */
-    private $paidBankCent;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\InvoicePosition", mappedBy="invoice", orphanRemoval=true)
      */
     private $invoicePositions;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $totalEuro;
 
     public function __construct()
     {
@@ -67,6 +62,9 @@ class Invoice
     public function setRegistration(Registration $registration): self
     {
         $this->registration = $registration;
+        if ($registration->getInvoice() !== $this) {
+            $registration->setInvoice($this);
+        }
 
         return $this;
     }
@@ -83,18 +81,6 @@ class Invoice
         return $this;
     }
 
-    public function getPaidCashCent(): ?int
-    {
-        return $this->paidCashCent;
-    }
-
-    public function setPaidCashCent(int $paidCashCent): self
-    {
-        $this->paidCashCent = $paidCashCent;
-
-        return $this;
-    }
-
     public function getPaidBankEuro(): ?int
     {
         return $this->paidBankEuro;
@@ -103,18 +89,6 @@ class Invoice
     public function setPaidBankEuro(int $paidBankEuro): self
     {
         $this->paidBankEuro = $paidBankEuro;
-
-        return $this;
-    }
-
-    public function getPaidBankCent(): ?int
-    {
-        return $this->paidBankCent;
-    }
-
-    public function setPaidBankCent(int $paidBankCent): self
-    {
-        $this->paidBankCent = $paidBankCent;
 
         return $this;
     }
@@ -146,6 +120,18 @@ class Invoice
                 $invoicePosition->setInvoice(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getTotalEuro(): ?int
+    {
+        return $this->totalEuro;
+    }
+
+    public function setTotalEuro(int $totalEuro): self
+    {
+        $this->totalEuro = $totalEuro;
 
         return $this;
     }

@@ -43,11 +43,6 @@ class InvoicePosition
      */
     private $totalEuro;
 
-    /**
-     * @ORM\Column(type="smallint")
-     */
-    private $totalCent;
-
     public function getId(): ?int
     {
         return $this->id;
@@ -109,18 +104,6 @@ class InvoicePosition
     public function setTotalEuro(int $totalEuro): self
     {
         $this->totalEuro = $totalEuro;
-
-        return $this;
-    }
-
-    public function getTotalCent(): ?int
-    {
-        return $this->totalCent;
-    }
-
-    public function setTotalCent(int $totalCent): self
-    {
-        $this->totalCent = $totalCent;
 
         return $this;
     }

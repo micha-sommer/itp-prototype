@@ -34,26 +34,26 @@
                 <th scope="col">Sat</th>
                 <th scope="col">Tue</th>
                 <th scope="col">Wed</th>
-                <th scope="col"><i class="fa fa-plane-arrival"></i></th>
-                <th scope="col"><i class="fa fa-plane-departure"></i></th>
+                <th scope="col"><i class="fas fa-plane-arrival"></i></th>
+                <th scope="col"><i class="fas fa-plane-departure"></i></th>
                 <th scope="col">Action</th>
             </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>&sum;</td>
-                    <td></td>
-                    <td>{{ countRegistrations }}</td>
-                    <td>{{ countOfficials }}</td>
-                    <td>{{ countContestants }}</td>
-                    <td class="table-active">{{ countFri }}</td>
-                    <td class="table-active">{{ countSat }}</td>
-                    <td class="table-active">{{ countITCtillTu }}</td>
-                    <td class="table-active">{{ countITCtillWe }}</td>
-                    <td>{{ countArrivals }}</td>
-                    <td>{{ countDepartures }}</td>
-                    <td></td>
-                </tr>
+            <tr>
+                <td>&sum;</td>
+                <td></td>
+                <td>{{ countRegistrations }}</td>
+                <td>{{ countOfficials }}</td>
+                <td>{{ countContestants }}</td>
+                <td class="table-active">{{ countFri }}</td>
+                <td class="table-active">{{ countSat }}</td>
+                <td class="table-active">{{ countITCtillTu }}</td>
+                <td class="table-active">{{ countITCtillWe }}</td>
+                <td>{{ countArrivals }}</td>
+                <td>{{ countDepartures }}</td>
+                <td></td>
+            </tr>
             {% for registration in registrations %}
                 <tr>
                     <td>{{ registration.id }}</td>
@@ -89,6 +89,9 @@
                            href="{{ path('welcome', {'_switch_user': registration.email }) }}">
                             Angucken
                         </a>
+                            <a class="btn {{ registration.invoice is not null ? "btn-warning" : "btn-info" }}" role="button" href="{{ path('invoicing', {'_switch_user': registration.email }) }}">
+                                <i class="fas fa-file-invoice-dollar"></i>
+                            </a>
                         <!--a class="btn btn-info" role="button"
                            data-toggle="tooltip" data-placement="top"
                            title="Send confirmation mail"
@@ -96,8 +99,8 @@
                             <i class="fa fa-envelope" aria-hidden="true"></i>
                         </a-->
                         <a class="btn btn-danger" href="javascript:void(0)"
-                           onclick="if(confirm('Are you sure you want to delete {{ registration.club }} and all its registered officials, contestants, and transport ?')){window.location='{{ path('delete_registration', {'uid': registration.id}) }}';}"><i
-                                    class="fa fa-trash" aria-hidden="true"></i></a>
+                           onclick="if(confirm('Are you sure you want to delete {{ registration.club }} and all its registered officials, contestants, and transport ?')){window.location='{{ path('delete_registration', {'uid': registration.id}) }}';}">
+                            <i class="fas fa-trash" aria-hidden="true"></i></a>
                     </td>
                 </tr>
             {% endfor %}

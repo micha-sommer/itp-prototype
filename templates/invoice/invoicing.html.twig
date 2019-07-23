@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ 'title.contestants'|trans }}!{% endblock %}
+{% block title %}{{ 'title.invoicing'|trans }}!{% endblock %}
 
 {% block javascripts %}
     <script>
@@ -15,11 +15,11 @@
         jQuery(document).ready(function () {
 
             // Get the ul that holds the collection of tags
-            $collectionHolder = $('tbody.contestants');
+            $collectionHolder = $('tbody.invoices');
 
             // add a delete link to all of the existing tag form li elements
             $collectionHolder.find('tr').each(function () {
-                addTagFormCommentLink($(this));
+                //addTagFormCommentLink($(this));
                 addTagFormDeleteLink($(this));
             });
 
@@ -52,9 +52,9 @@
             $collectionHolder.data('index', index + 1);
 
             // Display the form in the page in an li, before the "Add a tag" link td
-            let $newFormTr = $('<tr class="table-secondary contestant"></tr>').append(newForm);
+            let $newFormTr = $('<tr class="table-secondary invoice_position"></tr>').append(newForm);
 
-            addTagFormCommentLink($newFormTr);
+            //addTagFormCommentLink($newFormTr);
             addTagFormDeleteLink($newFormTr);
 
             $collectionHolder.append($newFormTr);
@@ -89,61 +89,46 @@
 {% endblock %}
 
 {% block body %}
-    <div class="jumbotron">
-        <h1 class="display-4">{{ 'title.contestants'|trans }}!</h1>
-        <p class="lead">{{ 'description.contestants'|trans }}</p>
 
+    <div class="jumbotron">
+        <h1 class="display-4">{{ 'title.invoicing'|trans }}!</h1>
+        <p class="lead">{{ 'description.invoicing'|trans }}</p>
         <hr class="my-4">
 
         {{ form_start(form) }}
         <table class="table table-middle-aligned">
             <thead class="thead-dark">
-            <tr class="table-sm text-center">
-                <td class="bg-light" colspan="5"></td>
-                <th colspan="3">{{ 'accommodation.participants'|trans }}</th>
-                <td class="bg-light" colspan="2"></td>
-            </tr>
             <tr>
-                <th class="text-center" scope="col">{{ 'first_name.participants'|trans }}</th>
-                <th class="text-center" scope="col">{{ 'last_name.participants'|trans }}</th>
-                <th class="text-center" scope="col">{{ 'year.contestants'|trans }}</th>
-                <th class="text-center" scope="col">{{ 'weight.contestants'|trans }}</th>
-                <th class="text-center" scope="col">{{ 'age.contestants'|trans }}</th>
-                <th class="text-center" scope="col">{{ 'friday.participants'|trans }}</th>
-                <th class="text-center" scope="col">{{ 'saturnday.participants'|trans }}</th>
-                <th class="text-center" data-toggle="tooltip" data-placement="top"
-                    title="{{ 'itc.tooltip.participants'|trans }}" scope="col">
-                    <ins>{{ 'itc.participants'|trans }}</ins>
-                </th>
+                <th class="text-center" scope="col">{{ 'position_item_description.invoice'|trans }}</th>
+                <th class="text-center" scope="col">{{ 'position_multiplier.invoice'|trans }}</th>
+                <th class="text-center" scope="col">{{ 'position_is_add.invoice'|trans }}</th>
+                <th colspan="2" class="text-center" scope="col">{{ 'position_total.invoice'|trans }}</th>
                 <th class="text-center" scope="col"></th>
                 <th class="text-center" scope="col"></th>
             </tr>
             </thead>
-            <tbody class="contestants" data-prototype="
-                {{ '<td class="text-center">'|e }}{{ form_widget(form.list.vars.prototype.first_name)|e }}      {{ '</td>'|e }}
-                {{ '<td class="text-center">'|e }}{{ form_widget(form.list.vars.prototype.last_name)|e }}       {{ '</td>'|e }}
-                {{ '<td class="text-center">'|e }}{{ form_widget(form.list.vars.prototype.year)|e }}            {{ '</td>'|e }}
-                {{ '<td class="text-center">'|e }}{{ form_widget(form.list.vars.prototype.weight_category)|e }} {{ '</td>'|e }}
-                {{ '<td class="text-center">'|e }}{{ form_widget(form.list.vars.prototype.age_category)|e }}    {{ '</td>'|e }}
-                {{ '<td class="text-center">'|e }}{{ form_widget(form.list.vars.prototype.friday)|e }}          {{ '</td>'|e }}
-                {{ '<td class="text-center">'|e }}{{ form_widget(form.list.vars.prototype.saturday)|e }}        {{ '</td>'|e }}
-                {{ '<td class="text-center">'|e }}{{ form_widget(form.list.vars.prototype.itc)|e }} {{ form_widget(form.list.vars.prototype.comment)|e }} {{ '</td>'|e }}
+            <tbody class="invoices" data-prototype="
+                {{ '<td class="text-center">'|e }}{{ form_widget(form.list.vars.prototype.item)|e }}      {{ '</td>'|e }}
+                {{ '<td class="text-center">'|e }}{{ form_widget(form.list.vars.prototype.multiplier)|e }}      {{ '</td>'|e }}
+                {{ '<td class="text-center">'|e }}{{ form_widget(form.list.vars.prototype.is_add)|e }}       {{ '</td>'|e }}
+                {{ '<td class="text-center">'|e }}{{ form_widget(form.list.vars.prototype.total_euro)|e }}            {{ '</td>'|e }}
             ">
             {{ form_row(form._token) }}
-            {% for contestant in form.list %}
-                <tr class="contestant">
-                    <td class="text-center">{{ form_widget(contestant.first_name) }}</td>
-                    <td class="text-center">{{ form_widget(contestant.last_name) }}</td>
-                    <td class="text-center">{{ form_widget(contestant.year) }}{{ form_errors(contestant.year) }}</td>
-                    <td class="text-center">{{ form_widget(contestant.weight_category) }}{{ form_errors(contestant.weight_category) }}</td>
-                    <td class="text-center">{{ form_widget(contestant.age_category) }}</td>
-                    <td class="text-center">{{ form_widget(contestant.friday) }}</td>
-                    <td class="text-center">{{ form_widget(contestant.saturday) }}</td>
-                    <td class="text-center">{{ form_widget(contestant.itc) }} {{ form_errors(contestant.itc) }} {{ form_widget(contestant.comment) }}</td>
+            {% for invoice_position in form.list %}
+                <tr class="invoice_position">
+                    <td class="text-center">{{ form_widget(invoice_position.item) }}</td>
+                    <td class="text-center">{{ form_widget(invoice_position.multiplier) }}</td>
+                    <td class="text-center">{{ form_widget(invoice_position.is_add) }}</td>
+                    <td class="text-center">{{ form_widget(invoice_position.total_euro) }}</td>
                 </tr>
             {% endfor %}
+            <tr class="total">
+                <td class="text-right" colspan="3">{{ 'total.invoicing'|trans }}</td>
+                <td class="text-right" >{{ (app.user.invoice.totalEuro/100)|number_format(2,',','.') }} €</td>
+            </tr>
             </tbody>
         </table>
+
 
         {% if is_granted('ROLE_PREVIOUS_ADMIN') or date(end_date, 'Europe/Paris') > date('now', 'Europe/Paris') %}
             <div class="bg-light clearfix">
@@ -155,10 +140,13 @@
                 <input class="btn btn-primary btn-lg float-right mr-1" type="submit" data-toggle="tooltip"
                        data-placement="top"
                        title="{{ 'generic.tooltip.save'|trans }}" value="{{ 'generic.save'|trans }}"/>
-                <a href="{{ path('contestants') }}" class="btn btn-primary btn-lg btn-warning float-right mr-1"
+                <a href="{{ path('invoicing') }}" class="btn btn-primary btn-lg btn-warning float-right mr-1"
                    role="button"
                    data-toggle="tooltip" data-placement="top"
                    title="{{ 'generic.tooltip.cancel'|trans }}">{{ 'generic.cancel'|trans }}</a>
+                <a class="btn btn-danger btn-lg float-right mr-1 " href="javascript:void(0)"
+                   onclick="if(confirm('Are you sure you want to delete this invoice of {{ app.user.club }}?')){window.location='{{ path('delete_invoice', {'uid': app.user.id}) }}';}">
+                    <i class="fas fa-trash" aria-hidden="true"></i></a>
             </div>
         {% endif %}
 
@@ -188,7 +176,7 @@
                 </div>
             </div>
         </div>
-        {{ form_end(form) }}
+        {{ form_end(form, {'render_rest': false}) }}
     </div>
     <script>
         $('#commentModal').on('show.bs.modal', function (event) {

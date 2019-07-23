@@ -292,7 +292,7 @@
         <source>Email</source>
         <target>Email</target>
       </trans-unit>
-      <trans-unit id="e0iIBJs" resname="Invoice address">
+      <trans-unit id="dysKVCN" resname="Invoice address">
         <source>Invoice address</source>
         <target>Rechnungsadresse</target>
       </trans-unit>
@@ -563,8 +563,8 @@
       </trans-unit>
       <trans-unit id="DYHByyX" resname="alert.accomondation">
         <source>alert.accomondation</source>
-        <target>
-          <![CDATA[
+        <target><![CDATA[
+          
           
             <p>
               Die Anzahl der uns zur Verfügung stehenden Unterkünfte ist auf Grund der hohen Teilnehmerzahl sehr knapp.
@@ -587,6 +587,46 @@
         <source>overview</source>
         <target>Hier ist die vorläufige Übersicht:</target>
       </trans-unit>
+      <trans-unit id="Ci9W8.K" resname="menu.invoice">
+        <source>menu.invoice</source>
+        <target>Rechnung</target>
+      </trans-unit>
+      <trans-unit id="qCsaqX9" resname="d.m.Y">
+        <source>d.m.Y</source>
+        <target>d.m.Y</target>
+      </trans-unit>
+      <trans-unit id="M895D9C" resname="title.invoicing">
+        <source>title.invoicing</source>
+        <target>Rechnungslegung</target>
+      </trans-unit>
+      <trans-unit id="fEQqv7u" resname="description.invoicing">
+        <source>description.invoicing</source>
+        <target>Dies ist ihre Rechnung</target>
+      </trans-unit>
+      <trans-unit id="QTYGxJW" resname="position_item_description.invoice">
+        <source>position_item_description.invoice</source>
+        <target>Positionsbeschreibung</target>
+      </trans-unit>
+      <trans-unit id="tr1xC7J" resname="item_amount.invoice">
+        <source>item_amount.invoice</source>
+        <target>Betrag</target>
+      </trans-unit>
+      <trans-unit id="BJ7zLCV" resname="position_multiplier.invoice">
+        <source>position_multiplier.invoice</source>
+        <target>Anzahl</target>
+      </trans-unit>
+      <trans-unit id="4GzZFYK" resname="position_is_add.invoice">
+        <source>position_is_add.invoice</source>
+        <target>+/-</target>
+      </trans-unit>
+      <trans-unit id="4wuZQtx" resname="position_total.invoice">
+        <source>position_total.invoice</source>
+        <target>Summe</target>
+      </trans-unit>
+        <trans-unit id="0">
+            <source>total.invoicing</source>
+            <target>Gesamt:</target>
+        </trans-unit>
     </body>
   </file>
 </xliff>

@@ -7,6 +7,8 @@ use App\Enum\ITCEnum;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use JsonSerializable;
+use Serializable;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -18,7 +20,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Entity
  * @UniqueEntity("email")
  */
-class Registration implements UserInterface, \Serializable, \JsonSerializable
+class Registration implements UserInterface, Serializable, JsonSerializable
 {
     /**
      * @var int
@@ -109,7 +111,7 @@ class Registration implements UserInterface, \Serializable, \JsonSerializable
     private $country;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Invoice", mappedBy="registration", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="App\Entity\Invoice", mappedBy="registration", cascade={"persist", "remove"}, orphanRemoval=true)
      * @ORM\JoinColumn(nullable=true)
      */
     private $invoice;
@@ -514,12 +516,12 @@ class Registration implements UserInterface, \Serializable, \JsonSerializable
         return $numOfficials + $numContestants;
     }
 
-    public function setInvoice(Invoice $invoice): self
+    public function setInvoice(?Invoice $invoice): self
     {
         $this->invoice = $invoice;
 
         // set the owning side of the relation if necessary
-        if ($this !== $invoice->getRegistration()) {
+        if ($invoice !== null && $this !== $invoice->getRegistration()) {
             $invoice->setRegistration($this);
         }
 
