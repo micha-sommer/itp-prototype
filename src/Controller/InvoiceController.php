@@ -97,11 +97,14 @@ class InvoiceController extends AbstractController
                     case 6: // Internationales Trainings Camp
                         $multiplier = $officials_female_with_ITC_count + $officials_male_with_ITC_count + $contestants_with_ITC_count;
                         break;
+                    case 7: // Überweisung
+                        $invoicePosition->setIsAdd(false);
+                        $multiplier = 1;
                     default:
                         break;
                 }
                 $invoicePosition->setMultiplier($multiplier);
-                $totalPosition = $invoicePosition->getMultiplier() * $invoiceItem->getAmountEuro();
+                $totalPosition = $invoicePosition->getMultiplier() * $invoiceItem->getAmountEuro() * 100;
                 if ($invoicePosition->getIsAdd()) {
                     $totalInvoice += $totalPosition;
                 } else {

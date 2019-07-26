@@ -9,8 +9,8 @@
         });
 
         let $collectionHolder;
-        let $removeFormButton = $('<td><button class="btn btn-danger" type="button"><i class="fa fa-trash" aria-hidden="true"></i></button></td>');
-        let $commentFormButton = $('<td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#commentModal" data-comment=""><i class="fa fa-comment"></i></button></td>');
+        let $removeFormButton = $('<td><button class="btn btn-danger" type="button"><i class="fas fa-trash"></i></button></td>');
+        let $calcFormButton = $('<td><button class="btn btn-primary" type="button"  ><i class="fas fa-calculator"></i></button></td>');
 
         jQuery(document).ready(function () {
 
@@ -19,7 +19,7 @@
 
             // add a delete link to all of the existing tag form li elements
             $collectionHolder.find('tr').each(function () {
-                //addTagFormCommentLink($(this));
+                addTagFormCalcLink($(this));
                 addTagFormDeleteLink($(this));
             });
 
@@ -54,25 +54,26 @@
             // Display the form in the page in an li, before the "Add a tag" link td
             let $newFormTr = $('<tr class="table-secondary invoice_position"></tr>').append(newForm);
 
-            //addTagFormCommentLink($newFormTr);
+            addTagFormCalcLink($newFormTr);
             addTagFormDeleteLink($newFormTr);
 
             $collectionHolder.append($newFormTr);
         }
 
-        function addTagFormCommentLink($tagFormTr) {
-            let $thisCommentFormButton = $commentFormButton.clone();
+        function addTagFormCalcLink($tagFormTr) {
+            let $thisCalcFormButton = $calcFormButton.clone();
 
-            let $commentHiddenType = $tagFormTr.find('input.hidden-comment');
-            let $button = $thisCommentFormButton.find('button');
-            $button.attr('data-comment', $commentHiddenType.attr('value'));
-            $button.attr('data-name', $tagFormTr.find('input.hidden-first_name').attr('value') + ' ' + $tagFormTr.find('input.hidden-last_name').attr('value'));
-            $button.attr('data-id', $commentHiddenType.attr('id'));
+            $tagFormTr.append($thisCalcFormButton);
 
-            if ($button.attr('data-comment') !== '')
-                $button.removeClass('btn-primary').addClass('btn-success');
-
-            $tagFormTr.append($thisCommentFormButton);
+            $thisCalcFormButton.on('click', function () {
+                let $totalField = $tagFormTr.find('input.hidden-total_euro');
+                let $price = $tagFormTr.find('td.hidden-price').attr('value');
+                let $multiplier = $tagFormTr.find('input.hidden-multiplier').val();
+                let $newValue = Number($price * $multiplier).toFixed(2).replace('.', ',');
+                console.log($newValue);
+                $totalField.val($newValue);
+                $totalField.change(); // trigger change
+            });
         }
 
         function addTagFormDeleteLink($tagFormTr) {
@@ -84,6 +85,40 @@
                 // remove the li for the tag form
                 $tagFormTr.remove();
             });
+        }
+
+        function currencyFormatDE(num) {
+            return (
+                num
+                    .toFixed(2) // always two decimal digits
+                    .replace('.', ',') // replace decimal point character with ,
+                    .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.') + ' €'
+            ) // use . as a separator
+        }
+
+        function changePrice() {
+            console.log('change price');
+            console.log(this);
+            let $parent = this.parentElement.querySelector('td.hidden-price');
+            console.log($parent);
+            let $price = this.children[0].value;
+            // console.log($price);
+            $parent.innerHTML = '&times; '+currencyFormatDE(Number($price)) + ' =';
+            $parent.setAttribute('value', $price);
+        }
+
+        function updateTotal() {
+            console.log('update Total');
+            let $total = 0;
+            // Get the ul that holds the collection of tags
+            $collectionHolder = $('tbody.invoices');
+
+            // add a delete link to all of the existing tag form li elements
+            $collectionHolder.find('tr').each(function () {
+                $total += parseInt($(this).find('input.hidden-total_euro').val());
+            });
+            console.log($total);
+            $('th.final_total').html(currencyFormatDE($total));
         }
     </script>
 {% endblock %}
@@ -101,6 +136,7 @@
             <tr>
                 <th class="text-center" scope="col">{{ 'position_item_description.invoice'|trans }}</th>
                 <th class="text-center" scope="col">{{ 'position_multiplier.invoice'|trans }}</th>
+                <th class="text-center" scope="col">{{ 'position_item_price.invoice'|trans }}</th>
                 <th class="text-center" scope="col">{{ 'position_is_add.invoice'|trans }}</th>
                 <th colspan="2" class="text-center" scope="col">{{ 'position_total.invoice'|trans }}</th>
                 <th class="text-center" scope="col"></th>
@@ -110,22 +146,28 @@
             <tbody class="invoices" data-prototype="
                 {{ '<td class="text-center">'|e }}{{ form_widget(form.list.vars.prototype.item)|e }}      {{ '</td>'|e }}
                 {{ '<td class="text-center">'|e }}{{ form_widget(form.list.vars.prototype.multiplier)|e }}      {{ '</td>'|e }}
+                {{ '<td class="text-center hidden-price" style="padding-top: 15px" value="{{ invoice_position.vars.value.item.amountEuro }}">'|e }}
+                                {{ '</td>'|e }}
                 {{ '<td class="text-center">'|e }}{{ form_widget(form.list.vars.prototype.is_add)|e }}       {{ '</td>'|e }}
-                {{ '<td class="text-center">'|e }}{{ form_widget(form.list.vars.prototype.total_euro)|e }}            {{ '</td>'|e }}
+                {{ '<td class="text-center onchange="updateTotal()">'|e }}{{ form_widget(form.list.vars.prototype.total_euro)|e }}            {{ '</td>'|e }}
             ">
             {{ form_row(form._token) }}
             {% for invoice_position in form.list %}
                 <tr class="invoice_position">
-                    <td class="text-center">{{ form_widget(invoice_position.item) }}</td>
+                    <td class="text-center" onchange="changePrice.call(this)">{{ form_widget(invoice_position.item) }}</td>
                     <td class="text-center">{{ form_widget(invoice_position.multiplier) }}</td>
+                    <td class="text-right hidden-price" style="padding-top: 15px"
+                        value="{{ invoice_position.vars.value.item.amountEuro }}">
+                        &times; {{ invoice_position.vars.value.item.amountEuro|number_format(2,',','.') }} € =
+                    </td>
                     <td class="text-center">{{ form_widget(invoice_position.is_add) }}</td>
-                    <td class="text-center">{{ form_widget(invoice_position.total_euro) }}</td>
+                    <td class="text-center" onchange="updateTotal()">{{ form_widget(invoice_position.total_euro) }}</td>
                 </tr>
             {% endfor %}
-            <tr class="total">
-                <td class="text-right" colspan="3">{{ 'total.invoicing'|trans }}</td>
-                <td class="text-right" >{{ (app.user.invoice.totalEuro/100)|number_format(2,',','.') }} €</td>
-            </tr>
+            <thead class="total">
+            <th class="text-right" colspan="4">{{ 'total.invoicing'|trans }}</th>
+            <th class="text-right final_total">{{ (app.user.invoice.totalEuro/100)|number_format(2,',','.') }} €</th>
+            </thead>
             </tbody>
         </table>
 

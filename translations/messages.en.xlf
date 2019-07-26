@@ -629,6 +629,10 @@
             <source>total.invoicing</source>
             <target>Total:</target>
         </trans-unit>
+        <trans-unit id="1">
+            <source>position_item_price.invoice</source>
+            <target>Price</target>
+        </trans-unit>
     </body>
   </file>
 </xliff>
