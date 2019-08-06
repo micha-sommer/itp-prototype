@@ -14,15 +14,15 @@ use App\Repository\ContestantsRepository;
 use App\Repository\OfficialsRepository;
 use App\Repository\TransportRepository;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
-class ParticipantsController extends Controller
+class ParticipantsController extends AbstractController
 {
     /**
      * @Route("/officials", name="officials")

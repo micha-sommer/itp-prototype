@@ -137,9 +137,6 @@ class InvoiceController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            dump($invoicePositionsBefore);
-            dump($invoicePositionsAfter);
-
             // check for deleted invoice positions
             foreach ($invoicePositionsBefore as $invoicePosition) {
                 if (false === $invoicePositionsAfter->getList()->contains($invoicePosition)) {

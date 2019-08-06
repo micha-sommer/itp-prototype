@@ -15,13 +15,18 @@ use App\Repository\ContestantsRepository;
 use App\Repository\OfficialsRepository;
 use App\Repository\RegistrationsRepository;
 use App\Repository\TransportRepository;
+use function array_map;
+use function file_get_contents;
+use function implode;
+use function json_decode;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
-class LoginController extends Controller
+class LoginController extends AbstractController
 {
     /**
      * @Route("/login", name="login")
@@ -113,7 +118,7 @@ class LoginController extends Controller
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \Exception
      */
-    public function admin(Request $request, RegistrationsRepository $registrationsRepository, OfficialsRepository $officialsRepository, ContestantsRepository $contestantsRepository, TransportRepository $transportRepository, ChangeSetRepository $changeSetRepository, \Swift_Mailer $mailer): Response
+    public function admin(Request $request, RegistrationsRepository $registrationsRepository, OfficialsRepository $officialsRepository, ContestantsRepository $contestantsRepository, TransportRepository $transportRepository, ChangeSetRepository $changeSetRepository, \Swift_Mailer $mailer, KernelInterface $appKernel): Response
     {
         $showSentNotification = false;
 
@@ -134,93 +139,93 @@ class LoginController extends Controller
             /*
              * filter changes (only want drops of each repository)
              */
-            $registrationsDrops = \array_filter($changes, function (ChangeSet $changeSet) {
+            $registrationsDrops = \array_filter($changes, static function (ChangeSet $changeSet) {
                 return $changeSet->getType() === 'DROP' && $changeSet->getName() === 'registration';
             });
-            $officialsDrops = \array_filter($changes, function (ChangeSet $changeSet) {
+            $officialsDrops = \array_filter($changes, static function (ChangeSet $changeSet) {
                 return $changeSet->getType() === 'DROP' && $changeSet->getName() === 'official';
             });
-            $contestantsDrops = \array_filter($changes, function (ChangeSet $changeSet) {
+            $contestantsDrops = \array_filter($changes, static function (ChangeSet $changeSet) {
                 return $changeSet->getType() === 'DROP' && $changeSet->getName() === 'contestant';
             });
-            $transportsDrops = \array_filter($changes, function (ChangeSet $changeSet) {
+            $transportsDrops = \array_filter($changes, static function (ChangeSet $changeSet) {
                 return $changeSet->getType() === 'DROP' && $changeSet->getName() === 'transport';
             });
 
-            $getId = function ($object) {
+            $getId = static function ($object) {
                 return $object->getId();
             };
 
-            $getNameId = function (ChangeSet $object) {
+            $getNameId = static function (ChangeSet $object) {
                 return $object->getNameId();
             };
 
-            $registrationsChanges = \array_filter($changes, function (ChangeSet $changeSet) use ($getId, $getNameId, $newRegistrations, $registrationsDrops) {
+            $registrationsChanges = \array_filter($changes, static function (ChangeSet $changeSet) use ($getId, $getNameId, $newRegistrations, $registrationsDrops) {
                 return $changeSet->getType() === 'UPDATE'
                     && $changeSet->getName() === 'registration'
-                    && !\in_array($changeSet->getNameId(), \array_map($getId, $newRegistrations), true)
-                    && !\in_array($changeSet->getNameId(), \array_map($getNameId, $registrationsDrops), true);
+                    && !\in_array($changeSet->getNameId(), array_map($getId, $newRegistrations), true)
+                    && !\in_array($changeSet->getNameId(), array_map($getNameId, $registrationsDrops), true);
             });
-            $officialsChanges = \array_filter($changes, function (ChangeSet $changeSet) use ($getId, $getNameId, $newOfficials, $officialsDrops) {
+            $officialsChanges = \array_filter($changes, static function (ChangeSet $changeSet) use ($getId, $getNameId, $newOfficials, $officialsDrops) {
                 return $changeSet->getType() === 'UPDATE'
                     && $changeSet->getName() === 'official'
-                    && !\in_array($changeSet->getNameId(), \array_map($getId, $newOfficials), true)
-                    && !\in_array($changeSet->getNameId(), \array_map($getNameId, $officialsDrops), true);
+                    && !\in_array($changeSet->getNameId(), array_map($getId, $newOfficials), true)
+                    && !\in_array($changeSet->getNameId(), array_map($getNameId, $officialsDrops), true);
             });
-            $contestantsChanges = \array_filter($changes, function (ChangeSet $changeSet) use ($getId, $getNameId, $newContestants, $contestantsDrops) {
+            $contestantsChanges = \array_filter($changes, static function (ChangeSet $changeSet) use ($getId, $getNameId, $newContestants, $contestantsDrops) {
                 return $changeSet->getType() === 'UPDATE'
                     && $changeSet->getName() === 'contestant'
-                    && !\in_array($changeSet->getNameId(), \array_map($getId, $newContestants), true)
-                    && !\in_array($changeSet->getNameId(), \array_map($getNameId, $contestantsDrops), true);
+                    && !\in_array($changeSet->getNameId(), array_map($getId, $newContestants), true)
+                    && !\in_array($changeSet->getNameId(), array_map($getNameId, $contestantsDrops), true);
             });
-            $transportsChanges = \array_filter($changes, function (ChangeSet $changeSet) use ($getId, $getNameId, $newTransports, $transportsDrops) {
+            $transportsChanges = \array_filter($changes, static function (ChangeSet $changeSet) use ($getId, $getNameId, $newTransports, $transportsDrops) {
                 return $changeSet->getType() === 'UPDATE'
                     && $changeSet->getName() === 'transport'
-                    && !\in_array($changeSet->getNameId(), \array_map($getId, $newTransports), true)
-                    && !\in_array($changeSet->getNameId(), \array_map($getNameId, $transportsDrops), true);
+                    && !\in_array($changeSet->getNameId(), array_map($getId, $newTransports), true)
+                    && !\in_array($changeSet->getNameId(), array_map($getNameId, $transportsDrops), true);
             });
 
-            $setClubRegistration = function (ChangeSet $changeSet) use ($registrationsRepository) {
+            $setClubRegistration = static function (ChangeSet $changeSet) use ($registrationsRepository) {
                 $registration = $registrationsRepository->findOneById($changeSet->getNameId());
-                $changeSet->setChangeSetObject(\json_decode($changeSet->getChangeSet()));
+                $changeSet->setChangeSetObject(json_decode($changeSet->getChangeSet(), false));
                 $changeSet->setObject($registration);
                 return $changeSet;
             };
-            $setClubOfficials = function (ChangeSet $changeSet) use ($officialsRepository) {
+            $setClubOfficials = static function (ChangeSet $changeSet) use ($officialsRepository) {
                 $official = $officialsRepository->findOneById($changeSet->getNameId());
-                $changeSet->setChangeSetObject(\json_decode($changeSet->getChangeSet()));
+                $changeSet->setChangeSetObject(json_decode($changeSet->getChangeSet(), false));
                 $changeSet->setObject($official);
                 return $changeSet;
             };
-            $setClubContestants = function (ChangeSet $changeSet) use ($contestantsRepository) {
+            $setClubContestants = static function (ChangeSet $changeSet) use ($contestantsRepository) {
                 $contestant = $contestantsRepository->findOneById($changeSet->getNameId());
-                $changeSet->setChangeSetObject(\json_decode($changeSet->getChangeSet()));
+                $changeSet->setChangeSetObject(json_decode($changeSet->getChangeSet(), false));
                 $changeSet->setObject($contestant);
                 return $changeSet;
             };
-            $setClubTransport = function (ChangeSet $changeSet) use ($transportRepository) {
+            $setClubTransport = static function (ChangeSet $changeSet) use ($transportRepository) {
                 $transport = $transportRepository->findOneById($changeSet->getNameId());
-                $changeSet->setChangeSetObject(\json_decode($changeSet->getChangeSet()));
+                $changeSet->setChangeSetObject(json_decode($changeSet->getChangeSet(), false));
                 $changeSet->setObject($transport);
                 return $changeSet;
             };
 
-            $registrationsChanges = \array_map($setClubRegistration, $registrationsChanges);
-            $officialsChanges = \array_map($setClubOfficials, $officialsChanges);
-            $contestantsChanges = \array_map($setClubContestants, $contestantsChanges);
-            $transportsChanges = \array_map($setClubTransport, $transportsChanges);
+            $registrationsChanges = array_map($setClubRegistration, $registrationsChanges);
+            $officialsChanges = array_map($setClubOfficials, $officialsChanges);
+            $contestantsChanges = array_map($setClubContestants, $contestantsChanges);
+            $transportsChanges = array_map($setClubTransport, $transportsChanges);
 
             /*
              * retrieve object from change set (and adjust timestamp)
              */
             $getObject = function (ChangeSet $changeSet) {
-                $obj = (object)\json_decode($changeSet->getChangeSet());
+                $obj = (object)json_decode($changeSet->getChangeSet());
                 $obj->timestamp = $changeSet->getTimestamp();
                 return $obj;
             };
-            $officialsDrops = \array_map($getObject, $officialsDrops);
-            $contestantsDrops = \array_map($getObject, $contestantsDrops);
-            $transportsDrops = \array_map($getObject, $transportsDrops);
+            $officialsDrops = array_map($getObject, $officialsDrops);
+            $contestantsDrops = array_map($getObject, $contestantsDrops);
+            $transportsDrops = array_map($getObject, $transportsDrops);
 
             $message = (new \Swift_Message('Change history from ' . \date_format($after, 'Y-m-d H:i:s') . ' to ' . \date_format($before, 'Y-m-d H:i:s')))
                 ->setFrom('anmeldung@thueringer-judoverband.de')
@@ -302,9 +307,9 @@ class LoginController extends Controller
                 'registrations' => $registrations,
                 'showSentNotification' => $showSentNotification,
                 'allOfficialsJSON' => \json_encode($officialsRepository->findAll()),
-                'allOfficials' => $this->officialsToCVS($officialsRepository->findAll()),
+                'allOfficials' => $this->officialsToCVS($officialsRepository->findAll(), $appKernel),
                 'allContestantsJSON' => \json_encode($contestantsRepository->findAll()),
-                'allContestants' => $this->contestantsToCVS($contestantsRepository->findAll()),
+                'allContestants' => $this->contestantsToCVS($contestantsRepository->findAll(), $appKernel),
                 'countRegistrations' => $countRegistrations,
                 'countOfficials' => $countOfficials,
                 'countContestants' => $countContestants,
@@ -319,15 +324,15 @@ class LoginController extends Controller
     }
 
 
-    private function contestantsToCVS(array $contestants): string
+    private function contestantsToCVS(array $contestants, KernelInterface $kernel): string
     {
-        $contestants = \array_filter($contestants, function (Contestant $contestant) {
+        $contestants = \array_filter($contestants, static function (Contestant $contestant) {
             return $contestant->getRegistration()->getId() > 0;
         });
 
-        $path = $this->get('kernel')->getRootDir();
-        $codes = \json_decode(\file_get_contents($path . '/../public/data/ISO3166-1-Alpha-2_to_IOC.json'));
-        return \implode("\n", \array_map(function (Contestant $contestant) use ($codes) {
+        $path = $kernel->getProjectDir();
+        $codes = json_decode(file_get_contents($path . '/public/data/ISO3166-1-Alpha-2_to_IOC.json'), true);
+        return implode("\n", array_map(static function (Contestant $contestant) use ($codes) {
             return self::contestantToCVS($contestant, $codes);
         }, $contestants));
     }
@@ -336,7 +341,7 @@ class LoginController extends Controller
     {
         $data = [
             $contestant->getRegistration()->getId(),
-            $codes ? $codes->{$contestant->getRegistration()->getCountry()} : $contestant->getRegistration()->getCountry(),
+            $codes ? $codes[$contestant->getRegistration()->getCountry()] : $contestant->getRegistration()->getCountry(),
             $contestant->getRegistration()->getClub(),
             $contestant->getLastName(),
             $contestant->getFirstName(),
@@ -349,29 +354,30 @@ class LoginController extends Controller
             '"' . preg_replace("/\r|\n/", '', $contestant->getComment()) . '"',
         ];
 
-        return \implode(',', $data);
+        return implode(',', $data);
     }
 
 
     private
-    function officialsToCVS(array $officials): string
+    function officialsToCVS(array $officials, KernelInterface $kernel): string
     {
-        $officials = \array_filter($officials, function (Official $official) {
+        $officials = \array_filter($officials, static function (Official $official) {
             return $official->getRegistration()->getId() > 0;
         });
-        $path = $this->get('kernel')->getRootDir();
-        $codes = \json_decode(\file_get_contents($path . '/../public/data/ISO3166-1-Alpha-2_to_IOC.json'));
-        return \implode("\n", \array_map(function (Official $official) use ($codes) {
+        $path = $kernel->getProjectDir();
+        dump($path);
+        $codes = json_decode(file_get_contents($path . '/public/data/ISO3166-1-Alpha-2_to_IOC.json'), true);
+        dump($codes);
+        return implode("\n", array_map(static function (Official $official) use ($codes) {
             return self::officialToCVS($official, $codes);
         }, $officials));
     }
 
     private static function officialToCVS(Official $official, $codes = null): string
     {
-
         $data = [
             $official->getRegistration()->getId(),
-            $codes ? $codes->{$official->getRegistration()->getCountry()} : $official->getRegistration()->getCountry(),
+            $codes ? $codes[$official->getRegistration()->getCountry()] : $official->getRegistration()->getCountry(),
             $official->getRegistration()->getClub(),
             $official->getLastName(),
             $official->getFirstName(),
@@ -383,7 +389,7 @@ class LoginController extends Controller
             '"' . preg_replace("/\r|\n/", '', $official->getComment()) . '"',
         ];
 
-        return \implode(',', $data);
+        return implode(',', $data);
     }
 
 }
