@@ -112,21 +112,21 @@ class Registration implements UserInterface, Serializable, JsonSerializable
     private $country;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Invoice", mappedBy="registration", cascade={"persist", "remove"}, orphanRemoval=true)
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private $invoice;
-
-    /**
      * @ORM\Column(type="text", nullable=true)
      */
     private $invoice_address;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Invoice", mappedBy="registration", orphanRemoval=true)
+     */
+    private $invoices;
 
     public function __construct()
     {
         $this->transports = new ArrayCollection();
         $this->officials = new ArrayCollection();
         $this->contestants = new ArrayCollection();
+        $this->invoices = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -517,23 +517,6 @@ class Registration implements UserInterface, Serializable, JsonSerializable
         return $numOfficials + $numContestants;
     }
 
-    public function setInvoice(?Invoice $invoice): self
-    {
-        $this->invoice = $invoice;
-
-        // set the owning side of the relation if necessary
-        if ($invoice !== null && $this !== $invoice->getRegistration()) {
-            $invoice->setRegistration($this);
-        }
-
-        return $this;
-    }
-
-    public function getInvoice(): ?Invoice
-    {
-        return $this->invoice;
-    }
-
     public function getInvoiceAddress(): ?string
     {
         return $this->invoice_address;
@@ -542,6 +525,37 @@ class Registration implements UserInterface, Serializable, JsonSerializable
     public function setInvoiceAddress(?string $invoice_address): self
     {
         $this->invoice_address = $invoice_address;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Invoice[]
+     */
+    public function getInvoices(): Collection
+    {
+        return $this->invoices;
+    }
+
+    public function addInvoice(Invoice $invoice): self
+    {
+        if (!$this->invoices->contains($invoice)) {
+            $this->invoices[] = $invoice;
+            $invoice->setRegistration($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInvoice(Invoice $invoice): self
+    {
+        if ($this->invoices->contains($invoice)) {
+            $this->invoices->removeElement($invoice);
+            // set the owning side to null (unless already changed)
+            if ($invoice->getRegistration() === $this) {
+                $invoice->setRegistration(null);
+            }
+        }
 
         return $this;
     }

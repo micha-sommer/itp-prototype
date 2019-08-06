@@ -63,11 +63,13 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('change_password') }}">{{ 'menu.password_edit'|trans }}</a>
                 </li>
-                {% if app.user.invoice is not null %}
+                {% for invoice in app.user.invoices %}
+                    {% if invoice.published %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('invoice', {'uid': app.user.id}) }}">{{ 'menu.invoice'|trans }}</a>
+                        <a class="nav-link" href="{{ path('invoice', {'uid': invoice.id}) }}">{{ 'menu.invoice'|trans }}</a>
                     </li>
-                {% endif %}
+                    {% endif %}
+                {% endfor %}
                 {% if is_granted('ROLE_ADMIN') %}
                     <li class="nav-item">
                         <a class="nav-link badge-warning" href="{{ path('admin') }}">{{ 'menu.admin'|trans }}</a>

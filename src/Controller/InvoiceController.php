@@ -12,11 +12,8 @@ use App\Entity\Registration;
 use App\Enum\GenderEnum;
 use App\Enum\ITCEnum;
 use App\Form\InvoicePositionsListType;
-use App\Repository\InvoiceItemRepository;
 use App\Repository\InvoiceRepository;
-use App\Repository\RegistrationsRepository;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\NonUniqueResultException;
 use function in_array;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,30 +25,21 @@ class InvoiceController extends AbstractController
 {
 
     /**
-     * @Route("/invoicing", name="invoicing")
+     * @Route("/new_invoice", name="new_invoice")
      *
-     *
-     * @param Request $request
-     * @param InvoiceRepository $invoiceRepository
-     * @param InvoiceItemRepository $invoiceItemRepository
      * @return Response
      */
-    public function invoicing(Request $request, InvoiceRepository $invoiceRepository, InvoiceItemRepository $invoiceItemRepository): Response
+    public function newInvoice(): Response
     {
         $em = $this->getDoctrine()->getManager();
 
+        $invoice = new Invoice();
+        $invoice->setPublished(false);
+        $invoice->setTotal(0); // default
+
         /** @var Registration $registration */
         $registration = $this->getUser();
-        $invoice = $invoiceRepository->findOneBy(['registration' => $registration]);
-
-        if ($invoice === null) {
-
-            // create initial invoice
-            $invoice = new Invoice();
-            $invoice->setRegistration($registration);
-            $invoice->setPaidBankEuro(0);
-            $invoice->setPaidCashEuro(0);
-
+        if ($registration->getInvoices()->isEmpty()) {
             // prepare some values
             $officials = $registration->getOfficials();
             $officials_count = $officials->count();
@@ -73,50 +61,91 @@ class InvoiceController extends AbstractController
                 return $contestant->getItc() !== ITCEnum::no;
             })->count();
 
-            $totalInvoice = 0;
-            foreach ($invoiceItemRepository->findAll() as $invoiceItem) {
-                $invoicePosition = new InvoicePosition();
-                $invoicePosition->setIsAdd(true);
-                $invoicePosition->setItem($invoiceItem);
-                $multiplier = 0;
-                switch ($invoiceItem->getId()) {
-                    case 1: // Startgeld
-                        $multiplier = $contestants_count;
-                        break;
-                    case 2: // erhöhtes Startgeld
-                        break;
-                    case 3: // Mehrbettzimmer
-                        $multiplier = (int)($officials_male_with_ITC_count / 2) + (int)($officials_female_with_ITC_count / 2) + $contestants_count;
-                        break;
-                    case 4: // Einzelzimmer
-                        $multiplier = $officials_male_with_ITC_count % 2 + $officials_female_with_ITC_count % 2;
-                        break;
-                    case 5: // Transportpauschale
-                        $multiplier = ($officials_count + $contestants_count) * $registration->getTransports()->count();
-                        break;
-                    case 6: // Internationales Trainings Camp
-                        $multiplier = $officials_female_with_ITC_count + $officials_male_with_ITC_count + $contestants_with_ITC_count;
-                        break;
-                    case 7: // Überweisung
-                        $invoicePosition->setIsAdd(false);
-                        $multiplier = 1;
-                    default:
-                        break;
-                }
-                $invoicePosition->setMultiplier($multiplier);
-                $totalPosition = $invoicePosition->getMultiplier() * $invoiceItem->getAmountEuro() * 100;
-                if ($invoicePosition->getIsAdd()) {
-                    $totalInvoice += $totalPosition;
-                } else {
-                    $totalInvoice -= $totalPosition;
-                }
-                $invoicePosition->setTotalEuro($totalPosition);
-                $invoice->addInvoicePosition($invoicePosition);
-                $em->persist($invoicePosition);
-            }
-            $invoice->setTotalEuro($totalInvoice);
-            $em->persist($invoice);
-            $em->flush();
+            $invoiceTotal = 0;
+
+            // add default Startgeld
+            $invoicePosition = new InvoicePosition();
+            $invoicePosition->setDescription('Startgeld (entry fee)');
+            $invoicePosition->setMultiplier($contestants_count);
+            $invoicePosition->setPrice(3000);
+            $invoiceTotal += $invoicePosition->calculateTotal()->getTotal();
+            $invoicePosition->setInvoice($invoice);
+            $em->persist($invoicePosition);
+
+            // add default erhöhtes Startgeld
+            $invoicePosition = new InvoicePosition();
+            $invoicePosition->setDescription('erhöhtes Startgeld (increased entry fee)');
+            $invoicePosition->setMultiplier(0);
+            $invoicePosition->setPrice(6000);
+            $invoiceTotal += $invoicePosition->calculateTotal()->getTotal();
+            $invoicePosition->setInvoice($invoice);
+            $em->persist($invoicePosition);
+
+            // add Einzelzimmer
+            $invoicePosition = new InvoicePosition();
+            $invoicePosition->setDescription('Einzelzimmer (single room)');
+            $invoicePosition->setMultiplier($officials_male_with_ITC_count % 2 + $officials_female_with_ITC_count % 2);
+            $invoicePosition->setPrice(5000);
+            $invoiceTotal += $invoicePosition->calculateTotal()->getTotal();
+            $invoicePosition->setInvoice($invoice);
+            $em->persist($invoicePosition);
+
+            // add Mehrbettzimmer
+            $invoicePosition = new InvoicePosition();
+            $invoicePosition->setDescription('Mehrbettzimmer (shared rooms, dorm)');
+            $invoicePosition->setMultiplier((int)($officials_male_with_ITC_count / 2) + (int)($officials_female_with_ITC_count / 2) + $contestants_count);
+            $invoicePosition->setPrice(4000);
+            $invoiceTotal += $invoicePosition->calculateTotal()->getTotal();
+            $invoicePosition->setInvoice($invoice);
+            $em->persist($invoicePosition);
+
+            // add Transportpauschale
+            $invoicePosition = new InvoicePosition();
+            $invoicePosition->setDescription('Transportpauschale (transfer airport)');
+            $invoicePosition->setMultiplier(($officials_count + $contestants_count) * $registration->getTransports()->count());
+            $invoicePosition->setPrice(8000);
+            $invoiceTotal += $invoicePosition->calculateTotal()->getTotal();
+            $invoicePosition->setInvoice($invoice);
+            $em->persist($invoicePosition);
+
+            // add Internationales Trainings Camp
+            $invoicePosition = new InvoicePosition();
+            $invoicePosition->setDescription('Internationales Trainings Camp');
+            $invoicePosition->setMultiplier($officials_female_with_ITC_count + $officials_male_with_ITC_count + $contestants_with_ITC_count);
+            $invoicePosition->setPrice(28000);
+            $invoiceTotal += $invoicePosition->calculateTotal()->getTotal();
+            $invoicePosition->setInvoice($invoice);
+            $em->persist($invoicePosition);
+
+            $invoice->setTotal($invoiceTotal);
+        }
+        $registration->addInvoice($invoice);
+
+        $em->persist($invoice);
+        $em->flush();
+
+
+        return $this->redirectToRoute('invoicing', ['uid' => $invoice->getId()]);
+    }
+
+    /**
+     * @Route("/invoicing/{uid}", name="invoicing")
+     *
+     * @param Request $request
+     * @param int $uid
+     * @param InvoiceRepository $invoiceRepository
+     * @return Response
+     */
+    public function invoicing(Request $request, $uid, InvoiceRepository $invoiceRepository): Response
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $invoice = $invoiceRepository->find($uid);
+        if($invoice === null)
+        {
+            throw $this->createNotFoundException(
+                'Error: Invoice with id '.$uid.' could not be found.'
+            );
         }
 
         $invoicePositionsBefore = $invoice->getInvoicePositions();
@@ -126,7 +155,6 @@ class InvoiceController extends AbstractController
         if ($invoicePositionsAfter->getList()->isEmpty()) {
             {
                 $invoicePosition = new InvoicePosition();
-                $invoicePosition->setIsAdd(true);
                 $invoicePositionsAfter->addInvoicePosition($invoicePosition);
             }
         }
@@ -155,48 +183,35 @@ class InvoiceController extends AbstractController
                 }
             }
 
-            // recalulate total
-            $totalInvoice = 0;
-            foreach ($invoice->getInvoicePositions() as $invoicePosition) {
-                if ($invoicePosition->getIsAdd()) {
-                    $totalInvoice += $invoicePosition->getTotalEuro();
-                } else {
-                    $totalInvoice -= $invoicePosition->getTotalEuro();
-                }
+            if ($request->request->get('publish')) {
+                $invoice->setPublished(true);
+                $invoice->calculateTotal();
             }
-            $invoice->setTotalEuro($totalInvoice);
 
             $em->flush();
-            if ($request->request->get('back')) {
-                return $this->redirectToRoute('welcome');
-            }
         }
 
         return $this->render('invoice/invoicing.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'invoice' => $invoice
         ]);
     }
 
     /**
      * @Route("/invoice/{uid}", name="invoice")
      * @param int $uid
-     * @param RegistrationsRepository $registrationsRepository
+     * @param InvoiceRepository $invoiceRepository
      * @return Response
-     * @throws NonUniqueResultException
      */
-    public function invoice(int $uid, RegistrationsRepository $registrationsRepository): Response
+    public function invoice(int $uid, InvoiceRepository $invoiceRepository): Response
     {
-        $registration = $registrationsRepository->findOneById($uid);
+        $invoice = $invoiceRepository->find($uid);
 
-        if ($registration === null) {
-            return new Response(404);
-        }
-
-        $invoice = $registration->getInvoice();
-
-        if ($invoice === null) {
-            $invoice = new Invoice();
-            $invoice->setRegistration($registration);
+        if($invoice === null)
+        {
+            throw $this->createNotFoundException(
+                'Error: Invoice with id '.$uid.' could not be found.'
+            );
         }
 
         $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'utf-8', false);
@@ -232,22 +247,18 @@ class InvoiceController extends AbstractController
     /**
      * @Route("/invoice/delete/{uid}", name="delete_invoice")
      * @param $uid
-     * @param RegistrationsRepository $registrationsRepository
+     * @param InvoiceRepository $invoiceRepository
      * @return Response
-     * @throws NonUniqueResultException
      */
-    public function delete($uid, RegistrationsRepository $registrationsRepository): Response
+    public function delete($uid, InvoiceRepository $invoiceRepository): Response
     {
         $em = $this->getDoctrine()->getManager();
 
-        $registration = $registrationsRepository->findOneById($uid);
-        if ($registration !== null) {
-            $registration->setInvoice(null);
-            $em->flush();
-//            $invoice = $registration->getInvoice();
-//            $em->remove($invoice);
-//            $em->flush();
-        }
+        $invoice = $invoiceRepository->find($uid);
+
+        $em->remove($invoice);
+        $em->flush();
+
         return $this->redirectToRoute('admin', ['_switch_user' => '_exit']);
     }
 

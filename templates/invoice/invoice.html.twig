@@ -69,10 +69,10 @@
     </tr>
     {% for position in invoice.invoicePositions %}
         <tr>
-            <td style="width: 45%"> {{ position.item.description }} </td>
-            <td style="width: 15%" align="right"> {{ position.item.amountEuro|number_format(2,',','.') }} €</td>
+            <td style="width: 45%"> {{ position.description }} </td>
+            <td style="width: 15%" align="right"> {{ (position.price/100)|number_format(2,',','.') }} €</td>
             <td style="width: 12%" align="right"> {{ position.multiplier|number_format(0,',','.') }} </td>
-            <td style="width: 28%" align="right">{{ position.isAdd ? "" : "-" }} {{ (position.totalEuro/100)|number_format(2,',','.') }} €</td>
+            <td style="width: 28%" align="right">{{ (position.total/100)|number_format(2,',','.') }} €</td>
         </tr>
     {% endfor %}
     <tr>
@@ -85,7 +85,7 @@
         <td style="width: 45%"></td>
         <td style="width: 15%"></td>
         <td style="border: 1px solid black; width: 12%"><b>Gesamt:</b></td>
-        <td style="border: 1px solid black; width: 28%; text-align: right"><b>{{ (invoice.totalEuro/100)|number_format(2,',','.') }}
+        <td style="border: 1px solid black; width: 28%; text-align: right"><b>{{ (invoice.total/100)|number_format(2,',','.') }}
                 €</b></td>
     </tr>
     <tr>

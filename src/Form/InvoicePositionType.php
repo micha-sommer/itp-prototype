@@ -6,11 +6,10 @@ namespace App\Form;
 
 use App\Entity\InvoiceItem;
 use App\Entity\InvoicePosition;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -19,12 +18,12 @@ class InvoicePositionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('item', EntityType::class, ['class' => InvoiceItem::class, 'choice_label' => 'description', 'choice_value' => 'amount_euro'])
+            ->add('description', TextType::class)
+            ->add('price', NumberType::class, ['scale' => 2, 'grouping' => true, 'attr' => ['class' => 'hidden-price']])
             ->add('multiplier', NumberType::class, ['attr' => ['class' => 'hidden-multiplier']])
-            ->add('is_add', ChoiceType::class, ['choices' => ['+' => true, '-' => false], 'label' => false])
-            ->add('total_euro', NumberType::class, ['scale' => 2, 'attr' => ['class' => 'hidden-total_euro','style' => 'text-align: right']]);
+            ->add('total', NumberType::class, ['scale' => 2, 'grouping' => true, 'attr' => ['class' => 'hidden-total','style' => 'text-align: right']]);
 
-        $builder->get('total_euro')->addModelTransformer(new CallbackTransformer(
+        $moneyTransformer = new CallbackTransformer(
 
             static function ($number)
             {
@@ -36,7 +35,10 @@ class InvoicePositionType extends AbstractType
                 return $decimal*100;
             }
 
-            ));
+        );
+
+        $builder->get('price')->addModelTransformer($moneyTransformer);
+        $builder->get('total')->addModelTransformer($moneyTransformer);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

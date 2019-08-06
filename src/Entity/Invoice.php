@@ -19,22 +19,6 @@ class Invoice
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Registration", inversedBy="invoice", cascade={"persist"})
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $registration;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $paidCashEuro;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $paidBankEuro;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\InvoicePosition", mappedBy="invoice", orphanRemoval=true)
      */
     private $invoicePositions;
@@ -42,7 +26,18 @@ class Invoice
     /**
      * @ORM\Column(type="integer")
      */
-    private $totalEuro;
+    private $total;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Registration", inversedBy="invoices")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $registration;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $published;
 
     public function __construct()
     {
@@ -52,45 +47,6 @@ class Invoice
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getRegistration(): ?Registration
-    {
-        return $this->registration;
-    }
-
-    public function setRegistration(Registration $registration): self
-    {
-        $this->registration = $registration;
-        if ($registration->getInvoice() !== $this) {
-            $registration->setInvoice($this);
-        }
-
-        return $this;
-    }
-
-    public function getPaidCashEuro(): ?int
-    {
-        return $this->paidCashEuro;
-    }
-
-    public function setPaidCashEuro(int $paidCashEuro): self
-    {
-        $this->paidCashEuro = $paidCashEuro;
-
-        return $this;
-    }
-
-    public function getPaidBankEuro(): ?int
-    {
-        return $this->paidBankEuro;
-    }
-
-    public function setPaidBankEuro(int $paidBankEuro): self
-    {
-        $this->paidBankEuro = $paidBankEuro;
-
-        return $this;
     }
 
     /**
@@ -124,14 +80,48 @@ class Invoice
         return $this;
     }
 
-    public function getTotalEuro(): ?int
+    public function getTotal(): ?int
     {
-        return $this->totalEuro;
+        return $this->total;
     }
 
-    public function setTotalEuro(int $totalEuro): self
+    public function setTotal(int $total): self
     {
-        $this->totalEuro = $totalEuro;
+        $this->total = $total;
+
+        return $this;
+    }
+
+    public function calculateTotal(): self
+    {
+        $total = 0;
+        foreach ($this->getInvoicePositions() as $invoicePosition)
+        {
+            $total += $invoicePosition->getTotal();
+        }
+        return $this->setTotal($total);
+    }
+
+    public function getRegistration(): ?Registration
+    {
+        return $this->registration;
+    }
+
+    public function setRegistration(?Registration $registration): self
+    {
+        $this->registration = $registration;
+
+        return $this;
+    }
+
+    public function getPublished(): ?bool
+    {
+        return $this->published;
+    }
+
+    public function setPublished(bool $published): self
+    {
+        $this->published = $published;
 
         return $this;
     }

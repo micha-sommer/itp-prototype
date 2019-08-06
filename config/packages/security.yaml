@@ -39,6 +39,7 @@ security:
         - { path: ^/(%app_locales%)/transports, roles: ROLE_USER, requires_channel: https }
         - { path: ^/(%app_locales%)/invoice/, roles: ROLE_USER, requires_channel: https }
         - { path: ^/(%app_locales%)/invoicing, roles: ROLE_PREVIOUS_ADMIN, requires_channel: https }
+        - { path: ^/(%app_locales%)/new_invoice, roles: ROLE_PREVIOUS_ADMIN, requires_channel: https }
         - { path: ^/(%app_locales%)/invoice/delete/, roles: ROLE_ADMIN, requires_channel: https }
         - { path: ^/(%app_locales%)/registration, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
         - { path: ^/(%app_locales%)/registration/edit, roles: ROLE_USER, requires_channel: https }

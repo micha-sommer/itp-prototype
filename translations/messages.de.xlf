@@ -631,6 +631,10 @@
             <source>position_item_price.invoice</source>
             <target>Einzelpreis</target>
         </trans-unit>
+        <trans-unit id="2">
+            <source>save_and_back.invoice</source>
+            <target>Speicher und veröffentlichen</target>
+        </trans-unit>
     </body>
   </file>
 </xliff>

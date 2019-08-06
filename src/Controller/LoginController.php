@@ -365,9 +365,7 @@ class LoginController extends AbstractController
             return $official->getRegistration()->getId() > 0;
         });
         $path = $kernel->getProjectDir();
-        dump($path);
         $codes = json_decode(file_get_contents($path . '/public/data/ISO3166-1-Alpha-2_to_IOC.json'), true);
-        dump($codes);
         return implode("\n", array_map(static function (Official $official) use ($codes) {
             return self::officialToCVS($official, $codes);
         }, $officials));

@@ -633,6 +633,10 @@
             <source>position_item_price.invoice</source>
             <target>Price</target>
         </trans-unit>
+        <trans-unit id="2">
+            <source>save_and_back.invoice</source>
+            <target>Save and publish</target>
+        </trans-unit>
     </body>
   </file>
 </xliff>

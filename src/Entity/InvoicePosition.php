@@ -17,12 +17,6 @@ class InvoicePosition
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\InvoiceItem")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $item;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Invoice", inversedBy="invoicePositions")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -34,30 +28,25 @@ class InvoicePosition
     private $multiplier;
 
     /**
-     * @ORM\Column(type="boolean")
-     */
-    private $isAdd;
-
-    /**
+     * In cents.
      * @ORM\Column(type="integer")
      */
-    private $totalEuro;
+    private $total;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $description;
+
+    /**
+     * In cents.
+     * @ORM\Column(type="integer")
+     */
+    private $price;
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getItem(): ?InvoiceItem
-    {
-        return $this->item;
-    }
-
-    public function setItem(?InvoiceItem $item): self
-    {
-        $this->item = $item;
-
-        return $this;
     }
 
     public function getInvoice(): ?Invoice
@@ -84,27 +73,44 @@ class InvoicePosition
         return $this;
     }
 
-    public function getIsAdd(): ?bool
+    public function getTotal(): ?int
     {
-        return $this->isAdd;
+        return $this->total;
     }
 
-    public function setIsAdd(bool $isAdd): self
+    public function setTotal(int $total): self
     {
-        $this->isAdd = $isAdd;
+        $this->total = $total;
 
         return $this;
     }
 
-    public function getTotalEuro(): ?int
+    public function getDescription(): ?string
     {
-        return $this->totalEuro;
+        return $this->description;
     }
 
-    public function setTotalEuro(int $totalEuro): self
+    public function setDescription(string $description): self
     {
-        $this->totalEuro = $totalEuro;
+        $this->description = $description;
 
         return $this;
+    }
+
+    public function getPrice(): ?int
+    {
+        return $this->price;
+    }
+
+    public function setPrice(int $price): self
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    public function calculateTotal(): self
+    {
+        return $this->setTotal($this->getPrice() * $this->getMultiplier());
     }
 }
