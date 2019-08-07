@@ -185,9 +185,10 @@ class InvoiceController extends AbstractController
 
             if ($request->request->get('publish')) {
                 $invoice->setPublished(true);
-                $invoice->calculateTotal();
             }
 
+
+            $invoice->calculateTotal();
             $em->flush();
         }
 
