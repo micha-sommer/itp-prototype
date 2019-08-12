@@ -33,12 +33,13 @@ class InvoiceController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
 
+        /** @var Registration $registration */
+        $registration = $this->getUser();
+
         $invoice = new Invoice();
         $invoice->setPublished(false);
         $invoice->setTotal(0); // default
 
-        /** @var Registration $registration */
-        $registration = $this->getUser();
         if ($registration->getInvoices()->isEmpty()) {
             // prepare some values
             $officials = $registration->getOfficials();

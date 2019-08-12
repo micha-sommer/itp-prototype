@@ -22,7 +22,11 @@
         <td colspan="4"></td>
     </tr>
     <tr>
-        <td style="width: 60%" colspan="2">{{ invoice.registration.invoiceAddress|nl2br }}
+        {% if invoice.invoiceAddress is empty %}
+            <td style="width: 60%" colspan="2">{{ invoice.registration.invoiceAddress|nl2br }}
+        {% else %}
+            <td style="width: 60%" colspan="2">{{ invoice.invoiceAddress|nl2br }}
+        {% endif %}
         </td>
         <td style="width: 40%" colspan="2">
             Thüringer Judo-Verband e.V.<br>

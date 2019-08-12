@@ -39,6 +39,11 @@ class Invoice
      */
     private $published;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $invoiceAddress;
+
     public function __construct()
     {
         $this->invoicePositions = new ArrayCollection();
@@ -122,6 +127,18 @@ class Invoice
     public function setPublished(bool $published): self
     {
         $this->published = $published;
+
+        return $this;
+    }
+
+    public function getInvoiceAddress(): ?string
+    {
+        return $this->invoiceAddress;
+    }
+
+    public function setInvoiceAddress(?string $invoiceAddress): self
+    {
+        $this->invoiceAddress = $invoiceAddress;
 
         return $this;
     }
