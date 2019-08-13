@@ -211,7 +211,7 @@ class InvoiceController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             if ($request->request->get('publish')) {
-                $invoice->setPublished(true);
+                $invoice->setPublished(!$invoice->getPublished());
             }
 
             $invoice->calculateTotal();

@@ -157,12 +157,13 @@
                 </tr>
             {% endfor %}
             <thead class="total">
-            <th class="text-right" colspan="3">{{ 'total.invoicing'|trans }}</th>
-            <th class="text-right final_total">{{ (invoice.total/100)|number_format(2) }} €</th>
-            <th></th>
-            <th></th>
+            <tr>
+                <th class="text-right" colspan="3">{{ 'total.invoicing'|trans }}</th>
+                <th class="text-right final_total">{{ (invoice.total/100)|number_format(2) }} €</th>
+                <th></th>
+                <th></th>
+            </tr>
             </thead>
-            </tbody>
         </table>
 
 
@@ -170,9 +171,17 @@
             <div class="bg-light clearfix">
                 <button class="btn btn-primary btn-lg btn-success float-left add-a-tag"
                         type="button">{{ 'generic.add'|trans }}</button>
-                <input class="btn btn-secondary btn-lg float-right" name="publish" type="submit" data-toggle="tooltip"
-                       data-placement="top"
-                       title="{{ 'generic.tooltip.save'|trans }}" value="{{ 'save_and_back.invoice'|trans }}"/>
+                <button class="btn {{ (invoice.published) ? 'btn-warning'|raw : 'btn-success'|raw }} btn-lg float-right"
+                        name="publish" type="submit" data-toggle="tooltip"
+                        data-placement="top"
+                        title="{{ (invoice.published) ? 'tooltip.hide.invoice'|trans : 'tooltip.publish.invoice'|trans }}"
+                        value="{{ (invoice.published) ? 'save_and_hide.invoice'|trans : 'save_and_publish.invoice'|trans }}">
+                    {% if invoice.published %}
+                        <i class="fas fa-eye-slash"></i>
+                    {% else %}
+                        <i class="fas fa-eye"></i>
+                    {% endif %}
+                </button>
                 <input class="btn btn-primary btn-lg float-right mr-1" type="submit" data-toggle="tooltip"
                        data-placement="top"
                        title="{{ 'generic.tooltip.save'|trans }}" value="{{ 'generic.save'|trans }}"/>

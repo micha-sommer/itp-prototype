@@ -626,17 +626,29 @@
         <target>Total</target>
       </trans-unit>
         <trans-unit id="0">
-            <source>total.invoicing</source>
-            <target>Total:</target>
-        </trans-unit>
-        <trans-unit id="1">
-            <source>position_item_price.invoice</source>
-            <target>Price</target>
-        </trans-unit>
-        <trans-unit id="2">
-            <source>save_and_back.invoice</source>
-            <target>Save and publish</target>
-        </trans-unit>
+        <source>total.invoicing</source>
+        <target>Total:</target>
+      </trans-unit>
+      <trans-unit id="1">
+        <source>position_item_price.invoice</source>
+        <target>Price</target>
+      </trans-unit>
+      <trans-unit id="2">
+        <source>save_and_publish.invoice</source>
+        <target>Save and publish</target>
+      </trans-unit>
+      <trans-unit id="3">
+        <source>save_and_hide.invoice</source>
+        <target>Save and hide</target>
+      </trans-unit>
+      <trans-unit id="4">
+        <source>tooltip.publish.invoice</source>
+        <target>Publish this invoice so that the user can see it.</target>
+      </trans-unit>
+      <trans-unit id="5">
+        <source>tooltip.hide.invoice</source>
+        <target>Hide this invoice so that the user cannot see it (anymore).</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -623,18 +623,30 @@
         <source>position_total.invoice</source>
         <target>Summe</target>
       </trans-unit>
-        <trans-unit id="0">
-            <source>total.invoicing</source>
-            <target>Gesamt:</target>
-        </trans-unit>
-        <trans-unit id="1">
-            <source>position_item_price.invoice</source>
-            <target>Einzelpreis</target>
-        </trans-unit>
-        <trans-unit id="2">
-            <source>save_and_back.invoice</source>
-            <target>Speicher und veröffentlichen</target>
-        </trans-unit>
+      <trans-unit id="0">
+        <source>total.invoicing</source>
+        <target>Gesamt:</target>
+      </trans-unit>
+      <trans-unit id="1">
+        <source>position_item_price.invoice</source>
+        <target>Einzelpreis</target>
+      </trans-unit>
+      <trans-unit id="2">
+        <source>save_and_publish.invoice</source>
+        <target>Speichern und veröffentlichen</target>
+      </trans-unit>
+      <trans-unit id="3">
+        <source>save_and_hide.invoice</source>
+        <target>Speichern und zurückziehen</target>
+      </trans-unit>
+      <trans-unit id="4">
+        <source>tooltip.publish.invoice</source>
+        <target>Veröffentliche diese Rechnung, so dass sie der Nutzer sehen kann.</target>
+      </trans-unit>
+      <trans-unit id="5">
+        <source>tooltip.hide.invoice</source>
+        <target>Ziehe diese Rechnung zurück, so dass sie der Nutzer nicht (mehr) sehen kann.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
