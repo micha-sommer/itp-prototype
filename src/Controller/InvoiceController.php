@@ -3,18 +3,14 @@
 
 namespace App\Controller;
 
-
 use App\Entity\Contestant;
 use App\Entity\Invoice;
 use App\Entity\InvoicePosition;
-use App\Entity\InvoicePositionsList;
 use App\Entity\Registration;
 use App\Enum\GenderEnum;
 use App\Enum\ITCEnum;
 use App\Form\InvoiceType;
 use App\Repository\InvoiceRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use function in_array;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -122,6 +118,62 @@ class InvoiceController extends AbstractController
             $em->persist($invoicePosition);
 
             $invoice->setTotal($invoiceTotal);
+        }
+        else
+        {
+            // add default Startgeld
+            $invoicePosition = new InvoicePosition();
+            $invoicePosition->setDescription('Startgeld (entry fee)');
+            $invoicePosition->setMultiplier(0);
+            $invoicePosition->setPrice(3000);
+            $invoicePosition->calculateTotal();
+            $invoicePosition->setInvoice($invoice);
+            $em->persist($invoicePosition);
+
+            // add default erhöhtes Startgeld
+            $invoicePosition = new InvoicePosition();
+            $invoicePosition->setDescription('erhöhtes Startgeld (increased entry fee)');
+            $invoicePosition->setMultiplier(0);
+            $invoicePosition->setPrice(6000);
+            $invoicePosition->calculateTotal();
+            $invoicePosition->setInvoice($invoice);
+            $em->persist($invoicePosition);
+
+            // add Einzelzimmer
+            $invoicePosition = new InvoicePosition();
+            $invoicePosition->setDescription('Einzelzimmer (single room)');
+            $invoicePosition->setMultiplier(0);
+            $invoicePosition->setPrice(5000);
+            $invoicePosition->calculateTotal();
+            $invoicePosition->setInvoice($invoice);
+            $em->persist($invoicePosition);
+
+            // add Mehrbettzimmer
+            $invoicePosition = new InvoicePosition();
+            $invoicePosition->setDescription('Mehrbettzimmer (shared rooms, dorm)');
+            $invoicePosition->setMultiplier(0);
+            $invoicePosition->setPrice(4000);
+            $invoicePosition->calculateTotal();
+            $invoicePosition->setInvoice($invoice);
+            $em->persist($invoicePosition);
+
+            // add Transportpauschale
+            $invoicePosition = new InvoicePosition();
+            $invoicePosition->setDescription('Transportpauschale (transfer airport)');
+            $invoicePosition->setMultiplier(0);
+            $invoicePosition->setPrice(8000);
+            $invoicePosition->calculateTotal();
+            $invoicePosition->setInvoice($invoice);
+            $em->persist($invoicePosition);
+
+            // add Internationales Trainings Camp
+            $invoicePosition = new InvoicePosition();
+            $invoicePosition->setDescription('Internationales Trainings Camp');
+            $invoicePosition->setMultiplier(0);
+            $invoicePosition->setPrice(28000);
+            $invoicePosition->calculateTotal();
+            $invoicePosition->setInvoice($invoice);
+            $em->persist($invoicePosition);
         }
         $registration->addInvoice($invoice);
 
