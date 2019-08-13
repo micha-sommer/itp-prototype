@@ -11,6 +11,8 @@ namespace App\Services;
 
 use App\Entity\ChangeSet;
 use App\Entity\Contestant;
+use App\Entity\Invoice;
+use App\Entity\InvoicePosition;
 use App\Entity\Official;
 use App\Entity\Registration;
 use App\Entity\Transport;
@@ -47,6 +49,12 @@ class OnFlushService
                 case $entity instanceof Registration:
                     $changeSet->setName('registration');
                     break;
+                case $entity instanceof Invoice:
+                    $changeSet->setName('invoice');
+                    break;
+                case $entity instanceof InvoicePosition:
+                    $changeSet->setName('invoicePosition');
+                    break;
                 default:
                     $changeSet->setName('unknown');
                     break;
@@ -75,6 +83,12 @@ class OnFlushService
                 case $entity instanceof Registration:
                     $changeSet->setName('registration');
                     break;
+                case $entity instanceof Invoice:
+                    $changeSet->setName('invoice');
+                    break;
+                case $entity instanceof InvoicePosition:
+                    $changeSet->setName('invoicePosition');
+                    break;
                 default:
                     $changeSet->setName('unknown');
                     break;
@@ -90,6 +104,7 @@ class OnFlushService
         }
 
         foreach ($uow->getScheduledCollectionDeletions() as $col) {
+            /*
             $changeSet = new ChangeSet();
             $changeSet->setTimestamp(new \DateTime());
             $changeSet->setType('DROP');
@@ -98,10 +113,11 @@ class OnFlushService
             $em->persist($changeSet);
             $md = $em->getClassMetadata(\get_class($changeSet));
             $uow->computeChangeSet($md, $changeSet);
-
+            //*/
         }
 
         foreach ($uow->getScheduledCollectionUpdates() as $col) {
+            /*
             $changeSet = new ChangeSet();
             $changeSet->setTimestamp(new \DateTime());
             $changeSet->setType('UPDATE');
@@ -110,6 +126,7 @@ class OnFlushService
             $em->persist($changeSet);
             $md = $em->getClassMetadata(\get_class($changeSet));
             $uow->computeChangeSet($md, $changeSet);
+            //*/
         }
         error_reporting($oldErrorReporting);
     }

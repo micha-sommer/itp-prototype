@@ -11,7 +11,7 @@ use App\Entity\InvoicePositionsList;
 use App\Entity\Registration;
 use App\Enum\GenderEnum;
 use App\Enum\ITCEnum;
-use App\Form\InvoicePositionsListType;
+use App\Form\InvoiceType;
 use App\Repository\InvoiceRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use function in_array;
@@ -149,45 +149,15 @@ class InvoiceController extends AbstractController
             );
         }
 
-        $invoicePositionsBefore = $invoice->getInvoicePositions();
-        $invoicePositionsAfter = new InvoicePositionsList();
-        $invoicePositionsAfter->setList(new ArrayCollection($invoicePositionsBefore->toArray()));
-
-        if ($invoicePositionsAfter->getList()->isEmpty()) {
-            {
-                $invoicePosition = new InvoicePosition();
-                $invoicePositionsAfter->addInvoicePosition($invoicePosition);
-            }
-        }
-
-        $form = $this->createForm(InvoicePositionsListType::class, $invoicePositionsAfter);
+        $form = $this->createForm(InvoiceType::class, $invoice);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            // check for deleted invoice positions
-            foreach ($invoicePositionsBefore as $invoicePosition) {
-                if (false === $invoicePositionsAfter->getList()->contains($invoicePosition)) {
-                    $em->remove($invoicePosition);
-                    $em->flush();
-                }
-            }
-
-            // check for added invoice positions
-            foreach ($invoicePositionsAfter->getList() as $invoicePosition) {
-                if (false === in_array($invoicePosition, $invoicePositionsBefore->toArray(), true)) {
-                    if (null === $invoicePosition->getInvoice()) {
-                        $invoicePosition->setInvoice($invoice);
-                    }
-                    $em->persist($invoicePosition);
-                }
-            }
-
             if ($request->request->get('publish')) {
                 $invoice->setPublished(true);
             }
-
 
             $invoice->calculateTotal();
             $em->flush();

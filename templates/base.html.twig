@@ -66,7 +66,7 @@
                 {% for invoice in app.user.invoices %}
                     {% if invoice.published %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('invoice', {'uid': invoice.id}) }}">{{ 'menu.invoice'|trans }}</a>
+                        <a class="nav-link" href="{{ path('invoice', {'uid': invoice.id}) }}">{{ 'menu.invoice'|trans }} : {{ invoice.name }}</a>
                     </li>
                     {% endif %}
                 {% endfor %}

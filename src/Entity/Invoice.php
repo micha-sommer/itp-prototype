@@ -19,7 +19,7 @@ class Invoice
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\InvoicePosition", mappedBy="invoice", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\InvoicePosition", mappedBy="invoice", orphanRemoval=true, cascade={"persist", "remove"})
      */
     private $invoicePositions;
 
@@ -43,6 +43,11 @@ class Invoice
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $invoiceAddress;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $name;
 
     public function __construct()
     {
@@ -139,6 +144,18 @@ class Invoice
     public function setInvoiceAddress(?string $invoiceAddress): self
     {
         $this->invoiceAddress = $invoiceAddress;
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
 
         return $this;
     }

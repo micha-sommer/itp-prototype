@@ -22,7 +22,7 @@ class ChangeSet
     private $changeSet;
 
     /**
-     * @ORM\Column(name="name", type="string", length=0, nullable=false, columnDefinition="ENUM('contestant', 'official', 'registration', 'transport')")
+     * @ORM\Column(name="name", type="string", length=0, nullable=false, columnDefinition="ENUM('contestant', 'official', 'registration', 'transport', 'invoice', 'invoicePosition')")
      */
     private $name;
 

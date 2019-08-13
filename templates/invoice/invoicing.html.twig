@@ -52,7 +52,7 @@
             $collectionHolder.data('index', index + 1);
 
             // Display the form in the page in an li, before the "Add a tag" link td
-            let $newFormTr = $('<tr class="table-secondary invoice_position"></tr>').append(newForm);
+            let $newFormTr = $('<tr class="table-secondary invoicePosition"></tr>').append(newForm);
 
             addTagFormCalcLink($newFormTr);
             addTagFormDeleteLink($newFormTr);
@@ -124,10 +124,11 @@
 
     <div class="jumbotron">
         <h1 class="display-4">{{ 'title.invoicing'|trans }}!</h1>
-        <p class="lead">{{ 'description.invoicing'|trans }}</p>
-        <hr class="my-4">
-
         {{ form_start(form) }}
+        <p class="lead">{{ 'description.invoicing'|trans }}</p>
+        {{ form_row(form.name) }}
+        {{ form_row(form.invoice_address) }}
+        <hr class="my-4">
         <table class="table table-middle-aligned">
             <thead class="thead-dark">
             <tr>
@@ -141,18 +142,18 @@
             </tr>
             </thead>
             <tbody class="invoices" data-prototype="
-                {{ '<td class="text-center">'|e }}{{ form_widget(form.list.vars.prototype.description)|e }}                     {{ '</td>'|e }}
-                {{ '<td class="text-center">'|e }}{{ form_widget(form.list.vars.prototype.price)|e }}                           {{ '</td>'|e }}
-                {{ '<td class="text-center">'|e }}{{ form_widget(form.list.vars.prototype.multiplier)|e }}                      {{ '</td>'|e }}
-                {{ '<td class="text-center" onchange="updateTotal()">'|e }}{{ form_widget(form.list.vars.prototype.total)|e }}   {{ '</td>'|e }}
+                {{ '<td class="text-center">'|e }}{{ form_widget(form.invoicePositions.vars.prototype.description)|e }}                     {{ '</td>'|e }}
+                {{ '<td class="text-center">'|e }}{{ form_widget(form.invoicePositions.vars.prototype.price)|e }}                           {{ '</td>'|e }}
+                {{ '<td class="text-center">'|e }}{{ form_widget(form.invoicePositions.vars.prototype.multiplier)|e }}                      {{ '</td>'|e }}
+                {{ '<td class="text-center" onchange="updateTotal()">'|e }}{{ form_widget(form.invoicePositions.vars.prototype.total)|e }}   {{ '</td>'|e }}
             ">
             {{ form_row(form._token) }}
-            {% for invoice_position in form.list %}
-                <tr class="invoice_position">
-                    <td class="text-center">{{ form_widget(invoice_position.description) }}</td>
-                    <td class="text-center">{{ form_widget(invoice_position.price) }}</td>
-                    <td class="text-center">{{ form_widget(invoice_position.multiplier) }}</td>
-                    <td class="text-center" onchange="updateTotal()">{{ form_widget(invoice_position.total) }}</td>
+            {% for invoicePosition in form.invoicePositions %}
+                <tr class="invoicePosition">
+                    <td class="text-center">{{ form_widget(invoicePosition.description) }}</td>
+                    <td class="text-center">{{ form_widget(invoicePosition.price) }}</td>
+                    <td class="text-center">{{ form_widget(invoicePosition.multiplier) }}</td>
+                    <td class="text-center" onchange="updateTotal()">{{ form_widget(invoicePosition.total) }}</td>
                 </tr>
             {% endfor %}
             <thead class="total">
