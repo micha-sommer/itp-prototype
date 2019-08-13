@@ -69,10 +69,16 @@
                 let $totalField = $tagFormTr.find('input.hidden-total');
                 let $price = $tagFormTr.find('input.hidden-price').val();
                 let $multiplier = $tagFormTr.find('input.hidden-multiplier').val();
+                let locale =document.querySelector('html').getAttribute('lang');
+                if(locale === 'de')
+                {
+                    $price = $price.replace(/\./g, '').replace(',', '.');
+                    $multiplier = $multiplier.replace(/\./g, '').replace(',', '.');
+                }
                 let $newValue = Number($price * $multiplier);
-                console.log($newValue);
-                $totalField.val(currencyFormatUS($newValue));
-                $totalField.change(); // trigger change
+                console.log($newValue.toLocaleString(locale, {minimumFractionDigits:2, maximumFractionDigits:2}));
+                $totalField.val($newValue.toLocaleString(locale, {minimumFractionDigits:2, maximumFractionDigits:2}));
+                $totalField.change(); // trigger change to update total
             });
         }
 
