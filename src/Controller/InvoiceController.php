@@ -37,8 +37,10 @@ class InvoiceController extends AbstractController
         $registration = $this->getUser();
 
         $invoice = new Invoice();
-        $invoice->setPublished(false);
         $invoice->setTotal(0); // default
+        $invoice->setPublished(false);
+        $invoice->setInvoiceAddress($registration->getInvoiceAddress());
+        $invoice->setName($registration->getInvoices()->count());
 
         if ($registration->getInvoices()->isEmpty()) {
             // prepare some values
