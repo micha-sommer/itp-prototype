@@ -126,6 +126,7 @@
         <h1 class="display-4">{{ 'title.invoicing'|trans }}!</h1>
         {{ form_start(form) }}
         <p class="lead">{{ 'description.invoicing'|trans }}</p>
+        {{ form_row(form.subId) }}
         {{ form_row(form.name) }}
         {{ form_row(form.invoice_address) }}
         <hr class="my-4">

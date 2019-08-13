@@ -13,6 +13,7 @@ use App\Entity\Invoice;
 use App\Entity\InvoicePositionsList;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -23,6 +24,7 @@ class InvoiceType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options) : void
     {
         $builder
+            ->add('subId', NumberType::class, ['required' => true])
             ->add('invoice_address', TextareaType::class, ['required' => false])
             ->add('name', TextType::class, ['required' => true])
             ->add('invoicePositions', CollectionType::class, [
