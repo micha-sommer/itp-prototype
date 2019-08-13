@@ -19,6 +19,11 @@ class Invoice
     private $id;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    private $subId;
+
+    /**
      * @ORM\OneToMany(targetEntity="App\Entity\InvoicePosition", mappedBy="invoice", orphanRemoval=true, cascade={"persist", "remove"})
      */
     private $invoicePositions;
@@ -156,6 +161,18 @@ class Invoice
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getSubId(): ?int
+    {
+        return $this->subId;
+    }
+
+    public function setSubId(int $subId): self
+    {
+        $this->subId = $subId;
 
         return $this;
     }

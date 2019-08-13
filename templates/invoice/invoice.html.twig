@@ -51,7 +51,8 @@
         <td style="width: 15%"></td>
         <td style="border: 1px solid black; width: 12%">Nr.:</td>
         <td style="border: 1px solid black; width: 28%; text-align: center; ">
-            <b>{{ invoice.registration.id }}</b></td>
+            <b>{{ "%03d"|format(invoice.registration.id) }}{{ (invoice.registration.invoices.count<=1) ? "" : "_#{invoice.subId}"  }}</b>
+        </td>
     </tr>
     <tr>
         <td colspan="4"></td>
