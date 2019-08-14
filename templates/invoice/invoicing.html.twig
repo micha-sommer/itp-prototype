@@ -69,15 +69,14 @@
                 let $totalField = $tagFormTr.find('input.hidden-total');
                 let $price = $tagFormTr.find('input.hidden-price').val();
                 let $multiplier = $tagFormTr.find('input.hidden-multiplier').val();
-                let locale =document.querySelector('html').getAttribute('lang');
-                if(locale === 'de')
-                {
-                    $price = $price.replace(/\./g, '').replace(',', '.');
-                    $multiplier = $multiplier.replace(/\./g, '').replace(',', '.');
-                }
+
+                let locale = document.querySelector('html').getAttribute('lang');
+                $price = stringToNumber($price,locale);
+                $multiplier = stringToNumber($multiplier, locale);
                 let $newValue = Number($price * $multiplier);
-                console.log($newValue.toLocaleString(locale, {minimumFractionDigits:2, maximumFractionDigits:2}));
-                $totalField.val($newValue.toLocaleString(locale, {minimumFractionDigits:2, maximumFractionDigits:2}));
+
+                console.log($newValue.toLocaleString(locale, {minimumFractionDigits: 2, maximumFractionDigits: 2}));
+                $totalField.val($newValue.toLocaleString(locale, {minimumFractionDigits: 2, maximumFractionDigits: 2}));
                 $totalField.change(); // trigger change to update total
             });
         }
@@ -92,6 +91,15 @@
                 $tagFormTr.remove();
                 updateTotal();
             });
+        }
+
+        function stringToNumber(numberString, locale) {
+            if (locale === 'de') {
+                return  parseFloat(numberString.replace(/\./g, '').replace(',', '.'));
+            }
+            else{
+                return  parseFloat(numberString.replace(',', ''));
+            }
         }
 
         function currencyFormatDE(num) {
@@ -114,15 +122,21 @@
         function updateTotal() {
             console.log('update Total');
             let $total = 0;
+            let locale = document.querySelector('html').getAttribute('lang');
+
             // Get the ul that holds the collection of tags
             $collectionHolder = $('tbody.invoices');
 
-            // add a delete link to all of the existing tag form li elements
+            // get sub total of all elements
             $collectionHolder.find('tr').each(function () {
-                $total += parseInt($(this).find('input.hidden-total').val().replace(',', ''));
+                $total += stringToNumber($(this).find('input.hidden-total').val(), locale);
             });
             console.log($total);
-            $('th.final_total').html(currencyFormatUS($total) + ' €');
+            if (locale === 'de') {
+                $('th.final_total').html(currencyFormatDE($total) + ' €');
+            } else {
+                $('th.final_total').html(currencyFormatUS($total) + ' €');
+            }
         }
     </script>
 {% endblock %}
