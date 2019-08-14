@@ -649,6 +649,14 @@
         <source>tooltip.hide.invoice</source>
         <target>Hide this invoice so that the user cannot see it (anymore).</target>
       </trans-unit>
+      <trans-unit id="6">
+        <source>Sub id</source>
+        <target>Sub id</target>
+      </trans-unit>
+      <trans-unit id="7">
+        <source>Name</source>
+        <target>Name</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

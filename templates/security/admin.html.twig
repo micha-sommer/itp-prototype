@@ -91,12 +91,14 @@
                         </a>
                         <a class="btn btn-info" role="button"
                            data-toggle="tooltip" data-placement="top"
-                           title="Add a new invoice"
+                           title="New Invoice"
                            href="{{ path('new_invoice', {'_switch_user': registration.email}) }}">
                             <i class="fas fa-hand-holding-usd"></i>
                         </a>
                         {% for invoice in registration.invoices %}
                             <a class="btn {{ invoice.published ? "btn-success" : "btn-warning" }}" role="button"
+                               data-toggle="tooltip" data-placement="top"
+                               title="{{ 'menu.invoice'|trans }} : {{ invoice.name }}"
                                href="{{ path('invoicing', {'_switch_user': registration.email, 'uid': invoice.id }) }}">
                                 <i class="fas fa-file-invoice-dollar"></i>
                             </a>
