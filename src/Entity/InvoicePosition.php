@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\InvoicePositionRepository")
  */
-class InvoicePosition
+class InvoicePosition implements \JsonSerializable
 {
     /**
      * @ORM\Id()
@@ -23,7 +23,7 @@ class InvoicePosition
     private $invoice;
 
     /**
-     * @ORM\Column(type="decimal", precision=5, scale=2)
+     * @ORM\Column(type="integer")
      */
     private $multiplier;
 
@@ -111,6 +111,18 @@ class InvoicePosition
 
     public function calculateTotal(): self
     {
-        return $this->setTotal($this->getPrice() * $this->getMultiplier());
+        return $this->setTotal($this->getPrice() * ($this->getMultiplier()/100));
+    }
+
+    /**
+     * Specify data which should be serialized to JSON
+     * @link https://php.net/manual/en/jsonserializable.jsonserialize.php
+     * @return mixed data which can be serialized by <b>json_encode</b>,
+     * which is a value of any type other than a resource.
+     * @since 5.4.0
+     */
+    public function jsonSerialize()
+    {
+        return get_object_vars($this);
     }
 }

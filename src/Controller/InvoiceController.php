@@ -66,7 +66,7 @@ class InvoiceController extends AbstractController
             // add default Startgeld
             $invoicePosition = new InvoicePosition();
             $invoicePosition->setDescription('Startgeld (entry fee)');
-            $invoicePosition->setMultiplier($contestants_count);
+            $invoicePosition->setMultiplier($contestants_count*100);
             $invoicePosition->setPrice(3000);
             $invoiceTotal += $invoicePosition->calculateTotal()->getTotal();
             $invoicePosition->setInvoice($invoice);
@@ -84,7 +84,7 @@ class InvoiceController extends AbstractController
             // add Einzelzimmer
             $invoicePosition = new InvoicePosition();
             $invoicePosition->setDescription('Einzelzimmer (single room)');
-            $invoicePosition->setMultiplier($officials_male_with_ITC_count % 2 + $officials_female_with_ITC_count % 2);
+            $invoicePosition->setMultiplier(($officials_male_with_ITC_count % 2 + $officials_female_with_ITC_count % 2)*100);
             $invoicePosition->setPrice(5000);
             $invoiceTotal += $invoicePosition->calculateTotal()->getTotal();
             $invoicePosition->setInvoice($invoice);
@@ -93,7 +93,7 @@ class InvoiceController extends AbstractController
             // add Mehrbettzimmer
             $invoicePosition = new InvoicePosition();
             $invoicePosition->setDescription('Mehrbettzimmer (shared rooms, dorm)');
-            $invoicePosition->setMultiplier((int)($officials_male_with_ITC_count / 2) + (int)($officials_female_with_ITC_count / 2) + $contestants_count);
+            $invoicePosition->setMultiplier(((int)($officials_male_with_ITC_count / 2) + (int)($officials_female_with_ITC_count / 2) + $contestants_count)*100);
             $invoicePosition->setPrice(4000);
             $invoiceTotal += $invoicePosition->calculateTotal()->getTotal();
             $invoicePosition->setInvoice($invoice);
@@ -102,7 +102,7 @@ class InvoiceController extends AbstractController
             // add Transportpauschale
             $invoicePosition = new InvoicePosition();
             $invoicePosition->setDescription('Transportpauschale (transfer airport)');
-            $invoicePosition->setMultiplier(($officials_count + $contestants_count) * $registration->getTransports()->count());
+            $invoicePosition->setMultiplier(($officials_count + $contestants_count) * $registration->getTransports()->count()*100);
             $invoicePosition->setPrice(8000);
             $invoiceTotal += $invoicePosition->calculateTotal()->getTotal();
             $invoicePosition->setInvoice($invoice);
@@ -111,7 +111,7 @@ class InvoiceController extends AbstractController
             // add Internationales Trainings Camp
             $invoicePosition = new InvoicePosition();
             $invoicePosition->setDescription('Internationales Trainings Camp');
-            $invoicePosition->setMultiplier($officials_female_with_ITC_count + $officials_male_with_ITC_count + $contestants_with_ITC_count);
+            $invoicePosition->setMultiplier(($officials_female_with_ITC_count + $officials_male_with_ITC_count + $contestants_with_ITC_count)*100);
             $invoicePosition->setPrice(28000);
             $invoiceTotal += $invoicePosition->calculateTotal()->getTotal();
             $invoicePosition->setInvoice($invoice);

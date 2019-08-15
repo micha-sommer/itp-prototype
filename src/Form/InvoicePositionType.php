@@ -32,12 +32,13 @@ class InvoicePositionType extends AbstractType
 
             static function ($decimal)
             {
-                return $decimal*100;
+                return (int)($decimal*100);
             }
 
         );
 
         $builder->get('price')->addModelTransformer($moneyTransformer);
+        $builder->get('multiplier')->addModelTransformer($moneyTransformer);
         $builder->get('total')->addModelTransformer($moneyTransformer);
     }
 

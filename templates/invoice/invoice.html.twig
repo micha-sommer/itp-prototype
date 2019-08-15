@@ -76,10 +76,10 @@
         <tr>
             <td style="width: 45%"> {{ position.description }} </td>
             <td style="width: 15%" align="right"> {{ (position.price/100)|number_format(2,',','.') }} €</td>
-            {% if position.multiplier|round != position.multiplier %}
-                <td style="width: 12%" align="right">{{ (position.multiplier*100)|number_format(0,',','.') }}%</td>
+            {% if position.multiplier%100 != 0 %}
+                <td style="width: 12%" align="right">{{ position.multiplier|number_format(0,',','.') }}%</td>
             {% else %}
-                <td style="width: 12%" align="right">{{ position.multiplier|number_format(0,',','.') }} </td>
+                <td style="width: 12%" align="right">{{ (position.multiplier/100)|number_format(0,',','.') }} </td>
             {% endif %}
             <td style="width: 28%" align="right">{{ (position.total/100)|number_format(2,',','.') }} €</td>
         </tr>
