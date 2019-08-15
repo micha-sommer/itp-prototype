@@ -2,70 +2,44 @@
 
 namespace App\Controller;
 
-use App\Entity\Contestant;
-use App\Entity\ContestantsList;
-use App\Entity\Official;
-use App\Entity\OfficialsList;
+use App\Entity\Registration;
 use App\Entity\Transport;
 use App\Form\ContestantsListType;
 use App\Form\OfficialsListType;
 use App\Form\TransportType;
-use App\Repository\ContestantsRepository;
-use App\Repository\OfficialsRepository;
 use App\Repository\TransportRepository;
-use Doctrine\Common\Collections\ArrayCollection;
+use DateTime;
+use Exception as ExceptionAlias;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ParticipantsController extends AbstractController
 {
     /**
      * @Route("/officials", name="officials")
      * @param Request $request
-     * @param OfficialsRepository $officialsRepository
-     * @return \Symfony\Component\HttpFoundation\Response
-     * @throws \Exception
+     * @return Response
+     * @throws ExceptionAlias
      */
-    public function officials(Request $request, OfficialsRepository $officialsRepository): Response
+    public function officials(Request $request): Response
     {
-        $officialsBefore = $officialsRepository->findBy(['registration' => $this->getUser()]);
+        /** @var Registration $registration */
+        $registration = $this->getUser();
 
-        $officialsAfter = new OfficialsList();
-        $officialsAfter->setList(new ArrayCollection($officialsBefore));
-
-        if ($officialsAfter->getList()->isEmpty()) {
-            $officialsAfter->addOfficial(new Official());
-        }
-
-        $form = $this->createForm(OfficialsListType::class, $officialsAfter);
+        $form = $this->createForm(OfficialsListType::class, $registration);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
-            // check for deleted officials
-            foreach ($officialsBefore as $official) {
-                if (false === $officialsAfter->getList()->contains($official)) {
-                    $em->remove($official);
-                }
-            }
-
-            // check for added officials
-            foreach ($officialsAfter->getList() as $official) {
-                if (false === \in_array($official, $officialsBefore, true)) {
-                    $official->setRegistration($this->getUser());
-                    $official->setTimestamp(new \DateTime());
-                    $em->persist($official);
-                    $em->flush();
-                }
-            }
             $em->flush();
+
             if ($request->request->get('back')) {
                 return $this->redirectToRoute('welcome');
             }
@@ -79,24 +53,16 @@ class ParticipantsController extends AbstractController
     /**
      * @Route("/contestants", name="contestants")
      * @param Request $request
-     * @param ContestantsRepository $contestantsRepository
      * @param ValidatorInterface $validator
      * @param TranslatorInterface $translator
-     * @return \Symfony\Component\HttpFoundation\Response
-     * @throws \Exception
+     * @return Response
      */
-    public function contestants(Request $request, ContestantsRepository $contestantsRepository, ValidatorInterface $validator, TranslatorInterface $translator): Response
+    public function contestants(Request $request, ValidatorInterface $validator, TranslatorInterface $translator): Response
     {
-        $contestantsBefore = $contestantsRepository->findBy(['registration' => $this->getUser()]);
+        /** @var Registration $registration */
+        $registration = $this->getUser();
 
-        $contestantsAfter = new ContestantsList();
-        $contestantsAfter->setList(new ArrayCollection($contestantsBefore));
-
-        if ($contestantsAfter->getList()->isEmpty()) {
-            $contestantsAfter->addContestant(new Contestant());
-        }
-
-        $form = $this->createForm(ContestantsListType::class, $contestantsAfter);
+        $form = $this->createForm(ContestantsListType::class, $registration);
 
         $has_errors = false;
 
@@ -105,43 +71,36 @@ class ParticipantsController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
-            // check for deleted contestants
-            foreach ($contestantsBefore as $contestant) {
-                if (false === $contestantsAfter->getList()->contains($contestant)) {
-                    $em->remove($contestant);
-                }
-            }
-
             // check for added contestants
-            foreach ($contestantsAfter->getList() as $contestant) {
+            foreach ($registration->getContestants() as $contestant) {
 
                 $errors = $validator->validate($contestant);
                 if (\count($errors) > 0) {
                     $em->detach($contestant);
                     $has_errors = true;
-                    $forms = $form->get('list');
+                    $forms = $form->get('contestants');
+                    $generalFormError = new FormError($translator->trans('errorMessageEntityNotSaved'));
+                    $form->addError($generalFormError);
                     foreach ($errors as $error) {
                         if ($error->getPropertyPath() === 'validYearAgeCombination') {
                             $formErrorInvalidAge = new FormError($translator->trans($error->getPropertyPath()));
-                            $forms[$contestantsAfter->getList()->indexOf($contestant)]->get('year')->addError($formErrorInvalidAge);
+                            $forms[$registration->getContestants()->indexOf($contestant)]->get('year')->addError($formErrorInvalidAge);
                         } elseif ($error->getPropertyPath() === 'validAgeWeightCombination') {
                             $formErrorInvalidAge = new FormError($translator->trans($error->getPropertyPath()));
-                            $forms[$contestantsAfter->getList()->indexOf($contestant)]->get('weight_category')->addError($formErrorInvalidAge);
+                            $forms[$registration->getContestants()->indexOf($contestant)]->get('weight_category')->addError($formErrorInvalidAge);
                         } elseif ($error->getPropertyPath() === 'validCamp') {
                             $formErrorInvalidAge = new FormError($translator->trans($error->getPropertyPath()));
-                            $forms[$contestantsAfter->getList()->indexOf($contestant)]->get('itc')->addError($formErrorInvalidAge);
+                            $forms[$registration->getContestants()->indexOf($contestant)]->get('itc')->addError($formErrorInvalidAge);
                         }
                     }
-                } else
-                    if (false === \in_array($contestant, $contestantsBefore, true)) {
-                        $contestant->setRegistration($this->getUser());
-                        $contestant->setTimestamp(new \DateTime());
-                        $em->persist($contestant);
-                    }
+                }
             }
-            $em->flush();
-            if (!$has_errors && $request->request->get('back')) {
-                return $this->redirectToRoute('welcome');
+
+            if (!$has_errors) {
+                $em->flush();
+                if ($request->request->get('back')) {
+                    return $this->redirectToRoute('welcome');
+                }
             }
         }
 
@@ -155,8 +114,8 @@ class ParticipantsController extends AbstractController
      * @Route("/transports", name="transports")
      * @param Request $request
      * @param TransportRepository $transportRepository
-     * @return \Symfony\Component\HttpFoundation\Response
-     * @throws \Exception
+     * @return Response
+     * @throws ExceptionAlias
      */
     public function transports(Request $request, TransportRepository $transportRepository): Response
     {
@@ -194,7 +153,7 @@ class ParticipantsController extends AbstractController
 
             if ($departure_needed) {
                 if ($create_departure) {
-                    $departure->setTimestamp(new \DateTime());
+                    $departure->setTimestamp(new DateTime());
                     $entityManager->persist($departure);
                     $create_departure = false;
                 }
@@ -209,7 +168,7 @@ class ParticipantsController extends AbstractController
 
             if ($arrival_needed) {
                 if ($create_arrival) {
-                    $arrival->setTimestamp(new \DateTime());
+                    $arrival->setTimestamp(new DateTime());
                     $entityManager->persist($arrival);
                     $create_arrival = false;
                 }

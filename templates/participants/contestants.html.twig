@@ -120,17 +120,17 @@
             </tr>
             </thead>
             <tbody class="contestants" data-prototype="
-                {{ '<td class="text-center">'|e }}{{ form_widget(form.list.vars.prototype.first_name)|e }}      {{ '</td>'|e }}
-                {{ '<td class="text-center">'|e }}{{ form_widget(form.list.vars.prototype.last_name)|e }}       {{ '</td>'|e }}
-                {{ '<td class="text-center">'|e }}{{ form_widget(form.list.vars.prototype.year)|e }}            {{ '</td>'|e }}
-                {{ '<td class="text-center">'|e }}{{ form_widget(form.list.vars.prototype.weight_category)|e }} {{ '</td>'|e }}
-                {{ '<td class="text-center">'|e }}{{ form_widget(form.list.vars.prototype.age_category)|e }}    {{ '</td>'|e }}
-                {{ '<td class="text-center">'|e }}{{ form_widget(form.list.vars.prototype.friday)|e }}          {{ '</td>'|e }}
-                {{ '<td class="text-center">'|e }}{{ form_widget(form.list.vars.prototype.saturday)|e }}        {{ '</td>'|e }}
-                {{ '<td class="text-center">'|e }}{{ form_widget(form.list.vars.prototype.itc)|e }} {{ form_widget(form.list.vars.prototype.comment)|e }} {{ '</td>'|e }}
+                {{ '<td class="text-center">'|e }}{{ form_widget(form.contestants.vars.prototype.first_name)|e }}      {{ '</td>'|e }}
+                {{ '<td class="text-center">'|e }}{{ form_widget(form.contestants.vars.prototype.last_name)|e }}       {{ '</td>'|e }}
+                {{ '<td class="text-center">'|e }}{{ form_widget(form.contestants.vars.prototype.year)|e }}            {{ '</td>'|e }}
+                {{ '<td class="text-center">'|e }}{{ form_widget(form.contestants.vars.prototype.weight_category)|e }} {{ '</td>'|e }}
+                {{ '<td class="text-center">'|e }}{{ form_widget(form.contestants.vars.prototype.age_category)|e }}    {{ '</td>'|e }}
+                {{ '<td class="text-center">'|e }}{{ form_widget(form.contestants.vars.prototype.friday)|e }}          {{ '</td>'|e }}
+                {{ '<td class="text-center">'|e }}{{ form_widget(form.contestants.vars.prototype.saturday)|e }}        {{ '</td>'|e }}
+                {{ '<td class="text-center">'|e }}{{ form_widget(form.contestants.vars.prototype.itc)|e }} {{ form_widget(form.contestants.vars.prototype.comment)|e }} {{ '</td>'|e }}
             ">
             {{ form_row(form._token) }}
-            {% for contestant in form.list %}
+            {% for contestant in form.contestants %}
                 <tr class="contestant">
                     <td class="text-center">{{ form_widget(contestant.first_name) }}</td>
                     <td class="text-center">{{ form_widget(contestant.last_name) }}</td>
@@ -144,7 +144,7 @@
             {% endfor %}
             </tbody>
         </table>
-
+        {{ form_errors(form) }}
         {% if is_granted('ROLE_PREVIOUS_ADMIN') or date(end_date, 'Europe/Paris') > date('now', 'Europe/Paris') %}
             <div class="bg-light clearfix">
                 <button class="btn btn-primary btn-lg btn-success float-left add-a-tag"

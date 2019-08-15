@@ -2,11 +2,12 @@
 
 namespace App\Entity;
 
-use App\Enum\GenderEnum;
 use App\Enum\ITCEnum;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use function get_object_vars;
 use function in_array;
 use JsonSerializable;
 use Serializable;
@@ -87,12 +88,12 @@ class Registration implements UserInterface, Serializable, JsonSerializable
     private $transports;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Official", mappedBy="registration", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Official", mappedBy="registration", orphanRemoval=true, cascade={"persist", "remove"})
      */
     private $officials;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Contestant", mappedBy="registration", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Contestant", mappedBy="registration", orphanRemoval=true, cascade={"persist", "remove"})
      */
     private $contestants;
 
@@ -416,12 +417,12 @@ class Registration implements UserInterface, Serializable, JsonSerializable
         return $this;
     }
 
-    public function getTimestamp(): ?\DateTimeInterface
+    public function getTimestamp(): ?DateTimeInterface
     {
         return $this->timestamp;
     }
 
-    public function setTimestamp(\DateTimeInterface $timestamp): self
+    public function setTimestamp(DateTimeInterface $timestamp): self
     {
         $this->timestamp = $timestamp;
 
@@ -449,7 +450,7 @@ class Registration implements UserInterface, Serializable, JsonSerializable
      */
     public function jsonSerialize()
     {
-        return \get_object_vars($this);
+        return get_object_vars($this);
     }
 
     public function getArrival(): ?Transport

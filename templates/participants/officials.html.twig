@@ -8,7 +8,7 @@
             $('[data-toggle="tooltip"]').tooltip()
         });
 
-        let  $collectionHolder;
+        let $collectionHolder;
         let $removeFormButton = $('<td><button class="btn btn-danger" type="button"><i class="fa fa-trash" aria-hidden="true"></i></button></td>');
         let $commentFormButton = $('<td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#commentModal" data-comment=""><i class="fa fa-comment"></i></button></td>');
 
@@ -89,101 +89,102 @@
 
 {% block body %}
     <div class="jumbotron">
-    <h1 class="display-4">{{ 'title.officials'|trans }}!</h1>
-    <p class="lead">{{ 'description.officials'|trans }}</p>
+        <h1 class="display-4">{{ 'title.officials'|trans }}!</h1>
+        <p class="lead">{{ 'description.officials'|trans }}</p>
 
-    <hr class="my-4">
+        <hr class="my-4">
 
-    {{ form_start(form) }}
-    <table class="table table-middle-aligned">
-        <thead class="thead-dark">
-        <tr class="table-sm text-center">
-            <td class="bg-light" colspan="4"></td>
-            <th colspan="3">{{ 'accommodation.participants'|trans }}</th>
-            <td class="bg-light" colspan="2"></td>
-        </tr>
-        <tr>
-            <th class="text-center" scope="col">{{ 'first_name.participants'|trans }}</th>
-            <th class="text-center" scope="col">{{ 'last_name.participants'|trans }}</th>
-            <th class="text-center" scope="col">{{ 'role.participants'|trans }}</th>
-            <th class="text-center" scope="col">{{ 'gender.participants'|trans }}</th>
-            <th class="text-center" scope="col">{{ 'friday.participants'|trans }}</th>
-            <th class="text-center" scope="col">{{ 'saturnday.participants'|trans }}</th>
-            <th class="text-center" scope="col" data-toggle="tooltip" data-placement="top"
-                title="{{ 'itc.tooltip.participants'|trans }}">
-                <ins>{{ 'itc.participants'|trans }}</ins>
-            </th>
-            <th class="text-center" scope="col"></th>
-            <th class="text-center" scope="col"></th>
-        </tr>
-        </thead>
-        <tbody class="officials" data-prototype="
-                {{ '<td class="text-center">'|e }}{{ form_widget(form.list.vars.prototype.first_name)|e }}  {{ '</td>'|e }}
-                {{ '<td class="text-center">'|e }}{{ form_widget(form.list.vars.prototype.last_name)|e }}   {{ '</td>'|e }}
-                {{ '<td class="text-center">'|e }}{{ form_widget(form.list.vars.prototype.role)|e }}        {{ '</td>'|e }}
-                {{ '<td class="text-center">'|e }}{{ form_widget(form.list.vars.prototype.gender)|e }}      {{ '</td>'|e }}
-                {{ '<td class="text-center">'|e }}{{ form_widget(form.list.vars.prototype.friday)|e }}      {{ '</td>'|e }}
-                {{ '<td class="text-center">'|e }}{{ form_widget(form.list.vars.prototype.saturday)|e }}    {{ '</td>'|e }}
-                {{ '<td class="text-center">'|e }}{{ form_widget(form.list.vars.prototype.itc)|e }} {{ form_widget(form.list.vars.prototype.comment)|e }} {{ '</td>'|e }}
-            ">
-        {{ form_row(form._token) }}
-        {% for official in form.list %}
-            <tr class="official">
-                <td class="text-center">{{ form_widget(official.first_name) }}</td>
-                <td class="text-center">{{ form_widget(official.last_name) }}</td>
-                <td class="text-center">{{ form_widget(official.role) }}</td>
-                <td class="text-center">{{ form_widget(official.gender) }}</td>
-                <td class="text-center">{{ form_widget(official.friday) }}</td>
-                <td class="text-center">{{ form_widget(official.saturday) }}</td>
-                <td class="text-center">{{ form_widget(official.itc) }} {{ form_widget(official.comment) }}</td>
+        {{ form_start(form) }}
+        <table class="table table-middle-aligned">
+            <thead class="thead-dark">
+            <tr class="table-sm text-center">
+                <td class="bg-light" colspan="4"></td>
+                <th colspan="3">{{ 'accommodation.participants'|trans }}</th>
+                <td class="bg-light" colspan="2"></td>
             </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    {% if is_granted('ROLE_PREVIOUS_ADMIN') or date(end_date, 'Europe/Paris') > date('now', 'Europe/Paris') %}
-        <div class="bg-light clearfix">
-            <button class="btn btn-primary btn-lg btn-success float-left add-a-tag"
-                    type="button">{{ 'generic.add'|trans }}</button>
-            <input class="btn btn-secondary btn-lg float-right" name="back" type="submit" data-toggle="tooltip"
-                   data-placement="top"
-                   title="{{ 'generic.tooltip.save'|trans }}" value="{{ 'generic.save_and_back'|trans }}"/>
-            <input class="btn btn-primary btn-lg float-right mr-1" type="submit" data-toggle="tooltip"
-                   data-placement="top"
-                   title="{{ 'generic.tooltip.save'|trans }}" value="{{ 'generic.save'|trans }}"/>
-            <a href="{{ path('officials') }}" class="btn btn-primary btn-lg btn-warning float-right mr-1" role="button"
-               data-toggle="tooltip" data-placement="top"
-               title="{{ 'generic.tooltip.cancel'|trans }}">{{ 'generic.cancel'|trans }}</a>
-        </div>
-    {% endif %}
+            <tr>
+                <th class="text-center" scope="col">{{ 'first_name.participants'|trans }}</th>
+                <th class="text-center" scope="col">{{ 'last_name.participants'|trans }}</th>
+                <th class="text-center" scope="col">{{ 'role.participants'|trans }}</th>
+                <th class="text-center" scope="col">{{ 'gender.participants'|trans }}</th>
+                <th class="text-center" scope="col">{{ 'friday.participants'|trans }}</th>
+                <th class="text-center" scope="col">{{ 'saturnday.participants'|trans }}</th>
+                <th class="text-center" scope="col" data-toggle="tooltip" data-placement="top"
+                    title="{{ 'itc.tooltip.participants'|trans }}">
+                    <ins>{{ 'itc.participants'|trans }}</ins>
+                </th>
+                <th class="text-center" scope="col"></th>
+                <th class="text-center" scope="col"></th>
+            </tr>
+            </thead>
+            <tbody class="officials" data-prototype="
+                {{ '<td class="text-center">'|e }}{{ form_widget(form.officials.vars.prototype.first_name)|e }}  {{ '</td>'|e }}
+                {{ '<td class="text-center">'|e }}{{ form_widget(form.officials.vars.prototype.last_name)|e }}   {{ '</td>'|e }}
+                {{ '<td class="text-center">'|e }}{{ form_widget(form.officials.vars.prototype.role)|e }}        {{ '</td>'|e }}
+                {{ '<td class="text-center">'|e }}{{ form_widget(form.officials.vars.prototype.gender)|e }}      {{ '</td>'|e }}
+                {{ '<td class="text-center">'|e }}{{ form_widget(form.officials.vars.prototype.friday)|e }}      {{ '</td>'|e }}
+                {{ '<td class="text-center">'|e }}{{ form_widget(form.officials.vars.prototype.saturday)|e }}    {{ '</td>'|e }}
+                {{ '<td class="text-center">'|e }}{{ form_widget(form.officials.vars.prototype.itc)|e }} {{ form_widget(form.officials.vars.prototype.comment)|e }} {{ '</td>'|e }}
+            ">
+            {{ form_row(form._token) }}
+            {% for official in form.officials %}
+                <tr class="official">
+                    <td class="text-center">{{ form_widget(official.first_name) }}</td>
+                    <td class="text-center">{{ form_widget(official.last_name) }}</td>
+                    <td class="text-center">{{ form_widget(official.role) }}</td>
+                    <td class="text-center">{{ form_widget(official.gender) }}</td>
+                    <td class="text-center">{{ form_widget(official.friday) }}</td>
+                    <td class="text-center">{{ form_widget(official.saturday) }}</td>
+                    <td class="text-center">{{ form_widget(official.itc) }} {{ form_widget(official.comment) }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% if is_granted('ROLE_PREVIOUS_ADMIN') or date(end_date, 'Europe/Paris') > date('now', 'Europe/Paris') %}
+            <div class="bg-light clearfix">
+                <button class="btn btn-primary btn-lg btn-success float-left add-a-tag"
+                        type="button">{{ 'generic.add'|trans }}</button>
+                <input class="btn btn-secondary btn-lg float-right" name="back" type="submit" data-toggle="tooltip"
+                       data-placement="top"
+                       title="{{ 'generic.tooltip.save'|trans }}" value="{{ 'generic.save_and_back'|trans }}"/>
+                <input class="btn btn-primary btn-lg float-right mr-1" type="submit" data-toggle="tooltip"
+                       data-placement="top"
+                       title="{{ 'generic.tooltip.save'|trans }}" value="{{ 'generic.save'|trans }}"/>
+                <a href="{{ path('officials') }}" class="btn btn-primary btn-lg btn-warning float-right mr-1"
+                   role="button"
+                   data-toggle="tooltip" data-placement="top"
+                   title="{{ 'generic.tooltip.cancel'|trans }}">{{ 'generic.cancel'|trans }}</a>
+            </div>
+        {% endif %}
 
-    <div class="modal fade" id="commentModal" tabindex="-1" role="dialog" aria-labelledby="commentModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="exampleModalLabel">{{ 'Add a comment'|trans }}</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                aria-hidden="true">&times;</span></button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="form-group">
-                            <label for="comment-textarea" class="col-form-label">{{ 'Comment'|trans }}:</label>
-                            <label class="modal-body-name"></label>
-                            <textarea class="form-control" id="comment-textarea"></textarea>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button id="modal-save" onclick="save()" type="button" class="btn btn-primary" data-dismiss="modal">
-                        {{ 'generic.save'|trans }}
-                    </button>
+        <div class="modal fade" id="commentModal" tabindex="-1" role="dialog" aria-labelledby="commentModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="exampleModalLabel">{{ 'Add a comment'|trans }}</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="comment-textarea" class="col-form-label">{{ 'Comment'|trans }}:</label>
+                                <label class="modal-body-name"></label>
+                                <textarea class="form-control" id="comment-textarea"></textarea>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="modal-save" onclick="save()" type="button" class="btn btn-primary"
+                                data-dismiss="modal">
+                            {{ 'generic.save'|trans }}
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
+        {{ form_end(form) }}
     </div>
-
-    {{ form_end(form) }}
-
     <script>
         $('#commentModal').on('show.bs.modal', function (event) {
             let button = $(event.relatedTarget); // Button that triggered the modal

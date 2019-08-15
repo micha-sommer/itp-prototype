@@ -9,7 +9,7 @@
 namespace App\Form;
 
 
-use App\Entity\ContestantsList;
+use App\Entity\Registration;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -20,7 +20,7 @@ class ContestantsListType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options) : void
     {
         $builder
-            ->add('list', CollectionType::class, [
+            ->add('contestants', CollectionType::class, [
                 'entry_type' => ContestantType::class,
                 'entry_options' => ['label' => false],
                 'allow_add' => true,
@@ -33,7 +33,7 @@ class ContestantsListType extends AbstractType
     public function configureOptions(OptionsResolver $resolver) : void
     {
         $resolver->setDefaults([
-            'data_class' => ContestantsList::class
+            'data_class' => Registration::class
         ]);
     }
 }

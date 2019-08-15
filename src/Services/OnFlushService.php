@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: mremm
@@ -16,14 +17,18 @@ use App\Entity\InvoicePosition;
 use App\Entity\Official;
 use App\Entity\Registration;
 use App\Entity\Transport;
+use DateTime;
 use Doctrine\ORM\Event\OnFlushEventArgs;
+use Doctrine\ORM\ORMException;
+use function get_class;
+use function json_encode;
 
 class OnFlushService
 {
 
     /**
      * @param OnFlushEventArgs $eventArgs
-     * @throws \Doctrine\ORM\ORMException
+     * @throws ORMException
      */
     public function onFlush(OnFlushEventArgs $eventArgs): void
     {
@@ -31,9 +36,22 @@ class OnFlushService
         $uow = $em->getUnitOfWork();
         $oldErrorReporting = error_reporting(0);
 
+        foreach ($uow->getScheduledEntityInsertions() as $entity) {
+            switch (true) {
+                case $entity instanceof Official:
+                case $entity instanceof Contestant:
+                    $entity->setTimestamp(new DateTime());
+                    break;
+                default:
+                    break;
+            }
+            $md = $em->getClassMetadata(get_class($entity));
+            $uow->recomputeSingleEntityChangeSet($md, $entity);
+        }
+
         foreach ($uow->getScheduledEntityUpdates() as $entity) {
             $changeSet = new ChangeSet();
-            $changeSet->setTimestamp(new \DateTime());
+            $changeSet->setTimestamp(new DateTime());
             $changeSet->setType('UPDATE');
 
             switch (true) {
@@ -60,15 +78,15 @@ class OnFlushService
                     break;
             }
             $changeSet->setNameId($entity->getId());
-            $changeSet->setChangeSet(\json_encode($uow->getEntityChangeSet($entity)));
+            $changeSet->setChangeSet(json_encode($uow->getEntityChangeSet($entity)));
             $em->persist($changeSet);
-            $md = $em->getClassMetadata(\get_class($changeSet));
+            $md = $em->getClassMetadata(get_class($changeSet));
             $uow->computeChangeSet($md, $changeSet);
         }
 
         foreach ($uow->getScheduledEntityDeletions() as $entity) {
             $changeSet = new ChangeSet();
-            $changeSet->setTimestamp(new \DateTime());
+            $changeSet->setTimestamp(new DateTime());
             $changeSet->setType('DROP');
             switch (true) {
                 case $entity instanceof Official:
@@ -94,40 +112,15 @@ class OnFlushService
                     break;
             }
             $changeSet->setNameId($entity->getId());
-            $json = \json_encode($entity);
+            $json = json_encode($entity);
             //$club = '"club":"'.$entity->getRegistration()->getClub().'",';
             //$json = substr_replace($json, $club, 1, 0);
             $changeSet->setChangeSet($json);
             $em->persist($changeSet);
-            $md = $em->getClassMetadata(\get_class($changeSet));
+            $md = $em->getClassMetadata(get_class($changeSet));
             $uow->computeChangeSet($md, $changeSet);
         }
 
-        foreach ($uow->getScheduledCollectionDeletions() as $col) {
-            /*
-            $changeSet = new ChangeSet();
-            $changeSet->setTimestamp(new \DateTime());
-            $changeSet->setType('DROP');
-            $changeSet->setName('unknown');
-            $changeSet->setChangeSet(\json_encode($uow->getEntityChangeSet($col)));
-            $em->persist($changeSet);
-            $md = $em->getClassMetadata(\get_class($changeSet));
-            $uow->computeChangeSet($md, $changeSet);
-            //*/
-        }
-
-        foreach ($uow->getScheduledCollectionUpdates() as $col) {
-            /*
-            $changeSet = new ChangeSet();
-            $changeSet->setTimestamp(new \DateTime());
-            $changeSet->setType('UPDATE');
-            $changeSet->setName('unknown');
-            $changeSet->setChangeSet(\json_encode($uow->getEntityChangeSet($col)));
-            $em->persist($changeSet);
-            $md = $em->getClassMetadata(\get_class($changeSet));
-            $uow->computeChangeSet($md, $changeSet);
-            //*/
-        }
         error_reporting($oldErrorReporting);
     }
 }

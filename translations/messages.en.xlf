@@ -609,7 +609,7 @@
         <source>position_item_description.invoice</source>
         <target>Position Description</target>
       </trans-unit>
-      <trans-unit id="tr1xC7J" resname="item_amount.invoice">
+      <trans-unit id="A5R9lbg" resname="item_amount.invoice">
         <source>item_amount.invoice</source>
         <target>Price</target>
       </trans-unit>
@@ -625,37 +625,41 @@
         <source>position_total.invoice</source>
         <target>Total</target>
       </trans-unit>
-        <trans-unit id="0">
+      <trans-unit id="bvSSz4s" resname="total.invoicing">
         <source>total.invoicing</source>
         <target>Total:</target>
       </trans-unit>
-      <trans-unit id="1">
+      <trans-unit id="JNUC8WW" resname="position_item_price.invoice">
         <source>position_item_price.invoice</source>
         <target>Price</target>
       </trans-unit>
-      <trans-unit id="2">
+      <trans-unit id="yOUIQ7d" resname="save_and_publish.invoice">
         <source>save_and_publish.invoice</source>
         <target>Save and publish</target>
       </trans-unit>
-      <trans-unit id="3">
+      <trans-unit id="4avQYZB" resname="save_and_hide.invoice">
         <source>save_and_hide.invoice</source>
         <target>Save and hide</target>
       </trans-unit>
-      <trans-unit id="4">
+      <trans-unit id="e8tCicM" resname="tooltip.publish.invoice">
         <source>tooltip.publish.invoice</source>
         <target>Publish this invoice so that the user can see it.</target>
       </trans-unit>
-      <trans-unit id="5">
+      <trans-unit id="zbV.XpT" resname="tooltip.hide.invoice">
         <source>tooltip.hide.invoice</source>
         <target>Hide this invoice so that the user cannot see it (anymore).</target>
       </trans-unit>
-      <trans-unit id="6">
+      <trans-unit id="GmVW94_" resname="Sub id">
         <source>Sub id</source>
         <target>Sub id</target>
       </trans-unit>
-      <trans-unit id="7">
+      <trans-unit id="3NHVIj9" resname="Name">
         <source>Name</source>
         <target>Name</target>
+      </trans-unit>
+      <trans-unit id="uyJ6Qn5" resname="errorMessageEntityNotSaved">
+        <source>errorMessageEntityNotSaved</source>
+        <target>ATTENTION: Changes have not been saved due to errors!!!</target>
       </trans-unit>
     </body>
   </file>
