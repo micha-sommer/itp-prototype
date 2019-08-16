@@ -1,5 +1,22 @@
 <!DOCTYPE html>
+<meta charset="UTF-8" />
 <html lang="{{ app.request.locale }}">
+<style>
+    table {
+        border-collapse: collapse;
+    }
+
+    table, th, td {
+        border: 1px solid black;
+    }
+
+    th, td {
+        padding: 15px;
+        text-align: left;
+    }
+
+</style>
+
 <body>
 
 <h1>
@@ -10,7 +27,7 @@
 </h2>
 <div>
     <h3>New Registrations:</h3>
-    <table border="1">
+    <table >
         <thead>
         <tr>
             <th>{{ 'When'|trans }}</th>
@@ -39,7 +56,7 @@
 </div>
 <div>
     <h3>New Officials:</h3>
-    <table border="1">
+    <table>
         <thead>
         <tr>
             <th>{{ 'When'|trans }}</th>
@@ -74,7 +91,7 @@
 </div>
 <div>
     <h3>New Contestant:</h3>
-    <table border="1">
+    <table>
         <thead>
         <tr>
             <th>{{ 'When'|trans }}</th>
@@ -111,7 +128,7 @@
 </div>
 <div>
     <h3>New Transport:</h3>
-    <table border="1">
+    <table>
         <thead>
         <tr>
             <th>{{ 'When'|trans }}</th>
@@ -143,7 +160,7 @@
 <hr/>
 <div>
     <h3>Removed Officials:</h3>
-    <table border="1">
+    <table>
         <thead>
         <tr>
             <th>{{ 'When'|trans }}</th>
@@ -176,7 +193,7 @@
 </div>
 <div>
     <h3>Removed Contestants:</h3>
-    <table border="1">
+    <table>
         <thead>
         <tr>
             <th>{{ 'When'|trans }}</th>
@@ -211,7 +228,7 @@
 </div>
 <div>
     <h3>Removed Transports:</h3>
-    <table border="1">
+    <table>
         <thead>
         <tr>
             <th>{{ 'When'|trans }}</th>
@@ -241,7 +258,7 @@
 <hr>
 <div>
     <h3>Changed Registrations:</h3>
-    <table border="1">
+    <table>
         <thead>
         <tr>
             <th>{{ 'When'|trans }}</th>
@@ -261,7 +278,7 @@
                     {{ change.timestamp|date("Y-m-d H:i:s"|trans) }}
                 </td>
                 {% if change.changeSetObject.club is defined %}
-                    <td bgcolor="orange">
+                    <td style="background-color:orange">
                         {{ change.changeSetObject.club[0] }} -> {{ change.changeSetObject.club[1] }}
                     </td>
                 {% else %}
@@ -270,7 +287,7 @@
                     </td>
                 {% endif %}
                 {% if change.changeSetObject.country is defined %}
-                    <td bgcolor="orange">
+                    <td style="background-color:orange">
                         {{ change.changeSetObject.country[0] }} -> {{ change.changeSetObject.country[1] }}
                     </td>
                 {% else %}
@@ -279,7 +296,7 @@
                     </td>
                 {% endif %}
                 {% if change.changeSetObject.firstName is defined %}
-                    <td bgcolor="orange">
+                    <td style="background-color:orange">
                         {{ change.changeSetObject.firstName[0] }} -> {{ change.changeSetObject.firstName[1] }}
                     </td>
                 {% else %}
@@ -288,9 +305,9 @@
                     </td>
                 {% endif %}
                 {% if change.changeSetObject.lastName is defined %}
-                    <td bgcolor="orange">
+                    <td style="background-color:orange">
                         {{ change.changeSetObject.lastName[0] }}
-                        => {{ change.changeSetObject.lastName[1] }}
+                        -> {{ change.changeSetObject.lastName[1] }}
                     </td>
                 {% else %}
                     <td>
@@ -298,8 +315,8 @@
                     </td>
                 {% endif %}
                 {% if change.changeSetObject.email is defined %}
-                    <td bgcolor="orange">
-                        {{ change.changeSetObject.email[0] }} => {{ change.changeSetObject.email[1] }}
+                    <td style="background-color:orange">
+                        {{ change.changeSetObject.email[0] }} -> {{ change.changeSetObject.email[1] }}
                     </td>
                 {% else %}
                     <td>
@@ -307,7 +324,7 @@
                     </td>
                 {% endif %}
                 {% if change.changeSetObject.telephone is defined %}
-                    <td bgcolor="orange">
+                    <td style="background-color:orange">
                         {{ change.changeSetObject.telephone[0] }} -> {{ change.changeSetObject.telephone[1] }}
                     </td>
                 {% else %}
@@ -316,7 +333,7 @@
                     </td>
                 {% endif %}
                 {% if change.changeSetObject.comment is defined %}
-                    <td bgcolor="orange">
+                    <td style="background-color:orange">
                         {{ change.changeSetObject.comment[0] }} -> {{ change.changeSetObject.comment[1] }}
                     </td>
                 {% else %}
@@ -331,7 +348,7 @@
 </div>
 <div>
     <h3>Changed Officials:</h3>
-    <table border="1">
+    <table>
         <thead>
         <tr>
             <th>{{ 'When'|trans }}</th>
@@ -351,7 +368,7 @@
                 <td>{{ change.timestamp|date("Y-m-d H:i:s"|trans) }}</td>
                 <td>{{ change.object.registration.club }}</td>
                 {% if change.changeSetObject.firstName is defined %}
-                    <td bgcolor="orange">
+                    <td style="background-color:orange">
                         {{ change.changeSetObject.firstName[0] }} -> {{ change.changeSetObject.firstName[1] }}
                     </td>
                 {% else %}
@@ -360,7 +377,7 @@
                     </td>
                 {% endif %}
                 {% if change.changeSetObject.lastName is defined %}
-                    <td bgcolor="orange">
+                    <td style="background-color:orange">
                         {{ change.changeSetObject.lastName[0] }} -> {{ change.changeSetObject.lastName[1] }}
                     </td>
                 {% else %}
@@ -369,7 +386,7 @@
                     </td>
                 {% endif %}
                 {% if change.changeSetObject.role is defined %}
-                    <td bgcolor="orange">
+                    <td style="background-color:orange">
                         {{ change.changeSetObject.role[0] }} -> {{ change.changeSetObject.role[1] }}
                     </td>
                 {% else %}
@@ -378,7 +395,7 @@
                     </td>
                 {% endif %}
                 {% if change.changeSetObject.gender is defined %}
-                    <td bgcolor="orange">
+                    <td style="background-color:orange">
                         {{ change.changeSetObject.gender[0] }} -> {{ change.changeSetObject.gender[1] }}
                     </td>
                 {% else %}
@@ -387,7 +404,7 @@
                     </td>
                 {% endif %}
                 {% if change.changeSetObject.friday is defined %}
-                    <td bgcolor="orange">
+                    <td style="background-color:orange">
                         {% if change.changeSetObject.friday[0] %}yes{% else %}no{% endif %}
                         ->
                         {% if change.changeSetObject.friday[1] %}yes{% else %}no{% endif %}
@@ -398,7 +415,7 @@
                     </td>
                 {% endif %}
                 {% if change.changeSetObject.saturday is defined %}
-                    <td bgcolor="orange">
+                    <td style="background-color:orange">
                         {% if change.changeSetObject.saturday[0] %}yes{% else %}no{% endif %}
                         ->
                         {% if change.changeSetObject.saturday[1] %}yes{% else %}no{% endif %}
@@ -409,7 +426,7 @@
                     </td>
                 {% endif %}
                 {% if change.changeSetObject.itc is defined %}
-                    <td bgcolor="orange">
+                    <td style="background-color:orange">
                         {{ change.changeSetObject.itc[0] }} -> {{ change.changeSetObject.itc[1] }}
                     </td>
                 {% else %}
@@ -418,7 +435,7 @@
                     </td>
                 {% endif %}
                 {% if change.changeSetObject.comment is defined %}
-                    <td bgcolor="orange">
+                    <td style="background-color:orange">
                         {{ change.changeSetObject.comment[0] }} -> {{ change.changeSetObject.comment[1] }}
                     </td>
                 {% else %}
@@ -432,7 +449,7 @@
 </div>
 <div>
     <h3>Changed Contestants:</h3>
-    <table border="1">
+    <table>
         <thead>
         <tr>
             <th>{{ 'When'|trans }}</th>
@@ -453,7 +470,7 @@
                 <td>{{ change.timestamp|date("Y-m-d H:i:s"|trans) }}</td>
                 <td>{{ change.object.registration.club }}</td>
                 {% if change.changeSetObject.firstName is defined %}
-                    <td bgcolor="orange">
+                    <td style="background-color:orange">
                         {{ change.changeSetObject.firstName[0] }} -> {{ change.changeSetObject.firstName[1] }}
                     </td>
                 {% else %}
@@ -462,7 +479,7 @@
                     </td>
                 {% endif %}
                 {% if change.changeSetObject.lastName is defined %}
-                    <td bgcolor="orange">
+                    <td style="background-color:orange">
                         {{ change.changeSetObject.lastName[0] }} -> {{ change.changeSetObject.lastName[1] }}
                     </td>
                 {% else %}
@@ -471,7 +488,7 @@
                     </td>
                 {% endif %}
                 {% if change.changeSetObject.year is defined %}
-                    <td bgcolor="orange">
+                    <td style="background-color:orange">
                         {{ change.changeSetObject.year[0] }} -> {{ change.changeSetObject.year[1] }}
                     </td>
                 {% else %}
@@ -480,7 +497,7 @@
                     </td>
                 {% endif %}
                 {% if change.changeSetObject.weightCategory is defined %}
-                    <td bgcolor="orange">
+                    <td style="background-color:orange">
                         {{ change.changeSetObject.weightCategory[0] }} -> {{ change.changeSetObject.weightCategory[1] }}
                     </td>
                 {% else %}
@@ -489,7 +506,7 @@
                     </td>
                 {% endif %}
                 {% if change.changeSetObject.ageCategory is defined %}
-                    <td bgcolor="orange">
+                    <td style="background-color:orange">
                         {{ change.changeSetObject.ageCategory[0] }} -> {{ change.changeSetObject.ageCategory[1] }}
                     </td>
                 {% else %}
@@ -498,7 +515,7 @@
                     </td>
                 {% endif %}
                 {% if change.changeSetObject.friday is defined %}
-                    <td bgcolor="orange">
+                    <td style="background-color:orange">
                         {% if change.changeSetObject.friday[0] %}yes{% else %}no{% endif %}
                         ->
                         {% if change.changeSetObject.friday[1] %}yes{% else %}no{% endif %}
@@ -509,7 +526,7 @@
                     </td>
                 {% endif %}
                 {% if change.changeSetObject.saturday is defined %}
-                    <td bgcolor="orange">
+                    <td style="background-color:orange">
                         {% if change.changeSetObject.saturday[0] %}yes{% else %}no{% endif %}
                         ->
                         {% if change.changeSetObject.saturday[1] %}yes{% else %}no{% endif %}
@@ -520,7 +537,7 @@
                     </td>
                 {% endif %}
                 {% if change.changeSetObject.itc is defined %}
-                    <td bgcolor="orange">
+                    <td style="background-color:orange">
                         {{ change.changeSetObject.itc[0] }} -> {{ change.changeSetObject.itc[1] }}
                     </td>
                 {% else %}
@@ -529,7 +546,7 @@
                     </td>
                 {% endif %}
                 {% if change.changeSetObject.comment is defined %}
-                    <td bgcolor="orange">
+                    <td style="background-color:orange">
                         {{ change.changeSetObject.comment[0] }} -> {{ change.changeSetObject.comment[1] }}
                     </td>
                 {% else %}
@@ -543,7 +560,7 @@
 </div>
 <div>
     <h3>Changed Transports:</h3>
-    <table border="1">
+    <table>
         <thead>
         <tr>
             <th>{{ 'When'|trans }}</th>
@@ -564,7 +581,7 @@
                     {% if change.object.isArrival %}yes{% else %}no{% endif %}
                 </td>
                 {% if change.changeSetObject.date.date is defined %}
-                    <td bgcolor="orange">
+                    <td style="background-color:orange">
                         {{ change.changeSetObject.date[0].date|date("date.date"|trans) }}
                         -> {{ change.changeSetObject.date[1].date|date("date.date"|trans) }}
                     </td>
@@ -574,7 +591,7 @@
                     </td>
                 {% endif %}
                 {% if change.changeSetObject.time.date is defined %}
-                    <td bgcolor="orange">
+                    <td style="background-color:orange">
                         {{ change.changeSetObject.time[0].date|date("date.time"|trans) }}
                         -> {{ change.changeSetObject.time[1].date|date("date.time"|trans) }}
                     </td>
@@ -584,7 +601,7 @@
                     </td>
                 {% endif %}
                 {% if change.changeSetObject.place is defined %}
-                    <td bgcolor="orange">
+                    <td style="background-color:orange">
                         {{ change.changeSetObject.place[0] }} -> {{ change.changeSetObject.place[1] }}
                     </td>
                 {% else %}
@@ -593,7 +610,7 @@
                     </td>
                 {% endif %}
                 {% if change.changeSetObject.information is defined %}
-                    <td bgcolor="orange">
+                    <td style="background-color:orange">
                         {{ change.changeSetObject.information[0] }} -> {{ change.changeSetObject.information[1] }}
                     </td>
                 {% else %}

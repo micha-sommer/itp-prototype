@@ -15,9 +15,17 @@ use App\Repository\ContestantsRepository;
 use App\Repository\OfficialsRepository;
 use App\Repository\RegistrationsRepository;
 use App\Repository\TransportRepository;
+use Doctrine\ORM\NonUniqueResultException;
+use Exception;
+use Swift_Mailer;
+use Swift_Message;
+use function array_filter;
 use function array_map;
+use function count;
+use function date_format;
 use function file_get_contents;
 use function implode;
+use function in_array;
 use function json_decode;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,6 +33,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use function json_encode;
 
 class LoginController extends AbstractController
 {
@@ -64,11 +73,11 @@ class LoginController extends AbstractController
      * @Route("/forgot_password", name="forgot_password")
      * @param Request $request
      * @param RegistrationsRepository $registrationsRepository
-     * @param \Swift_Mailer $mailer
-     * @return \Symfony\Component\HttpFoundation\Response
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @param Swift_Mailer $mailer
+     * @return Response
+     * @throws NonUniqueResultException
      */
-    public function forgotPassword(Request $request, RegistrationsRepository $registrationsRepository, \Swift_Mailer $mailer): Response
+    public function forgotPassword(Request $request, RegistrationsRepository $registrationsRepository, Swift_Mailer $mailer): Response
     {
         $form = $this->createForm(ForgotPasswordType::class);
 
@@ -88,7 +97,7 @@ class LoginController extends AbstractController
 
                 $link = $root . '/' . $locale . '/reset_password/' . $uid . '/' . $hash;
 
-                $message = (new \Swift_Message('Forgot your password'))
+                $message = (new Swift_Message('Forgot your password'))
                     ->setFrom('anmeldung@thueringer-judoverband.de')
                     ->setTo($registration->getEmail())
                     ->setBody($this->renderView('emails/forgot_password.html.twig', [
@@ -114,11 +123,12 @@ class LoginController extends AbstractController
      * @param ContestantsRepository $contestantsRepository
      * @param TransportRepository $transportRepository
      * @param ChangeSetRepository $changeSetRepository
-     * @param \Swift_Mailer $mailer
-     * @return \Symfony\Component\HttpFoundation\Response
-     * @throws \Exception
+     * @param Swift_Mailer $mailer
+     * @param KernelInterface $appKernel
+     * @return Response
+     * @throws Exception
      */
-    public function admin(Request $request, RegistrationsRepository $registrationsRepository, OfficialsRepository $officialsRepository, ContestantsRepository $contestantsRepository, TransportRepository $transportRepository, ChangeSetRepository $changeSetRepository, \Swift_Mailer $mailer, KernelInterface $appKernel): Response
+    public function admin(Request $request, RegistrationsRepository $registrationsRepository, OfficialsRepository $officialsRepository, ContestantsRepository $contestantsRepository, TransportRepository $transportRepository, ChangeSetRepository $changeSetRepository, Swift_Mailer $mailer, KernelInterface $appKernel): Response
     {
         $showSentNotification = false;
 
@@ -139,20 +149,21 @@ class LoginController extends AbstractController
             /*
              * filter changes (only want drops of each repository)
              */
-            $registrationsDrops = \array_filter($changes, static function (ChangeSet $changeSet) {
+            $registrationsDrops = array_filter($changes, static function (ChangeSet $changeSet) {
                 return $changeSet->getType() === 'DROP' && $changeSet->getName() === 'registration';
             });
-            $officialsDrops = \array_filter($changes, static function (ChangeSet $changeSet) {
+            $officialsDrops = array_filter($changes, static function (ChangeSet $changeSet) {
                 return $changeSet->getType() === 'DROP' && $changeSet->getName() === 'official';
             });
-            $contestantsDrops = \array_filter($changes, static function (ChangeSet $changeSet) {
+            $contestantsDrops = array_filter($changes, static function (ChangeSet $changeSet) {
                 return $changeSet->getType() === 'DROP' && $changeSet->getName() === 'contestant';
             });
-            $transportsDrops = \array_filter($changes, static function (ChangeSet $changeSet) {
+            $transportsDrops = array_filter($changes, static function (ChangeSet $changeSet) {
                 return $changeSet->getType() === 'DROP' && $changeSet->getName() === 'transport';
             });
 
             $getId = static function ($object) {
+                /** @noinspection PhpUndefinedMethodInspection */
                 return $object->getId();
             };
 
@@ -160,29 +171,32 @@ class LoginController extends AbstractController
                 return $object->getNameId();
             };
 
-            $registrationsChanges = \array_filter($changes, static function (ChangeSet $changeSet) use ($getId, $getNameId, $newRegistrations, $registrationsDrops) {
+            /*
+             * filter changes (only want those who have not been dropped or just been added)
+             */
+            $registrationsChanges = array_filter($changes, static function (ChangeSet $changeSet) use ($getId, $getNameId, $newRegistrations, $registrationsDrops) {
                 return $changeSet->getType() === 'UPDATE'
                     && $changeSet->getName() === 'registration'
-                    && !\in_array($changeSet->getNameId(), array_map($getId, $newRegistrations), true)
-                    && !\in_array($changeSet->getNameId(), array_map($getNameId, $registrationsDrops), true);
+                    && !in_array($changeSet->getNameId(), array_map($getId, $newRegistrations), true)
+                    && !in_array($changeSet->getNameId(), array_map($getNameId, $registrationsDrops), true);
             });
-            $officialsChanges = \array_filter($changes, static function (ChangeSet $changeSet) use ($getId, $getNameId, $newOfficials, $officialsDrops) {
+            $officialsChanges = array_filter($changes, static function (ChangeSet $changeSet) use ($getId, $getNameId, $newOfficials, $officialsDrops) {
                 return $changeSet->getType() === 'UPDATE'
                     && $changeSet->getName() === 'official'
-                    && !\in_array($changeSet->getNameId(), array_map($getId, $newOfficials), true)
-                    && !\in_array($changeSet->getNameId(), array_map($getNameId, $officialsDrops), true);
+                    && !in_array($changeSet->getNameId(), array_map($getId, $newOfficials), true)
+                    && !in_array($changeSet->getNameId(), array_map($getNameId, $officialsDrops), true);
             });
-            $contestantsChanges = \array_filter($changes, static function (ChangeSet $changeSet) use ($getId, $getNameId, $newContestants, $contestantsDrops) {
+            $contestantsChanges = array_filter($changes, static function (ChangeSet $changeSet) use ($getId, $getNameId, $newContestants, $contestantsDrops) {
                 return $changeSet->getType() === 'UPDATE'
                     && $changeSet->getName() === 'contestant'
-                    && !\in_array($changeSet->getNameId(), array_map($getId, $newContestants), true)
-                    && !\in_array($changeSet->getNameId(), array_map($getNameId, $contestantsDrops), true);
+                    && !in_array($changeSet->getNameId(), array_map($getId, $newContestants), true)
+                    && !in_array($changeSet->getNameId(), array_map($getNameId, $contestantsDrops), true);
             });
-            $transportsChanges = \array_filter($changes, static function (ChangeSet $changeSet) use ($getId, $getNameId, $newTransports, $transportsDrops) {
+            $transportsChanges = array_filter($changes, static function (ChangeSet $changeSet) use ($getId, $getNameId, $newTransports, $transportsDrops) {
                 return $changeSet->getType() === 'UPDATE'
                     && $changeSet->getName() === 'transport'
-                    && !\in_array($changeSet->getNameId(), array_map($getId, $newTransports), true)
-                    && !\in_array($changeSet->getNameId(), array_map($getNameId, $transportsDrops), true);
+                    && !in_array($changeSet->getNameId(), array_map($getId, $newTransports), true)
+                    && !in_array($changeSet->getNameId(), array_map($getNameId, $transportsDrops), true);
             });
 
             $setClubRegistration = static function (ChangeSet $changeSet) use ($registrationsRepository) {
@@ -227,12 +241,12 @@ class LoginController extends AbstractController
             $contestantsDrops = array_map($getObject, $contestantsDrops);
             $transportsDrops = array_map($getObject, $transportsDrops);
 
-            $message = (new \Swift_Message('Change history from ' . \date_format($after, 'Y-m-d H:i:s') . ' to ' . \date_format($before, 'Y-m-d H:i:s')))
+            $message = (new Swift_Message('Change history from ' . date_format($after, 'Y-m-d H:i:s') . ' to ' . date_format($before, 'Y-m-d H:i:s')))
                 ->setFrom('anmeldung@thueringer-judoverband.de')
                 ->setTo($this->getUser()->getEmail())
                 ->setBody($this->renderView('emails/change_history.html.twig', [
-                    'from_date' => \date_format($after, 'Y-m-d H:i:s'),
-                    'to_date' => \date_format($before, 'Y-m-d H:i:s'),
+                    'from_date' => date_format($after, 'Y-m-d H:i:s'),
+                    'to_date' => date_format($before, 'Y-m-d H:i:s'),
                     'newRegistrations' => $newRegistrations,
                     'newOfficials' => $newOfficials,
                     'newContestants' => $newContestants,
@@ -288,11 +302,11 @@ class LoginController extends AbstractController
             //*/
         }
 
-        $registrations = \array_filter($registrationsRepository->findAll(), function (Registration $registration) {
-	        return !\in_array($registration->getId(), [-1, -2, -3], true);
+        $registrations = array_filter($registrationsRepository->findAll(), function (Registration $registration) {
+	        return !in_array($registration->getId(), [-1, -2, -3], true);
         });
 
-        $countRegistrations = \count($registrations);
+        $countRegistrations = count($registrations);
         $countOfficials = $officialsRepository->count([]);
         $countContestants = $contestantsRepository->count([]);
         $countFri = $officialsRepository->count(['friday' => true]) + $contestantsRepository->count(['friday' => true]);
@@ -306,9 +320,9 @@ class LoginController extends AbstractController
             [
                 'registrations' => $registrations,
                 'showSentNotification' => $showSentNotification,
-                'allOfficialsJSON' => \json_encode($officialsRepository->findAll()),
+                'allOfficialsJSON' => json_encode($officialsRepository->findAll()),
                 'allOfficials' => $this->officialsToCVS($officialsRepository->findAll(), $appKernel),
-                'allContestantsJSON' => \json_encode($contestantsRepository->findAll()),
+                'allContestantsJSON' => json_encode($contestantsRepository->findAll()),
                 'allContestants' => $this->contestantsToCVS($contestantsRepository->findAll(), $appKernel),
                 'countRegistrations' => $countRegistrations,
                 'countOfficials' => $countOfficials,
@@ -326,7 +340,7 @@ class LoginController extends AbstractController
 
     private function contestantsToCVS(array $contestants, KernelInterface $kernel): string
     {
-        $contestants = \array_filter($contestants, static function (Contestant $contestant) {
+        $contestants = array_filter($contestants, static function (Contestant $contestant) {
             return $contestant->getRegistration()->getId() > 0;
         });
 
@@ -339,7 +353,7 @@ class LoginController extends AbstractController
 
     private static function contestantToCVS(Contestant $contestant, $codes): string
     {
-        $data = [
+        $data = array(
             $contestant->getRegistration()->getId(),
             $codes ? $codes[$contestant->getRegistration()->getCountry()] : $contestant->getRegistration()->getCountry(),
             $contestant->getRegistration()->getClub(),
@@ -351,8 +365,8 @@ class LoginController extends AbstractController
             '',
             $contestant->getItc(),
             '',
-            '"' . preg_replace("/\r|\n/", '', $contestant->getComment()) . '"',
-        ];
+            '"'. preg_replace(['/\r/','/\n/'], '', $contestant->getComment()) . '"',
+        );
 
         return implode(',', $data);
     }
@@ -361,7 +375,7 @@ class LoginController extends AbstractController
     private
     function officialsToCVS(array $officials, KernelInterface $kernel): string
     {
-        $officials = \array_filter($officials, static function (Official $official) {
+        $officials = array_filter($officials, static function (Official $official) {
             return $official->getRegistration()->getId() > 0;
         });
         $path = $kernel->getProjectDir();
@@ -384,7 +398,7 @@ class LoginController extends AbstractController
             $official->getGender(),
             $official->getItc(),
             '',
-            '"' . preg_replace("/\r|\n/", '', $official->getComment()) . '"',
+            '"' . preg_replace(['/\r/','/\n/'], '', $official->getComment()) . '"',
         ];
 
         return implode(',', $data);
