@@ -2,8 +2,13 @@
 
 namespace App\Repository;
 
+use App\Entity\Contestant;
 use App\Entity\Registration;
+use DateTime;
+use DateTimeInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
+use Exception;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -20,15 +25,15 @@ class RegistrationsRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param \DateTimeInterface $after
-     * @param \DateTimeInterface|null $before
+     * @param DateTimeInterface $after
+     * @param DateTimeInterface|null $before
      * @return Registration[] Returns an array of Registrtion objects
-     * @throws \Exception
+     * @throws Exception
      */
-    public function findByDate(\DateTimeInterface $after, \DateTimeInterface $before = null): array
+    public function findByDate(DateTimeInterface $after, DateTimeInterface $before = null): array
     {
         if ($before === null) {
-            $before = new \DateTime();
+            $before = new DateTime();
         }
         return $this->createQueryBuilder('r')
             ->andWhere('r.timestamp BETWEEN :from AND :to')
@@ -95,5 +100,22 @@ class RegistrationsRepository extends ServiceEntityRepository
             ->setParameter('val', $id)
             ->getQuery()
             ->getOneOrNullResult();
+    }
+
+    public function findDistinctCountries(): ?array
+    {
+        $query = $this->createQueryBuilder('r');
+
+        $result = $query
+            ->select('r.country')
+            ->distinct()
+            ->join(Contestant::class, 'c', Join::WITH)
+            ->getQuery()->getArrayResult();
+
+        $result =  array_map(function ($a){
+            return $a['country'];
+        }, $result);
+
+        return $result;
     }
 }

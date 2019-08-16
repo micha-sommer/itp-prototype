@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Contestant;
 use App\Entity\Registration;
 use App\Entity\Transport;
 use App\Enum\AgeCategoryEnum;
@@ -10,9 +9,11 @@ use App\Enum\WeightCategoryEnum;
 use App\Repository\ContestantsRepository;
 use App\Repository\RegistrationsRepository;
 use Doctrine\Common\Collections\Criteria;
-use Doctrine\ORM\NoResultException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use function array_filter;
+use function count;
 
 class WelcomeController extends AbstractController
 {
@@ -20,9 +21,9 @@ class WelcomeController extends AbstractController
      * @Route("/", name="welcome")
      * @param RegistrationsRepository $registrationsRepository
      * @param ContestantsRepository $contestantsRepository
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
-    public function welcome(RegistrationsRepository $registrationsRepository, ContestantsRepository $contestantsRepository): \Symfony\Component\HttpFoundation\Response
+    public function welcome(RegistrationsRepository $registrationsRepository, ContestantsRepository $contestantsRepository): Response
     {
         $registration = $this->getUser();
 
@@ -30,16 +31,18 @@ class WelcomeController extends AbstractController
         $departure = null;
 
         $filterFunction = function (Registration $registration) {
-            return \count($registration->getContestants()) > 0;
+            return count($registration->getContestants()) > 0;
         };
 
-        $registrationCount = \count(\array_filter($registrationsRepository->findAll(), $filterFunction));
+        $registrationCount = count(array_filter($registrationsRepository->findAll(), $filterFunction));
 
         foreach (AgeCategoryEnum::asArray() as $age) {
             foreach (WeightCategoryEnum::asArray() as $weight) {
                 $categories[$age][$weight] = $contestantsRepository->count(['ageCategory' => $age, 'weightCategory' => $weight]);
             }
         }
+        $test= $registrationsRepository->findDistinctCountries();
+        dump($test);
 
         $categories[AgeCategoryEnum::cadet]['total'] = $contestantsRepository->count(['ageCategory' => AgeCategoryEnum::cadet]);
         $categories[AgeCategoryEnum::cadet]['camp'] = $contestantsRepository->_count(Criteria::create()->where(Criteria::expr()->eq('ageCategory', AgeCategoryEnum::cadet))->andWhere(Criteria::expr()->neq('itc', 'no')));
@@ -76,18 +79,18 @@ class WelcomeController extends AbstractController
      *     }
      * )
      * @param ContestantsRepository $contestantsRepository
-     * @param $age one of AgeCategoryEnum
-     * @param $weight one of WeightCategoryEnum
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @param $age AgeCategoryEnum
+     * @param $weight WeightCategoryEnum
+     * @return Response
      */
-    public function showCategory(ContestantsRepository $contestantsRepository, $age, $weight): \Symfony\Component\HttpFoundation\Response
+    public function showCategory(ContestantsRepository $contestantsRepository, $age, $weight): Response
     {
         if (($age == 'cadet' && $weight == '-78') ||
             ($age == 'cadet' && $weight == '+78') ||
             ($age == 'junior' && $weight == '-40') ||
             ($age == 'junior' && $weight == '+70')
         ) {
-            return $this->createNotFoundException('Wrong category');
+            throw $this->createNotFoundException('Wrong category');
         }
 
         $contestants = $contestantsRepository->findBy(['ageCategory' => $age, 'weightCategory' => $weight]);
