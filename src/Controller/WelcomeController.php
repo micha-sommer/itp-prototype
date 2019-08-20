@@ -41,8 +41,7 @@ class WelcomeController extends AbstractController
                 $categories[$age][$weight] = $contestantsRepository->count(['ageCategory' => $age, 'weightCategory' => $weight]);
             }
         }
-        $test= $registrationsRepository->findDistinctCountries();
-        dump($test);
+        $distinctCountries = $registrationsRepository->findDistinctCountries();
 
         $categories[AgeCategoryEnum::cadet]['total'] = $contestantsRepository->count(['ageCategory' => AgeCategoryEnum::cadet]);
         $categories[AgeCategoryEnum::cadet]['camp'] = $contestantsRepository->_count(Criteria::create()->where(Criteria::expr()->eq('ageCategory', AgeCategoryEnum::cadet))->andWhere(Criteria::expr()->neq('itc', 'no')));
@@ -66,6 +65,7 @@ class WelcomeController extends AbstractController
             'departure' => $departure,
             'clubsCount' => $registrationCount,
             'categories' => $categories,
+            'countries' => $distinctCountries
         ]);
     }
 

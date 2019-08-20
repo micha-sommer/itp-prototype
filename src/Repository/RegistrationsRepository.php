@@ -7,6 +7,7 @@ use App\Entity\Registration;
 use DateTime;
 use DateTimeInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\Query\Expr\Join;
 use Exception;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -76,7 +77,7 @@ class RegistrationsRepository extends ServiceEntityRepository
     /**
      * @param $email
      * @return Registration|null
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws NonUniqueResultException
      */
     public function findOneByEmail($email): ?Registration
     {
@@ -91,7 +92,7 @@ class RegistrationsRepository extends ServiceEntityRepository
     /**
      * @param $id
      * @return Registration|null
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws NonUniqueResultException
      */
     public function findOneById($id): ?Registration
     {
@@ -110,9 +111,10 @@ class RegistrationsRepository extends ServiceEntityRepository
             ->select('r.country')
             ->distinct()
             ->join(Contestant::class, 'c', Join::WITH)
-            ->getQuery()->getArrayResult();
+            ->getQuery()
+            ->getArrayResult();
 
-        $result =  array_map(function ($a){
+        $result =  array_map(static function ($a){
             return $a['country'];
         }, $result);
 

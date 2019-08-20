@@ -164,52 +164,9 @@
                    role="button">{{ 'start'|trans }}</a>
                 <hr class="my-4">
                 <figure class="figure">
-                    <img src="{{ asset('images/Flag_of_Germany.svg') }}" class="rounded float-left mb-2" height="50"
-                         alt="GER">
-                    <img src="{{ asset('images/Flag_of_Japan.svg') }}" class="rounded float-left ml-2 mb-2" height="50"
-                         alt="JPN">
-                    <img src="{{ asset('images/Flag_of_the_Netherlands.svg') }}" class="rounded float-left ml-2 mb-2" height="50"
-                         alt="NED">
-                    <img src="{{ asset('images/Flag_of_the_Czech_Republic.svg') }}" class="rounded float-left ml-2 mb-2" height="50"
-                         alt="CZE">
-                    <img src="{{ asset('images/Flag_of_Belgium.svg') }}" class="rounded float-left ml-2 mb-2" height="50"
-                         alt="BEL">
-                    <img src="{{ asset('images/Flag_of_Finland.svg') }}" class="rounded float-left ml-2 mb-2" height="50"
-                         alt="FIN">
-                    <img src="{{ asset('images/Flag_of_Canada.svg') }}" class="rounded float-left ml-2 mb-2" height="50"
-                         alt="CAN">
-                    <img src="{{ asset('images/Flag_of_France.svg') }}" class="rounded float-left ml-2 mb-2" height="50"
-                         alt="FRA">
-                    <img src="{{ asset('images/Flag_of_Angola.svg') }}" class="rounded float-left ml-2 mb-2" height="50"
-                         alt="AGO">
-                    <img src="{{ asset('images/Flag_of_Switzerland.svg') }}" class="rounded float-left ml-2 mb-2" height="50"
-                         alt="SUI">
-                    <img src="{{ asset('images/Flag_of_Denmark.svg') }}" class="rounded float-left ml-2 mb-2" height="50"
-                         alt="DEN">
-                    <img src="{{ asset('images/Flag_of_Sweden.svg') }}" class="rounded float-left ml-2 mb-2" height="50"
-                         alt="SWE">
-		            <img src="{{ asset('images/Flag_of_Brazil.svg') }}" class="rounded float-left ml-2 mb-2" height="50"
-                         alt="BRA">
-                    <img src="{{ asset('images/Flag_of_the_United_Kingdom.svg') }}" class="rounded float-left ml-2 mb-2" height="50"
-                         alt="GBR">
-                    <img src="{{ asset('images/Flag_of_Luxembourg.svg') }}" class="rounded float-left ml-2 mb-2" height="50"
-                         alt="LUX">
-                    <img src="{{ asset('images/Flag_of_Costa_Rica.svg') }}" class="rounded float-left ml-2 mb-2" height="50"
-                         alt="CRI">
-                    <img src="{{ asset('images/Flag_of_Latvia.svg') }}" class="rounded float-left ml-2 mb-2" height="50"
-                         alt="LAT">
-                    <!--img src="{{ asset('images/Flag_of_Norway.svg') }}" class="rounded float-left ml-2 mb-2" height="50"
-                         alt="NOR">
-                    <img src="{{ asset('images/Flag_of_Austria.svg') }}" class="rounded float-left ml-2 mb-2" height="50"
-                         alt="AUT">
-                    <img src="{{ asset('images/Flag_of_Australia.svg') }}" class="rounded float-left ml-2 mb-2" height="50"
-                         alt="AUS">
-
-                    <img src="{{ asset('images/Flag_of_Kazakhstan.svg') }}" class="rounded float-left ml-2 mb-2" height="50"
-                         alt="KAZ">
-                    <img src="{{ asset('images/Flag_of_Poland.svg') }}" class="rounded float-left ml-2 mb-2" height="50"
-                         alt="POL">
-                    -->
+                {% for country in countries %}
+                    <img src="{{ asset('images/Flag_of_%s.svg'|format(country)) }}" class="rounded float-left mb-2 ml-2" height="50">
+                {% endfor %}
                 </figure>
 
                 <p>{{ 'overview.contestants'|trans({'%total%':categories['total'],'%clubs%':clubsCount })|raw }}</p>
@@ -217,14 +174,30 @@
                     <thead class="thead-dark">
                     <tr>
                         <th class="text-center" scope="col">{{ 'cadet'|trans }}</th>
-                        <th class="text-center" scope="col"><a href="{{ path('overview', {'age': 'cadet', 'weight': '-40'}) }}">{{ '-40'|trans }}</a></th>
-                        <th class="text-center" scope="col"><a href="{{ path('overview', {'age': 'cadet', 'weight': '-44'}) }}">{{ '-44'|trans }}</a></th>
-                        <th class="text-center" scope="col"><a href="{{ path('overview', {'age': 'cadet', 'weight': '-48'}) }}">{{ '-48'|trans }}</a></th>
-                        <th class="text-center" scope="col"><a href="{{ path('overview', {'age': 'cadet', 'weight': '-52'}) }}">{{ '-52'|trans }}</a></th>
-                        <th class="text-center" scope="col"><a href="{{ path('overview', {'age': 'cadet', 'weight': '-57'}) }}">{{ '-57'|trans }}</a></th>
-                        <th class="text-center" scope="col"><a href="{{ path('overview', {'age': 'cadet', 'weight': '-63'}) }}">{{ '-63'|trans }}</a></th>
-                        <th class="text-center" scope="col"><a href="{{ path('overview', {'age': 'cadet', 'weight': '-70'}) }}">{{ '-70'|trans }}</a></th>
-                        <th class="text-center" scope="col"><a href="{{ path('overview', {'age': 'cadet', 'weight': '+70'}) }}">{{ '+70'|trans }}</a></th>
+                        <th class="text-center" scope="col"><a
+                                    href="{{ path('overview', {'age': 'cadet', 'weight': '-40'}) }}">{{ '-40'|trans }}</a>
+                        </th>
+                        <th class="text-center" scope="col"><a
+                                    href="{{ path('overview', {'age': 'cadet', 'weight': '-44'}) }}">{{ '-44'|trans }}</a>
+                        </th>
+                        <th class="text-center" scope="col"><a
+                                    href="{{ path('overview', {'age': 'cadet', 'weight': '-48'}) }}">{{ '-48'|trans }}</a>
+                        </th>
+                        <th class="text-center" scope="col"><a
+                                    href="{{ path('overview', {'age': 'cadet', 'weight': '-52'}) }}">{{ '-52'|trans }}</a>
+                        </th>
+                        <th class="text-center" scope="col"><a
+                                    href="{{ path('overview', {'age': 'cadet', 'weight': '-57'}) }}">{{ '-57'|trans }}</a>
+                        </th>
+                        <th class="text-center" scope="col"><a
+                                    href="{{ path('overview', {'age': 'cadet', 'weight': '-63'}) }}">{{ '-63'|trans }}</a>
+                        </th>
+                        <th class="text-center" scope="col"><a
+                                    href="{{ path('overview', {'age': 'cadet', 'weight': '-70'}) }}">{{ '-70'|trans }}</a>
+                        </th>
+                        <th class="text-center" scope="col"><a
+                                    href="{{ path('overview', {'age': 'cadet', 'weight': '+70'}) }}">{{ '+70'|trans }}</a>
+                        </th>
                         <th class="text-center" scope="col">{{ 'itc.participants'|trans }}</th>
                     </tr>
                     </thead>
@@ -245,14 +218,30 @@
                     <thead class="thead-dark">
                     <tr>
                         <th class="text-center" scope="col">{{ 'junior'|trans }}</th>
-                        <th class="text-center" scope="col"><a href="{{ path('overview', {'age': 'junior', 'weight': '-44'}) }}">{{ '-44'|trans }}</th>
-                        <th class="text-center" scope="col"><a href="{{ path('overview', {'age': 'junior', 'weight': '-48'}) }}">{{ '-48'|trans }}</th>
-                        <th class="text-center" scope="col"><a href="{{ path('overview', {'age': 'junior', 'weight': '-52'}) }}">{{ '-52'|trans }}</th>
-                        <th class="text-center" scope="col"><a href="{{ path('overview', {'age': 'junior', 'weight': '-57'}) }}">{{ '-57'|trans }}</th>
-                        <th class="text-center" scope="col"><a href="{{ path('overview', {'age': 'junior', 'weight': '-63'}) }}">{{ '-63'|trans }}</th>
-                        <th class="text-center" scope="col"><a href="{{ path('overview', {'age': 'junior', 'weight': '-70'}) }}">{{ '-70'|trans }}</th>
-                        <th class="text-center" scope="col"><a href="{{ path('overview', {'age': 'junior', 'weight': '-78'}) }}">{{ '-78'|trans }}</th>
-                        <th class="text-center" scope="col"><a href="{{ path('overview', {'age': 'junior', 'weight': '+78'}) }}">{{ '+78'|trans }}</th>
+                        <th class="text-center" scope="col"><a
+                                    href="{{ path('overview', {'age': 'junior', 'weight': '-44'}) }}">{{ '-44'|trans }}
+                        </th>
+                        <th class="text-center" scope="col"><a
+                                    href="{{ path('overview', {'age': 'junior', 'weight': '-48'}) }}">{{ '-48'|trans }}
+                        </th>
+                        <th class="text-center" scope="col"><a
+                                    href="{{ path('overview', {'age': 'junior', 'weight': '-52'}) }}">{{ '-52'|trans }}
+                        </th>
+                        <th class="text-center" scope="col"><a
+                                    href="{{ path('overview', {'age': 'junior', 'weight': '-57'}) }}">{{ '-57'|trans }}
+                        </th>
+                        <th class="text-center" scope="col"><a
+                                    href="{{ path('overview', {'age': 'junior', 'weight': '-63'}) }}">{{ '-63'|trans }}
+                        </th>
+                        <th class="text-center" scope="col"><a
+                                    href="{{ path('overview', {'age': 'junior', 'weight': '-70'}) }}">{{ '-70'|trans }}
+                        </th>
+                        <th class="text-center" scope="col"><a
+                                    href="{{ path('overview', {'age': 'junior', 'weight': '-78'}) }}">{{ '-78'|trans }}
+                        </th>
+                        <th class="text-center" scope="col"><a
+                                    href="{{ path('overview', {'age': 'junior', 'weight': '+78'}) }}">{{ '+78'|trans }}
+                        </th>
                         <th class="text-center" scope="col">{{ 'itc.participants'|trans }}</th>
                     </tr>
                     </thead>
