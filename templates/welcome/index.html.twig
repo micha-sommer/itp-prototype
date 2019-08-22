@@ -165,7 +165,7 @@
                 <hr class="my-4">
                 <figure class="figure">
                 {% for country in countries %}
-                    <img src="{{ asset('images/Flag_of_%s.svg'|format(country)) }}" class="rounded float-left mb-2 ml-2" height="50">
+                    <img src="{{ asset('images/Flag_of_%s.svg'|format(country)) }}" class="rounded float-left mb-2 ml-2" height="50" alt="{{ country }}">
                 {% endfor %}
                 </figure>
 
@@ -203,16 +203,16 @@
                     </thead>
                     <tbody>
                     <tr>
-                        <td class="text-center" scope="col">{{ categories['cadet']['total'] }}</td>
-                        <td class="text-center" scope="col">{{ categories['cadet']['-40'] }}</td>
-                        <td class="text-center" scope="col">{{ categories['cadet']['-44'] }}</td>
-                        <td class="text-center" scope="col">{{ categories['cadet']['-48'] }}</td>
-                        <td class="text-center" scope="col">{{ categories['cadet']['-52'] }}</td>
-                        <td class="text-center" scope="col">{{ categories['cadet']['-57'] }}</td>
-                        <td class="text-center" scope="col">{{ categories['cadet']['-63'] }}</td>
-                        <td class="text-center" scope="col">{{ categories['cadet']['-70'] }}</td>
-                        <td class="text-center" scope="col">{{ categories['cadet']['+70'] }}</td>
-                        <td class="text-center" scope="col">{{ categories['cadet']['camp'] }}</td>
+                        <td class="text-center">{{ categories['cadet']['total'] }}</td>
+                        <td class="text-center">{{ categories['cadet']['-40'] }}</td>
+                        <td class="text-center">{{ categories['cadet']['-44'] }}</td>
+                        <td class="text-center">{{ categories['cadet']['-48'] }}</td>
+                        <td class="text-center">{{ categories['cadet']['-52'] }}</td>
+                        <td class="text-center">{{ categories['cadet']['-57'] }}</td>
+                        <td class="text-center">{{ categories['cadet']['-63'] }}</td>
+                        <td class="text-center">{{ categories['cadet']['-70'] }}</td>
+                        <td class="text-center">{{ categories['cadet']['+70'] }}</td>
+                        <td class="text-center">{{ categories['cadet']['camp'] }}</td>
                     </tr>
                     </tbody>
                     <thead class="thead-dark">
@@ -247,16 +247,16 @@
                     </thead>
                     <tbody>
                     <tr>
-                        <td class="text-center" scope="col">{{ categories['junior']['total'] }}</td>
-                        <td class="text-center" scope="col">{{ categories['junior']['-44'] }}</td>
-                        <td class="text-center" scope="col">{{ categories['junior']['-48'] }}</td>
-                        <td class="text-center" scope="col">{{ categories['junior']['-52'] }}</td>
-                        <td class="text-center" scope="col">{{ categories['junior']['-57'] }}</td>
-                        <td class="text-center" scope="col">{{ categories['junior']['-63'] }}</td>
-                        <td class="text-center" scope="col">{{ categories['junior']['-70'] }}</td>
-                        <td class="text-center" scope="col">{{ categories['junior']['-78'] }}</td>
-                        <td class="text-center" scope="col">{{ categories['junior']['+78'] }}</td>
-                        <td class="text-center" scope="col">{{ categories['junior']['camp'] }}</td>
+                        <td class="text-center">{{ categories['junior']['total'] }}</td>
+                        <td class="text-center">{{ categories['junior']['-44'] }}</td>
+                        <td class="text-center">{{ categories['junior']['-48'] }}</td>
+                        <td class="text-center">{{ categories['junior']['-52'] }}</td>
+                        <td class="text-center">{{ categories['junior']['-57'] }}</td>
+                        <td class="text-center">{{ categories['junior']['-63'] }}</td>
+                        <td class="text-center">{{ categories['junior']['-70'] }}</td>
+                        <td class="text-center">{{ categories['junior']['-78'] }}</td>
+                        <td class="text-center">{{ categories['junior']['+78'] }}</td>
+                        <td class="text-center">{{ categories['junior']['camp'] }}</td>
                     </tr>
                     </tbody>
                 </table>

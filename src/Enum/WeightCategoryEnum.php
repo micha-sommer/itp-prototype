@@ -41,4 +41,8 @@ class WeightCategoryEnum
             self::camp_only => self::camp_only];
     }
 
+    public function __toString() : string
+    {
+        return ''.$this;
+    }
 }

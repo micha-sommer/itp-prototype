@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Contestant;
 use App\Enum\WeightCategoryEnum;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Criteria;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -115,7 +116,7 @@ class ContestantsRepository extends ServiceEntityRepository
     /**
      * Counts entities by a set of criteria.
      *
-     * @param  array|\Doctrine\Common\Collections\Criteria $criteria
+     * @param  array|Criteria $criteria
      *
      * @return int The cardinality of the objects that match the given criteria.
      */
