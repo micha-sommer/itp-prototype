@@ -51,10 +51,10 @@ class WelcomeController extends AbstractController
         $categories['camp'] = $contestantsRepository->count([]);
 
         if ($registration) {
-            $arrival = $registration->getTransports()->filter(function (Transport $transport) {
+            $arrival = $registration->getTransports()->filter(static function (Transport $transport) {
                 return $transport->getIsArrival();
             })->first();
-            $departure = $registration->getTransports()->filter(function (Transport $transport) {
+            $departure = $registration->getTransports()->filter(static function (Transport $transport) {
                 return !$transport->getIsArrival();
             })->first();
         }
