@@ -7,7 +7,15 @@ twig:
     form_themes: ['bootstrap_4_horizontal_layout.html.twig']
 
     globals:
+        #year: the year of the tournament
+        year: '2019'
+        #itc_count the counter for the training camp, e.g. 15th International Training Camp
+        itc_count: '15'
+        #itp_count the counter for the tournament, e.g. 28th International Thuringia Cup
+        itp_count: '28'
+        #alert_accomondation: when true displays a warning message
+        alert_accomondation: false
         #end_date is when you last can enter competitors etc.
-        end_date: 'March 19, 2020 23:59'
+        end_date: 'March 19, 2019 23:59'
         #deadline is from when increased registration fee is charged.
-        deadline: 'March 10, 2020 23:59'
+        deadline: 'March 10, 2019 23:59'

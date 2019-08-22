@@ -110,7 +110,7 @@ class RegistrationsRepository extends ServiceEntityRepository
         $result = $query
             ->select('r.country')
             ->distinct()
-            ->join(Contestant::class, 'c', Join::WITH)
+            ->join(Contestant::class, 'c', Join::WITH, 'r.id = c.registration')
             ->getQuery()
             ->getArrayResult();
 

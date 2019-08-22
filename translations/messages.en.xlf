@@ -55,7 +55,7 @@
       </trans-unit>
       <trans-unit id="XIxZe_L" resname="greeting.top">
         <source>greeting.top</source>
-        <target>This is the new entry form for the registration process of International Thuringia Cup 2019.
+        <target>This is the new entry form for the registration process of International Thuringia Cup %year%.
                 </target>
       </trans-unit>
       <trans-unit id="11AR9Vh" resname="greeting.middle">
@@ -540,7 +540,7 @@
       </trans-unit>
       <trans-unit id="495pup0" resname="invitation.link">
         <source>invitation.link</source>
-        <target>https://www.thueringer-judoverband.de/fileadmin/PDF/ITP/ITP_2019/ITP_eng_2019.pdf</target>
+        <target>https://www.thueringer-judoverband.de/fileadmin/PDF/ITP/ITP_%year%/ITP_eng_%year%.pdf</target>
       </trans-unit>
       <trans-unit id="nf9dsiF" resname="about_us">
         <source>about_us</source>
@@ -660,6 +660,10 @@
       <trans-unit id="uyJ6Qn5" resname="errorMessageEntityNotSaved">
         <source>errorMessageEntityNotSaved</source>
         <target>ATTENTION: Changes have not been saved due to errors!!!</target>
+      </trans-unit>
+      <trans-unit id="v8kuAz2" resname="Registration period ended">
+        <source>Registration period ended</source>
+        <target>Registration period ended. For further changes please tell us personally.</target>
       </trans-unit>
     </body>
   </file>
