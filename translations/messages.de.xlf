@@ -661,7 +661,7 @@
       </trans-unit>
       <trans-unit id="v8kuAz2" resname="Registration period ended">
         <source>Registration period ended</source>
-        <target>Anmeldezeitraum abgelaufen. Bitte teilen Sie uns vor Änderungen Ort mit.</target>
+        <target>Anmeldezeitraum abgelaufen. Bitte teilen Sie uns Änderungen vor Ort mit.</target>
       </trans-unit>
     </body>
   </file>
