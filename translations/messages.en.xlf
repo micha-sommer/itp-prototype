@@ -540,7 +540,7 @@
       </trans-unit>
       <trans-unit id="495pup0" resname="invitation.link">
         <source>invitation.link</source>
-        <target>https://www.thueringer-judoverband.de/fileadmin/PDF/ITP/ITP_%year%/ITP_eng_%year%.pdf</target>
+        <target>https://drive.google.com/file/d/1zOFEa4_QrgGAyIjQ_DJcH3P9RtSlylaE</target>
       </trans-unit>
       <trans-unit id="nf9dsiF" resname="about_us">
         <source>about_us</source>

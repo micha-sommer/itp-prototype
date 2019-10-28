@@ -23,12 +23,12 @@ class ContestantType extends AbstractType
             ->add('last_name', TextType::class, ['attr'=> ['class' => 'hidden-last_name']])
             ->add('year', ChoiceType::class, [
                 'choices' => [
-                    1999 => '1999',
                     2000 => '2000',
                     2001 => '2001',
                     2002 => '2002',
                     2003 => '2003',
                     2004 => '2004',
+                    2005 => '2005',
                 ]
             ])
             ->add('weight_category', ChoiceType::class, [

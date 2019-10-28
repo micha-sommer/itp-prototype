@@ -28,9 +28,9 @@ class AgeCategoryEnum
     {
         switch ($ageCategory) {
             case self::cadet:
-                return ['2002', '2003', '2004'];
+                return ['2003', '2004', '2005'];
             case self::junior:
-                return ['1999', '2000', '2001', '2002'];
+                return ['2000', '2001', '2002', '2003'];
         }
         return [];
     }
