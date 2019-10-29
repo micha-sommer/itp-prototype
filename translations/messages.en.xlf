@@ -74,7 +74,7 @@
       </trans-unit>
       <trans-unit id="yf0otSF" resname="title.welcome">
         <source>title.welcome</source>
-        <target>Welcome to ITP 2019!</target>
+        <target>Welcome to ITP %year%!</target>
       </trans-unit>
       <trans-unit id="80JoLd0" resname="title.login">
         <source>title.login</source>
@@ -512,7 +512,7 @@
       </trans-unit>
       <trans-unit id="VyK8kwy" resname="title.confirmation">
         <source>title.confirmation</source>
-        <target>Confirmation Thuringia Cup 2019</target>
+        <target>Confirmation Thuringia Cup</target>
       </trans-unit>
       <trans-unit id="x.FyDpm" resname="headline_confirmation_mail">
         <source>headline_confirmation_mail</source>

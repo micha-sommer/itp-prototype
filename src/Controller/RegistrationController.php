@@ -8,6 +8,7 @@ use App\Form\RegistrationType;
 use App\Form\ResetPasswordType;
 use App\Form\ChangePasswordType;
 use App\Repository\RegistrationsRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -61,7 +62,7 @@ class RegistrationController extends AbstractController
      * @param $uid
      * @param RegistrationsRepository $registrationsRepository
      * @return Response
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws NonUniqueResultException
      */
     public function delete($uid, RegistrationsRepository $registrationsRepository): Response
     {
@@ -81,7 +82,7 @@ class RegistrationController extends AbstractController
      * @param \Swift_Mailer $mailer
      * @param TranslatorInterface $translator
      * @return Response
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws NonUniqueResultException
      */
     public function confirm(RegistrationsRepository $registrationsRepository, $uid, \Swift_Mailer $mailer, TranslatorInterface $translator): Response
     {
@@ -108,6 +109,7 @@ class RegistrationController extends AbstractController
             'arrival' => $arrival,
             'departure' => $departure,
         ]);
+
         $message = (new \Swift_Message())
             ->setSubject($translator->trans('title.confirmation') . ' ' . $registration->getClub() . '(' . $now->format('Y-m-d H:i:s') . ')')
             ->setFrom(['anmeldung@thueringer-judoverband.de' => 'ITP Registration'])
@@ -181,7 +183,7 @@ class RegistrationController extends AbstractController
      * @param RegistrationsRepository $registrationsRepository
      * @param UserPasswordEncoderInterface $passwordEncoder
      * @return Response
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws NonUniqueResultException
      */
     public
     function resetPassword(Request $request, $uid, $hash, RegistrationsRepository $registrationsRepository, UserPasswordEncoderInterface $passwordEncoder): Response

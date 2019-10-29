@@ -75,7 +75,7 @@
       </trans-unit>
       <trans-unit id="yf0otSF" resname="title.welcome">
         <source>title.welcome</source>
-        <target>Willkommen zum ITP 2019</target>
+        <target>Willkommen zum ITP %year%</target>
       </trans-unit>
       <trans-unit id="80JoLd0" resname="title.login">
         <source>title.login</source>
@@ -510,7 +510,7 @@
       </trans-unit>
       <trans-unit id="VyK8kwy" resname="title.confirmation">
         <source>title.confirmation</source>
-        <target>Meldebestätigung Thüringenpokal 2019</target>
+        <target>Meldebestätigung Thüringenpokal</target>
       </trans-unit>
       <trans-unit id="x.FyDpm" resname="headline_confirmation_mail">
         <source>headline_confirmation_mail</source>
