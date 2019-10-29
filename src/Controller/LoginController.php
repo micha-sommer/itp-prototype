@@ -303,7 +303,7 @@ class LoginController extends AbstractController
         }
 
         $registrations = array_filter($registrationsRepository->findAll(), function (Registration $registration) {
-	        return !in_array($registration->getId(), [-1, -2, -3], true);
+	        return !in_array($registration->getId(), [-1, -2, -3, -5], true);
         });
 
         $countRegistrations = count($registrations);
