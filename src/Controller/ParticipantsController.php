@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Contestant;
+use App\Entity\Official;
 use App\Entity\Registration;
 use App\Entity\Transport;
 use App\Form\ContestantsListType;
@@ -31,7 +33,13 @@ class ParticipantsController extends AbstractController
         /** @var Registration $registration */
         $registration = $this->getUser();
 
+        if($registration->getOfficials()->isEmpty())
+        {
+            $registration->addOfficial(new Official());
+        }
+
         $form = $this->createForm(OfficialsListType::class, $registration);
+
 
         $form->handleRequest($request);
 
@@ -61,6 +69,11 @@ class ParticipantsController extends AbstractController
     {
         /** @var Registration $registration */
         $registration = $this->getUser();
+
+        if($registration->getContestants()->isEmpty())
+        {
+            $registration->addContestant(new Contestant());
+        }
 
         $form = $this->createForm(ContestantsListType::class, $registration);
 
