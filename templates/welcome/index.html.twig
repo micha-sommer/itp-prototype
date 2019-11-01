@@ -160,11 +160,15 @@
                     </div>
                 </div>
             {% else %}
-                <a class="btn btn-primary btn-lg" href="{{ path('registration') }}"
+                <div class="clearfix">
+		<a class="btn btn-primary btn-lg float-left mr-1" href="{{ path('registration') }}"
                    role="button">{{ 'start'|trans }}</a>
-                <div class="alert alert-warning">
-                    <p class="lead">{{ 'logins_have_been_reset'|trans }}</p>
+                <div class="alert alert-warning float-left">
+		<i class="fas fa-arrow-left" aria-hidden="true">
+                    {{ 'logins_have_been_reset'|trans }}
+		</i>
                 </div>
+		</div>
                 <hr class="my-4">
                 <figure class="figure">
                 {% for country in countries %}
