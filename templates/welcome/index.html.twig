@@ -162,6 +162,9 @@
             {% else %}
                 <a class="btn btn-primary btn-lg" href="{{ path('registration') }}"
                    role="button">{{ 'start'|trans }}</a>
+                <div class="alert alert-warning">
+                    <p class="lead">{{ 'logins_have_been_reset'|trans }}</p>
+                </div>
                 <hr class="my-4">
                 <figure class="figure">
                 {% for country in countries %}

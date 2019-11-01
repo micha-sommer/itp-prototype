@@ -665,6 +665,10 @@
         <source>Registration period ended</source>
         <target>Registration period ended. For further changes please tell us personally.</target>
       </trans-unit>
+      <trans-unit id="sO9C_HM" resname="logins_have_been_reset">
+        <source>logins_have_been_reset</source>
+        <target>All logins from last year have been dropped. Please register again for the upcoming competition.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

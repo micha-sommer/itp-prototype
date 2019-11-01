@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ 'title.welcome'|trans }}{% endblock %}
+{% block title %}{{ 'title.welcome'|trans({'%year%':year}) }}{% endblock %}
 
 {% block body %}
     <div class="container">
