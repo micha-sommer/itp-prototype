@@ -85,7 +85,7 @@ class InvoiceController extends AbstractController
             $invoicePosition = new InvoicePosition();
             $invoicePosition->setDescription('Einzelzimmer (single room)');
             $invoicePosition->setMultiplier(($officials_male_with_ITC_count % 2 + $officials_female_with_ITC_count % 2)*100);
-            $invoicePosition->setPrice(5000);
+            $invoicePosition->setPrice(5500);
             $invoiceTotal += $invoicePosition->calculateTotal()->getTotal();
             $invoicePosition->setInvoice($invoice);
             $em->persist($invoicePosition);
@@ -94,7 +94,7 @@ class InvoiceController extends AbstractController
             $invoicePosition = new InvoicePosition();
             $invoicePosition->setDescription('Mehrbettzimmer (shared rooms, dorm)');
             $invoicePosition->setMultiplier(((int)($officials_male_with_ITC_count / 2) + (int)($officials_female_with_ITC_count / 2) + $contestants_count)*100);
-            $invoicePosition->setPrice(4000);
+            $invoicePosition->setPrice(4500);
             $invoiceTotal += $invoicePosition->calculateTotal()->getTotal();
             $invoicePosition->setInvoice($invoice);
             $em->persist($invoicePosition);
@@ -143,7 +143,7 @@ class InvoiceController extends AbstractController
             $invoicePosition = new InvoicePosition();
             $invoicePosition->setDescription('Einzelzimmer (single room)');
             $invoicePosition->setMultiplier(0);
-            $invoicePosition->setPrice(5000);
+            $invoicePosition->setPrice(5500);
             $invoicePosition->calculateTotal();
             $invoicePosition->setInvoice($invoice);
             $em->persist($invoicePosition);
@@ -152,7 +152,7 @@ class InvoiceController extends AbstractController
             $invoicePosition = new InvoicePosition();
             $invoicePosition->setDescription('Mehrbettzimmer (shared rooms, dorm)');
             $invoicePosition->setMultiplier(0);
-            $invoicePosition->setPrice(4000);
+            $invoicePosition->setPrice(4500);
             $invoicePosition->calculateTotal();
             $invoicePosition->setInvoice($invoice);
             $em->persist($invoicePosition);
