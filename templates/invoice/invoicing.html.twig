@@ -207,13 +207,13 @@
                 <input class="btn btn-primary btn-lg float-right mr-1" type="submit" data-toggle="tooltip"
                        data-placement="top"
                        title="{{ 'generic.tooltip.save'|trans }}" value="{{ 'generic.save'|trans }}"/>
-                <a href="{{ path('invoicing', {'uid': invoice.id}) }}"
-                   class="btn btn-primary btn-lg btn-success float-right mr-1"
+                <a href="{{ path('invoice', {'uid': invoice.id}) }}"
+                   class="btn btn-info btn-lg float-right mr-1"
                    role="button"
                    data-toggle="tooltip" data-placement="top"
                    title="{{ 'generic.tooltip.preview'|trans }}">{{ 'generic.preview'|trans }}</a>
                 <a href="{{ path('invoicing', {'uid': invoice.id}) }}"
-                   class="btn btn-primary btn-lg btn-warning float-right mr-1"
+                   class="btn btn-warning btn-lg float-right mr-1"
                    role="button"
                    data-toggle="tooltip" data-placement="top"
                    title="{{ 'generic.tooltip.cancel'|trans }}">{{ 'generic.cancel'|trans }}</a>
