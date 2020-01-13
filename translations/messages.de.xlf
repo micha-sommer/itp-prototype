@@ -673,7 +673,7 @@
       </trans-unit>
       <trans-unit id="hash1" resname="generic.tooltip.preview">
         <source>generic.tooltip.preview</source>
-        <target>Speichert die aktuellen Einstellungen und zeigt das Dokument an, ohne es zu veröffentlichen.</target>
+        <target>Zeigt das Dokument an, ohne es zu veröffentlichen. Um die aktuellen Daten zu sehen, muss zuerst gespeichert werden.</target>
       </trans-unit>
     </body>
   </file>

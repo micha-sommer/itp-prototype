@@ -675,7 +675,7 @@
       </trans-unit>
       <trans-unit id="hash1" resname="generic.tooltip.preview">
         <source>generic.tooltip.preview</source>
-        <target>Saves all changes and opens a preview without publishing.</target>
+        <target>Opens a preview without publishing. In order to see current data, save first.</target>
       </trans-unit>
     </body>
   </file>
