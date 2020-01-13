@@ -669,6 +669,14 @@
         <source>logins_have_been_reset</source>
         <target>All logins from last year have been dropped. Please register again for the upcoming competition.</target>
       </trans-unit>
+      <trans-unit id="hash0" resname="generic.preview">
+        <source>generic.preview</source>
+        <target>Preview</target>
+      </trans-unit>
+      <trans-unit id="hash1" resname="generic.tooltip.preview">
+        <source>generic.tooltip.preview</source>
+        <target>Saves all changes and opens a preview without publishing.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

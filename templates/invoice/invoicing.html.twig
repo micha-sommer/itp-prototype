@@ -208,6 +208,11 @@
                        data-placement="top"
                        title="{{ 'generic.tooltip.save'|trans }}" value="{{ 'generic.save'|trans }}"/>
                 <a href="{{ path('invoicing', {'uid': invoice.id}) }}"
+                   class="btn btn-primary btn-lg btn-success float-right mr-1"
+                   role="button"
+                   data-toggle="tooltip" data-placement="top"
+                   title="{{ 'generic.tooltip.preview'|trans }}">{{ 'generic.preview'|trans }}</a>
+                <a href="{{ path('invoicing', {'uid': invoice.id}) }}"
                    class="btn btn-primary btn-lg btn-warning float-right mr-1"
                    role="button"
                    data-toggle="tooltip" data-placement="top"
