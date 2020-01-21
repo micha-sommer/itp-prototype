@@ -346,6 +346,10 @@
         <source>2004</source>
         <target>2004</target>
       </trans-unit>
+      <trans-unit id="ogore7C" resname="2005">
+        <source>2005</source>
+        <target>2005</target>
+      </trans-unit>
       <trans-unit id="JG9suQH" resname="-40">
         <source>-40</source>
         <target>-40</target>
@@ -669,11 +673,11 @@
         <source>logins_have_been_reset</source>
         <target>All logins from last year have been dropped. Please register again for the upcoming competition.</target>
       </trans-unit>
-      <trans-unit id="hash0" resname="generic.preview">
+      <trans-unit id="A6l2_yo" resname="generic.preview">
         <source>generic.preview</source>
         <target>Preview</target>
       </trans-unit>
-      <trans-unit id="hash1" resname="generic.tooltip.preview">
+      <trans-unit id="Oh4Zlq4" resname="generic.tooltip.preview">
         <source>generic.tooltip.preview</source>
         <target>Opens a preview without publishing. In order to see current data, save first.</target>
       </trans-unit>

@@ -344,6 +344,10 @@
         <source>2004</source>
         <target>2004</target>
       </trans-unit>
+      <trans-unit id="ogore7C" resname="2005">
+        <source>2005</source>
+        <target>2005</target>
+      </trans-unit>
       <trans-unit id="JG9suQH" resname="-40">
         <source>-40</source>
         <target>-40</target>
@@ -667,11 +671,11 @@
         <source>logins_have_been_reset</source>
         <target>Alle Anmeldedaten aus dem Vorjahr wurden entfernt. Bitte registrieren Sie sich erneut.</target>
       </trans-unit>
-      <trans-unit id="hash0" resname="generic.preview">
+      <trans-unit id="A6l2_yo" resname="generic.preview">
         <source>generic.preview</source>
         <target>Vorschau</target>
       </trans-unit>
-      <trans-unit id="hash1" resname="generic.tooltip.preview">
+      <trans-unit id="Oh4Zlq4" resname="generic.tooltip.preview">
         <source>generic.tooltip.preview</source>
         <target>Zeigt das Dokument an, ohne es zu veröffentlichen. Um die aktuellen Daten zu sehen, muss zuerst gespeichert werden.</target>
       </trans-unit>
