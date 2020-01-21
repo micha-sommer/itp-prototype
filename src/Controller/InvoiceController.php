@@ -3,14 +3,15 @@
 
 namespace App\Controller;
 
-use App\Entity\Contestant;
 use App\Entity\Invoice;
 use App\Entity\InvoicePosition;
 use App\Entity\Registration;
 use App\Enum\GenderEnum;
 use App\Enum\ITCEnum;
 use App\Form\InvoiceType;
+use App\Repository\ContestantsRepository;
 use App\Repository\InvoiceRepository;
+use App\Repository\OfficialsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,9 +24,12 @@ class InvoiceController extends AbstractController
     /**
      * @Route("/new_invoice", name="new_invoice")
      *
+     * @param OfficialsRepository $officialsRepository
+     * @param ContestantsRepository $contestantsRepository
      * @return Response
+     * @noinspection PhpUnused
      */
-    public function newInvoice(): Response
+    public function newInvoice(OfficialsRepository $officialsRepository, ContestantsRepository $contestantsRepository): Response
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -40,33 +44,34 @@ class InvoiceController extends AbstractController
         $invoice->setName($invoice->getSubId());
 
         if ($registration->getInvoices()->isEmpty()) {
-            // prepare some values
-            $officials = $registration->getOfficials();
-            $officials_count = $officials->count();
-            $officials_male_with_ITC_count = 0;
-            $officials_female_with_ITC_count = 0;
-            foreach ($officials as $official) {
-                if ($official->getItc() !== ITCEnum::no) {
-                    if ($official->getGender() === GenderEnum::male) {
-                        $officials_male_with_ITC_count++;
-                    } else {
-                        $officials_female_with_ITC_count++;
-                    }
-                }
-            }
+            // prepare counters values
+            // officials
+            $officials_count = $officialsRepository->count(['registration' => $registration]);
+            // male
+            $officials_male_friday = $officialsRepository->count(['registration' => $registration, 'gender' => GenderEnum::male, 'friday' => true]);
+            $officials_male_saturday_no_itc = $officialsRepository->count(['registration' => $registration, 'gender' => GenderEnum::male, 'saturday' => true, 'itc' => ITCEnum::no]);
+            $officials_male_with_itc_tuesday = $officialsRepository->count(['registration' => $registration, 'gender' => GenderEnum::male, 'itc' => ITCEnum::tillTuesday]);
+            $officials_male_with_itc_wednesday = $officialsRepository->count(['registration' => $registration, 'gender' => GenderEnum::male, 'itc' => ITCEnum::tillWednesday]);
+            // female
+            $officials_female_friday = $officialsRepository->count(['registration' => $registration, 'gender' => GenderEnum::female, 'friday' => true]);
+            $officials_female_saturday_no_itc = $officialsRepository->count(['registration' => $registration, 'gender' => GenderEnum::female, 'saturday' => true, 'itc' => ITCEnum::no]);
+            $officials_female_with_itc_tuesday = $officialsRepository->count(['registration' => $registration, 'gender' => GenderEnum::female, 'itc' => ITCEnum::tillTuesday]);
+            $officials_female_with_itc_wednesday = $officialsRepository->count(['registration' => $registration, 'gender' => GenderEnum::female, 'itc' => ITCEnum::tillWednesday]);
 
-            $contestants = $registration->getContestants();
-            $contestants_count = $contestants->count();
-            $contestants_with_ITC_count = $contestants->filter(static function (Contestant $contestant) {
-                return $contestant->getItc() !== ITCEnum::no;
-            })->count();
+            // contestants
+            $contestants_count = $contestantsRepository->count(['registration' => $registration]);
+            $contestants_friday = $contestantsRepository->count(['registration' => $registration, 'friday' => true]);
+            $contestants_saturday_no_itc = $contestantsRepository->count(['registration' => $registration, 'saturday' => true, 'itc' => ITCEnum::no]);
+            $contestants_with_itc_tuesday = $contestantsRepository->count(['registration' => $registration, 'itc' => ITCEnum::tillTuesday]);
+            $contestants_with_itc_wednesday = $contestantsRepository->count(['registration' => $registration, 'itc' => ITCEnum::tillWednesday]);
 
             $invoiceTotal = 0;
 
             // add default Startgeld
+            $entry_fee = $contestants_count * 100;
             $invoicePosition = new InvoicePosition();
             $invoicePosition->setDescription('Startgeld (entry fee)');
-            $invoicePosition->setMultiplier($contestants_count*100);
+            $invoicePosition->setMultiplier($entry_fee);
             $invoicePosition->setPrice(3000);
             $invoiceTotal += $invoicePosition->calculateTotal()->getTotal();
             $invoicePosition->setInvoice($invoice);
@@ -82,45 +87,69 @@ class InvoiceController extends AbstractController
             $em->persist($invoicePosition);
 
             // add Einzelzimmer
+            $single_room_fee = (
+                    $officials_male_friday % 2 +
+                    $officials_male_saturday_no_itc % 2 +
+                    $officials_female_friday % 2 +
+                    $officials_female_saturday_no_itc % 2
+                ) * 100;
             $invoicePosition = new InvoicePosition();
             $invoicePosition->setDescription('Einzelzimmer (single room)');
-            $invoicePosition->setMultiplier(($officials_male_with_ITC_count % 2 + $officials_female_with_ITC_count % 2)*100);
+            $invoicePosition->setMultiplier($single_room_fee);
             $invoicePosition->setPrice(5500);
             $invoiceTotal += $invoicePosition->calculateTotal()->getTotal();
             $invoicePosition->setInvoice($invoice);
             $em->persist($invoicePosition);
 
             // add Mehrbettzimmer
+            $shared_room_fee = (
+                    (int)($officials_male_friday / 2) +
+                    (int)($officials_male_saturday_no_itc / 2) +
+                    (int)($officials_female_friday / 2) +
+                    (int)($officials_female_saturday_no_itc / 2) +
+                    $contestants_friday +
+                    $contestants_saturday_no_itc
+                ) * 100;
             $invoicePosition = new InvoicePosition();
             $invoicePosition->setDescription('Mehrbettzimmer (shared rooms, dorm)');
-            $invoicePosition->setMultiplier(((int)($officials_male_with_ITC_count / 2) + (int)($officials_female_with_ITC_count / 2) + $contestants_count)*100);
+            $invoicePosition->setMultiplier($shared_room_fee);
             $invoicePosition->setPrice(4500);
             $invoiceTotal += $invoicePosition->calculateTotal()->getTotal();
             $invoicePosition->setInvoice($invoice);
             $em->persist($invoicePosition);
 
             // add Transportpauschale
+            $tranport_fee = ($officials_count + $contestants_count) * $registration->getTransports()->count() * 100;
             $invoicePosition = new InvoicePosition();
             $invoicePosition->setDescription('Transportpauschale (transfer airport)');
-            $invoicePosition->setMultiplier(($officials_count + $contestants_count) * $registration->getTransports()->count()*100);
+            $invoicePosition->setMultiplier($tranport_fee);
             $invoicePosition->setPrice(8000);
             $invoiceTotal += $invoicePosition->calculateTotal()->getTotal();
             $invoicePosition->setInvoice($invoice);
             $em->persist($invoicePosition);
 
-            // add Internationales Trainings Camp
+            // add Internationales Trainings Camp Tuesday edition
+            $itc_till_tuesday_fee = ($officials_female_with_itc_tuesday + $officials_male_with_itc_tuesday + $contestants_with_itc_tuesday) * 100;
             $invoicePosition = new InvoicePosition();
             $invoicePosition->setDescription('Internationales Trainings Camp');
-            $invoicePosition->setMultiplier(($officials_female_with_ITC_count + $officials_male_with_ITC_count + $contestants_with_ITC_count)*100);
+            $invoicePosition->setMultiplier($itc_till_tuesday_fee);
+            $invoicePosition->setPrice(25000);
+            $invoiceTotal += $invoicePosition->calculateTotal()->getTotal();
+            $invoicePosition->setInvoice($invoice);
+            $em->persist($invoicePosition);
+
+            // add Internationales Trainings Camp Wednesday edition
+            $itc_till_wednesday_fee = ($officials_female_with_itc_wednesday + $officials_male_with_itc_wednesday + $contestants_with_itc_wednesday) * 100;
+            $invoicePosition = new InvoicePosition();
+            $invoicePosition->setDescription('Internationales Trainings Camp');
+            $invoicePosition->setMultiplier($itc_till_wednesday_fee);
             $invoicePosition->setPrice(28000);
             $invoiceTotal += $invoicePosition->calculateTotal()->getTotal();
             $invoicePosition->setInvoice($invoice);
             $em->persist($invoicePosition);
 
             $invoice->setTotal($invoiceTotal);
-        }
-        else
-        {
+        } else {
             // add default Startgeld
             $invoicePosition = new InvoicePosition();
             $invoicePosition->setDescription('Startgeld (entry fee)');
@@ -166,7 +195,16 @@ class InvoiceController extends AbstractController
             $invoicePosition->setInvoice($invoice);
             $em->persist($invoicePosition);
 
-            // add Internationales Trainings Camp
+            // add Internationales Trainings Camp Tuesday edition
+            $invoicePosition = new InvoicePosition();
+            $invoicePosition->setDescription('Internationales Trainings Camp');
+            $invoicePosition->setMultiplier(0);
+            $invoicePosition->setPrice(25000);
+            $invoicePosition->calculateTotal();
+            $invoicePosition->setInvoice($invoice);
+            $em->persist($invoicePosition);
+
+            // add Internationales Trainings Camp Wednesday edition
             $invoicePosition = new InvoicePosition();
             $invoicePosition->setDescription('Internationales Trainings Camp');
             $invoicePosition->setMultiplier(0);
@@ -197,10 +235,9 @@ class InvoiceController extends AbstractController
         $em = $this->getDoctrine()->getManager();
 
         $invoice = $invoiceRepository->find($uid);
-        if($invoice === null)
-        {
+        if ($invoice === null) {
             throw $this->createNotFoundException(
-                'Error: Invoice with id '.$uid.' could not be found.'
+                'Error: Invoice with id ' . $uid . ' could not be found.'
             );
         }
 
@@ -234,10 +271,9 @@ class InvoiceController extends AbstractController
     {
         $invoice = $invoiceRepository->find($uid);
 
-        if($invoice === null)
-        {
+        if ($invoice === null) {
             throw $this->createNotFoundException(
-                'Error: Invoice with id '.$uid.' could not be found.'
+                'Error: Invoice with id ' . $uid . ' could not be found.'
             );
         }
 
@@ -245,6 +281,7 @@ class InvoiceController extends AbstractController
         $pdf->setCreator(PDF_CREATOR);
         $pdf->setAuthor('Thüringer Judo-Verband e.V.');
         $pdf->setTitle('Rechnung Internationaler Thüringenpokal');
+        /** @noinspection NullPointerExceptionInspection */
         $pdf->setSubject('Rechnung für ' . $invoice->getRegistration()->getClub());
 
         // remove default header/footer
