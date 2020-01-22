@@ -113,7 +113,7 @@ class RegistrationController extends AbstractController
         $message = (new \Swift_Message())
             ->setSubject($translator->trans('title.confirmation') . ' ' . $registration->getClub() . '(' . $now->format('Y-m-d H:i:s') . ')')
             ->setFrom(['anmeldung@thueringer-judoverband.de' => 'ITP Registration'])
-            ->setTo($this->getUser()->getEmail())
+            ->setTo($registration->getEmail())
             ->setCc(['anmeldung@thueringer-judoverband.de' => 'ITP Registration'])
             ->setBody($body, 'text/html');
 
