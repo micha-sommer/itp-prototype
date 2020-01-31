@@ -103,12 +103,6 @@
                                 <i class="fas fa-file-invoice-dollar"></i>
                             </a>
                         {% endfor %}
-                        <!--a class="btn btn-info" role="button"
-                           data-toggle="tooltip" data-placement="top"
-                           title="Send confirmation mail"
-                           href="{{ path('confirm_registration', {'uid': registration.id}) }}">
-                            <i class="fa fa-envelope" aria-hidden="true"></i>
-                        </a-->
                         <a class="btn btn-danger" href="javascript:void(0)"
                            onclick="if(confirm('Are you sure you want to delete {{ registration.club }} and all its registered officials, contestants, and transport ?')){window.location='{{ path('delete_registration', {'uid': registration.id}) }}';}">
                             <i class="fas fa-trash" aria-hidden="true"></i></a>

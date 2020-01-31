@@ -13,6 +13,9 @@ use App\Repository\ContestantsRepository;
 use App\Repository\InvoiceRepository;
 use App\Repository\OfficialsRepository;
 use DateTime;
+use Swift_Attachment;
+use Swift_Mailer;
+use Swift_Message;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -279,6 +282,19 @@ class InvoiceController extends AbstractController
             );
         }
 
+        $pdf = $this->getInvoicePDF($invoice);
+
+        $pdf->Output('Rechnung.pdf');
+
+        return new Response(200);
+    }
+
+    /**
+     * @param Invoice $invoice
+     * @return TCPDF
+     */
+    public function getInvoicePDF(Invoice $invoice): TCPDF
+    {
         $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'utf-8', false);
         $pdf->setCreator(PDF_CREATOR);
         $pdf->setAuthor('Thüringer Judo-Verband e.V.');
@@ -304,10 +320,44 @@ class InvoiceController extends AbstractController
         $pdf->AddPage();
 
         $pdf->writeHTML($this->render('invoice/invoice.html.twig', ['invoice' => $invoice])->getContent(), true, false, true);
+        return $pdf;
+    }
 
-        $pdf->Output('Rechnung.pdf');
+    /**
+     * @Route("/mailInvoice/{uid}", name="mail_invoice")
+     * @param int $uid
+     * @param InvoiceRepository $invoiceRepository
+     * @param Swift_Mailer $mailer
+     * @return Response
+     */
+    public function mailInvoice(int $uid, InvoiceRepository $invoiceRepository, Swift_Mailer $mailer): Response
+    {
+        $invoice = $invoiceRepository->find($uid);
 
-        return new Response(200);
+        if ($invoice === null) {
+            throw $this->createNotFoundException(
+                'Error: Invoice with id ' . $uid . ' could not be found.'
+            );
+        }
+
+        $message = (new Swift_Message('Invoice for International Thuringia Cup: ' . $invoice->getName()))
+            ->setFrom('anmeldung@thueringer-judoverband.de')
+            //->setTo($this->getUser()->getEmail())
+            ->setTo('info@thueringer-judoverband.de')
+            ->setCc('anmeldung@thueringer-judoverband.de')
+            ->setBody($this->renderView('emails/invoice.html.twig', ['invoice' => $invoice]), 'text/html');
+
+        $pdf = $this->getInvoicePDF($invoice);
+        $data = $pdf->Output('Invoice_' . $invoice->getName() . '.pdf', 'S');
+        $attachment = new Swift_Attachment($data, 'Invoice_' . $invoice->getName() . '.pdf', 'application/pdf');
+        $message->attach($attachment);
+
+        $showSentNotification = $mailer->send($message);
+
+        if ($showSentNotification) {
+            return $this->redirectToRoute('invoicing', ['uid' => $uid]);
+        }
+        throw $this->createNotFoundException('Error: Something went wrong when sending this email.');
     }
 
     /**
@@ -327,5 +377,4 @@ class InvoiceController extends AbstractController
 
         return $this->redirectToRoute('admin', ['_switch_user' => '_exit']);
     }
-
 }

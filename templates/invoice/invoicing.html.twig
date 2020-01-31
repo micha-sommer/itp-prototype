@@ -71,7 +71,7 @@
                 let $multiplier = $tagFormTr.find('input.hidden-multiplier').val();
 
                 let locale = document.querySelector('html').getAttribute('lang');
-                $price = stringToNumber($price,locale);
+                $price = stringToNumber($price, locale);
                 $multiplier = stringToNumber($multiplier, locale);
                 let $newValue = Number($price * $multiplier);
 
@@ -95,10 +95,9 @@
 
         function stringToNumber(numberString, locale) {
             if (locale === 'de') {
-                return  parseFloat(numberString.replace(/\./g, '').replace(',', '.'));
-            }
-            else{
-                return  parseFloat(numberString.replace(',', ''));
+                return parseFloat(numberString.replace(/\./g, '').replace(',', '.'));
+            } else {
+                return parseFloat(numberString.replace(',', ''));
             }
         }
 
@@ -212,6 +211,12 @@
                    role="button"
                    data-toggle="tooltip" data-placement="top"
                    title="{{ 'generic.tooltip.preview'|trans }}">{{ 'generic.preview'|trans }}</a>
+                <a class="btn btn-info btn-lg float-right mr-1" role="button"
+                   data-toggle="tooltip" data-placement="top"
+                   title="Send confirmation mail"
+                   href="{{ path('mail_invoice', {'uid': invoice.id}) }}">
+                    <i class="fa fa-envelope" aria-hidden="true"></i>
+                </a>
                 <a href="{{ path('invoicing', {'uid': invoice.id}) }}"
                    class="btn btn-warning btn-lg float-right mr-1"
                    role="button"

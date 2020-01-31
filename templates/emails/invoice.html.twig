@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale }}">
+<body>
+<h1>
+    Your invoice is ready.
+</h1>
+<p>
+    Please check the attachment. The invoice has been created on {{ invoice.timestamp|date('l, d M Y H:i:s') }}. Any
+    changes to your registration afterwards may not be accounted for.
+</p>
+</body>
+</html>
