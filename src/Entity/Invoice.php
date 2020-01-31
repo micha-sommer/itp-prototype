@@ -54,6 +54,11 @@ class Invoice implements \JsonSerializable
      */
     private $name;
 
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $timestamp;
+
     public function __construct()
     {
         $this->invoicePositions = new ArrayCollection();
@@ -187,5 +192,17 @@ class Invoice implements \JsonSerializable
     public function jsonSerialize()
     {
         return get_object_vars($this);
+    }
+
+    public function getTimestamp(): ?\DateTimeInterface
+    {
+        return $this->timestamp;
+    }
+
+    public function setTimestamp(?\DateTimeInterface $timestamp): self
+    {
+        $this->timestamp = $timestamp;
+
+        return $this;
     }
 }

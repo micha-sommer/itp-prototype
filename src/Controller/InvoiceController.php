@@ -12,6 +12,7 @@ use App\Form\InvoiceType;
 use App\Repository\ContestantsRepository;
 use App\Repository\InvoiceRepository;
 use App\Repository\OfficialsRepository;
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -213,6 +214,7 @@ class InvoiceController extends AbstractController
             $invoicePosition->setInvoice($invoice);
             $em->persist($invoicePosition);
         }
+        $invoice->setTimestamp(new DateTime());
         $registration->addInvoice($invoice);
 
         $em->persist($invoice);
@@ -250,7 +252,7 @@ class InvoiceController extends AbstractController
             if ($request->request->get('publish')) {
                 $invoice->setPublished(!$invoice->getPublished());
             }
-
+            $invoice->setTimestamp(new DateTime());
             $invoice->calculateTotal();
             $em->flush();
         }
