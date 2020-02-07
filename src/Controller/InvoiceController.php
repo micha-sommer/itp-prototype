@@ -340,11 +340,12 @@ class InvoiceController extends AbstractController
             );
         }
 
+        /** @noinspection NullPointerExceptionInspection */
         $message = (new Swift_Message('Invoice for International Thuringia Cup: ' . $invoice->getName()))
             ->setFrom('anmeldung@thueringer-judoverband.de')
-            //->setTo($this->getUser()->getEmail())
-            ->setTo('info@thueringer-judoverband.de')
-            ->setCc('anmeldung@thueringer-judoverband.de')
+            ->setTo($invoice->getRegistration()->getEmail())
+            ->setCc('info@thueringer-judoverband.de')
+            ->setBcc('anmeldung@thueringer-judoverband.de')
             ->setBody($this->renderView('emails/invoice.html.twig', ['invoice' => $invoice]), 'text/html');
 
         $pdf = $this->getInvoicePDF($invoice);
