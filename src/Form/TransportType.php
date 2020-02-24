@@ -25,9 +25,9 @@ class TransportType extends AbstractType
     {
         $builder
             ->add('date', DateType::class, [
-                'years' => ['2019'],
+                'years' => ['2020'],
                 'months' => ['3'],
-                'days' => range(20,28),
+                'days' => range(18,26),
             ])
             ->add('time', TimeType::class)
             ->add('place', TextType::class, ['required' => false])
