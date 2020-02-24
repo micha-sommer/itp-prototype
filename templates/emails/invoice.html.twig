@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale }}">
+<body>
+<h1>
+    Your invoice is ready.
+</h1>
+<p>
+    Dear {{ invoice.registration.firstName }} {{ invoice.registration.lastName }}, <br/>
+    please check the attached invoice. It has been created on {{ invoice.timestamp|date('l, d M Y H:i:s') }}. Any
+    changes to your registration afterwards may not be accounted for.
+</p>
+<p>
+    Best Regards<br/>
+    Tony Stegmann<br/>
+    Dipl-Sportwiss.<br/>
+    Geschäftsführer TJV<br/>
+    <br/>
+    <br/>
+    <i>Geschäftsstelle Thüringer Judo- Verband e.V. - Schützenstraße 4 - 99096 Erfurt - Tel.: 0361-3731647</i><br/>
+    <i>E-Mail: <a href="mailto:info@thueringer-judoverband.de">info@thueringer-judoverband.de</a></i>
+</p>
+</body>
+</html>
