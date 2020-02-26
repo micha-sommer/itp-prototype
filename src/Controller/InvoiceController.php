@@ -344,7 +344,6 @@ class InvoiceController extends AbstractController
         $message = (new Swift_Message('Invoice for International Thuringia Cup: ' . $invoice->getName()))
             ->setFrom('anmeldung@thueringer-judoverband.de')
             ->setTo($invoice->getRegistration()->getEmail())
-            ->setCc('info@thueringer-judoverband.de')
             ->setBcc('anmeldung@thueringer-judoverband.de')
             ->setBody($this->renderView('emails/invoice.html.twig', ['invoice' => $invoice]), 'text/html');
 
