@@ -665,7 +665,7 @@
       </trans-unit>
       <trans-unit id="v8kuAz2" resname="Registration period ended">
         <source>Registration period ended</source>
-        <target>Anmeldezeitraum abgelaufen. Bitte teilen Sie uns Änderungen vor Ort mit.</target>
+	<target>Aufgrund der aktuellen Entwicklungen bezüglich der Ausbreitung des Corona-Virus und den damit verbundenen behördlichen Vorgaben bzw. Auflagen der Gesundheitsämter sehen wir uns als Veranstalter des Internationalen Thüringenpokals 2020 seit heute gezwungen, die Veranstaltung sowie das Trainingscamp abzusagen. Dies geschieht nach reichlicher Überlegung und Prüfung aller Möglichkeiten. Wir bedauern die Entscheidung zutiefst und bitten, damit verbundene Unannehmlichkeiten zu entschuldigen.</target>
       </trans-unit>
       <trans-unit id="sO9C_HM" resname="logins_have_been_reset">
         <source>logins_have_been_reset</source>
