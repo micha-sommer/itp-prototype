@@ -4,45 +4,45 @@ namespace App\Repository;
 
 use App\Entity\Official;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method Official|null find($id, $lockMode = null, $lockVersion = null)
- * @method Official|null findOneBy(array $criteria, array $orderBy = null)
+ * @method null|Official find($id, $lockMode = null, $lockVersion = null)
+ * @method null|Official findOneBy(array $criteria, array $orderBy = null)
  * @method Official[]    findAll()
  * @method Official[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class OfficialsRepository extends ServiceEntityRepository
 {
-    public function __construct(RegistryInterface $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Official::class);
     }
 
-
     /**
-     * @param \DateTimeInterface $after
-     * @param \DateTimeInterface|null $before
-     * @return Official[] Returns an array of ChangeSet objects
      * @throws \Exception
+     *
+     * @return Official[] Returns an array of ChangeSet objects
      */
     public function findByDate(\DateTimeInterface $after, \DateTimeInterface $before = null): array
     {
-        if ($before === null) {
+        if (null === $before) {
             $before = new \DateTime();
         }
+
         return $this->createQueryBuilder('o')
             ->andWhere('o.timestamp BETWEEN :from AND :to')
             ->setParameter('from', $after)
             ->setParameter('to', $before)
             ->orderBy('o.timestamp', 'ASC')
             ->getQuery()
-            ->getResult();
+            ->getResult()
+        ;
     }
 
     /**
      * @param $id
-     * @return Official|null
+     *
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function findOneById($id): ?Official
@@ -51,7 +51,8 @@ class OfficialsRepository extends ServiceEntityRepository
             ->andWhere('o.id = :id')
             ->setParameter('id', $id)
             ->getQuery()
-            ->getOneOrNullResult();
+            ->getOneOrNullResult()
+        ;
     }
 
     public function findAllById($array): array
@@ -59,11 +60,12 @@ class OfficialsRepository extends ServiceEntityRepository
         $query = $this->createQueryBuilder('o');
 
         foreach ($array as $id) {
-            $query->orWhere('o.id = ' . $id);
+            $query->orWhere('o.id = '.$id);
         }
 
         return $query->getQuery()
-            ->getResult();
+            ->getResult()
+        ;
     }
 
 //    /**

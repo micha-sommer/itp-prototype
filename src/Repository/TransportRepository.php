@@ -4,44 +4,45 @@ namespace App\Repository;
 
 use App\Entity\Transport;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method Transport|null find($id, $lockMode = null, $lockVersion = null)
- * @method Transport|null findOneBy(array $criteria, array $orderBy = null)
+ * @method null|Transport find($id, $lockMode = null, $lockVersion = null)
+ * @method null|Transport findOneBy(array $criteria, array $orderBy = null)
  * @method Transport[]    findAll()
  * @method Transport[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class TransportRepository extends ServiceEntityRepository
 {
-    public function __construct(RegistryInterface $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Transport::class);
     }
 
     /**
-     * @param \DateTimeInterface $after
-     * @param \DateTimeInterface|null $before
-     * @return Transport[] Returns an array of ChangeSet objects
      * @throws \Exception
+     *
+     * @return Transport[] Returns an array of ChangeSet objects
      */
     public function findByDate(\DateTimeInterface $after, \DateTimeInterface $before = null): array
     {
-        if ($before === null) {
+        if (null === $before) {
             $before = new \DateTime();
         }
+
         return $this->createQueryBuilder('t')
             ->andWhere('t.timestamp BETWEEN :from AND :to')
             ->setParameter('from', $after)
             ->setParameter('to', $before)
             ->orderBy('t.timestamp', 'ASC')
             ->getQuery()
-            ->getResult();
+            ->getResult()
+        ;
     }
 
     /**
      * @param $id
-     * @return Transport|null
+     *
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function findOneById($id): ?Transport
@@ -50,7 +51,8 @@ class TransportRepository extends ServiceEntityRepository
             ->andWhere('t.id = :id')
             ->setParameter('id', $id)
             ->getQuery()
-            ->getOneOrNullResult();
+            ->getOneOrNullResult()
+        ;
     }
 
     public function findAllById($array): array
@@ -58,11 +60,12 @@ class TransportRepository extends ServiceEntityRepository
         $query = $this->createQueryBuilder('t');
 
         foreach ($array as $id) {
-            $query->orWhere('t.id = ' . $id);
+            $query->orWhere('t.id = '.$id);
         }
 
         return $query->getQuery()
-            ->getResult();
+            ->getResult()
+        ;
     }
 
 //    /**

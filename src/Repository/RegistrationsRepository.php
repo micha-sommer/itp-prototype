@@ -9,40 +9,41 @@ use DateTimeInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\Query\Expr\Join;
+use Doctrine\Persistence\ManagerRegistry;
 use Exception;
-use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
- * @method Registration|null find($id, $lockMode = null, $lockVersion = null)
- * @method Registration|null findOneBy(array $criteria, array $orderBy = null)
+ * @method null|Registration find($id, $lockMode = null, $lockVersion = null)
+ * @method null|Registration findOneBy(array $criteria, array $orderBy = null)
  * @method Registration[]    findAll()
  * @method Registration[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class RegistrationsRepository extends ServiceEntityRepository
 {
-    public function __construct(RegistryInterface $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Registration::class);
     }
 
     /**
-     * @param DateTimeInterface $after
-     * @param DateTimeInterface|null $before
-     * @return Registration[] Returns an array of Registrtion objects
      * @throws Exception
+     *
+     * @return Registration[] Returns an array of Registrtion objects
      */
     public function findByDate(DateTimeInterface $after, DateTimeInterface $before = null): array
     {
-        if ($before === null) {
+        if (null === $before) {
             $before = new DateTime();
         }
+
         return $this->createQueryBuilder('r')
             ->andWhere('r.timestamp BETWEEN :from AND :to')
             ->setParameter('from', $after)
             ->setParameter('to', $before)
             ->orderBy('r.timestamp', 'ASC')
             ->getQuery()
-            ->getResult();
+            ->getResult()
+        ;
     }
 
     public function findAllById($array): array
@@ -50,11 +51,12 @@ class RegistrationsRepository extends ServiceEntityRepository
         $query = $this->createQueryBuilder('r');
 
         foreach ($array as $id) {
-            $query->orWhere('r.id = ' . $id);
+            $query->orWhere('r.id = '.$id);
         }
 
         return $query->getQuery()
-            ->getResult();
+            ->getResult()
+        ;
     }
 
 //    /**
@@ -76,7 +78,7 @@ class RegistrationsRepository extends ServiceEntityRepository
 
     /**
      * @param $email
-     * @return Registration|null
+     *
      * @throws NonUniqueResultException
      */
     public function findOneByEmail($email): ?Registration
@@ -85,13 +87,13 @@ class RegistrationsRepository extends ServiceEntityRepository
             ->andWhere('o.email = :val')
             ->setParameter('val', $email)
             ->getQuery()
-            ->getOneOrNullResult();
+            ->getOneOrNullResult()
+        ;
     }
-
 
     /**
      * @param $id
-     * @return Registration|null
+     *
      * @throws NonUniqueResultException
      */
     public function findOneById($id): ?Registration
@@ -100,7 +102,8 @@ class RegistrationsRepository extends ServiceEntityRepository
             ->andWhere('o.id = :val')
             ->setParameter('val', $id)
             ->getQuery()
-            ->getOneOrNullResult();
+            ->getOneOrNullResult()
+        ;
     }
 
     public function findDistinctCountries(): ?array
@@ -112,9 +115,10 @@ class RegistrationsRepository extends ServiceEntityRepository
             ->distinct()
             ->join(Contestant::class, 'c', Join::WITH, 'r.id = c.registration')
             ->getQuery()
-            ->getArrayResult();
+            ->getArrayResult()
+        ;
 
-        $result =  array_map(static function ($a){
+        $result = array_map(static function ($a) {
             return $a['country'];
         }, $result);
 
