@@ -11,12 +11,12 @@ use function get_object_vars;
 use function in_array;
 use JsonSerializable;
 use Serializable;
-use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Registration
+ * Registration.
  *
  * @ORM\Table(name="registrations")
  * @ORM\Entity
@@ -55,7 +55,7 @@ class Registration implements UserInterface, Serializable, JsonSerializable
     private $lastName;
 
     /**
-     * @var string|null
+     * @var null|string
      *
      * @Assert\Email()
      * @ORM\Column(name="email", type="string", length=255, nullable=false)
@@ -63,7 +63,7 @@ class Registration implements UserInterface, Serializable, JsonSerializable
     private $email;
 
     /**
-     * @var string|null
+     * @var null|string
      *
      * @ORM\Column(name="telephone", type="string", length=255, nullable=true)
      */
@@ -76,9 +76,9 @@ class Registration implements UserInterface, Serializable, JsonSerializable
     private $plainPassword;
 
     /**
-     * @var string|null
+     * @var null|string
      *
-     * @ORM\Column(name="password", type="string", length=64)
+     * @ORM\Column(name="password", type="string", length=255)
      */
     private $password;
 
@@ -195,7 +195,6 @@ class Registration implements UserInterface, Serializable, JsonSerializable
         return $this;
     }
 
-
     /**
      * Returns the roles granted to the user.
      *
@@ -217,6 +216,7 @@ class Registration implements UserInterface, Serializable, JsonSerializable
         if (in_array($this->getEmail(), ['m.remmos@gmail.com', 'info@thueringer-judoverband.de', 'webmaster@thueringer-judoverband.de', 'maximo-mayer@web.de'], true)) {
             return ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_ALLOWED_TO_SWITCH'];
         }
+
         return ['ROLE_USER'];
     }
 
@@ -253,7 +253,7 @@ class Registration implements UserInterface, Serializable, JsonSerializable
      *
      * This can return null if the password was not encoded using a salt.
      *
-     * @return string|null The salt
+     * @return null|string The salt
      */
     public function getSalt(): ?string
     {
@@ -442,10 +442,13 @@ class Registration implements UserInterface, Serializable, JsonSerializable
     }
 
     /**
-     * Specify data which should be serialized to JSON
-     * @link https://php.net/manual/en/jsonserializable.jsonserialize.php
+     * Specify data which should be serialized to JSON.
+     *
+     * @see https://php.net/manual/en/jsonserializable.jsonserialize.php
+     *
      * @return mixed data which can be serialized by <b>json_encode</b>,
-     * which is a value of any type other than a resource.
+     *               which is a value of any type other than a resource
+     *
      * @since 5.4.0
      */
     public function jsonSerialize()
@@ -458,8 +461,10 @@ class Registration implements UserInterface, Serializable, JsonSerializable
         $first = $this->getTransports()->filter(function (Transport $transport) {
             return $transport->getIsArrival();
         });
-        if ($first->isEmpty())
+        if ($first->isEmpty()) {
             return null;
+        }
+
         return $first->first();
     }
 
@@ -468,8 +473,10 @@ class Registration implements UserInterface, Serializable, JsonSerializable
         $first = $this->getTransports()->filter(function (Transport $transport) {
             return !$transport->getIsArrival();
         });
-        if ($first->isEmpty())
+        if ($first->isEmpty()) {
             return null;
+        }
+
         return $first->first();
     }
 
@@ -481,6 +488,7 @@ class Registration implements UserInterface, Serializable, JsonSerializable
         $numContestants = $this->contestants->filter(function (Contestant $contestant) {
             return $contestant->getFriday();
         })->count();
+
         return $numOfficials + $numContestants;
     }
 
@@ -492,29 +500,31 @@ class Registration implements UserInterface, Serializable, JsonSerializable
         $numContestants = $this->contestants->filter(function (Contestant $contestant) {
             return $contestant->getSaturday();
         })->count();
-        return $numOfficials + $numContestants;
 
+        return $numOfficials + $numContestants;
     }
 
     public function getITCToTuesdayCount(): int
     {
         $numOfficials = $this->officials->filter(function (Official $official) {
-            return $official->getItc() === ITCEnum::tillTuesday;
+            return ITCEnum::tillTuesday === $official->getItc();
         })->count();
         $numContestants = $this->contestants->filter(function (Contestant $contestant) {
-            return $contestant->getItc() === ITCEnum::tillTuesday;
+            return ITCEnum::tillTuesday === $contestant->getItc();
         })->count();
+
         return $numOfficials + $numContestants;
     }
 
     public function getITCToWednesdayCount(): int
     {
         $numOfficials = $this->officials->filter(function (Official $official) {
-            return $official->getItc() === ITCEnum::tillWednesday;
+            return ITCEnum::tillWednesday === $official->getItc();
         })->count();
         $numContestants = $this->contestants->filter(function (Contestant $contestant) {
-            return $contestant->getItc() === ITCEnum::tillWednesday;
+            return ITCEnum::tillWednesday === $contestant->getItc();
         })->count();
+
         return $numOfficials + $numContestants;
     }
 
@@ -560,5 +570,4 @@ class Registration implements UserInterface, Serializable, JsonSerializable
 
         return $this;
     }
-
 }

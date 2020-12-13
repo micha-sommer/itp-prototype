@@ -8,14 +8,14 @@ twig:
 
     globals:
         #year: the year of the tournament
-        year: '2020'
+        year: '2021'
         #itc_count the counter for the training camp, e.g. 15th International Training Camp
-        itc_count: '16'
+        itc_count: '17'
         #itp_count the counter for the tournament, e.g. 28th International Thuringia Cup
-        itp_count: '29'
+        itp_count: '30'
         #alert_accomondation: when true displays a warning message (i.e. accomondation is limited)
         alert_accomondation: false
         #end_date is when you last can enter competitors etc.
-        end_date: 'March 10, 2020 23:59'
+        end_date: 'March 10, 2021 23:59'
         #deadline is from when increased registration fee is charged.
-        deadline: 'March 10, 2020 23:59'
+        deadline: 'March 10, 2021 23:59'
