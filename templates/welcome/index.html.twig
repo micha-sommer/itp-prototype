@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ 'title.welcome'|trans({'%year%':year}) }}{% endblock %}
+{% block title %}{{ 'title.welcome'|trans({'%year%':globals.year}) }}{% endblock %}
 
 {% block body %}
     <div class="container">
         <div class="jumbotron">
             <h1 class="display-4">{{ 'greeting.welcome'|trans|raw }}</h1>
-            <p class="lead">{{ 'greeting.top'|trans({'%year%':year})}}</p>
-            {% if date(end_date, 'Europe/Paris') < date('now', 'Europe/Paris') %}
+            <p class="lead">{{ 'greeting.top'|trans({'%year%':globals.year})}}</p>
+            {% if date(globals.endDate, 'Europe/Paris') < date('now', 'Europe/Paris') %}
                 <div class="alert alert-danger" role="alert">{{'Registration period ended'|trans }}</div>
             {% endif %}
             <hr class="my-4">

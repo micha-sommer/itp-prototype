@@ -111,12 +111,12 @@
     {% endif %}
 </nav>
 <main role="main" class="container">
-    {% if alert_accomondation %}
+    {% if globals.alertAccomondation %}
     <div class="alert alert-danger" role="alert">
         {{ 'alert.accomondation'|trans|raw }}
     </div>
     {% endif %}
-    {% if date('now', 'Europe/Paris') > date(deadline, 'Europe/Paris') %}
+    {% if date('now', 'Europe/Paris') > date(globals.deadline, 'Europe/Paris') %}
         <div class="alert alert-danger" role="alert">
             {{ 'alert.deadline'|trans }}
         </div>
@@ -125,7 +125,7 @@
 </main>
 
 <nav class="navbar fixed-bottom navbar-light bg-light">
-    <a class="nav-link" href="{{ 'invitation.link'|trans({'%year%':year}) }}">{{ 'invitation'|trans }}</a>
+    <a class="nav-link" href="{{ 'invitation.link'|trans({'%year%':globals.year}) }}">{{ 'invitation'|trans }}</a>
     <a class="nav-link"
        href="https://www.thueringer-judoverband.de/navigation-footer/impressum/">{{ 'about_us'|trans }}</a>
     <a class="nav-link mr-auto"
