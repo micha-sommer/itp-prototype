@@ -92,6 +92,15 @@
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
     },
+    "laminas/laminas-code": {
+        "version": "3.5.1"
+    },
+    "laminas/laminas-eventmanager": {
+        "version": "3.3.0"
+    },
+    "laminas/laminas-zendframework-bridge": {
+        "version": "1.1.1"
+    },
     "monolog/monolog": {
         "version": "1.23.0"
     },
@@ -200,6 +209,9 @@
     "symfony/dependency-injection": {
         "version": "v4.1.0"
     },
+    "symfony/deprecation-contracts": {
+        "version": "v2.2.0"
+    },
     "symfony/doctrine-bridge": {
         "version": "v4.1.0"
     },
@@ -208,6 +220,9 @@
     },
     "symfony/dotenv": {
         "version": "v4.1.0"
+    },
+    "symfony/error-handler": {
+        "version": "v4.4.17"
     },
     "symfony/event-dispatcher": {
         "version": "v4.1.0"
@@ -244,6 +259,9 @@
             "version": "3.3",
             "ref": "8a2f7fa50a528f0aad1d7a87ae3730c981b367ce"
         }
+    },
+    "symfony/http-client-contracts": {
+        "version": "v2.3.1"
     },
     "symfony/http-foundation": {
         "version": "v4.1.0"
@@ -299,11 +317,17 @@
     "symfony/polyfill-ctype": {
         "version": "v1.8.0"
     },
+    "symfony/polyfill-intl-grapheme": {
+        "version": "v1.20.0"
+    },
     "symfony/polyfill-intl-icu": {
         "version": "v1.8.0"
     },
     "symfony/polyfill-intl-idn": {
         "version": "v1.11.0"
+    },
+    "symfony/polyfill-intl-normalizer": {
+        "version": "v1.20.0"
     },
     "symfony/polyfill-mbstring": {
         "version": "v1.8.0"
@@ -313,6 +337,9 @@
     },
     "symfony/polyfill-php73": {
         "version": "v1.11.0"
+    },
+    "symfony/polyfill-php80": {
+        "version": "v1.20.0"
     },
     "symfony/process": {
         "version": "v4.1.0"
@@ -367,6 +394,9 @@
     },
     "symfony/stopwatch": {
         "version": "v4.1.0"
+    },
+    "symfony/string": {
+        "version": "v5.2.0"
     },
     "symfony/swiftmailer-bundle": {
         "version": "2.5",
@@ -451,6 +481,9 @@
     },
     "twig/twig": {
         "version": "v2.4.8"
+    },
+    "webimpress/safe-writer": {
+        "version": "2.1.0"
     },
     "webmozart/assert": {
         "version": "1.3.0"
