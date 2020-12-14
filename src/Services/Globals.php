@@ -36,6 +36,11 @@ class Globals
      */
     private DateTime $deadline;
 
+    /**
+     * Tells whether registration is currently active or not.
+     */
+    private bool $isActive;
+
     public function __construct()
     {
         $this->setYear('2021')
@@ -44,6 +49,7 @@ class Globals
             ->setAlertAccomondation(false)
             ->setEndDate(new DateTime('March 10, 2021 23:59'))
             ->setDeadline(new DateTime('March 10, 2021 23:59'))
+            ->setActive(false)
         ;
     }
 
@@ -175,6 +181,28 @@ class Globals
     public function setDeadline($deadline)
     {
         $this->deadline = $deadline;
+
+        return $this;
+    }
+
+    /**
+     * Get tells whether registration is currently active or not.
+     */
+    public function isActive()
+    {
+        return $this->isActive;
+    }
+
+    /**
+     * Set tells whether registration is currently active or not.
+     *
+     * @param mixed $isActive
+     *
+     * @return self
+     */
+    public function setActive($isActive)
+    {
+        $this->isActive = $isActive;
 
         return $this;
     }

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale }}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>{{ 'title.welcome'|trans({'%year%':''}) }}</title>
+    <link rel="stylesheet"
+          href="https://bootswatch.com/4/flatly/bootstrap.css">
+</head>
+
+<body>
+<nav class="navbar navbar-expand-xl navbar-dark bg-primary">
+
+    <a class="navbar-brand" href="{{ path('welcome') }}">
+        <img src="{{ asset('images/logo_white.svg') }}" width="100" alt="ITP"/>
+    </a>
+    <a class="navbar-brand ml-auto"
+       href="{{ path(app.request.get('_route',  'welcome'), app.request.attributes.get('_route_params')|merge({_locale:'de'})) }}">
+        <img src="{{ asset('images/Flag_of_DE.svg') }}" height="15" alt="DEU"/>
+    </a>
+    <a class="navbar-brand"
+       href="{{ path(app.request.get('_route',  'welcome'), app.request.attributes.get('_route_params')|merge({_locale:'en'})) }}">
+        <img src="{{ asset('images/Flag_of_GB.svg') }}" height="15" alt="ENG"/>
+    </a>
+</nav>
+
+<div class="container">
+    <div class="jumbotron">
+        <h1 class="display-4">{{ 'greeting.welcome'|trans|raw }}</h1>
+        <hr class="my-4">
+        <p class="lead">{{ 'inactive.message'|trans }}</p>
+    </div>
+</div>
+
+<nav class="navbar fixed-bottom navbar-light bg-light">
+    <a class="nav-link" href="{{ 'homepage.link'|trans }}">{{ 'homepage'|trans }}</a>
+    <a class="nav-link"
+       href="https://www.thueringer-judoverband.de/navigation-footer/impressum/">{{ 'about_us'|trans }}</a>
+    <a class="nav-link mr-auto"
+       href="https://www.thueringer-judoverband.de/links/datenschutz/">{{ 'privacy'|trans }}</a>
+</nav>
+</body>
+</html>

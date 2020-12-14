@@ -130,7 +130,7 @@
       <trans-unit id="orNvyxC" resname="description.registration_edit">
         <source>description.registration_edit</source>
         <target><![CDATA[Changes needed? If you want to change your password, please go to
-                    
+
                     <a href="/en/registration/change_password">Change Password</a>
                     .
                 ]]></target>
@@ -538,6 +538,14 @@
         <source>validCamp</source>
         <target>Please choose camp participation!</target>
       </trans-unit>
+      <trans-unit id="homepage">
+        <source>homepage</source>
+        <target>TJV-Homepage</target>
+      </trans-unit>
+      <trans-unit id="homepage.link">
+        <source>homepage.link</source>
+        <target>http://thueringer-judoverband.de/home/</target>
+      </trans-unit>
       <trans-unit id="owE8CCx" resname="invitation">
         <source>invitation</source>
         <target>invitation</target>
@@ -571,8 +579,8 @@
       <trans-unit id="DYHByyX" resname="alert.accomondation">
         <source>alert.accomondation</source>
         <target><![CDATA[
-          
-          
+
+
             <p>
               The remain amount of available accomondation is very limited. We cannot garantee accomondatation if you add new ones from now on.
               In case of questions, please don't hesitate to contact us.
@@ -581,7 +589,7 @@
                   <a class="fa fa-envelope" href="mailto:info@thueringer-judoverband.de">
                       info@thueringer-judoverband.de</a>
             </p>
-          
+
         ]]></target>
       </trans-unit>
       <trans-unit id="G4pfh5p" resname="alert.deadline">
@@ -680,6 +688,10 @@
       <trans-unit id="Oh4Zlq4" resname="generic.tooltip.preview">
         <source>generic.tooltip.preview</source>
         <target>Opens a preview without publishing. In order to see current data, save first.</target>
+      </trans-unit>
+      <trans-unit resname="inactive.message" id="">
+        <source>inactive.message</source>
+        <target>Registration for the International ThuringiaCup is currently not possible.</target>
       </trans-unit>
     </body>
   </file>

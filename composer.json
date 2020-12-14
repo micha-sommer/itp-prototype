@@ -1,8 +1,10 @@
 {
+    "name": "tjv/itp-prototype",
+    "description": "TJV ITP Anmeldung Composer File",
     "type": "project",
     "license": "proprietary",
     "require": {
-        "php": "^7.2.5",
+        "php": "^7.4",
         "ext-iconv": "*",
         "ext-json": "*",
         "erusev/parsedown": "^1.7",

@@ -8,22 +8,65 @@ use App\Enum\AgeCategoryEnum;
 use App\Enum\WeightCategoryEnum;
 use App\Repository\ContestantsRepository;
 use App\Repository\RegistrationsRepository;
+use App\Services\Globals;
+use function array_filter;
+use function count;
 use Doctrine\Common\Collections\Criteria;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use function array_filter;
-use function count;
 
 class WelcomeController extends AbstractController
 {
+    private Globals $globals;
+
+    public function __construct(Globals $globals)
+    {
+        $this->globals = $globals;
+    }
+
     /**
      * @Route("/", name="welcome")
-     * @param RegistrationsRepository $registrationsRepository
-     * @param ContestantsRepository $contestantsRepository
-     * @return Response
      */
     public function welcome(RegistrationsRepository $registrationsRepository, ContestantsRepository $contestantsRepository): Response
+    {
+        if ($this->globals->isActive()) {
+            return $this->activeWelcome($registrationsRepository, $contestantsRepository);
+        }
+
+        return $this->inactiveWelcome();
+    }
+
+    /**
+     * @Route(
+     *     "/{age}/{weight}",
+     *     name="overview",
+     *     requirements={
+     *          "age" = "cadet|junior",
+     *          "weight" = "-40|-44|-48|-52|-57|-63|-70|\+70|-78|\+78"
+     *     }
+     * )
+     */
+    public function showCategory(ContestantsRepository $contestantsRepository, $age, $weight): Response
+    {
+        if (('cadet' == $age && '-78' == $weight)
+            || ('cadet' == $age && '+78' == $weight)
+            || ('junior' == $age && '-40' == $weight)
+            || ('junior' == $age && '+70' == $weight)
+        ) {
+            throw $this->createNotFoundException('Wrong category');
+        }
+
+        $contestants = $contestantsRepository->findBy(['ageCategory' => $age, 'weightCategory' => $weight]);
+
+        return $this->render('welcome/contestants.html.twig', [
+            'age' => $age,
+            'weight' => $weight,
+            'contestants' => $contestants,
+        ]);
+    }
+
+    private function activeWelcome(RegistrationsRepository $registrationsRepository, ContestantsRepository $contestantsRepository): Response
     {
         $registration = $this->getUser();
 
@@ -65,40 +108,12 @@ class WelcomeController extends AbstractController
             'departure' => $departure,
             'clubsCount' => $registrationCount,
             'categories' => $categories,
-            'countries' => $distinctCountries
+            'countries' => $distinctCountries,
         ]);
     }
 
-    /**
-     * @Route(
-     *     "/{age}/{weight}",
-     *     name="overview",
-     *     requirements={
-     *          "age" = "cadet|junior",
-     *          "weight" = "-40|-44|-48|-52|-57|-63|-70|\+70|-78|\+78"
-     *     }
-     * )
-     * @param ContestantsRepository $contestantsRepository
-     * @param $age AgeCategoryEnum
-     * @param $weight WeightCategoryEnum
-     * @return Response
-     */
-    public function showCategory(ContestantsRepository $contestantsRepository, $age, $weight): Response
+    private function inactiveWelcome(): Response
     {
-        if (($age == 'cadet' && $weight == '-78') ||
-            ($age == 'cadet' && $weight == '+78') ||
-            ($age == 'junior' && $weight == '-40') ||
-            ($age == 'junior' && $weight == '+70')
-        ) {
-            throw $this->createNotFoundException('Wrong category');
-        }
-
-        $contestants = $contestantsRepository->findBy(['ageCategory' => $age, 'weightCategory' => $weight]);
-
-        return $this->render('welcome/contestants.html.twig', [
-            'age' => $age,
-            'weight' => $weight,
-            'contestants' => $contestants
-        ]);
+        return $this->render('welcome/waiting.html.twig');
     }
 }

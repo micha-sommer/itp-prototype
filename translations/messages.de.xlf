@@ -131,7 +131,7 @@
       <trans-unit id="orNvyxC" resname="description.registration_edit">
         <source>description.registration_edit</source>
         <target><![CDATA[Änderungen notwendig? Falls Sie ihr Passwort ändern möchten, klicken Sie
-                    
+
                 <a href="/de/registration/change_password">hier</a>
             .
                 ]]></target>
@@ -536,6 +536,14 @@
         <source>validCamp</source>
         <target>Bitte auch die Teilnahme am Camp auswählen!</target>
       </trans-unit>
+      <trans-unit id="homepage">
+        <source>homepage</source>
+        <target>TJV-Homepage</target>
+      </trans-unit>
+      <trans-unit id="homepage.link">
+        <source>homepage.link</source>
+        <target>http://thueringer-judoverband.de/home/</target>
+      </trans-unit>
       <trans-unit id="owE8CCx" resname="invitation">
         <source>invitation</source>
         <target>Ausschreibung</target>
@@ -568,8 +576,8 @@
       <trans-unit id="DYHByyX" resname="alert.accomondation">
         <source>alert.accomondation</source>
         <target><![CDATA[
-          
-          
+
+
             <p>
               Die Anzahl der uns zur Verfügung stehenden Unterkünfte ist auf Grund der hohen Teilnehmerzahl sehr knapp.
               Sollten Sie jetzt noch Übernachtungen buchen, können wir diese nicht garantieren.
@@ -579,7 +587,7 @@
                   <a class="fa fa-envelope" href="mailto:info@thueringer-judoverband.de">
                       info@thueringer-judoverband.de</a>
             </p>
-          
+
         ]]></target>
       </trans-unit>
       <trans-unit id="G4pfh5p" resname="alert.deadline">
@@ -678,6 +686,10 @@
       <trans-unit id="Oh4Zlq4" resname="generic.tooltip.preview">
         <source>generic.tooltip.preview</source>
         <target>Zeigt das Dokument an, ohne es zu veröffentlichen. Um die aktuellen Daten zu sehen, muss zuerst gespeichert werden.</target>
+      </trans-unit>
+      <trans-unit resname="inactive.message" id="">
+        <source>inactive.message</source>
+        <target>Aktuell ist die Anmeldung für den Internationalen Thüringenpokal nicht möglich.</target>
       </trans-unit>
     </body>
   </file>
