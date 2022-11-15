@@ -1,10 +1,14 @@
 base:
-  link-text:
-    homepage: 'Homepage des TJV'
-    about-us: 'Impressum'
-    privacy: 'Datenschutz'
+    language:
+        title: 'Sprache'
+        de: 'Deutsch'
+        en: 'Englisch'
+    link-text:
+        homepage: 'Homepage des TJV'
+        about-us: 'Impressum'
+        privacy: 'Datenschutz'
 
 welcome:
-  title: 'Willkommen zum ITP'
-  greeting: 'Hallo!'
-  inactive: 'Aktuell ist die Anmeldung für den Internationalen Thüringenpokal nicht möglich.'
+    title: 'Willkommen zum ITP'
+    greeting: 'Hallo!'
+    inactive: 'Aktuell ist die Anmeldung für den Internationalen Thüringenpokal nicht möglich.'

@@ -1,10 +1,14 @@
 base:
-  link-text:
-    homepage: 'TJV homepage'
-    about-us: 'about us'
-    privacy: 'privacy'
+    language:
+        title: 'language'
+        de: 'german'
+        en: 'english'
+    link-text:
+        homepage: 'TJV homepage'
+        about-us: 'about us'
+        privacy: 'privacy'
 
 welcome:
-  title: 'Welcome to ITP'
-  greeting: 'Hello!'
-  inactive: 'Registration for the International ThuringiaCup is currently not possible.'
+    title: 'Welcome to ITP'
+    greeting: 'Hello!'
+    inactive: 'Registration for the International ThuringiaCup is currently not possible.'
