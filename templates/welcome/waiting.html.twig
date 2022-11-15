@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale }}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>{{ 'welcome.title'|trans({'%year%':''}) }}</title>
+    <link rel="stylesheet"
+          href="https://bootswatch.com/4/flatly/bootstrap.css">
+</head>
+
+<body>
+<nav class="navbar navbar-expand-xl navbar-dark bg-primary" aria-label="site navigation">
+
+    <a class="navbar-brand" href="{{ path('welcome') }}">
+        <img src="{{ asset('images/logo_white.svg') }}" width="100" alt="ITP"/>
+    </a>
+    <a class="navbar-brand ml-auto"
+       href="{{ path('welcome', {_locale: 'de'}) }}">
+        <img src="{{ asset('images/Flag_of_DE.svg') }}" height="15" alt="DEU"/>
+    </a>
+    <a class="navbar-brand"
+       href="{{ path('welcome', {_locale: 'en'}) }}">
+        <img src="{{ asset('images/Flag_of_GB.svg') }}" height="15" alt="ENG"/>
+    </a>
+</nav>
+
+<div class="container">
+    <div class="jumbotron">
+        <h1 class="display-4">{{ 'welcome.greeting'|trans }}</h1>
+        <hr class="my-4">
+        <p class="lead">{{ 'welcome.inactive'|trans }}</p>
+    </div>
+</div>
+
+<nav class="navbar fixed-bottom navbar-light bg-light" aria-label="language menu">
+    <a class="nav-link" href="https://thueringer-judoverband.de/home/">{{ 'base.link-text.homepage'|trans }}</a>
+    <a class="nav-link"
+       href="https://www.thueringer-judoverband.de/navigation-footer/impressum/">{{ 'base.link-text.about-us'|trans }}</a>
+    <a class="nav-link mr-auto"
+       href="https://www.thueringer-judoverband.de/links/datenschutz/">{{ 'base.link-text.privacy'|trans }}</a>
+</nav>
+</body>
+</html>
