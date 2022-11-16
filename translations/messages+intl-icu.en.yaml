@@ -7,8 +7,25 @@ base:
         homepage: 'TJV homepage'
         about-us: 'about us'
         privacy: 'privacy'
+    navigation:
+        home: Home
+    alert:
+        accommodation: '<![CDATA[
+            <p>
+              The remain amount of available accommodation is very limited. We cannot guarantee accommodation if you add new ones from now on.
+              In case of questions, please dont hesitate to contact us.
+                           <br/>
+                           <a class="fa fa-phone" href="tel:0049-0361-3731647"> +49 (0) 361 373 16 47</a> or
+                           <a class="fa fa-envelope" href="mailto:info@thueringer-judoverband.de">
+                           info@thueringer-judoverband.de</a>
+            </p>
+        ]]>'
+        deadline: 'The deadline for registrations has passed. Please note that additional competitors will be charged with an increased registration fee.'
 
 welcome:
     title: 'Welcome to ITP'
     greeting: 'Hello!'
     inactive: 'Registration for the International ThuringiaCup is currently not possible.'
+    active: 'This is the new entry form for the registration process of International Thuringia Cup {year}.'
+    end-date-passed: 'Registration period ended. For further changes please tell us personally.'
+    contact-us: 'Feel free to contact us:'

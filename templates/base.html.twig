@@ -2,115 +2,145 @@
 <html lang="{{ app.request.locale }}">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>{% block title %}{{ 'welcome.title'|trans }}!{% endblock %}</title>
-
+    <title>{% block title %}{{ 'welcome.title'|trans }}{% endblock %}</title>
     <link href="{{ asset('styling/bootstrap.min.css') }}" rel="stylesheet">
 
     {% block stylesheets %}{% endblock %}
     <link rel="icon" type="image/x-icon" href="{{ asset('images/logo_black.ico') }}"/>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-primary" aria-label="site navigation">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <a class="navbar-brand" href="{{ path('welcome') }}">
-        <img src="{{ asset('images/logo_white.svg') }}" width="100" alt="ITP"/>
-    </a>
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="{{ path('welcome') }}">Home</a>
-            </li>
-            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary" aria-label="site navigation">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{{ path('welcome') }}">
+            <img src="{{ asset('images/logo_white.svg') }}" width="100" alt="ITP"/>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('edit_registration') }}">{{ 'menu.registration_edit'|trans }}</a>
+                    <a class="nav-link" href="{{ path('welcome') }}">{{ 'base.navigation.home'|trans }}</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('officials') }}">{{ 'menu.officials_edit'|trans }}</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('contestants') }}">{{ 'menu.contestants_edit'|trans }}</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('transports') }}">{{ 'menu.transport_edit'|trans }}</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('change_password') }}">{{ 'menu.password_edit'|trans }}</a>
-                </li>
-                {% for invoice in app.user.invoices %}
-                    {% if invoice.published %}
-                        <li class="nav-item">
-                            <a class="nav-link"
-                               href="{{ path('invoice', {'uid': invoice.id}) }}">{{ 'menu.invoice'|trans }}
-                                : {{ invoice.name }}</a>
+                {#                {% if is_granted('IS_AUTHENTICATED_FULLY') %} #}
+                {#                    <li class="nav-item"> #}
+                {#                        <a class="nav-link" #}
+                {#                           href="{{ path('edit_registration') }}">{{ 'menu.registration_edit'|trans }}</a> #}
+                {#                    </li> #}
+                {#                    <li class="nav-item"> #}
+                {#                        <a class="nav-link" href="{{ path('officials') }}">{{ 'menu.officials_edit'|trans }}</a> #}
+                {#                    </li> #}
+                {#                    <li class="nav-item"> #}
+                {#                        <a class="nav-link" href="{{ path('contestants') }}">{{ 'menu.contestants_edit'|trans }}</a> #}
+                {#                    </li> #}
+                {#                    <li class="nav-item"> #}
+                {#                        <a class="nav-link" href="{{ path('transports') }}">{{ 'menu.transport_edit'|trans }}</a> #}
+                {#                    </li> #}
+                {#                    <li class="nav-item"> #}
+                {#                        <a class="nav-link" href="{{ path('change_password') }}">{{ 'menu.password_edit'|trans }}</a> #}
+                {#                    </li> #}
+                {#                    {% for invoice in app.user.invoices %} #}
+                {#                        {% if invoice.published %} #}
+                {#                            <li class="nav-item"> #}
+                {#                                <a class="nav-link" #}
+                {#                                   href="{{ path('invoice', {'uid': invoice.id}) }}">{{ 'menu.invoice'|trans }} #}
+                {#                                    : {{ invoice.name }}</a> #}
+                {#                            </li> #}
+                {#                        {% endif %} #}
+                {#                    {% endfor %} #}
+                {#                    {% if is_granted('ROLE_ADMIN') %} #}
+                {#                        <li class="nav-item"> #}
+                {#                            <a class="nav-link badge-warning" href="{{ path('admin') }}">{{ 'menu.admin'|trans }}</a> #}
+                {#                        </li> #}
+                {#                    {% endif %} #}
+                {#                {% else %} #}
+                {#                    <li class="nav-item"> #}
+                {#                        <a class="nav-link" href="{{ path('registration') }}">{{ 'menu.registration_new'|trans }}</a> #}
+                {#                    </li> #}
+                {#                {% endif %} #}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        <img class="mb-2" src="{{ asset('images/Flag_of_%s.svg'|format(app.request.locale|upper)) }}"
+                             height="15" alt="{{ app.request.locale|upper }}"/>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="dropdown-item" href="{{ path('welcome', {_locale: 'de'}) }}">
+                                {{ 'base.language.de'|trans }}
+                                <img class="mb-2" src="{{ asset('images/Flag_of_DE.svg') }}" height="15" alt="DEU"/>
+                            </a>
                         </li>
-                    {% endif %}
-                {% endfor %}
-                {% if is_granted('ROLE_ADMIN') %}
-                    <li class="nav-item">
-                        <a class="nav-link badge-warning" href="{{ path('admin') }}">{{ 'menu.admin'|trans }}</a>
-                    </li>
-                {% endif %}
-            {% else %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('registration') }}">{{ 'menu.registration_new'|trans }}</a>
+                        <li>
+                            <a class="dropdown-item" href="{{ path('welcome', {_locale: 'en'}) }}">
+                                {{ 'base.language.en'|trans }}
+                                <img class="mb-2" src="{{ asset('images/Flag_of_EN.svg') }}" height="15" alt="ENG"/>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
-            {% endif %}
+                {#                <li class="nav-item"> #}
+                {#                    {% if is_granted('ROLE_PREVIOUS_ADMIN') %} #}
+                {#                        <a class="nav-link badge-warning" #}
+                {#                           href="{{ path('admin', {'_switch_user': '_exit'}) }}">{{ 'menu.logout'|trans }}</a> #}
+                {#                    {% elseif is_granted('IS_AUTHENTICATED_FULLY') %} #}
+                {#                        <a class="nav-link" href="{{ path('logout') }}">{{ 'menu.logout'|trans }}</a> #}
+                {#                    {% else %} #}
+                {#                        <a class="nav-link" href="{{ path('login') }}">{{ 'menu.login'|trans }}</a> #}
+                {#                    {% endif %} #}
+                {#                </li> #}
+            </ul>
+        </div>
 
-            <li class="nav-item">
-                {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
-                    <a class="nav-link badge-warning"
-                       href="{{ path('admin', {'_switch_user': '_exit'}) }}">{{ 'menu.logout'|trans }}</a>
-                {% elseif is_granted('IS_AUTHENTICATED_FULLY') %}
-                    <a class="nav-link" href="{{ path('logout') }}">{{ 'menu.logout'|trans }}</a>
-                {% else %}
-                    <a class="nav-link" href="{{ path('login') }}">{{ 'menu.login'|trans }}</a>
-                {% endif %}
-            </li>
-        </ul>
+        {#        {% if is_granted('IS_AUTHENTICATED_FULLY') %} #}
+        {#            <span class="navbar-text"> #}
+        {#                        {{ 'menu.logged_in_as'|trans }} #}
+        {#                {{ app.user.firstname|default('') }} {{ app.user.lastname|default('') }} #}
+        {#            ({{ app.user.club|default('') }}) #}
+        {#        </span> #}
+        {#        {% else %} #}
+        {#        {% endif %} #}
     </div>
-    <a class="navbar-brand ml-auto"
-       href="{{ path(app.request.get('_route',  'welcome'), app.request.attributes.get('_route_params')|merge({_locale:'de'})) }}">
-        <img src="{{ asset('images/Flag_of_DE.svg') }}" height="15" alt="DEU"/>
-    </a>
-    <a class="navbar-brand"
-       href="{{ path(app.request.get('_route',  'welcome'), app.request.attributes.get('_route_params')|merge({_locale:'en'})) }}">
-        <img src="{{ asset('images/Flag_of_GB.svg') }}" height="15" alt="ENG"/>
-    </a>
-    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-        <span class="navbar-text">
-                        {{ 'menu.logged_in_as'|trans }}
-            {{ app.user.firstname|default('') }} {{ app.user.lastname|default('') }}
-            ({{ app.user.club|default('') }})
-        </span>
-    {% else %}
-    {% endif %}
 </nav>
 <main role="main" class="container">
-    {% if globals.alertAccomondation %}
+    {% if alertAccommodation %}
         <div class="alert alert-danger" role="alert">
-            {{ 'alert.accomondation'|trans|raw }}
+            {{ 'base.alert.accommodation'|trans|raw }}
         </div>
     {% endif %}
-    {% if date('now', 'Europe/Paris') > date(globals.deadline, 'Europe/Paris') %}
+    {% if date('now', 'Europe/Paris') > date(deadline, 'Europe/Paris') %}
         <div class="alert alert-danger" role="alert">
-            {{ 'alert.deadline'|trans }}
+            {{ 'base.alert.deadline'|trans }}
         </div>
     {% endif %}
     {% block body %}{% endblock %}
 </main>
 
-<nav class="navbar fixed-bottom navbar-light bg-light" aria-label="page footer">
-    <a class="nav-link" href="{{ 'invitation.link'|trans({'%year%':globals.year}) }}">{{ 'invitation'|trans }}</a>
-    <a class="nav-link"
-       href="https://www.thueringer-judoverband.de/navigation-footer/impressum/">{{ 'about_us'|trans }}</a>
-    <a class="nav-link mr-auto"
-       href="https://www.thueringer-judoverband.de/links/datenschutz/">{{ 'privacy'|trans }}</a>
+<nav class="navbar navbar-expand-lg fixed-bottom navbar-light bg-light" aria-label="language menu">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link active"
+                       href="https://thueringer-judoverband.de/home/">{{ 'base.link-text.homepage'|trans }}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active"
+                       href="https://www.thueringer-judoverband.de/navigation-footer/impressum/">{{ 'base.link-text.about-us'|trans }}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active"
+                       href="https://www.thueringer-judoverband.de/links/datenschutz/">{{ 'base.link-text.privacy'|trans }}</a>
+                </li>
+            </ul>
+        </div>
+    </div>
 </nav>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+<script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
 </body>
 </html>

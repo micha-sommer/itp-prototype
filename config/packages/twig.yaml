@@ -1,6 +1,12 @@
 twig:
     default_path: '%kernel.project_dir%/templates'
 
+    globals:
+        year: 2023
+        alertAccommodation: false
+        deadline: 'March 8, 2023 23:59'
+        endDate: 'March 15, 2023 23:59'
+
 when@test:
     twig:
         strict_variables: true

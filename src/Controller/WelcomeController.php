@@ -17,6 +17,11 @@ class WelcomeController extends AbstractController
     #[Route('/{_locale<%app.supported_locales%>}/welcome', name: 'welcome')]
     public function index(): Response
     {
-        return $this->render('welcome/waiting.html.twig');
+        if ($this->getParameter('app.is_active')) {
+            return $this->render('welcome/index.html.twig');
+
+        } else {
+            return $this->render('welcome/waiting.html.twig');
+        }
     }
 }
