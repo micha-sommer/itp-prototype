@@ -1,0 +1,18 @@
+<h1>{{ 'registration.mail.greeting'|trans }}</h1>
+
+<p>
+    {{ 'registration.mail.link-pre-text'|trans }} <br><br>
+
+    <a href="{{ signedUrl|raw }}">{{ 'registration.mail.link-text'|trans }}</a>.<br><br>
+
+    {{ 'registration.mail.expire'|trans({'expiresText':expiresAtMessageKey|trans(expiresAtMessageData, 'VerifyEmailBundle')}) }}
+</p>
+
+<p>
+    {{ 'registration.mail.end-salutation'|trans }}<br/>
+    Thüringer Judo-Verband e.V.<br/>
+    Schützenstraße 4<br/>
+    99096 Erfurt<br/>
+    +49 (0) 361 373 16 47<br/>
+    info@thueringer-judoverband.de<br/>
+</p>

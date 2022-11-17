@@ -1,31 +1,47 @@
 base:
+    menu:
+        register: Registrieren
+        login: Einloggen
+        logout: Ausloggen
     language:
-        title: 'Sprache'
-        de: 'Deutsch'
-        en: 'Englisch'
+        title: Sprache
+        de: Deutsch
+        en: Englisch
     link-text:
         homepage: 'Homepage des TJV'
-        about-us: 'Impressum'
-        privacy: 'Datenschutz'
+        about-us: Impressum
+        privacy: Datenschutz
     navigation:
         home: Start
     alert:
-        accommodation: '<![CDATA[
-            <p>
-              Die Anzahl der uns zur Verfügung stehenden Unterkünfte ist auf Grund der hohen Teilnehmerzahl sehr knapp.
-              Sollten Sie jetzt noch Übernachtungen buchen, können wir diese nicht garantieren.
-              Kontaktieren Sie uns bitte bei Fragen.
-              <br/>
-              <a class="fa fa-phone" href="tel:0049-0361-3731647"> +49 (0) 361 373 16 47</a> oder
-                  <a class="fa fa-envelope" href="mailto:info@thueringer-judoverband.de">
-                      info@thueringer-judoverband.de</a>
-            </p>
-        ]]>'
+        accommodation: '<![CDATA[ <p> Die Anzahl der uns zur Verfügung stehenden Unterkünfte ist auf Grund der hohen Teilnehmerzahl sehr knapp. Sollten Sie jetzt noch Übernachtungen buchen, können wir diese nicht garantieren. Kontaktieren Sie uns bitte bei Fragen. <br/> <a class="fa fa-phone" href="tel:0049-0361-3731647"> +49 (0) 361 373 16 47</a> oder <a class="fa fa-envelope" href="mailto:info@thueringer-judoverband.de"> info@thueringer-judoverband.de</a> </p> ]]>'
         deadline: 'Der Meldeschluss ist verstrichen!!! Beachten Sie, dass das Anmelden weiterer Kämpferinnen mit der Berechnung einer erhöhten Startgebühr einhergeht.'
-
+login:
+    title: Einloggen
+    description: 'Bitte tragen Sie die Email-Adresse und Passwort ein, mit welcher Sie Ihren Verband/Verein registriert haben.'
+    action: einloggen
+registration:
+    title: Registrierung
+    description: 'Tragen Sie hier ihre Kontaktinformationen ein. Wenn Sie sich mit ihren Daten registriert haben, können Sie Offizielle und Wettkämpferinnen anmelden.'
+    data:
+        email: Email
+        password: Passwort
+        club: Verein
+        country: Land
+        first-name: Vorname
+        last-name: Nachname
+        telephone: Telefon
+    mail:
+        name: 'Thüringer Judo-Verband e.V.'
+        subject: 'Bitte bestätigen Sie Ihre Email-Adresse.'
+        greeting: 'Hallo! Bitte bestätigen Sie Ihre Email-Adresse!'
+        link-pre-text: 'Bitte bestätigen Sie Ihre Email-Adresse, indem Sie auf folgenden Link klicken:'
+        link-text: 'Email-Adresse bestätigen'
+        expire: 'Der Link läuft in {expiresText} aus.'
+        end-salutation: 'Mit sportlichen Grüßen'
 welcome:
     title: 'Willkommen zum ITP'
-    greeting: 'Hallo!'
+    greeting: Hallo!
     inactive: 'Aktuell ist die Anmeldung für den Internationalen Thüringenpokal nicht möglich.'
     active: 'Dies ist das neue Anmeldeformular für die Registrierung zum Internationalen Thüringenpokal {year}.'
     end-date-passed: 'Anmeldezeitraum abgelaufen. Bitte teilen Sie uns Änderungen vor Ort mit.'

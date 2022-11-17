@@ -1,30 +1,47 @@
 base:
+    menu:
+        register: Register
+        login: Login
+        logout: Logout
     language:
-        title: 'language'
-        de: 'german'
-        en: 'english'
+        title: language
+        de: german
+        en: english
     link-text:
         homepage: 'TJV homepage'
         about-us: 'about us'
-        privacy: 'privacy'
+        privacy: privacy
     navigation:
         home: Home
     alert:
-        accommodation: '<![CDATA[
-            <p>
-              The remain amount of available accommodation is very limited. We cannot guarantee accommodation if you add new ones from now on.
-              In case of questions, please dont hesitate to contact us.
-                           <br/>
-                           <a class="fa fa-phone" href="tel:0049-0361-3731647"> +49 (0) 361 373 16 47</a> or
-                           <a class="fa fa-envelope" href="mailto:info@thueringer-judoverband.de">
-                           info@thueringer-judoverband.de</a>
-            </p>
-        ]]>'
+        accommodation: '<![CDATA[ <p> The remain amount of available accommodation is very limited. We cannot guarantee accommodation if you add new ones from now on. In case of questions, please dont hesitate to contact us. <br/> <a class="fa fa-phone" href="tel:0049-0361-3731647"> +49 (0) 361 373 16 47</a> or <a class="fa fa-envelope" href="mailto:info@thueringer-judoverband.de"> info@thueringer-judoverband.de</a> </p> ]]>'
         deadline: 'The deadline for registrations has passed. Please note that additional competitors will be charged with an increased registration fee.'
-
+login:
+    title: Login
+    description: 'Please enter the email address and password that have been used to register your club/association/union.'
+    action: login
+registration:
+    title: Registration
+    description: "Register here! In order to proceed with the registration, we will need a contact person. This information is also required for later changes that might or might not be needed. Once you've registered your club, you can add officials (coaches, physiotherapist etc.) and of course your contestants."
+    data:
+        email: Email
+        password: Password
+        club: Club
+        country: Country
+        first-name: 'First name'
+        last-name: 'Last name'
+        telephone: Telephone
+    mail:
+        name: 'Thuringian Judo Federation'
+        subject: 'Please Confirm your Email'
+        greeting: 'Hi! Please confirm your email!'
+        link-pre-text: 'Please confirm your email address by clicking the following link:'
+        link-text: 'Confirm my Email'
+        expire: 'This link will expire in {expiresText}.'
+        end-salutation: 'Best regards'
 welcome:
     title: 'Welcome to ITP'
-    greeting: 'Hello!'
+    greeting: Hello!
     inactive: 'Registration for the International ThuringiaCup is currently not possible.'
     active: 'This is the new entry form for the registration process of International Thuringia Cup {year}.'
     end-date-passed: 'Registration period ended. For further changes please tell us personally.'

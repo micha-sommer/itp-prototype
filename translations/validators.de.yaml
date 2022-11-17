@@ -40,12 +40,16 @@
     '': 'Dieser Wert sollte kleiner oder gleich {{ limit }} sein.'
 'This value is too long':
     ' It should have {{ limit }} character or less':
-        '|This value is too long': { ' It should have {{ limit }} characters or less': { '': 'Diese Zeichenkette ist zu lang. Sie sollte höchstens {{ limit }} Zeichen haben.|Diese Zeichenkette ist zu lang. Sie sollte höchstens {{ limit }} Zeichen haben.' } }
+        '|This value is too long':
+            ' It should have {{ limit }} characters or less':
+                '': 'Diese Zeichenkette ist zu lang. Sie sollte höchstens {{ limit }} Zeichen haben.|Diese Zeichenkette ist zu lang. Sie sollte höchstens {{ limit }} Zeichen haben.'
 'This value should be {{ limit }} or more':
     '': 'Dieser Wert sollte größer oder gleich {{ limit }} sein.'
 'This value is too short':
     ' It should have {{ limit }} character or more':
-        '|This value is too short': { ' It should have {{ limit }} characters or more': { '': 'Diese Zeichenkette ist zu kurz. Sie sollte mindestens {{ limit }} Zeichen haben.|Diese Zeichenkette ist zu kurz. Sie sollte mindestens {{ limit }} Zeichen haben.' } }
+        '|This value is too short':
+            ' It should have {{ limit }} characters or more':
+                '': 'Diese Zeichenkette ist zu kurz. Sie sollte mindestens {{ limit }} Zeichen haben.|Diese Zeichenkette ist zu kurz. Sie sollte mindestens {{ limit }} Zeichen haben.'
 'This value should not be blank':
     '': 'Dieser Wert sollte nicht leer sein.'
 'This value should not be null':
