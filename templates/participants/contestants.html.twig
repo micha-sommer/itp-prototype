@@ -1,0 +1,205 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'participants.contestants.title'|trans }}{% endblock %}
+
+{% block body %}
+    <div class="container">
+        {{ form_start(form, {'attr': {'id': 'contestants_form'}}) }}
+        {{ form_row(form._token) }}
+        <div class="p-5 mb-4 bg-light rounded-3">
+            <h1 class="display-4">{{ 'participants.contestants.title'|trans }}</h1>
+            <p class="lead">{{ 'participants.contestants.description'|trans }}</p>
+            <hr class="my-4">
+            <div class="container">
+                <div class="row justify-content-sm-start">
+                    <div class="col-12 col-sm-auto ps-0">
+                        <input class="btn btn-success btn-block" type="submit"
+                               value="{{ 'global.forms.button.save'|trans }}"/>
+                    </div>
+                    <div class="col-12 col-sm-auto">
+                        <a class="btn btn-dark btn-block" href="{{ path('welcome') }}">
+                            {{ 'global.forms.button.back'|trans }}
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3" id="contestants" data-prototype="
+{{ '            <div class="card h-100 border-danger">
+                    <div class="card-body pt-2 pb-3">
+                        <div class="row">
+                            <div class="col-auto me-auto">
+                                <h5 class="card-title mb-0">'|e }}{{ 'participants.contestants.data.title'|trans }}{{ '</h5>
+                                <small class="text-muted">'|e }}{{ 'participants.contestants.data.first-name'|trans }}{{ '</small>
+                            </div>
+                            <div class="col-auto" id="buttons-go-here"></div>
+                        </div>'|e }}
+                        {{ form_widget(form.contestants.vars.prototype.firstName)|e }}
+{{ '                    <small class="text-muted">'|e }}{{ 'participants.contestants.data.last-name'|trans }}{{ '</small>'|e }}
+                        {{ form_widget(form.contestants.vars.prototype.lastName)|e }}
+{{ '                    <small class="text-muted">'|e }}{{ 'participants.contestants.data.year'|trans }}{{ '</small>'|e }}
+                        {{ form_widget(form.contestants.vars.prototype.year)|e }}
+{{ '                    <small class="text-muted">'|e }}{{ 'participants.contestants.data.age-category.title'|trans }}{{ '</small>'|e }}
+                        {{ form_widget(form.contestants.vars.prototype.ageCategory)|e }}
+{{ '                    <small class="text-muted">'|e }}{{ 'participants.contestants.data.weight-category'|trans }}{{ '</small>'|e }}
+                        {{ form_widget(form.contestants.vars.prototype.weightCategory)|e }}
+{{ '                    <small class="text-muted">'|e }}{{ 'participants.contestants.data.itc-selection.title'|trans }}{{ '</small>'|e }}
+                        {{ form_widget(form.contestants.vars.prototype.itcSelection)|e }}
+{{ '                </div>
+                    <div class="card-footer text-danger border-danger">
+                        <i class="fas fa-times-circle text-danger"></i> '|e }}{{ 'participants.contestants.status.created'|trans }}{{ '
+                    </div>
+                </div>
+                '|e }}">
+                {% for contestant in form.contestants %}
+                    <div class="col mb-4" id="contestant">
+                        <div class="card h-100 border-success">
+                            <div class="card-body pt-2 pb-3">
+                                <div class="row">
+                                    <div class="col-auto me-auto">
+                                        <h5 class="card-title mb-0">{{ 'participants.contestants.data.title'|trans }}</h5>
+                                        <small
+                                            class="text-muted">{{ 'participants.contestants.data.first-name'|trans }}</small>
+                                    </div>
+                                    <div class="col-auto" id="buttons-go-here"></div>
+                                </div>
+                                {{ form_widget(contestant.firstName) }}
+                                <small class="text-muted">{{ 'participants.contestants.data.last-name'|trans }}</small>
+                                {{ form_widget(contestant.lastName) }}
+                                <small class="text-muted">{{ 'participants.contestants.data.year'|trans }}</small>
+                                {{ form_widget(contestant.year) }}
+                                <small
+                                    class="text-muted">{{ 'participants.contestants.data.age-category.title'|trans }}</small>
+                                {{ form_widget(contestant.ageCategory) }}
+                                <small
+                                    class="text-muted">{{ 'participants.contestants.data.weight-category'|trans }}</small>
+                                {{ form_widget(contestant.weightCategory) }}
+                                <small
+                                    class="text-muted">{{ 'participants.contestants.data.itc-selection.title'|trans }}</small>
+                                {{ form_widget(contestant.itcSelection) }}
+                            </div>
+                            <div class="card-footer border-success text-success">
+                                <i class="fas fa-check-circle text-success"></i> {{ 'participants.contestants.status.saved'|trans }}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                {% if deadline is null or date(deadline) > date('now') %}
+                    <div class="col mb-4" id="add-new-contestant">
+                        <div class="card h-100 text-center align-items-center">
+                            <div class="card-body d-flex align-items-center">
+                                <button class="btn btn-primary add-a-tag stretched-link" type="button">
+                                    <i class="fas fa-user-plus fa-7x card-img"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+            <hr class="mb-4">
+            <div class="container">
+                <div class="row justify-content-sm-start">
+                    <div class="col-12 col-sm-auto ps-0">
+                        <input class="btn btn-success btn-block" type="submit"
+                               value="{{ 'global.forms.button.save'|trans }}"/>
+                    </div>
+                    <div class="col-12 col-sm-auto">
+                        <a class="btn btn-dark btn-block" href="{{ path('welcome') }}">
+                            {{ 'global.forms.button.back'|trans }}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{ form_end(form, {'render_rest': false}) }}
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    <script>
+        let $collectionHolder;
+        let $removeFormButton = $('<button class="btn btn-danger ml-1" type="button"><i class="fa fa-trash" aria-hidden="true"></i></button>');
+
+
+        $(document).ready(function () {
+            // Get the ul that holds the collection of tags
+            $collectionHolder = $('#contestants');
+
+            // add a delete link to all of the existing tag form li elements
+            $collectionHolder.find('div#contestant').each(function () {
+                // addTagFormCommentLink($(this));
+                addTagFormDeleteLink($(this));
+            });
+
+            // count the current form inputs we have (e.g. 2), use that as the new
+            // index when inserting a new item (e.g. 2)
+            let $contestantCount = $collectionHolder.find('div#contestant');
+            $collectionHolder.data('index', $contestantCount.length);
+
+            let $addTagLink = $('button.add-a-tag');
+            $addTagLink.on('click', function (e) {
+                // prevent the link from creating a "#" on the URL
+                e.preventDefault();
+                console.log("add")
+
+                // add a new tag form (see code block below)
+                addTagForm($collectionHolder, $addTagLink);
+            });
+
+            let unsaved = false;
+
+            $(":input").change(function () {
+                unsaved = true;
+            });
+
+            function unloadPage() {
+                if (unsaved) {
+                    return "{{ 'global.forms.unsaved-changes-warning'|trans }}";
+                }
+            }
+
+            window.onbeforeunload = unloadPage;
+
+            let myForm = document.querySelector('#contestants_form');
+            myForm.addEventListener("submit", function () {
+                unsaved = false
+            });
+        });
+
+        function addTagForm($collectionHolder) {
+            // Get the data-prototype explained earlier
+            let prototype = $collectionHolder.data('prototype');
+
+            // get the new index
+            let index = $collectionHolder.data('index');
+
+            // Replace '$$name$$' in the prototype's HTML to
+            // instead be a number based on how many items we have
+            let newForm = prototype.replace(/__name__/g, index);
+
+            // increase the index with one for the next item
+            $collectionHolder.data('index', index + 1);
+
+            // Display the form in the page in an li, before the "Add a tag" link td
+            let finalForm = $('<div class="col mb-4" id="contestant"></div>')
+                .append(newForm);
+
+            // addTagFormCommentLink($newForm);
+            addTagFormDeleteLink(finalForm);
+
+            finalForm.insertBefore('#add-new-contestant');
+        }
+
+        function addTagFormDeleteLink($tagFormKariEventPerson) {
+            console.log('add delete')
+            let $thisRemoveFormButton = $removeFormButton.clone();
+            let $buttonGoesHere = $tagFormKariEventPerson.find('#buttons-go-here');
+            $buttonGoesHere.append($thisRemoveFormButton);
+
+            $thisRemoveFormButton.on('click', function () {
+                // remove the li for the tag form
+                $tagFormKariEventPerson.remove();
+            });
+        }
+    </script>
+{% endblock %}

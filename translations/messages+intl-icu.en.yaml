@@ -1,6 +1,7 @@
 base:
     menu:
         register: Register
+        contestants: Contestants
         login: Login
         logout: Logout
     language:
@@ -16,10 +17,44 @@ base:
     alert:
         accommodation: '<![CDATA[ <p> The remain amount of available accommodation is very limited. We cannot guarantee accommodation if you add new ones from now on. In case of questions, please dont hesitate to contact us. <br/> <a class="fa fa-phone" href="tel:0049-0361-3731647"> +49 (0) 361 373 16 47</a> or <a class="fa fa-envelope" href="mailto:info@thueringer-judoverband.de"> info@thueringer-judoverband.de</a> </p> ]]>'
         deadline: 'The deadline for registrations has passed. Please note that additional competitors will be charged with an increased registration fee.'
+global:
+    forms:
+        button:
+            save: Save
+            save-and-send: 'Save and Send'
+            back: Back
+        unsaved-changes-warning: "You have unsaved changes. Do you really want to leave and loose the data or stay and continue?"
 login:
     title: Login
     description: 'Please enter the email address and password that have been used to register your club/association/union.'
     action: login
+participants:
+    contestants:
+        title: Contestants
+        description: 'Please enter as much information as you have available for the time being.'
+        data:
+            title: Participant
+            first-name: 'First name'
+            last-name: 'Last name'
+            year: 'Year of birth'
+            age-category:
+                title: 'Age category'
+                cadet: 'Cadet (under 18)'
+                junior: 'Junior (under 21)'
+            weight-category: 'Weight category'
+            camp-only: 'trainings camp only (ITC)'
+            itc-selection:
+                title: 'ITC selection'
+                none: 'no participation'
+                pack-A: 'package A'
+                pack-B: 'package B'
+                pack-C: 'package C'
+                1-day: '1 day'
+                2-day: '2 days'
+                3-day: '3 days'
+        status:
+            created: 'nicht gespeichert'
+            saved: 'gespeichert und angemeldet'
 registration:
     title: Registration
     description: "Register here! In order to proceed with the registration, we will need a contact person. This information is also required for later changes that might or might not be needed. Once you've registered your club, you can add officials (coaches, physiotherapist etc.) and of course your contestants."

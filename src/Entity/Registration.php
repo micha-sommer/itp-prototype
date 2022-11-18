@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\RegistrationRepository;
 use DateTimeInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -50,7 +52,20 @@ class Registration implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $country = null;
 
     #[ORM\Column(type: 'boolean')]
-    private $isVerified = false;
+    private bool $isVerified = false;
+
+    #[ORM\OneToMany(
+        mappedBy: 'registration',
+        targetEntity: Contestant::class,
+        cascade: ["persist", "remove"],
+        orphanRemoval: true,
+    )]
+    private Collection $contestants;
+
+    public function __construct()
+    {
+        $this->contestants = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -76,7 +91,7 @@ class Registration implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUserIdentifier(): string
     {
-        return (string) $this->email;
+        return (string)$this->email;
     }
 
     /**
@@ -202,6 +217,36 @@ class Registration implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsVerified(bool $isVerified): self
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Contestant>
+     */
+    public function getContestants(): Collection
+    {
+        return $this->contestants;
+    }
+
+    public function addContestant(Contestant $contestant): self
+    {
+        if (!$this->contestants->contains($contestant)) {
+            $this->contestants->add($contestant);
+            $contestant->setRegistration($this);
+        }
+
+        return $this;
+    }
+
+    public function removeContestant(Contestant $contestant): self
+    {
+        if ($this->contestants->removeElement($contestant)) {
+            // set the owning side to null (unless already changed)
+            if ($contestant->getRegistration() === $this) {
+                $contestant->setRegistration(null);
+            }
+        }
 
         return $this;
     }

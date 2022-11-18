@@ -6,6 +6,7 @@
 parameters:
     app.supported_locales: 'de|en'
     app.is_active: true
+    app.year: 2023
 
 services:
     # default configuration for services in *this* file

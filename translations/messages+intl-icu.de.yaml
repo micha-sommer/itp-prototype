@@ -1,6 +1,7 @@
 base:
     menu:
         register: Registrieren
+        contestants: Wettkämpferinnen
         login: Einloggen
         logout: Ausloggen
     language:
@@ -16,10 +17,44 @@ base:
     alert:
         accommodation: '<![CDATA[ <p> Die Anzahl der uns zur Verfügung stehenden Unterkünfte ist auf Grund der hohen Teilnehmerzahl sehr knapp. Sollten Sie jetzt noch Übernachtungen buchen, können wir diese nicht garantieren. Kontaktieren Sie uns bitte bei Fragen. <br/> <a class="fa fa-phone" href="tel:0049-0361-3731647"> +49 (0) 361 373 16 47</a> oder <a class="fa fa-envelope" href="mailto:info@thueringer-judoverband.de"> info@thueringer-judoverband.de</a> </p> ]]>'
         deadline: 'Der Meldeschluss ist verstrichen!!! Beachten Sie, dass das Anmelden weiterer Kämpferinnen mit der Berechnung einer erhöhten Startgebühr einhergeht.'
+global:
+    forms:
+        button:
+            save: Speichern
+            save-and-send: 'Speichern und Senden'
+            back: Zurück
+        unsaved-changes-warning: 'Du hast ungespeicherte Änderungen auf dieser Seite. Möchtest du die Seite verlassen und die Änderungen gehen verloren?'
 login:
     title: Einloggen
     description: 'Bitte tragen Sie die Email-Adresse und Passwort ein, mit welcher Sie Ihren Verband/Verein registriert haben.'
     action: einloggen
+participants:
+    contestants:
+        title: Offizielle
+        description: 'Bitte tragen Sie so viele Informationen ein, wie Sie können.'
+        data:
+            title: Teilnehmerin
+            first-name: Vorname
+            last-name: Nachname
+            year: Jahrgang
+            age-category:
+                title: Altersklasse
+                cadet: U18
+                junior: U21
+            weight-category: Gewichtsklasse
+            camp-only: 'nur Trainingscamp (ITC)'
+            itc-selection:
+                title: ITC-Auswahl
+                none: 'keine Teilnahme'
+                pack-A: 'Paket A'
+                pack-B: 'Paket B'
+                pack-C: 'Paket C'
+                1-day: '1 Tag'
+                2-day: '2 Tage'
+                3-day: '3 Tage'
+        status:
+            created: 'nicht gespeichert'
+            saved: 'gespeichert und angemeldet'
 registration:
     title: Registrierung
     description: 'Tragen Sie hier ihre Kontaktinformationen ein. Wenn Sie sich mit ihren Daten registriert haben, können Sie Offizielle und Wettkämpferinnen anmelden.'
