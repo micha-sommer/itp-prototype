@@ -27,10 +27,10 @@
                     <a class="nav-link" href="{{ path('welcome') }}">{{ 'base.navigation.home'|trans }}</a>
                 </li>
                 {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                    {#                    <li class="nav-item"> #}
-                    {#                        <a class="nav-link" #}
-                    {#                           href="{{ path('edit_registration') }}">{{ 'menu.registration_edit'|trans }}</a> #}
-                    {#                    </li> #}
+                    <li class="nav-item">
+                        <a class="nav-link"
+                           href="{{ path('registration_edit') }}">{{ 'base.menu.registration_edit'|trans }}</a>
+                    </li>
                     {#                    <li class="nav-item"> #}
                     {#                        <a class="nav-link" href="{{ path('officials') }}">{{ 'menu.officials_edit'|trans }}</a> #}
                     {#                    </li> #}
@@ -82,13 +82,15 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a class="dropdown-item" href="{{ path(app.request.get('_route',  'welcome'), app.request.attributes.get('_route_params')|merge({_locale:'de'})) }}">
+                            <a class="dropdown-item"
+                               href="{{ path(app.request.get('_route',  'welcome'), app.request.attributes.get('_route_params')|merge({_locale:'de'})) }}">
                                 {{ 'base.language.de'|trans }}
                                 <img class="mb-2" src="{{ asset('images/Flag_of_DE.svg') }}" height="15" alt="DEU"/>
                             </a>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="{{ path(app.request.get('_route',  'welcome'), app.request.attributes.get('_route_params')|merge({_locale:'en'})) }}">
+                            <a class="dropdown-item"
+                               href="{{ path(app.request.get('_route',  'welcome'), app.request.attributes.get('_route_params')|merge({_locale:'en'})) }}">
                                 {{ 'base.language.en'|trans }}
                                 <img class="mb-2" src="{{ asset('images/Flag_of_EN.svg') }}" height="15" alt="ENG"/>
                             </a>

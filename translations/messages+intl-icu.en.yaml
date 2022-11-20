@@ -1,6 +1,7 @@
 base:
     menu:
         register: Register
+        registration_edit: 'Contact Information'
         contestants: Contestants
         login: Login
         logout: Logout
@@ -59,8 +60,13 @@ participants:
             created: 'nicht gespeichert'
             saved: 'gespeichert und angemeldet'
 registration:
-    title: Registration
-    description: "Register here! In order to proceed with the registration, we will need a contact person. This information is also required for later changes that might or might not be needed. Once you've registered your club, you can add officials (coaches, physiotherapist etc.) and of course your contestants."
+    new:
+        title: Registration
+        description: "Register here! In order to proceed with the registration, we will need a contact person. This information is also required for later changes that might or might not be needed. Once you've registered your club, you can add officials (coaches, physiotherapist etc.) and of course your contestants."
+        action: Register
+    edit:
+        title: 'Edit Contact Information'
+        description: 'Edit your contact information. The email address cannot be changed. If you really need to, please contact us.'
     data:
         email: Email
         password: Password

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Registration;
+use App\Form\RegistrationEditFormType;
 use App\Form\RegistrationFormType;
 use App\Security\EmailVerifier;
 use DateTime;
@@ -70,6 +71,27 @@ class RegistrationController extends AbstractController
         }
 
         return $this->render('registration/new.html.twig', [
+            'registrationForm' => $form->createView(),
+        ]);
+    }
+
+    #[Route('/edit', name: 'registration_edit')]
+    public function edit(
+        Request                $request,
+        EntityManagerInterface $entityManager,
+    ): Response
+    {
+        /** @var Registration $registration */
+        $registration = $this->getUser();
+
+        $form = $this->createForm(RegistrationEditFormType::class, $registration);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+        }
+
+        return $this->render('registration/edit.html.twig', [
             'registrationForm' => $form->createView(),
         ]);
     }

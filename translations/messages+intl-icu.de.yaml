@@ -1,6 +1,7 @@
 base:
     menu:
         register: Registrieren
+        registration_edit: Kontaktinformationen
         contestants: Wettkämpferinnen
         login: Einloggen
         logout: Ausloggen
@@ -59,8 +60,13 @@ participants:
             created: 'nicht gespeichert'
             saved: 'gespeichert und angemeldet'
 registration:
-    title: Registrierung
-    description: 'Tragen Sie hier ihre Kontaktinformationen ein. Wenn Sie sich mit ihren Daten registriert haben, können Sie Offizielle und Wettkämpferinnen anmelden.'
+    new:
+        title: Registrierung
+        description: 'Tragen Sie hier ihre Kontaktinformationen ein. Wenn Sie sich mit ihren Daten registriert haben, können Sie Offizielle und Wettkämpferinnen anmelden.'
+        action: Register
+    edit:
+        title: 'Kontaktinformationen bearbeiten'
+        description: 'Tragen Sie hier ihre Kontaktinformationen ein. Ihre Emailadresse können Sie leider nicht ändern. Wenn Sie dies wirklich brauchen, kontaktieren Sie uns.'
     data:
         email: Email
         password: Passwort
