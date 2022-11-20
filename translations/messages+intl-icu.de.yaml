@@ -3,6 +3,7 @@ base:
         register: Registrieren
         registration_edit: Kontaktinformationen
         contestants: Wettkämpferinnen
+        officials: Offizielle
         login: Einloggen
         logout: Ausloggen
     language:
@@ -31,7 +32,7 @@ login:
     action: einloggen
 participants:
     contestants:
-        title: Offizielle
+        title: Wettkämpferinnen
         description: 'Bitte tragen Sie so viele Informationen ein, wie Sie können.'
         data:
             title: Teilnehmerin
@@ -50,6 +51,41 @@ participants:
                 pack-A: 'Paket A'
                 pack-B: 'Paket B'
                 pack-C: 'Paket C'
+                1-day: '1 Tag'
+                2-day: '2 Tage'
+                3-day: '3 Tage'
+            comment:
+                title: 'Kommentar hinzufügen'
+                for: 'Kommentar für'
+        status:
+            created: 'nicht gespeichert'
+            saved: 'gespeichert und angemeldet'
+    officials:
+        title: Offizielle
+        description: 'Bitte tragen Sie so viele Informationen ein, wie Sie können.'
+        data:
+            title: Offizieller
+            first-name: Vorname
+            last-name: Nachname
+            role:
+                title: Funktion
+                trainer: Trainer
+                physio: Physiotherapeut
+                psycho: Psychotherapeut
+                referee: Kampfrichter
+                photo: Fotograf
+                other: Anderes
+            gender:
+                title: Geschlecht
+                male: männlich
+                female: weiblich
+                divers: divers
+            itc-selection:
+                title: ITC-Auswahl
+                none: 'keine Teilnahme'
+                pack-A: 'Paket A (Fr.-Mo.)'
+                pack-B: 'Paket B (Fr.-Di.)'
+                pack-C: 'Paket C (Fr.-Mi.)'
                 1-day: '1 Tag'
                 2-day: '2 Tage'
                 3-day: '3 Tage'

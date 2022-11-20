@@ -31,13 +31,11 @@
                         <a class="nav-link"
                            href="{{ path('registration_edit') }}">{{ 'base.menu.registration_edit'|trans }}</a>
                     </li>
-                    {#                    <li class="nav-item"> #}
-                    {#                        <a class="nav-link" href="{{ path('officials') }}">{{ 'menu.officials_edit'|trans }}</a> #}
-                    {#                    </li> #}
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('contestants') }}">
-                            {{ 'base.menu.contestants'|trans }}
-                        </a>
+                        <a class="nav-link" href="{{ path('officials') }}">{{ 'base.menu.officials'|trans }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('contestants') }}">{{ 'base.menu.contestants'|trans }}</a>
                     </li>
                     {#                    <li class="nav-item"> #}
                     {#                        <a class="nav-link" href="{{ path('transports') }}">{{ 'menu.transport_edit'|trans }}</a> #}

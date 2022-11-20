@@ -3,6 +3,7 @@ base:
         register: Register
         registration_edit: 'Contact Information'
         contestants: Contestants
+        officials: Officials
         login: Login
         logout: Logout
     language:
@@ -57,8 +58,43 @@ participants:
                 title: 'add a comment'
                 for: 'comment for'
         status:
-            created: 'nicht gespeichert'
-            saved: 'gespeichert und angemeldet'
+            created: 'not yet saved'
+            saved: 'saved and registered'
+    officials:
+        title: Officials
+        description: 'Please enter as much information as you have available for the time being.'
+        data:
+            title: Official
+            first-name: 'First name'
+            last-name: 'Last name'
+            role:
+                title: Role
+                trainer: trainer
+                physio: 'physical therapist'
+                psycho: psychotherapist
+                referee: referee
+                photo: photographer
+                other: other
+            gender:
+                title: Gender
+                male: male
+                female: female
+                divers: non-binary
+            itc-selection:
+                title: 'ITC selection'
+                none: 'no participation'
+                pack-A: 'package A (Fri-Mon)'
+                pack-B: 'package B (Fri-Tue)'
+                pack-C: 'package C (Fri-Wed)'
+                1-day: '1 day'
+                2-day: '2 days'
+                3-day: '3 days'
+            comment:
+                title: 'add a comment'
+                for: 'comment for'
+        status:
+            created: 'not yet saved'
+            saved: 'saved and registered'
 registration:
     new:
         title: Registration

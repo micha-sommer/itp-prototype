@@ -34,6 +34,7 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/(%app.supported_locales%)/contestants$, roles: ROLE_USER }
+        - { path: ^/(%app.supported_locales%)/officials$, roles: ROLE_USER }
         - { path: ^/(%app.supported_locales%)/registration/new$, roles: PUBLIC_ACCESS }
         - { path: ^/(%app.supported_locales%)/registration/edit$, roles: ROLE_USER }
         - { path: ^/(%app.supported_locales%)/welcome, roles: PUBLIC_ACCESS }

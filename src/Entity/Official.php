@@ -2,14 +2,14 @@
 
 namespace App\Entity;
 
-use App\Repository\ContestantRepository;
+use App\Repository\OfficialRepository;
 use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: ContestantRepository::class)]
+#[ORM\Entity(repositoryClass: OfficialRepository::class)]
 #[ORM\HasLifecycleCallbacks]
-class Contestant
+class Official
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -22,29 +22,27 @@ class Contestant
     #[ORM\Column(length: 255)]
     private ?string $lastName = null;
 
-    #[ORM\Column(type: Types::SMALLINT)]
-    private ?int $year = null;
+    #[ORM\Column(length: 255)]
+    private ?string $role = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $weightCategory = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $ageCategory = null;
+    private ?string $gender = null;
 
     #[ORM\Column(length: 255)]
     private ?string $itcSelection = null;
+
+    #[ORM\ManyToOne(inversedBy: 'officials')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Registration $registration = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $comment = null;
 
     #[ORM\Column]
     private ?DateTimeImmutable $createdAt = null;
 
     #[ORM\Column]
     private ?DateTimeImmutable $modifiedAt = null;
-
-    #[ORM\ManyToOne(inversedBy: 'contestants')]
-    private ?Registration $registration = null;
-
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $comment = null;
 
     public function getId(): ?int
     {
@@ -75,38 +73,26 @@ class Contestant
         return $this;
     }
 
-    public function getYear(): ?int
+    public function getRole(): ?string
     {
-        return $this->year;
+        return $this->role;
     }
 
-    public function setYear(int $year): self
+    public function setRole(string $role): self
     {
-        $this->year = $year;
+        $this->role = $role;
 
         return $this;
     }
 
-    public function getWeightCategory(): ?string
+    public function getGender(): ?string
     {
-        return $this->weightCategory;
+        return $this->gender;
     }
 
-    public function setWeightCategory(string $weightCategory): self
+    public function setGender(string $gender): self
     {
-        $this->weightCategory = $weightCategory;
-
-        return $this;
-    }
-
-    public function getAgeCategory(): ?string
-    {
-        return $this->ageCategory;
-    }
-
-    public function setAgeCategory(string $ageCategory): self
-    {
-        $this->ageCategory = $ageCategory;
+        $this->gender = $gender;
 
         return $this;
     }
@@ -119,6 +105,30 @@ class Contestant
     public function setItcSelection(string $itcSelection): self
     {
         $this->itcSelection = $itcSelection;
+
+        return $this;
+    }
+
+    public function getRegistration(): ?Registration
+    {
+        return $this->registration;
+    }
+
+    public function setRegistration(?Registration $registration): self
+    {
+        $this->registration = $registration;
+
+        return $this;
+    }
+
+    public function getComment(): ?string
+    {
+        return $this->comment;
+    }
+
+    public function setComment(?string $comment): self
+    {
+        $this->comment = $comment;
 
         return $this;
     }
@@ -158,29 +168,5 @@ class Contestant
     public function onPreUpdate(): void
     {
         $this->modifiedAt = new DateTimeImmutable();
-    }
-
-    public function getRegistration(): ?Registration
-    {
-        return $this->registration;
-    }
-
-    public function setRegistration(?Registration $registration): self
-    {
-        $this->registration = $registration;
-
-        return $this;
-    }
-
-    public function getComment(): ?string
-    {
-        return $this->comment;
-    }
-
-    public function setComment(?string $comment): self
-    {
-        $this->comment = $comment;
-
-        return $this;
     }
 }

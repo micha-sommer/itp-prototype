@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection PhpUnused */
 
 namespace App\Entity;
 
@@ -62,9 +62,18 @@ class Registration implements UserInterface, PasswordAuthenticatedUserInterface
     )]
     private Collection $contestants;
 
+    #[ORM\OneToMany(
+        mappedBy: 'registration',
+        targetEntity: Official::class,
+        cascade: ["persist", "remove"],
+        orphanRemoval: true
+    )]
+    private Collection $officials;
+
     public function __construct()
     {
         $this->contestants = new ArrayCollection();
+        $this->officials = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -245,6 +254,36 @@ class Registration implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($contestant->getRegistration() === $this) {
                 $contestant->setRegistration(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Official>
+     */
+    public function getOfficials(): Collection
+    {
+        return $this->officials;
+    }
+
+    public function addOfficial(Official $official): self
+    {
+        if (!$this->officials->contains($official)) {
+            $this->officials->add($official);
+            $official->setRegistration($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOfficial(Official $official): self
+    {
+        if ($this->officials->removeElement($official)) {
+            // set the owning side to null (unless already changed)
+            if ($official->getRegistration() === $this) {
+                $official->setRegistration(null);
             }
         }
 

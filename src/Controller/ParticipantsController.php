@@ -2,10 +2,10 @@
 
 namespace App\Controller;
 
-use App\Entity\Contestant;
 use App\Entity\Registration;
 use App\Form\ContestantsListType;
-use Doctrine\Persistence\ManagerRegistry;
+use App\Form\OfficialsListType;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,14 +15,10 @@ use Symfony\Component\Routing\Annotation\Route;
 class ParticipantsController extends AbstractController
 {
     #[Route('/contestants', name: 'contestants')]
-    public function contestants(Request $request, ManagerRegistry $doctrine): Response
+    public function contestants(Request $request, EntityManagerInterface $entityManager): Response
     {
         /** @var Registration $registration */
         $registration = $this->getUser();
-
-        if ($registration->getContestants()->isEmpty()) {
-            $registration->addContestant(new Contestant());
-        }
 
         $form = $this->createForm(
             ContestantsListType::class,
@@ -33,11 +29,32 @@ class ParticipantsController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $doctrine->getManager();
             $entityManager->flush();
         }
 
         return $this->render('participants/contestants.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    #[Route('/officials', name: 'officials')]
+    public function officials(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        /** @var Registration $registration */
+        $registration = $this->getUser();
+
+        $form = $this->createForm(
+            OfficialsListType::class,
+            $registration,
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+        }
+
+        return $this->render('participants/officials.html.twig', [
             'form' => $form->createView(),
         ]);
     }
