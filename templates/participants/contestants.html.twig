@@ -33,7 +33,7 @@
                                 <small class="text-muted">'|e }}{{ 'participants.contestants.data.first-name'|trans }}{{ '</small>
                             </div>
                             <div class="col-auto" id="buttons-go-here"></div>
-                        </div>'|e }}
+                        </div>'|e }}{{ form_widget(form.contestants.vars.prototype.comment)|e }}
                         {{ form_widget(form.contestants.vars.prototype.firstName)|e }}
 {{ '                    <small class="text-muted">'|e }}{{ 'participants.contestants.data.last-name'|trans }}{{ '</small>'|e }}
                         {{ form_widget(form.contestants.vars.prototype.lastName)|e }}
@@ -61,6 +61,7 @@
                                         <small
                                             class="text-muted">{{ 'participants.contestants.data.first-name'|trans }}</small>
                                     </div>
+                                    {{ form_widget(contestant.comment) }}
                                     <div class="col-auto" id="buttons-go-here"></div>
                                 </div>
                                 {{ form_widget(contestant.firstName) }}
@@ -111,6 +112,35 @@
                 </div>
             </div>
         </div>
+        <div class="modal fade" id="commentModal" tabindex="-1" role="dialog" aria-labelledby="commentModalLabel">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="exampleModalLabel">
+                            {{ 'participants.contestants.data.comment.title'|trans }}
+                        </h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="comment-textarea" class="col-form-label">
+                                    {{ 'participants.contestants.data.comment.for'|trans }}
+                                </label>
+                                <label class="modal-body-name"></label>
+                                <textarea class="form-control" id="comment-textarea"></textarea>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="modal-save" onclick="save()" type="button" class="btn btn-success"
+                                data-bs-dismiss="modal">
+                            {{ 'global.forms.button.save'|trans }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
         {{ form_end(form, {'render_rest': false}) }}
     </div>
 {% endblock %}
@@ -118,8 +148,8 @@
 {% block javascript %}
     <script>
         let $collectionHolder;
-        let $removeFormButton = $('<button class="btn btn-danger ml-1" type="button"><i class="fa fa-trash" aria-hidden="true"></i></button>');
-
+        let $removeFormButton = $('<button class="btn btn-danger ms-1" type="button"><i class="fa fa-trash" aria-hidden="true"></i></button>');
+        let $commentFormButton = $('<button class="btn btn-info" type="button" data-bs-toggle="modal" data-bs-target="#commentModal" data-comment=""><i class="fa fa-comment"></i></button>');
 
         $(document).ready(function () {
             // Get the ul that holds the collection of tags
@@ -127,7 +157,7 @@
 
             // add a delete link to all of the existing tag form li elements
             $collectionHolder.find('div#contestant').each(function () {
-                // addTagFormCommentLink($(this));
+                addTagFormCommentLink($(this));
                 addTagFormDeleteLink($(this));
             });
 
@@ -140,7 +170,6 @@
             $addTagLink.on('click', function (e) {
                 // prevent the link from creating a "#" on the URL
                 e.preventDefault();
-                console.log("add")
 
                 // add a new tag form (see code block below)
                 addTagForm($collectionHolder, $addTagLink);
@@ -180,26 +209,68 @@
             // increase the index with one for the next item
             $collectionHolder.data('index', index + 1);
 
-            // Display the form in the page in an li, before the "Add a tag" link td
+            // Display the form in the page in a li, before the "Add a tag" link td
             let finalForm = $('<div class="col mb-4" id="contestant"></div>')
                 .append(newForm);
 
-            // addTagFormCommentLink($newForm);
+            addTagFormCommentLink(finalForm);
             addTagFormDeleteLink(finalForm);
 
             finalForm.insertBefore('#add-new-contestant');
         }
 
-        function addTagFormDeleteLink($tagFormKariEventPerson) {
-            console.log('add delete')
+        function addTagFormCommentLink($tagFromContestant) {
+            let $thisCommentFormButton = $commentFormButton.clone();
+            let $buttonGoesHere = $tagFromContestant.find('#buttons-go-here');
+
+            let $commentHiddenType = $tagFromContestant.find('input.hidden-comment');
+            $thisCommentFormButton.attr('data-comment', $commentHiddenType.attr('value'));
+            $thisCommentFormButton.attr('data-id', $commentHiddenType.attr('id'));
+
+            if ($thisCommentFormButton.attr('data-comment') !== '')
+                $thisCommentFormButton.removeClass('btn-info').addClass('btn-success');
+
+            $buttonGoesHere.append($thisCommentFormButton);
+        }
+
+        function addTagFormDeleteLink($tagFormContestant) {
             let $thisRemoveFormButton = $removeFormButton.clone();
-            let $buttonGoesHere = $tagFormKariEventPerson.find('#buttons-go-here');
+            let $buttonGoesHere = $tagFormContestant.find('#buttons-go-here');
             $buttonGoesHere.append($thisRemoveFormButton);
 
             $thisRemoveFormButton.on('click', function () {
                 // remove the li for the tag form
-                $tagFormKariEventPerson.remove();
+                $tagFormContestant.remove();
             });
+        }
+
+        $('#commentModal').on('show.bs.modal', function (event) {
+            let button = $(event.relatedTarget); // Button that triggered the modal
+            let comment = button.attr('data-comment'); // Extract info from data-* attributes
+            let id = button.data('id'); // Extract info from data-* attributes
+            let firstNameId = id.replaceAll('comment', 'firstName')
+            let lastNameId = id.replaceAll('comment', 'lastName')
+            let name = $('#'+firstNameId).val() + " " + $('#'+lastNameId).val(); // Extract info from data-* attributes
+            // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+            // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+            let modal = $(this);
+            modal.find('.modal-body-name').text(name);
+            modal.find('.modal-body textarea').val(comment);
+            modal.find('.modal-body textarea').attr('data-id', id);
+        });
+
+        function save() {
+            let commentTextArea = $("#comment-textarea");
+            let comment = commentTextArea.val();
+            let id = commentTextArea.attr('data-id');
+
+            let $button = $('button[data-id=' + id + ']');
+            if (comment === '')
+                $button.removeClass('btn-sucess').addClass('btn-info');
+            else
+                $button.removeClass('btn-info').addClass('btn-success');
+            $button.attr('data-comment', comment);
+            $('#' + id).attr('value', comment);
         }
     </script>
 {% endblock %}

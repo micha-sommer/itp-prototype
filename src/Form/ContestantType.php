@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Contestant;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -56,7 +57,9 @@ class ContestantType extends AbstractType
                     'participants.contestants.data.itc-selection.2-day' => '2-day',
                     'participants.contestants.data.itc-selection.3-day' => '3-day',
                 ]
-            ]);
+            ])
+            ->add('comment', HiddenType::class, ['attr'=> ['class' => 'hidden-comment']]);
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

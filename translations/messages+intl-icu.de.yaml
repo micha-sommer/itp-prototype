@@ -52,6 +52,9 @@ participants:
                 1-day: '1 Tag'
                 2-day: '2 Tage'
                 3-day: '3 Tage'
+            comment:
+                title: 'Kommentar hinzufügen'
+                for: 'Kommentar für'
         status:
             created: 'nicht gespeichert'
             saved: 'gespeichert und angemeldet'

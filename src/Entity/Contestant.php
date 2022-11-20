@@ -44,6 +44,9 @@ class Contestant
     #[ORM\ManyToOne(inversedBy: 'contestants')]
     private ?Registration $registration = null;
 
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $comment = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -166,6 +169,18 @@ class Contestant
     public function setRegistration(?Registration $registration): self
     {
         $this->registration = $registration;
+
+        return $this;
+    }
+
+    public function getComment(): ?string
+    {
+        return $this->comment;
+    }
+
+    public function setComment(?string $comment): self
+    {
+        $this->comment = $comment;
 
         return $this;
     }
