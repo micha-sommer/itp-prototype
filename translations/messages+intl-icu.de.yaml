@@ -67,6 +67,9 @@ registration:
     edit:
         title: 'Kontaktinformationen bearbeiten'
         description: 'Tragen Sie hier ihre Kontaktinformationen ein. Ihre Emailadresse können Sie leider nicht ändern. Wenn Sie dies wirklich brauchen, kontaktieren Sie uns.'
+    edit_password:
+        title: 'Passwort ändern'
+        description: 'Hier können Sie ihr Passwort für den Login ändern. Passwörter müssen mindestens 6 Zeichen lang sein.'
     data:
         email: Email
         password: Passwort

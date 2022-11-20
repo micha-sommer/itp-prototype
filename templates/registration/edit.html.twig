@@ -7,6 +7,7 @@
         <div class="p-5 mb-4 bg-light rounded-3">
             <h1 class="display-4">{{ 'registration.edit.title'|trans }}</h1>
             <p class="lead">{{ 'registration.edit.description'|trans }}</p>
+            <a class="btn btn-outline-primary" href="{{ path('registration_edit_password') }}">Passwort ändern</a>
             <hr class="my-4">
             {{ form_start(registrationForm) }}
             {{ form_row(registrationForm._token) }}

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Registration;
 use App\Form\RegistrationEditFormType;
+use App\Form\RegistrationEditPasswordFormType;
 use App\Form\RegistrationFormType;
 use App\Security\EmailVerifier;
 use DateTime;
@@ -92,6 +93,36 @@ class RegistrationController extends AbstractController
         }
 
         return $this->render('registration/edit.html.twig', [
+            'registrationForm' => $form->createView(),
+        ]);
+    }
+
+    #[Route('/edit/password', name: 'registration_edit_password')]
+    public function changePassword(
+        Request                     $request,
+        UserPasswordHasherInterface $userPasswordHasher,
+        EntityManagerInterface      $entityManager,
+    ): Response
+    {
+        /** @var Registration $registration */
+        $registration = $this->getUser();
+
+        $form = $this->createForm(RegistrationEditPasswordFormType::class, $registration);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // encode the plain password
+            $registration->setPassword(
+                $userPasswordHasher->hashPassword(
+                    $registration,
+                    $form->get('plainPassword')->getData()
+                )
+            );
+
+            $entityManager->flush();
+        }
+
+        return $this->render('registration/edit_password.html.twig', [
             'registrationForm' => $form->createView(),
         ]);
     }

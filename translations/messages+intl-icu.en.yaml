@@ -67,6 +67,9 @@ registration:
     edit:
         title: 'Edit Contact Information'
         description: 'Edit your contact information. The email address cannot be changed. If you really need to, please contact us.'
+    edit_password:
+        title: 'Change Password'
+        description: 'Change your password here. Password must be at least 6 characters long.'
     data:
         email: Email
         password: Password
