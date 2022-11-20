@@ -82,13 +82,13 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a class="dropdown-item" href="{{ path('welcome', {_locale: 'de'}) }}">
+                            <a class="dropdown-item" href="{{ path(app.request.get('_route',  'welcome'), app.request.attributes.get('_route_params')|merge({_locale:'de'})) }}">
                                 {{ 'base.language.de'|trans }}
                                 <img class="mb-2" src="{{ asset('images/Flag_of_DE.svg') }}" height="15" alt="DEU"/>
                             </a>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="{{ path('welcome', {_locale: 'en'}) }}">
+                            <a class="dropdown-item" href="{{ path(app.request.get('_route',  'welcome'), app.request.attributes.get('_route_params')|merge({_locale:'en'})) }}">
                                 {{ 'base.language.en'|trans }}
                                 <img class="mb-2" src="{{ asset('images/Flag_of_EN.svg') }}" height="15" alt="ENG"/>
                             </a>
