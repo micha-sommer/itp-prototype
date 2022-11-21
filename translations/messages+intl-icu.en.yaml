@@ -9,6 +9,7 @@ base:
         officials: Officials
         login: Login
         logout: Logout
+        exit-impersonation: 'Back to Admin'
     language:
         title: language
         de: german
