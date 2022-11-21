@@ -1,5 +1,8 @@
+admin:
+    title: Admin
 base:
     menu:
+        admin: Admin
         register: Register
         registration_edit: 'Contact Information'
         contestants: Contestants

@@ -289,4 +289,46 @@ class Registration implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    public function getPackageACount(): int
+    {
+        return $this->getItcSelectionCount('pack-A');
+    }
+
+    public function getPackageBCount(): int
+    {
+        return $this->getItcSelectionCount('pack-B');
+    }
+
+    public function getPackageCCount(): int
+    {
+        return $this->getItcSelectionCount('pack-C');
+    }
+
+    public function getOneDayCount(): int
+    {
+        return $this->getItcSelectionCount('1-day');
+    }
+
+    public function getTwoDaysCount(): int
+    {
+        return $this->getItcSelectionCount('2-day');
+    }
+
+    public function getThreeDaysCount(): int
+    {
+        return $this->getItcSelectionCount('3-day');
+    }
+
+    private function getItcSelectionCount(string $countCriteria): int
+    {
+        $numOfficials = $this->officials->filter(function (Official $official) use ($countCriteria) {
+            return $countCriteria === $official->getItcSelection();
+        })->count();
+        $numContestants = $this->contestants->filter(function (Contestant $contestant) use ($countCriteria) {
+            return $countCriteria === $contestant->getItcSelection();
+        })->count();
+
+        return $numOfficials + $numContestants;
+    }
 }

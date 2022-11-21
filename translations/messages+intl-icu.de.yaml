@@ -1,5 +1,8 @@
+admin:
+    title: Admin
 base:
     menu:
+        admin: Admin
         register: Registrieren
         registration_edit: Kontaktinformationen
         contestants: Wettkämpferinnen

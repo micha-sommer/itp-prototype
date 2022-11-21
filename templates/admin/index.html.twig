@@ -1,0 +1,92 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'admin.title'|trans }}{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="p-5 mb-4 bg-light rounded-3">
+            <h1 class="display-4">{{ 'admin.title'|trans }}</h1>
+            <hr class="my-4">
+            <table class="table">
+                <caption>Admin table</caption>
+                <thead class="table-dark">
+                <tr>
+                    <td colspan="5" class="table-light"></td>
+                    <td colspan="6" class="text-center">Übernachtungen</td>
+                    <td colspan="1" class="table-light"></td>
+                </tr>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col"></th>
+                    <th scope="col">Club</th>
+                    <th scope="col">O</th>
+                    <th scope="col">C</th>
+                    <th scope="col">Paket A</th>
+                    <th scope="col">Paket B</th>
+                    <th scope="col">Paket C</th>
+                    <th scope="col">1 Tag</th>
+                    <th scope="col">2 Tage</th>
+                    <th scope="col">3 Tage</th>
+                    <th scope="col">Aktion</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>&sum;</td>
+                    <td></td>
+                    <td>{{ registrationsCount }}</td>
+                    <td>{{ officialsCount }}</td>
+                    <td>{{ contestantsCount }}</td>
+                    <td class="table-active">{{ packageACount }}</td>
+                    <td class="table-active">{{ packageBCount }}</td>
+                    <td class="table-active">{{ packageCCount }}</td>
+                    <td class="table-active">{{ oneDayCount }}</td>
+                    <td class="table-active">{{ twoDaysCount }}</td>
+                    <td class="table-active">{{ threeDaysCount }}</td>
+                    <td></td>
+                </tr>
+                {% for registration in registrations %}
+                    <tr>
+                        <td>{{ registration.id }}</td>
+                        <td>{{ registration.country }}</td>
+                        <td>{{ registration.club }}</td>
+                        <td>{{ registration.officials.count }}</td>
+                        <td>{{ registration.contestants.count }}</td>
+                        <td class="table-active">{{ registration.packageACount }}</td>
+                        <td class="table-active">{{ registration.packageBCount }}</td>
+                        <td class="table-active">{{ registration.packageCCount }}</td>
+                        <td class="table-active">{{ registration.oneDayCount }}</td>
+                        <td class="table-active">{{ registration.twoDaysCount }}</td>
+                        <td class="table-active">{{ registration.threeDaysCount }}</td>
+                        <td>
+{#                            <a class="btn btn-primary" role="button"#}
+{#                               data-toggle="tooltip" data-placement="top"#}
+{#                               title="Login as user"#}
+{#                               href="{{ path('welcome', {'_switch_user': registration.email }) }}">#}
+{#                                <i class="fas fa-sign-in-alt"></i>#}
+{#                            </a>#}
+{#                            <a class="btn btn-info" role="button"#}
+{#                               data-toggle="tooltip" data-placement="top"#}
+{#                               title="New Invoice"#}
+{#                               href="{{ path('new_invoice', {'_switch_user': registration.email}) }}">#}
+{#                                <i class="fas fa-hand-holding-usd"></i>#}
+{#                            </a>#}
+{#                            {% for invoice in registration.invoices %}#}
+{#                                <a class="btn {{ invoice.published ? "btn-success" : "btn-warning" }}" role="button"#}
+{#                                   data-toggle="tooltip" data-placement="top"#}
+{#                                   title="{{ 'menu.invoice'|trans }} : {{ invoice.name }}"#}
+{#                                   href="{{ path('invoicing', {'_switch_user': registration.email, 'uid': invoice.id }) }}">#}
+{#                                    <i class="fas fa-file-invoice-dollar"></i>#}
+{#                                </a>#}
+{#                            {% endfor %}#}
+{#                            <a class="btn btn-danger" href="javascript:void(0)"#}
+{#                               onclick="if(confirm('Are you sure you want to delete {{ registration.club }} and all its registered officials, contestants, and transport ?')){window.location='{{ path('delete_registration', {'uid': registration.id}) }}';}">#}
+{#                                <i class="fas fa-trash" aria-hidden="true"></i></a>#}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

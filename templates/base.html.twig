@@ -52,11 +52,11 @@
                     {#                            </li> #}
                     {#                        {% endif %} #}
                     {#                    {% endfor %} #}
-                    {#                    {% if is_granted('ROLE_ADMIN') %} #}
-                    {#                        <li class="nav-item"> #}
-                    {#                            <a class="nav-link badge-warning" href="{{ path('admin') }}">{{ 'menu.admin'|trans }}</a> #}
-                    {#                        </li> #}
-                    {#                    {% endif %} #}
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <li class="nav-item">
+                            <a class="nav-link link-warning" href="{{ path('admin_index') }}">{{ 'base.menu.admin'|trans }}</a>
+                        </li>
+                    {% endif %}
                 {% else %}
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('registration_new') }}">{{ 'base.menu.register'|trans }}</a>
