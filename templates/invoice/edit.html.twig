@@ -1,0 +1,231 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'invoice.edit.title'|trans }}{% endblock %}
+
+{% block body %}
+    <div class="container">
+        {{ form_start(form) }}
+        {{ form_row(form._token) }}
+        <div class="p-5 mb-4 bg-light rounded-3">
+            <h1 class="display-4">{{ 'invoice.edit.title'|trans }}</h1>
+            <hr class="my-4">
+            {{ form_row(form.name, {label: 'invoice.data.name'}) }}
+            {{ form_row(form.invoiceAddress, {label: 'invoice.data.invoice-address'}) }}
+            <hr class="my-4">
+            <table class="table">
+                <caption>Invoice table</caption>
+                <thead class="table-dark">
+                <tr>
+                    <th id="1" class="text-center"
+                        style="width: 45%">{{ 'invoice.data.position.description'|trans }}</th>
+                    <th id="2" class="text-center" style="width: 15%">{{ 'invoice.data.position.price'|trans }}</th>
+                    <th id="3" class="text-center" style="width: 10%">{{ 'invoice.data.position.amount'|trans }}</th>
+                    <th id="4" class="text-center" style="width: 25%">{{ 'invoice.data.position.total'|trans }}</th>
+                    <th id="5" class="text-center" style="width: 2.5%"></th>
+                    <th id="6" class="text-center" style="width: 2.5%"></th>
+                </tr>
+                </thead>
+                <tbody id="invoices" data-prototype="
+                {{ '<td>'|e }}{{ form_widget(form.invoicePositions.vars.prototype.description)|e }}{{ '</td>'|e }}
+                {{ '<td>'|e }}{{ form_widget(form.invoicePositions.vars.prototype.priceInHundreds)|e }}{{ '</td>'|e }}
+                {{ '<td>'|e }}{{ form_widget(form.invoicePositions.vars.prototype.amountInHundreds)|e }}{{ '</td>'|e }}
+                {{ '<td>'|e }}{{ form_widget(form.invoicePositions.vars.prototype.totalInHundreds, { 'attr': {'class': 'text-end'}})|e }}{{ '</td>'|e }}
+            ">
+                {% for invoicePosition in form.invoicePositions %}
+                    <tr id="invoicePosition" data-index="{{ invoicePosition.vars.name }}">
+                        <td>{{ form_widget(invoicePosition.description) }}</td>
+                        <td>{{ form_widget(invoicePosition.priceInHundreds) }}</td>
+                        <td>{{ form_widget(invoicePosition.amountInHundreds) }}</td>
+                        <td>{{ form_widget(invoicePosition.totalInHundreds, { 'attr': {'class': 'text-end'}}) }}</td>
+                    </tr>
+                {% endfor %}
+                <tr>
+                </tr>
+                </tbody>
+                <thead class="total">
+                <tr>
+                    <td class="text-end" colspan="3"><p class="fw-bold mb-1">{{ 'invoice.data.total'|trans }}</p></td>
+                    <td class="final_total">{{ form_widget(form.totalInHundreds, {'attr': {'class': 'text-end'}}) }}</td>
+                    <td><button class="btn btn-primary" type="button" onclick="updateTotal()"><i class="fas fa-calculator"></i></button></td>
+                    <td></td>
+                </tr>
+                </thead>
+            </table>
+            <div class="container-fluid">
+                <button class="btn btn-primary btn-lg btn-info add-a-tag me-auto" type="button">
+                    {{ 'invoice.edit.add'|trans }}
+                </button>
+                <td><button class="btn btn-primary btn-lg" type="button" onclick="updateAll()"><i class="fas fa-calculator"></i></button></td>
+                <td><button class="btn btn-warning btn-lg" type="button" onclick="removeEmpty()"><i class="fas fa-broom"></i></button></td>
+                {#                <button class="btn {{ (invoice.published) ? 'btn-warning'|raw : 'btn-success'|raw }} btn-lg float-right" #}
+                {#                        name="publish" type="submit" data-toggle="tooltip" #}
+                {#                        data-placement="top" #}
+                {#                        title="{{ (invoice.published) ? 'tooltip.hide.invoice'|trans : 'tooltip.publish.invoice'|trans }}" #}
+                {#                        value="{{ (invoice.published) ? 'save_and_hide.invoice'|trans : 'save_and_publish.invoice'|trans }}"> #}
+                {#                    {% if invoice.published %} #}
+                {#                        <i class="fas fa-eye-slash"></i> #}
+                {#                    {% else %} #}
+                {#                        <i class="fas fa-eye"></i> #}
+                {#                    {% endif %} #}
+                {#                </button> #}
+                <input class="btn btn-success btn-lg" type="submit" value="{{ 'global.forms.button.save'|trans }}"/>
+                {#                <a href="{{ path('invoice', {'uid': invoice.id}) }}" #}
+                {#                   class="btn btn-info btn-lg float-right mr-1" #}
+                {#                   role="button" #}
+                {#                   data-toggle="tooltip" data-placement="top" #}
+                {#                   title="{{ 'generic.tooltip.preview'|trans }}">{{ 'generic.preview'|trans }}</a> #}
+                {#                <a class="btn btn-info btn-lg float-right mr-1" role="button" #}
+                {#                   data-toggle="tooltip" data-placement="top" #}
+                {#                   title="Send confirmation mail" #}
+                {#                   href="{{ path('mail_invoice', {'uid': invoice.id}) }}"> #}
+                {#                    <i class="fa fa-envelope" aria-hidden="true"></i> #}
+                {#                </a> #}
+                {#                <a href="{{ path('invoicing', {'uid': invoice.id}) }}" #}
+                {#                   class="btn btn-warning btn-lg float-right mr-1" #}
+                {#                   role="button" #}
+                {#                   data-toggle="tooltip" data-placement="top" #}
+                {#                   title="{{ 'generic.tooltip.cancel'|trans }}">{{ 'generic.cancel'|trans }}</a> #}
+                <a class="btn btn-danger btn-lg" href="javascript:void(0)"
+                   onclick="if(confirm('Are you sure you want to delete this invoice of {{ invoice.registration.club }}?')){window.location='{{ path('invoice_delete', {'id': invoice.id}) }}';}">
+                    <i class="fas fa-trash" aria-hidden="true"></i></a>
+            </div>
+        </div>
+        {{ form_end(form, {'render_rest': false}) }}
+    </div>
+{% endblock %}
+
+{% block javascript %}
+<script>
+    let collectionHolder;
+    let removeFormButton = $('<td><button class="btn btn-danger" id="removePositionButton" type="button"><i class="fas fa-trash"></i></button></td>');
+    let calcFormButton = $('<td><button class="btn btn-primary" id="calcSubtotalButton" type="button"><i class="fas fa-calculator"></i></button></td>');
+
+    jQuery(document).ready(function () {
+        // Get the ul that holds the collection of tags
+        collectionHolder = $('#invoices');
+
+        // add a delete link to all of the existing tag form li elements
+        collectionHolder.find('tr#invoicePosition').each(function () {
+            addTagFormCalcLink($(this));
+            addTagFormDeleteLink($(this));
+        });
+
+    // count the current form inputs we have (e.g. 2), use that as the new
+    // index when inserting a new item (e.g. 2)
+    collectionHolder.data('index', collectionHolder.find('tr#invoicePosition').length);
+
+    let $addTagLink = $('button.add-a-tag');
+    $addTagLink.on('click', function (e) {
+            // prevent the link from creating a "#" on the URL
+            e.preventDefault();
+
+            // add a new tag form (see code block below)
+            addTagForm(collectionHolder, $addTagLink);
+        });
+    });
+
+    function addTagForm(collectionHolder) {
+        // Get the data-prototype explained earlier
+        let prototype = collectionHolder.data('prototype');
+
+        // get the new index
+        let index = collectionHolder.data('index');
+
+        // Replace '$$name$$' in the prototype's HTML to
+        // instead be a number based on how many items we have
+        let newForm = prototype.replace(/__name__/g, index);
+
+        // increase the index with one for the next item
+        collectionHolder.data('index', index + 1);
+
+        // Display the form in the page in a li, before the "Add a tag" link td
+        let $newFormTr = $(`<tr class="table-warning" id="invoicePosition" data-index="${index}"></tr>`).append(newForm);
+
+        addTagFormCalcLink($newFormTr, index);
+        addTagFormDeleteLink($newFormTr);
+
+        collectionHolder.append($newFormTr);
+    }
+
+    function addTagFormCalcLink(tagFormTr) {
+        let thisCalcFormButton = calcFormButton.clone();
+        let index = tagFormTr.data('index')
+
+        tagFormTr.append(thisCalcFormButton);
+
+        thisCalcFormButton.on('click', function () {
+            let totalField = tagFormTr.find(`input#invoice_invoicePositions_${index}_totalInHundreds`);
+            let priceValue = tagFormTr.find(`input#invoice_invoicePositions_${index}_priceInHundreds`).val();
+            let multiplierValue = tagFormTr.find(`input#invoice_invoicePositions_${index}_amountInHundreds`).val();
+
+            let locale = document.querySelector('html').getAttribute('lang');
+            priceValue = stringToNumber(priceValue, locale);
+            multiplierValue = stringToNumber(multiplierValue, locale);
+            let newValue = Number(priceValue * multiplierValue);
+
+            totalField.val(newValue.toLocaleString(locale, {minimumFractionDigits: 2, maximumFractionDigits: 2}));
+            totalField.change(); // trigger change to update total
+        });
+    }
+
+    function addTagFormDeleteLink($tagFormTr) {
+        let $thisRemoveFormButton = removeFormButton.clone();
+
+        $tagFormTr.append($thisRemoveFormButton);
+
+        $thisRemoveFormButton.on('click', function () {
+            // remove the li for the tag form
+            $tagFormTr.remove();
+        });
+    }
+
+    function stringToNumber(numberString, locale) {
+        if (locale === 'de') {
+            return parseFloat(numberString.replace(/\./g, '').replace(',', '.'));
+        } else {
+            return parseFloat(numberString.replace(',', ''));
+        }
+    }
+
+    function updateTotal() {
+        let total = 0;
+        let locale = document.querySelector('html').getAttribute('lang');
+
+        // Get the ul that holds the collection of tags
+        collectionHolder = $('tbody#invoices');
+
+        // get subtotal of all elements
+        collectionHolder.find('tr#invoicePosition').each(function () {
+            let index = $(this).data('index');
+            console.log('get subtotals from index: '+index);
+            total += stringToNumber($(this).find(`input#invoice_invoicePositions_${index}_totalInHundreds`).val(), locale);
+        });
+        $('#invoice_totalInHundreds').val(total.toLocaleString(locale, {minimumFractionDigits: 2, maximumFractionDigits: 2}));
+    }
+
+    function updateAll() {
+        $('button#calcSubtotalButton').each(function () {
+            $(this).click()
+        });
+        updateTotal();
+    }
+
+    function removeEmpty() {
+        let locale = document.querySelector('html').getAttribute('lang');
+
+        console.log("remove empty")
+        $('tr#invoicePosition').each(function () {
+            let index = $(this).data('index');
+            console.log("check index: "+index)
+            let amount = stringToNumber($(this).find(`input#invoice_invoicePositions_${index}_amountInHundreds`).val(), locale);
+            console.log("amount is: "+amount)
+            console.log(amount === 0)
+            if(amount === 0) {
+                console.log("Remove index: "+index)
+                $(this).find('button#removePositionButton').click()
+            }
+        });
+    }
+
+</script>
+{% endblock %}

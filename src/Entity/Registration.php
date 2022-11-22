@@ -70,10 +70,22 @@ class Registration implements UserInterface, PasswordAuthenticatedUserInterface
     )]
     private Collection $officials;
 
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $invoiceAddress = null;
+
+    #[ORM\OneToMany(
+        mappedBy: 'registration',
+        targetEntity: Invoice::class,
+        cascade: ["persist", "remove"],
+        orphanRemoval: true
+    )]
+    private Collection $invoices;
+
     public function __construct()
     {
         $this->contestants = new ArrayCollection();
         $this->officials = new ArrayCollection();
+        $this->invoices = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -290,6 +302,18 @@ class Registration implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function getInvoiceAddress(): ?string
+    {
+        return $this->invoiceAddress;
+    }
+
+    public function setInvoiceAddress(?string $invoiceAddress): self
+    {
+        $this->invoiceAddress = $invoiceAddress;
+
+        return $this;
+    }
+
     public function getPackageACount(): int
     {
         return $this->getItcSelectionCount('pack-A');
@@ -330,5 +354,35 @@ class Registration implements UserInterface, PasswordAuthenticatedUserInterface
         })->count();
 
         return $numOfficials + $numContestants;
+    }
+
+    /**
+     * @return Collection<int, Invoice>
+     */
+    public function getInvoices(): Collection
+    {
+        return $this->invoices;
+    }
+
+    public function addInvoice(Invoice $invoice): self
+    {
+        if (!$this->invoices->contains($invoice)) {
+            $this->invoices->add($invoice);
+            $invoice->setRegistration($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInvoice(Invoice $invoice): self
+    {
+        if ($this->invoices->removeElement($invoice)) {
+            // set the owning side to null (unless already changed)
+            if ($invoice->getRegistration() === $this) {
+                $invoice->setRegistration(null);
+            }
+        }
+
+        return $this;
     }
 }

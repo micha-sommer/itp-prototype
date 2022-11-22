@@ -17,6 +17,7 @@
             {{ form_row(registrationForm.firstName, {label: 'registration.data.first-name'}) }}
             {{ form_row(registrationForm.lastName, {label: 'registration.data.last-name'}) }}
             {{ form_row(registrationForm.telephone, {label: 'registration.data.telephone'}) }}
+            {{ form_row(registrationForm.invoiceAddress, {label: 'registration.data.invoice-address'}) }}
 
             <button class="btn btn-primary btn-lg" type="submit">{{ 'registration.new.action'|trans }}</button>
             {{ form_end(registrationForm, {'render_rest': false}) }}

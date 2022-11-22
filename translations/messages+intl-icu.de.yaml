@@ -30,6 +30,19 @@ global:
             save-and-send: 'Speichern und Senden'
             back: Zurück
         unsaved-changes-warning: 'Du hast ungespeicherte Änderungen auf dieser Seite. Möchtest du die Seite verlassen und die Änderungen gehen verloren?'
+invoice:
+    edit:
+        title: 'Rechnung bearbeiten'
+        add: Mehr
+    data:
+        name: Name
+        invoice-address: Rechnungsadresse
+        total: Gesamt
+        position:
+            description: Positionsbeschreibung
+            price: Einzelpreis
+            amount: Menge
+            total: Summe
 login:
     title: Einloggen
     description: 'Bitte tragen Sie die Email-Adresse und Passwort ein, mit welcher Sie Ihren Verband/Verein registriert haben.'
@@ -118,6 +131,7 @@ registration:
         first-name: Vorname
         last-name: Nachname
         telephone: Telefon
+        invoice-address: Rechnungsadresse
     mail:
         name: 'Thüringer Judo-Verband e.V.'
         subject: 'Bitte bestätigen Sie Ihre Email-Adresse.'

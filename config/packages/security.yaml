@@ -36,6 +36,8 @@ security:
         - { path: ^/(%app.supported_locales%)/admin$, roles: ROLE_ADMIN }
         - { path: ^/(%app.supported_locales%)/contestants$, roles: ROLE_USER }
         - { path: ^/(%app.supported_locales%)/officials$, roles: ROLE_USER }
+        - { path: ^/(%app.supported_locales%)/invoices/new$, roles: ROLE_ADMIN }
+        - { path: ^/(%app.supported_locales%)/invoices/\d+/edit$, roles: ROLE_ADMIN }
         - { path: ^/(%app.supported_locales%)/registration/new$, roles: PUBLIC_ACCESS }
         - { path: ^/(%app.supported_locales%)/registration/edit$, roles: ROLE_USER }
         - { path: ^/(%app.supported_locales%)/welcome, roles: PUBLIC_ACCESS }

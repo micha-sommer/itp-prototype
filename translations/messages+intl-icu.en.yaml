@@ -30,6 +30,19 @@ global:
             save-and-send: 'Save and Send'
             back: Back
         unsaved-changes-warning: "You have unsaved changes. Do you really want to leave and loose the data or stay and continue?"
+invoice:
+    edit:
+        title: 'Edit Invoice'
+        add: Add
+    data:
+        name: Name
+        invoice-address: 'Invoice address'
+        total: Total
+        position:
+            description: 'position description'
+            price: Price
+            amount: Amount
+            total: Total
 login:
     title: Login
     description: 'Please enter the email address and password that have been used to register your club/association/union.'
@@ -118,6 +131,7 @@ registration:
         first-name: 'First name'
         last-name: 'Last name'
         telephone: Telephone
+        invoice-address: 'Invoice address'
     mail:
         name: 'Thuringian Judo Federation'
         subject: 'Please Confirm your Email'
