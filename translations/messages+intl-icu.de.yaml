@@ -40,6 +40,7 @@ invoice:
         title: 'Rechnung bearbeiten'
         add: Mehr
         preview: Vorschau
+        confirm-delete: "Bist du sicher, diese Rechnung für {club} löschen zu wollen?"
     data:
         sub-id: Sub-Id
         name: Name

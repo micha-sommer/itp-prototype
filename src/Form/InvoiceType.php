@@ -17,8 +17,8 @@ class InvoiceType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('subId', TextType::class)
-            ->add('name', TextType::class, ['required' => true])
+            ->add('subId', TextType::class, ['required' => false])
+            ->add('name', TextType::class)
             ->add('invoiceAddress', TextareaType::class, ['required' => false])
             ->add('totalInHundreds', NumberType::class, ['scale' => 2, 'grouping' => true])
             ->add('invoicePositions', CollectionType::class, [
