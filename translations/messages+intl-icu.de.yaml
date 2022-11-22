@@ -1,8 +1,13 @@
 admin:
     title: Admin
+    club:
+        confirm-delete: "Bist du sicher, dass du die Anmeldung für {club} und alle seine gemeldeten Teilnehmer löschen möchtest?"
+    invoice:
+        tooltip: "Rechnung: {subId} {name}"
 base:
     menu:
         admin: Admin
+        invoices: Rechnungen
         register: Registrieren
         registration_edit: Kontaktinformationen
         contestants: Wettkämpferinnen
@@ -34,7 +39,9 @@ invoice:
     edit:
         title: 'Rechnung bearbeiten'
         add: Mehr
+        preview: Vorschau
     data:
+        sub-id: Sub-Id
         name: Name
         invoice-address: Rechnungsadresse
         total: Gesamt

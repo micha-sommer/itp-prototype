@@ -43,6 +43,29 @@
                     {#                    <li class="nav-item"> #}
                     {#                        <a class="nav-link" href="{{ path('change_password') }}">{{ 'menu.password_edit'|trans }}</a> #}
                     {#                    </li> #}
+                    {% if app.user.invoices is empty %}
+                        <li class="nav-item">
+                            <a class="nav-link disabled">{{ 'base.menu.invoices'|trans }}</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                               aria-expanded="false">
+                                {{ 'base.menu.invoices'|trans }}
+                            </a>
+                            <ul class="dropdown-menu">
+                                {% for invoice in app.user.invoices %}
+    {#                            {% if invoice.published %}#}
+                                <li>
+                                    <a class="dropdown-item" href="{{ path('invoice_show', {'id': invoice.id}) }}" >
+                                        {{ invoice.subId }} {{ invoice.name }}
+                                    </a>
+                                </li>
+    {#                            {% endif %}#}
+                                {% endfor %}
+                            </ul>
+                        </li>
+                    {% endif %}
                     {#                    {% for invoice in app.user.invoices %} #}
                     {#                        {% if invoice.published %} #}
                     {#                            <li class="nav-item"> #}

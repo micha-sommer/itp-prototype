@@ -59,6 +59,9 @@
                         <td class="table-active">{{ registration.twoDaysCount }}</td>
                         <td class="table-active">{{ registration.threeDaysCount }}</td>
                         <td>
+{#                            <a class="btn btn-danger" href="javascript:void(0)"#}
+{#                               onclick="if(confirm({{ 'admin.club.confirm-delete'|trans }})){window.location='{{ path('registration_delete', {'id': registration.id}) }}';}">#}
+{#                                <i class="fas fa-trash" aria-hidden="true"></i></a>#}
                             <a class="btn btn-primary" role="button"
                                data-toggle="tooltip" data-placement="top"
                                title="Login as user"
@@ -71,17 +74,14 @@
                                href="{{ path('invoice_new', {'registrationId': registration.id }) }}">
                                 <i class="fas fa-hand-holding-usd"></i>
                             </a>
-{#                            {% for invoice in registration.invoices %}#}
-{#                                <a class="btn {{ invoice.published ? "btn-success" : "btn-warning" }}" role="button"#}
-{#                                   data-toggle="tooltip" data-placement="top"#}
-{#                                   title="{{ 'menu.invoice'|trans }} : {{ invoice.name }}"#}
-{#                                   href="{{ path('invoicing', {'_switch_user': registration.email, 'uid': invoice.id }) }}">#}
-{#                                    <i class="fas fa-file-invoice-dollar"></i>#}
-{#                                </a>#}
-{#                            {% endfor %}#}
-{#                            <a class="btn btn-danger" href="javascript:void(0)"#}
-{#                               onclick="if(confirm('Are you sure you want to delete {{ registration.club }} and all its registered officials, contestants, and transport ?')){window.location='{{ path('delete_registration', {'uid': registration.id}) }}';}">#}
-{#                                <i class="fas fa-trash" aria-hidden="true"></i></a>#}
+                            {% for invoice in registration.invoices %}
+                                <a class="btn {{ invoice.published ? "btn-success" : "btn-warning" }}" role="button"
+                                   data-toggle="tooltip" data-placement="top"
+                                   title="{{ 'admin.invoice.tooltip'|trans({'subId': invoice.subId, 'name': invoice.name}) }}"
+                                   href="{{ path('invoice_edit', {'id': invoice.id }) }}">
+                                    <i class="fas fa-file-invoice-dollar"></i>
+                                </a>
+                            {% endfor %}
                         </td>
                     </tr>
                 {% endfor %}

@@ -18,6 +18,9 @@ class Invoice
     #[ORM\Column]
     private ?int $id = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?string $subId = null;
+
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
@@ -56,6 +59,18 @@ class Invoice
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getSubId(): ?int
+    {
+        return $this->subId;
+    }
+
+    public function setSubId(?int $subId): self
+    {
+        $this->subId = $subId;
+
+        return $this;
     }
 
     public function getName(): ?string

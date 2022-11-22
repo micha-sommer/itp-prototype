@@ -1,8 +1,13 @@
 admin:
     title: Admin
+    club:
+        confirm-delete: "Are you sure you want to delete {club} and all its registered officials, contestants, and transport ?"
+    invoice:
+        tooltip: "Invoice {subId} {name}"
 base:
     menu:
         admin: Admin
+        invoices: Invoices
         register: Register
         registration_edit: 'Contact Information'
         contestants: Contestants
@@ -34,7 +39,9 @@ invoice:
     edit:
         title: 'Edit Invoice'
         add: Add
+        preview: Preview
     data:
+        sub-id: Sub-Id
         name: Name
         invoice-address: 'Invoice address'
         total: Total

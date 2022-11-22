@@ -9,6 +9,7 @@
         <div class="p-5 mb-4 bg-light rounded-3">
             <h1 class="display-4">{{ 'invoice.edit.title'|trans }}</h1>
             <hr class="my-4">
+            {{ form_row(form.subId, {label: 'invoice.data.sub-id'}) }}
             {{ form_row(form.name, {label: 'invoice.data.name'}) }}
             {{ form_row(form.invoiceAddress, {label: 'invoice.data.invoice-address'}) }}
             <hr class="my-4">
@@ -55,8 +56,8 @@
                 <button class="btn btn-primary btn-lg btn-info add-a-tag me-auto" type="button">
                     {{ 'invoice.edit.add'|trans }}
                 </button>
-                <td><button class="btn btn-primary btn-lg" type="button" onclick="updateAll()"><i class="fas fa-calculator"></i></button></td>
-                <td><button class="btn btn-warning btn-lg" type="button" onclick="removeEmpty()"><i class="fas fa-broom"></i></button></td>
+                <button class="btn btn-primary btn-lg" type="button" onclick="updateAll()"><i class="fas fa-calculator"></i></button>
+                <button class="btn btn-warning btn-lg" type="button" onclick="removeEmpty()"><i class="fas fa-broom"></i></button>
                 {#                <button class="btn {{ (invoice.published) ? 'btn-warning'|raw : 'btn-success'|raw }} btn-lg float-right" #}
                 {#                        name="publish" type="submit" data-toggle="tooltip" #}
                 {#                        data-placement="top" #}
@@ -69,11 +70,9 @@
                 {#                    {% endif %} #}
                 {#                </button> #}
                 <input class="btn btn-success btn-lg" type="submit" value="{{ 'global.forms.button.save'|trans }}"/>
-                {#                <a href="{{ path('invoice', {'uid': invoice.id}) }}" #}
-                {#                   class="btn btn-info btn-lg float-right mr-1" #}
-                {#                   role="button" #}
-                {#                   data-toggle="tooltip" data-placement="top" #}
-                {#                   title="{{ 'generic.tooltip.preview'|trans }}">{{ 'generic.preview'|trans }}</a> #}
+                <a class="btn btn-info btn-lg" role="button" href="{{ path('invoice_show', {'id': invoice.id}) }}">
+                    {{ 'invoice.edit.preview'|trans }}
+                </a>
                 {#                <a class="btn btn-info btn-lg float-right mr-1" role="button" #}
                 {#                   data-toggle="tooltip" data-placement="top" #}
                 {#                   title="Send confirmation mail" #}
@@ -226,6 +225,5 @@
             }
         });
     }
-
 </script>
 {% endblock %}

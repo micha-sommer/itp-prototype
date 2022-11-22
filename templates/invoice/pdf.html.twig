@@ -1,0 +1,110 @@
+<style>
+    td {
+    }
+</style>
+
+<table border="0" style="width: 100%; ">
+    <tr>
+        <td colspan="3">
+            &nbsp;<br>
+            &nbsp;<br>
+            <img src="{{ asset('images/Briefkopf_allgemein_Englisch_Logo_Deutsch.jpg') }}"
+                 height="auto"
+                 alt="Logo:ITP">
+        </td>
+        <td>
+            <img src="{{ asset('images/tjv-gross.jpg') }}"
+                 height="inherit"
+                 alt="Logo:TJV">
+        </td>
+    </tr>
+    <tr>
+        <td colspan="4"></td>
+    </tr>
+    <tr>
+        <td style="width: 60%" colspan="2">{{ invoice.invoiceAddress|nl2br }}</td>
+        <td style="width: 40%" colspan="2">
+            Thüringer Judo-Verband e.V.<br>
+            Geschäftsstelle<br>
+            Schützenstraße 4 <br>
+            99096 Erfurt / GERMANY <br>
+            info@thueringer-judoverband.de <br>
+            Steuernummer: 151/142/51493
+        </td>
+    </tr>
+    <tr>
+        <td colspan="4"></td>
+    </tr>
+    <tr>
+        <td align="right" colspan="4">Erfurt, {{ invoice.modifiedAt|date("d.m.Y"|trans) }}</td>
+    </tr>
+    <tr>
+        <td colspan="4"></td>
+    </tr>
+    <tr>
+        <td style="width: 45%"><u><b>Rechnung</b></u></td>
+        <td style="width: 15%"></td>
+        <td style="border: 1px solid black; width: 12%">Nr.:</td>
+        <td style="border: 1px solid black; width: 28%; text-align: center; ">
+            <b>{{ "%03d"|format(invoice.registration.id) }}{{ (invoice.registration.invoices.count <= 1) ? "" : "_#{invoice.subId}" }}</b>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="4"></td>
+    </tr>
+    <tr>
+        <td colspan="4">29. Internationaler Thüringen Pokal {{ year }} Bad Blankenburg</td>
+    </tr>
+    <tr>
+        <td colspan="4">16. Internationales Trainings Camp {{ year }} Bad Blankenburg</td>
+    </tr>
+    <tr>
+        <td colspan="4"></td>
+    </tr>
+    <tr>
+        <td style="border-bottom: 1px solid black; width: 45%"><b>Position</b></td>
+        <td style="border-bottom: 1px solid black; width: 15%" align="right"><b>Einzelpreis</b></td>
+        <td style="border-bottom: 1px solid black; width: 12%" align="right"><b>Anzahl</b></td>
+        <td style="border-bottom: 1px solid black; width: 28%" align="right"><b>Gesamtpreis</b></td>
+    </tr>
+    {% for position in invoice.invoicePositions %}
+        <tr>
+            <td style="width: 45%"> {{ position.description }} </td>
+            <td style="width: 15%" align="right"> {{ (position.priceInHundreds/100)|number_format(2,',','.') }} €</td>
+            {% if position.amountInHundreds%100 != 0 %}
+                <td style="width: 12%" align="right">{{ (position.amountInHundreds/100)|number_format(0,',','.') }}%</td>
+            {% else %}
+                <td style="width: 12%" align="right">{{ (position.amountInHundreds/100)|number_format(0,',','.') }} </td>
+            {% endif %}
+            <td style="width: 28%" align="right">{{ (position.totalInHundreds/100)|number_format(2,',','.') }} €</td>
+        </tr>
+    {% endfor %}
+    <tr>
+        <td style="border-bottom: 1px solid black;" colspan="4"></td>
+    </tr>
+    <tr>
+        <td colspan="4"></td>
+    </tr>
+    <tr>
+        <td style="width: 45%"></td>
+        <td style="width: 15%"></td>
+        <td style="border: 1px solid black; width: 12%"><b>Gesamt:</b></td>
+        <td style="border: 1px solid black; width: 28%; text-align: right">
+            <b>{{ (invoice.totalInHundreds/100)|number_format(2,',','.') }} €</b></td>
+    </tr>
+    <tr>
+        <td style="height: 50px" colspan="4"></td>
+    </tr>
+    <tr>
+        <td style="text-align: right"><b>Betrag überweisen an:</b></td>
+        <td colspan="3">
+            Thüringer Judo-Verband<br>
+            Sparkasse Mittelthüringen<br>
+            IBAN: DE 65 82051000 0130024457<br>
+            Swift code (BIC) HELADEF1WEM<br>
+            <b>Bitte Rechnungsnummer angeben!</b><br>
+            <br>
+            Preis ist ohne Überweisungsgebühren!!!
+        </td>
+    </tr>
+</table>
