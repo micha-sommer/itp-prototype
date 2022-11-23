@@ -2,8 +2,10 @@
 
 namespace App\Repository;
 
+use App\Entity\Contestant;
 use App\Entity\Registration;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -54,5 +56,22 @@ class RegistrationRepository extends ServiceEntityRepository implements Password
         $user->setPassword($newHashedPassword);
 
         $this->save($user, true);
+    }
+
+    public function findDistinctCountries(): ?array
+    {
+        $query = $this->createQueryBuilder('r');
+
+        $result = $query
+            ->select('r.country')
+            ->distinct()
+            ->join(Contestant::class, 'c', Join::WITH, 'r.id = c.registration')
+            ->getQuery()
+            ->getArrayResult()
+        ;
+
+        return array_map(static function ($a) {
+            return $a['country'];
+        }, $result);
     }
 }
