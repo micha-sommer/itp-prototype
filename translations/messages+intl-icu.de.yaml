@@ -26,7 +26,7 @@ base:
     navigation:
         home: Start
     alert:
-        accommodation: '<![CDATA[ <p> Die Anzahl der uns zur Verfügung stehenden Unterkünfte ist auf Grund der hohen Teilnehmerzahl sehr knapp. Sollten Sie jetzt noch Übernachtungen buchen, können wir diese nicht garantieren. Kontaktieren Sie uns bitte bei Fragen. <br/> <a class="fa fa-phone" href="tel:0049-0361-3731647"> +49 (0) 361 373 16 47</a> oder <a class="fa fa-envelope" href="mailto:info@thueringer-judoverband.de"> info@thueringer-judoverband.de</a> </p> ]]>'
+        accommodation: '<p> Die Anzahl der uns zur Verfügung stehenden Unterkünfte ist auf Grund der hohen Teilnehmerzahl sehr knapp. Sollten Sie jetzt noch Übernachtungen buchen, können wir diese nicht garantieren. Kontaktieren Sie uns bitte bei Fragen. <br/> <a class="fa fa-phone" href="tel:0049-0361-3731647"> +49 (0) 361 373 16 47</a> oder <a class="fa fa-envelope" href="mailto:info@thueringer-judoverband.de"> info@thueringer-judoverband.de</a> </p>'
         deadline: 'Der Meldeschluss ist verstrichen!!! Beachten Sie, dass das Anmelden weiterer Kämpferinnen mit der Berechnung einer erhöhten Startgebühr einhergeht.'
 global:
     forms:
@@ -155,3 +155,8 @@ welcome:
     active: 'Dies ist das neue Anmeldeformular für die Registrierung zum Internationalen Thüringenpokal {year}.'
     end-date-passed: 'Anmeldezeitraum abgelaufen. Bitte teilen Sie uns Änderungen vor Ort mit.'
     contact-us: 'Bei Fragen kontaktieren Sie uns:'
+    contestants: '<strong>{total}</strong> registrierte Wettkämpferinnen von <strong>{clubs}</strong> Vereinen/Nationen in den folgenden Klassen:'
+    overview:
+        age-category:
+            cadet: U18
+            junior: U21

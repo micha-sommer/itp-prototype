@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Registration;
 use App\Repository\ContestantRepository;
 use App\Repository\RegistrationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,7 +15,7 @@ class WelcomeController extends AbstractController
     private RegistrationRepository $registrationRepository;
 
     public function __construct(
-        ContestantRepository $contestantRepository,
+        ContestantRepository   $contestantRepository,
         RegistrationRepository $registrationRepository,
     )
     {
@@ -72,8 +73,29 @@ class WelcomeController extends AbstractController
     {
         $distinctCountries = $this->registrationRepository->findDistinctCountries();
 
+        $registrationCount = count(
+            array_filter(
+                $this->registrationRepository->findAll(),
+                fn(Registration $registration) => count($registration->getContestants()) > 0
+            ));
+
+
+        $categories['total'] = $this->contestantRepository->count([]);
+
+        $categories['cadet']['total'] = $this->contestantRepository->count(['ageCategory' => 'cadet']);
+        $categories['junior']['total'] = $this->contestantRepository->count(['ageCategory' => 'junior']);
+
+        foreach (['cadet', 'junior'] as $age) {
+            foreach (['-40','-44','-48','-52','-57','-63','-70','+70','-78','+78'] as $weight) {
+                $categories[$age][$weight] =
+                    $this->contestantRepository->count(['ageCategory' => $age, 'weightCategory' => $weight]);
+            }
+        }
+
         return $this->render('welcome/anonymous.html.twig', [
             'countries' => $distinctCountries,
+            'clubsCount' => $registrationCount,
+            'categories' => $categories,
         ]);
     }
 }
