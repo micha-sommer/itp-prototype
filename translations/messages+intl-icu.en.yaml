@@ -157,6 +157,9 @@ welcome:
     contact-us: 'Feel free to contact us:'
     contestants: '<strong>{total}</strong> registrierte Wettkämpferinnen von <strong>{clubs}</strong> Vereinen/Nationen in den folgenden Klassen:'
     overview:
+        registration: 'Contact Information'
+        contestants: Contestants
+        officials: Officials
         age-category:
             cadet: 'Cadet (under 18)'
             junior: 'Junior (under 21)'

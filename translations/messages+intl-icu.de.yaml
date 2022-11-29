@@ -9,7 +9,7 @@ base:
         admin: Admin
         invoices: Rechnungen
         register: Registrieren
-        registration_edit: Kontaktinformationen
+        registration_edit: Kontaktdaten
         contestants: Wettkämpferinnen
         officials: Offizielle
         login: Einloggen
@@ -94,11 +94,11 @@ participants:
             last-name: Nachname
             role:
                 title: Funktion
-                trainer: Trainer
-                physio: Physiotherapeut
-                psycho: Psychotherapeut
-                referee: Kampfrichter
-                photo: Fotograf
+                trainer: 'Trainer/in'
+                physio: 'Physiotherapeut/in'
+                psycho: 'Psychotherapeut/in'
+                referee: 'Kampfrichter/in'
+                photo: 'Fotograf/in'
                 other: Anderes
             gender:
                 title: Geschlecht
@@ -123,11 +123,11 @@ participants:
 registration:
     new:
         title: Registrierung
-        description: 'Tragen Sie hier ihre Kontaktinformationen ein. Wenn Sie sich mit ihren Daten registriert haben, können Sie Offizielle und Wettkämpferinnen anmelden.'
+        description: 'Tragen Sie hier ihre Kontaktdaten ein. Wenn Sie sich mit ihren Daten registriert haben, können Sie Offizielle und Wettkämpferinnen anmelden.'
         action: Register
     edit:
-        title: 'Kontaktinformationen bearbeiten'
-        description: 'Tragen Sie hier ihre Kontaktinformationen ein. Ihre Emailadresse können Sie leider nicht ändern. Wenn Sie dies wirklich brauchen, kontaktieren Sie uns.'
+        title: 'Kontaktdaten bearbeiten'
+        description: 'Tragen Sie hier ihre Kontaktdaten ein. Ihre Emailadresse können Sie leider nicht ändern. Wenn Sie dies wirklich brauchen, kontaktieren Sie uns.'
     edit_password:
         title: 'Passwort ändern'
         description: 'Hier können Sie ihr Passwort für den Login ändern. Passwörter müssen mindestens 6 Zeichen lang sein.'
@@ -157,6 +157,9 @@ welcome:
     contact-us: 'Bei Fragen kontaktieren Sie uns:'
     contestants: '<strong>{total}</strong> registrierte Wettkämpferinnen von <strong>{clubs}</strong> Vereinen/Nationen in den folgenden Klassen:'
     overview:
+        registration: Kontaktdaten
+        contestants: Wettkämpferinnen
+        officials: Offizielle
         age-category:
             cadet: U18
             junior: U21
