@@ -79,13 +79,26 @@
                 <a class="btn btn-info btn-lg ms-1" role="button" href="{{ path('invoice_show', {'id': invoice.id}) }}">
                     {{ 'invoice.edit.preview'|trans }}
                 </a>
+                <div class="btn-group dropup">
+                    <button class="btn btn-info btn-lg ms-1 dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa fa-envelope" aria-hidden="true"></i>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="dropdown-item" href="{{ path('invoice_send_mail', {'id': invoice.id, _locale:'de'}) }}">
+                                {{ 'base.language.de'|trans }}
+                                <img class="mb-2" src="{{ asset('images/Flag_of_DE.svg') }}" height="15" alt="DEU"/>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{{ path('invoice_send_mail', {'id': invoice.id, _locale:'en'}) }}">
+                                {{ 'base.language.en'|trans }}
+                                <img class="mb-2" src="{{ asset('images/Flag_of_EN.svg') }}" height="15" alt="ENG"/>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
                 <input class="btn btn-success btn-lg ms-1" type="submit" value="{{ 'global.forms.button.save'|trans }}"/>
-                {#                <a class="btn btn-info btn-lg float-right mr-1" role="button" #}
-                {#                   data-toggle="tooltip" data-placement="top" #}
-                {#                   title="Send confirmation mail" #}
-                {#                   href="{{ path('mail_invoice', {'uid': invoice.id}) }}"> #}
-                {#                    <i class="fa fa-envelope" aria-hidden="true"></i> #}
-                {#                </a> #}
                 {#                <a href="{{ path('invoicing', {'uid': invoice.id}) }}" #}
                 {#                   class="btn btn-warning btn-lg float-right mr-1" #}
                 {#                   role="button" #}

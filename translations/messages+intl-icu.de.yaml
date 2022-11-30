@@ -29,6 +29,7 @@ base:
         accommodation: '<p> Die Anzahl der uns zur Verfügung stehenden Unterkünfte ist auf Grund der hohen Teilnehmerzahl sehr knapp. Sollten Sie jetzt noch Übernachtungen buchen, können wir diese nicht garantieren. Kontaktieren Sie uns bitte bei Fragen. <br/> <a class="fa fa-phone" href="tel:0049-0361-3731647"> +49 (0) 361 373 16 47</a> oder <a class="fa fa-envelope" href="mailto:info@thueringer-judoverband.de"> info@thueringer-judoverband.de</a> </p>'
         deadline: 'Der Meldeschluss ist verstrichen!!! Beachten Sie, dass das Anmelden weiterer Kämpferinnen mit der Berechnung einer erhöhten Startgebühr einhergeht.'
 global:
+    tjv-name: 'Thüringer Judo-Verband e.V.'
     forms:
         button:
             save: Speichern
@@ -39,7 +40,7 @@ invoice:
     edit:
         title: 'Rechnung bearbeiten'
         add: Mehr
-        preview: Vorschau
+        preview: Anschauen
         confirm-delete: "Bist du sicher, diese Rechnung für {club} löschen zu wollen?"
     data:
         sub-id: Sub-Id
@@ -51,6 +52,11 @@ invoice:
             price: Einzelpreis
             amount: Menge
             total: Summe
+    mail:
+        subject: 'Rechnung für Thüringenpokal: {club}'
+        title: 'Hallo {name},'
+        greeting: 'bitte prüfen Sie Ihre Rechnung. Die Rechnung wurde am {timestamp, date} {timestamp, time, short} erzeugt. Änderungen, die danach vorgenommen wurden, sind darin nicht enthalten.'
+        positions: Positionen
 login:
     title: Einloggen
     description: 'Bitte tragen Sie die Email-Adresse und Passwort ein, mit welcher Sie Ihren Verband/Verein registriert haben.'

@@ -29,6 +29,7 @@ base:
         accommodation: '<p> The remain amount of available accommodation is very limited. We cannot guarantee accommodation if you add new ones from now on. In case of questions, please dont hesitate to contact us. <br/> <a class="fa fa-phone" href="tel:0049-0361-3731647"> +49 (0) 361 373 16 47</a> or <a class="fa fa-envelope" href="mailto:info@thueringer-judoverband.de"> info@thueringer-judoverband.de</a> </p>'
         deadline: 'The deadline for registrations has passed. Please note that additional competitors will be charged with an increased registration fee.'
 global:
+    tjv-name: 'Thuringian Judo Federation'
     forms:
         button:
             save: Save
@@ -39,7 +40,7 @@ invoice:
     edit:
         title: 'Edit Invoice'
         add: Add
-        preview: Preview
+        preview: View
         confirm-delete: "Are you sure you want to delete this invoice of {club}?"
     data:
         sub-id: Sub-Id
@@ -50,7 +51,12 @@ invoice:
             description: 'position description'
             price: Price
             amount: Amount
-            total: Total
+            total: Subtotal
+    mail:
+        subject: 'Invoice for International Thuringia Cup: {club}'
+        title: 'Dear {name},'
+        greeting: 'please check the attached invoice. It has been created on {timestamp, date} {timestamp, time, short}. Any changes to your registration afterwards may not be accounted for.'
+        positions: Positions
 login:
     title: Login
     description: 'Please enter the email address and password that have been used to register your club/association/union.'

@@ -6,11 +6,17 @@ use App\Entity\Invoice;
 use App\Entity\InvoicePosition;
 use App\Form\InvoiceType;
 use App\Repository\RegistrationRepository;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Address;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use TCPDF;
 use function round;
 
@@ -148,5 +154,50 @@ class InvoiceController extends AbstractController
         $entityManager->flush();
 
         return $this->redirectToRoute('admin_index');
+    }
+
+    /**
+     * @throws TransportExceptionInterface
+     */
+    #[Route('/{id}/mail', name: 'invoice_send_mail')]
+    public function sendInvoicePerMail(
+        Request $request,
+        Invoice $invoice,
+        MailerInterface $mailer,
+        TranslatorInterface $translator,
+    ): Response
+    {
+        $timestamp = new DateTime();
+        $registration = $invoice->getRegistration();
+        $name = $translator->trans('global.tjv-name');
+        $subject = $translator->trans('invoice.mail.subject', [
+            'club' => $registration->getClub(),
+        ]);
+        $title = $translator->trans('invoice.mail.title', [
+            'name' => $registration->getFirstName().' '. $registration->getLastName()
+        ]);
+        $greeting = $translator->trans('invoice.mail.greeting', [
+           'timestamp' => $timestamp,
+        ]);
+
+        $pdf = $this->getInvoicePDF($invoice);
+        $data = $pdf->Output('Invoice_' . $invoice->getName() . '.pdf', 'S');
+        $mail = (new TemplatedEmail())
+            ->from(new Address('anmeldung@thueringer-judoverband.de', $name))
+            ->to($registration->getEmail())
+            ->subject($subject)
+            ->context([
+                'title' => $title,
+                'greeting' => $greeting,
+                'invoice' => $invoice,
+                'requestLocale' => $request->getLocale(),
+            ])
+            ->htmlTemplate('invoice/email.html.twig')
+            ->attach($data, 'Invoice_' . $invoice->getName() . '.pdf', 'application/pdf')
+        ;
+
+        $mailer->send($mail);
+
+        return $this->redirectToRoute('invoice_edit', ['id' => $invoice->getId()]);
     }
 }

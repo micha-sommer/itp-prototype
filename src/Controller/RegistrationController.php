@@ -174,7 +174,6 @@ class RegistrationController extends AbstractController
             ->context([
                 'title' => $title,
                 'registration' => $registration,
-                'timestamp' => $timestamp,
                 'requestLocale' => $request->getLocale(),
             ])
             ->htmlTemplate('registration/confirmation_overview_email.html.twig');
