@@ -61,6 +61,7 @@ participants:
         description: 'Bitte tragen Sie so viele Informationen ein, wie Sie können.'
         data:
             title: Teilnehmerin
+            name: Name
             first-name: Vorname
             last-name: Nachname
             year: Jahrgang
@@ -90,6 +91,7 @@ participants:
         description: 'Bitte tragen Sie so viele Informationen ein, wie Sie können.'
         data:
             title: Offizieller
+            name: Name
             first-name: Vorname
             last-name: Nachname
             role:
@@ -132,10 +134,12 @@ registration:
         title: 'Passwort ändern'
         description: 'Hier können Sie ihr Passwort für den Login ändern. Passwörter müssen mindestens 6 Zeichen lang sein.'
     data:
+        id: ID
         email: Email
         password: Passwort
         club: Verein
         country: Land
+        contact-person: Ansprechpartner
         first-name: Vorname
         last-name: Nachname
         telephone: Telefon
@@ -148,6 +152,11 @@ registration:
         link-text: 'Email-Adresse bestätigen'
         expire: 'Der Link läuft in {expiresText} aus.'
         end-salutation: 'Mit sportlichen Grüßen'
+    confirmation:
+        name: 'Thüringer Judo-Verband e.V.'
+        subject: 'Meldebestätigung zum Thüringenpokal: {club} ({timestamp, date} {timestamp, time, short})'
+        title: 'Bestätigung der Meldung vom {timestamp, date} {timestamp, time, short}'
+        greeting: 'Wir freuen uns Sie beim {itpCount}. Internationalen Thüringenpokal bzw. {itcCount}. Internationalen Trainingscamp begrüßen zu dürfen. Eine Übersicht Ihrer Meldung finden Sie in dieser Mail.'
 welcome:
     title: 'Willkommen zum ITP'
     greeting: Hallo!
@@ -157,6 +166,7 @@ welcome:
     contact-us: 'Bei Fragen kontaktieren Sie uns:'
     contestants: '<strong>{total}</strong> registrierte Wettkämpferinnen von <strong>{clubs}</strong> Vereinen/Nationen in den folgenden Klassen:'
     overview:
+        send-confirmation: 'Bestätigungsmail senden'
         registration: Kontaktdaten
         contestants: Wettkämpferinnen
         officials: Offizielle

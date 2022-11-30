@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection PhpUnused */
 
 namespace App\Controller;
 
@@ -13,6 +13,8 @@ use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
@@ -144,5 +146,41 @@ class RegistrationController extends AbstractController
         $this->addFlash('success', 'Your email address has been verified.');
 
         return $this->redirectToRoute('login');
+    }
+
+    /**
+     * @throws TransportExceptionInterface
+     */
+    #[Route('/{id}/send_confirmation', name: 'registration_send_confirmation')]
+    public function sendConfirmation(
+        Request $request,
+        Registration $registration,
+        MailerInterface $mailer,
+        TranslatorInterface $translator,
+    ): Response
+    {
+        $timestamp = new DateTime();
+        $name = $translator->trans('registration.confirmation.name');
+        $subject = $translator->trans('registration.confirmation.subject', [
+            'club' => $registration->getClub(),
+            'timestamp' => $timestamp
+        ]);
+        $title = $translator->trans('registration.confirmation.title', ['timestamp' => $timestamp]);
+
+        $mail = (new TemplatedEmail())
+            ->from(new Address('anmeldung@thueringer-judoverband.de', $name))
+            ->to($registration->getEmail())
+            ->subject($subject)
+            ->context([
+                'title' => $title,
+                'registration' => $registration,
+                'timestamp' => $timestamp,
+                'requestLocale' => $request->getLocale(),
+            ])
+            ->htmlTemplate('registration/confirmation_overview_email.html.twig');
+
+        $mailer->send($mail);
+
+        return $this->redirectToRoute('welcome');
     }
 }

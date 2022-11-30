@@ -61,6 +61,7 @@ participants:
         description: 'Please enter as much information as you have available for the time being.'
         data:
             title: Participant
+            name: Name
             first-name: 'First name'
             last-name: 'Last name'
             year: 'Year of birth'
@@ -90,6 +91,7 @@ participants:
         description: 'Please enter as much information as you have available for the time being.'
         data:
             title: Official
+            name: Name
             first-name: 'First name'
             last-name: 'Last name'
             role:
@@ -132,14 +134,16 @@ registration:
         title: 'Change Password'
         description: 'Change your password here. Password must be at least 6 characters long.'
     data:
+        id: ID
         email: Email
         password: Password
         club: Club
         country: Country
+        contact-person: 'Contact Person'
         first-name: 'First name'
         last-name: 'Last name'
         telephone: Telephone
-        invoice-address: 'Invoice address'
+        invoice-address: 'Invoice Address'
     mail:
         name: 'Thuringian Judo Federation'
         subject: 'Please Confirm your Email'
@@ -148,6 +152,11 @@ registration:
         link-text: 'Confirm my Email'
         expire: 'This link will expire in {expiresText}.'
         end-salutation: 'Best regards'
+    confirmation:
+        name: 'Thuringian Judo Federation'
+        subject: 'Confirmation Thuringia Cup: {club} ({timestamp, date} -  {timestamp, time, short})'
+        title: 'Registration confirmation from {timestamp, date} {timestamp, time, short}'
+        greeting: 'We are happy to welcome you to {itpCount} International Thuringia Cup and {itcCount} International Training Camp. You find an overview of your data within this mail.'
 welcome:
     title: 'Welcome to ITP'
     greeting: Hello!
@@ -157,6 +166,7 @@ welcome:
     contact-us: 'Feel free to contact us:'
     contestants: '<strong>{total}</strong> registrierte Wettkämpferinnen von <strong>{clubs}</strong> Vereinen/Nationen in den folgenden Klassen:'
     overview:
+        send-confirmation: 'Send Confirmation Mail'
         registration: 'Contact Information'
         contestants: Contestants
         officials: Officials

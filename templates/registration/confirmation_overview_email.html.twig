@@ -1,0 +1,136 @@
+{% apply inky_to_html|inline_css(source('@styling/foundation-emails.css')) %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--suppress CssOverwrittenProperties, CssUnusedSymbol, CssFloatPxLength -->
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Title</title>
+    <style type="text/css">
+        body,
+        html,
+        .body {
+            background: #f3f3f3 !important;
+        }
+    </style>
+</head>
+
+<body>
+<style type="text/css">
+    body,
+    html,
+    .body {
+        background: #f3f3f3 !important;
+    }
+</style>
+<!-- move the above styles into your custom stylesheet -->
+
+<spacer size="16"></spacer>
+
+<container>
+
+    <spacer size="16"></spacer>
+
+    <row>
+        <columns>
+            <h1>{{ title }}</h1>
+            <p>{{ 'registration.confirmation.greeting'|trans({'itpCount': itp_count, 'itcCount': itc_count}, 'messages', requestLocale) }}</p>
+
+            <spacer size="16"></spacer>
+
+            <callout class="secondary">
+                <row>
+                    <columns large="6">
+                        <p>
+                            <strong>{{ 'registration.data.club'|trans({}, 'messages', requestLocale) }}</strong><br/>
+                            {{ registration.club }}
+                        </p>
+                        <p>
+                            <strong>{{ 'registration.data.contact-person'|trans({}, 'messages', requestLocale) }}</strong><br/>
+                            {{ registration.firstName }} {{ registration.lastName }}
+                        </p>
+                        <p>
+                            <strong>{{ 'registration.data.email'|trans({}, 'messages', requestLocale) }}</strong><br/>
+                            {{ registration.email }}
+                        </p>
+                        <p>
+                            <strong>{{ 'registration.data.id'|trans({}, 'messages', requestLocale) }}</strong><br/>
+                            {{ registration.id }}
+                        </p>
+                    </columns>
+                    <columns large="6">
+                        <p>
+                            <strong>{{ 'registration.data.country'|trans({}, 'messages', requestLocale) }}</strong><br/>
+                            {{ registration.country|country_name(requestLocale) }}
+                        </p>
+                        <p>
+                            <strong>{{ 'registration.data.telephone'|trans({}, 'messages', requestLocale) }}</strong><br/>
+                            {{ registration.telephone }}
+                        </p>
+                        <p>
+                            <strong>{{ 'registration.data.invoice-address'|trans({}, 'messages', requestLocale) }}</strong><br/>
+                            {{ registration.invoiceAddress|nl2br }}
+                        </p>
+                    </columns>
+                </row>
+            </callout>
+
+            <h4>{{ 'welcome.overview.officials'|trans({}, 'messages', requestLocale) }}</h4>
+
+            <table>
+                <tr>
+                    <th>{{ 'participants.officials.data.name'|trans({}, 'messages', requestLocale) }}</th>
+                    <th>{{ 'participants.officials.data.role.title'|trans({}, 'messages', requestLocale) }}</th>
+                    <th>{{ 'participants.officials.data.itc-selection.title'|trans({}, 'messages', requestLocale) }}</th>
+                </tr>
+                {% for official in registration.officials %}
+                    <tr>
+                        <td>{{ official.firstName }} {{ official.lastName }}</td>
+                        <td>{{ "participants.officials.data.role.#{ official.role }"|trans({}, 'messages', requestLocale) }}</td>
+                        <td>{{ "participants.officials.data.itc-selection.#{ official.itcSelection }"|trans({}, 'messages', requestLocale) }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+
+            <h4>{{ 'welcome.overview.contestants'|trans({}, 'messages', requestLocale) }}</h4>
+
+            <table>
+                <tr>
+                    <th>{{ 'participants.contestants.data.name'|trans({}, 'messages', requestLocale) }}</th>
+                    <th>{{ 'participants.contestants.data.age-category.title'|trans({}, 'messages', requestLocale) }}</th>
+                    <th>{{ 'participants.contestants.data.weight-category'|trans({}, 'messages', requestLocale) }}</th>
+                    <th>{{ 'participants.contestants.data.itc-selection.title'|trans({}, 'messages', requestLocale) }}</th>
+                </tr>
+                {% for contestant in registration.contestants %}
+                    <tr>
+                        <td>{{ contestant.firstName }} {{ contestant.lastName }}</td>
+                        <td>{{ "participants.contestants.data.age-category.#{ contestant.ageCategory }"|trans({}, 'messages', requestLocale) }}</td>
+                        <td>{{ contestant.weightCategory }}</td>
+                        <td>{{ "participants.contestants.data.itc-selection.#{ contestant.itcSelection }"|trans({}, 'messages', requestLocale) }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </columns>
+    </row>
+    <row>
+        <columns large="2">
+            <img src="{{ email.image('@images/tjv-gross.jpg') }}" alt="ITP">
+        </columns>
+        <columns large="5">
+            <p>
+                Thüringer Judo-Verband e.V.<br>
+                Schützenstraße 4 <br>
+                99096 Erfurt
+            </p>
+        </columns>
+        <columns large="5">
+            <p>
+                E-Mail:<br/>
+                info@thueringer-judoverband.de
+            </p>
+        </columns>
+    </row>
+</container>
+</body>
+{% endapply %}
