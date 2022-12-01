@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Official;
+use App\Entity\Registration;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -13,6 +14,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Official|null findOneBy(array $criteria, array $orderBy = null)
  * @method Official[]    findAll()
  * @method Official[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method int           count(array $array)
  */
 class OfficialRepository extends ServiceEntityRepository
 {
@@ -37,5 +39,35 @@ class OfficialRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function getPackACount(?Registration $registration): int
+    {
+        return $this->count(['registration' => $registration, 'itcSelection' => 'pack-A']);
+    }
+
+    public function getPackBCount(?Registration $registration): int
+    {
+        return $this->count(['registration' => $registration, 'itcSelection' => 'pack-B']);
+    }
+
+    public function getPackCCount(?Registration $registration): int
+    {
+        return $this->count(['registration' => $registration, 'itcSelection' => 'pack-C']);
+    }
+
+    public function get1DayCount(?Registration $registration): int
+    {
+        return $this->count(['registration' => $registration, 'itcSelection' => '1-day']);
+    }
+
+    public function get2DaysCount(?Registration $registration): int
+    {
+        return $this->count(['registration' => $registration, 'itcSelection' => '2-day']);
+    }
+
+    public function get3DaysCount(?Registration $registration): int
+    {
+        return $this->count(['registration' => $registration, 'itcSelection' => '3-day']);
     }
 }

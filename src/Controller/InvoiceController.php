@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\Invoice;
 use App\Entity\InvoicePosition;
 use App\Form\InvoiceType;
+use App\Repository\ContestantRepository;
+use App\Repository\OfficialRepository;
 use App\Repository\RegistrationRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
@@ -28,6 +30,8 @@ class InvoiceController extends AbstractController
         Request                $request,
         EntityManagerInterface $entityManager,
         RegistrationRepository $registrationRepository,
+        ContestantRepository   $contestantRepository,
+        OfficialRepository     $officialRepository,
     ): Response
     {
         $registrationId = $request->query->get('registrationId');
@@ -41,24 +45,37 @@ class InvoiceController extends AbstractController
         $invoice->setRegistration($registration);
         $invoice->setPublished(false);
 
-        $this->createInvoicePosition($invoice, 'Startgeld (entry fee)', 0, 5000);
-        $this->createInvoicePosition($invoice, 'erhöhtes Startgeld (increased entry fee)', 0, 8000);
+        $contestantCount = $contestantRepository->getRegularContestantCount($registration);
+        $lateCount = $contestantRepository->getLateContestantCount($registration);
+        $this->createInvoicePosition($invoice, 'Startgeld (entry fee)', $contestantCount * 100, 5000);
+        $this->createInvoicePosition($invoice, 'erhöhtes Startgeld (increased entry fee)', $lateCount * 100, 8000);
 
         $this->createInvoicePosition($invoice, 'ITC: Paket A EZ (package A single)', 0, 26000);
         $this->createInvoicePosition($invoice, 'ITC: Paket B EZ (package B single)', 0, 32000);
         $this->createInvoicePosition($invoice, 'ITC: Paket C EZ (package C single)', 0, 38000);
 
-        $this->createInvoicePosition($invoice, 'ITC: Paket A DZ/MBZ (package A shared)', 0, 24000);
-        $this->createInvoicePosition($invoice, 'ITC: Paket B DZ/MBZ (package B shared)', 0, 30000);
-        $this->createInvoicePosition($invoice, 'ITC: Paket C DZ/MBZ (package C shared)', 0, 36000);
+        $packACount = $contestantRepository->getPackACount($registration) + $officialRepository->getPackACount($registration);
+        $packBCount = $contestantRepository->getPackBCount($registration) + $officialRepository->getPackBCount($registration);
+        $packCCount = $contestantRepository->getPackCCount($registration) + $officialRepository->getPackCCount($registration);
+        $this->createInvoicePosition($invoice, 'ITC: Paket A DZ/MBZ (package A shared)', $packACount, 24000);
+        $this->createInvoicePosition($invoice, 'ITC: Paket B DZ/MBZ (package B shared)', $packBCount, 30000);
+        $this->createInvoicePosition($invoice, 'ITC: Paket C DZ/MBZ (package C shared)', $packCCount, 36000);
 
-        $this->createInvoicePosition($invoice, 'ITC: 1 Tag (1 day)', 0, 4000);
-        $this->createInvoicePosition($invoice, 'ITC: 2 Tage (2 days)', 0, 8000);
-        $this->createInvoicePosition($invoice, 'ITC: 3 Tage (3 days)', 0, 11000);
+        $contestant1DayCount = $contestantRepository->get1DayCount($registration);
+        $contestant2DaysCount = $contestantRepository->get2DaysCount($registration);
+        $contestant3DaysCCount = $contestantRepository->get3DaysCount($registration);
+        $this->createInvoicePosition($invoice, 'ITC: 1 Tag (1 day)', $contestant1DayCount, 4000);
+        $this->createInvoicePosition($invoice, 'ITC: 2 Tage (2 days)', $contestant2DaysCount, 8000);
+        $this->createInvoicePosition($invoice, 'ITC: 3 Tage (3 days)', $contestant3DaysCCount, 11000);
 
-        $this->createInvoicePosition($invoice, 'ITC: 1 Tag Trainer (1 day trainer)', 0, 1500);
-        $this->createInvoicePosition($invoice, 'ITC: 2 Tage Trainer (2 days trainer)', 0, 4000);
-        $this->createInvoicePosition($invoice, 'ITC: 3 Tage Trainer (3 days trainer)', 0, 6000);
+        $official1DayCount = $officialRepository->get1DayCount($registration);
+        $official2DaysCount = $officialRepository->get2DaysCount($registration);
+        $official3DaysCCount = $officialRepository->get3DaysCount($registration);
+        $this->createInvoicePosition($invoice, 'ITC: 1 Tag Trainer (1 day trainer)', $official1DayCount, 1500);
+        $this->createInvoicePosition($invoice, 'ITC: 2 Tage Trainer (2 days trainer)', $official2DaysCount, 4000);
+        $this->createInvoicePosition($invoice, 'ITC: 3 Tage Trainer (3 days trainer)', $official3DaysCCount, 6000);
+
+        $this->createInvoicePosition($invoice, 'Transportpauschale (transfer airport)', 0, 8000);
 
         $entityManager->persist($invoice);
         $entityManager->flush();
@@ -134,7 +151,7 @@ class InvoiceController extends AbstractController
         // Auswahl der MArgins
         $pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
         // Automatisches Autobreak der Seiten
-        $pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
+        $pdf->SetAutoPageBreak(true, PDF_MARGIN_BOTTOM);
         // Image Scale
         $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
         // Schriftart
@@ -161,9 +178,9 @@ class InvoiceController extends AbstractController
      */
     #[Route('/{id}/mail', name: 'invoice_send_mail')]
     public function sendInvoicePerMail(
-        Request $request,
-        Invoice $invoice,
-        MailerInterface $mailer,
+        Request             $request,
+        Invoice             $invoice,
+        MailerInterface     $mailer,
         TranslatorInterface $translator,
     ): Response
     {
@@ -174,10 +191,10 @@ class InvoiceController extends AbstractController
             'club' => $registration->getClub(),
         ]);
         $title = $translator->trans('invoice.mail.title', [
-            'name' => $registration->getFirstName().' '. $registration->getLastName()
+            'name' => $registration->getFirstName() . ' ' . $registration->getLastName()
         ]);
         $greeting = $translator->trans('invoice.mail.greeting', [
-           'timestamp' => $timestamp,
+            'timestamp' => $timestamp,
         ]);
 
         $pdf = $this->getInvoicePDF($invoice);
@@ -193,8 +210,7 @@ class InvoiceController extends AbstractController
                 'requestLocale' => $request->getLocale(),
             ])
             ->htmlTemplate('invoice/email.html.twig')
-            ->attach($data, 'Invoice_' . $invoice->getName() . '.pdf', 'application/pdf')
-        ;
+            ->attach($data, 'Invoice_' . $invoice->getName() . '.pdf', 'application/pdf');
 
         $mailer->send($mail);
 

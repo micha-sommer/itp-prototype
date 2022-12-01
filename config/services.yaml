@@ -7,6 +7,7 @@ parameters:
     app.supported_locales: 'de|en'
     app.is_active: true
     app.year: 2023
+    app.deadline: '2023-03-08 23:59:59'
 
 services:
     # default configuration for services in *this* file
@@ -25,3 +26,6 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    App\Repository\ContestantRepository:
+        arguments:
+            $deadline: '%app.deadline%'
