@@ -216,4 +216,22 @@ class InvoiceController extends AbstractController
 
         return $this->redirectToRoute('invoice_edit', ['id' => $invoice->getId()]);
     }
+
+    #[Route('/{id}/publish', name: 'invoice_publish')]
+    public function publishInvoice(Invoice $invoice, EntityManagerInterface $entityManager): Response
+    {
+        $invoice->setPublished(true);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('invoice_edit', ['id' => $invoice->getId()]);
+    }
+
+    #[Route('/{id}/hide', name: 'invoice_hide')]
+    public function hideInvoice(Invoice $invoice, EntityManagerInterface $entityManager): Response
+    {
+        $invoice->setPublished(false);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('invoice_edit', ['id' => $invoice->getId()]);
+    }
 }

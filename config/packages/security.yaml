@@ -41,6 +41,8 @@ security:
         - { path: ^/(%app.supported_locales%)/invoices/\d+$, methods: POST, roles: ROLE_ADMIN }
         - { path: ^/(%app.supported_locales%)/invoices/\d+/edit$, roles: ROLE_ADMIN }
         - { path: ^/(%app.supported_locales%)/invoices/\d+/mail$, roles: ROLE_USER }
+        - { path: ^/(%app.supported_locales%)/invoices/\d+/hide$, roles: ROLE_ADMIN }
+        - { path: ^/(%app.supported_locales%)/invoices/\d+/publish$, roles: ROLE_ADMIN }
         - { path: ^/(%app.supported_locales%)/registration/new$, roles: PUBLIC_ACCESS }
         - { path: ^/(%app.supported_locales%)/registration/edit$, roles: ROLE_USER }
         - { path: ^/(%app.supported_locales%)/registration/\d+/send_confirmation$, roles: ROLE_USER }
