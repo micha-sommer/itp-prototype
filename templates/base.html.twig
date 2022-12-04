@@ -44,7 +44,7 @@
                     {#                    <li class="nav-item"> #}
                     {#                        <a class="nav-link" href="{{ path('change_password') }}">{{ 'menu.password_edit'|trans }}</a> #}
                     {#                    </li> #}
-                    {% if app.user.invoices is empty %}
+                    {% if app.user.invoices|filter(invoice => invoice.published) is empty %}
                         <li class="nav-item">
                             <a class="nav-link disabled">{{ 'base.menu.invoices'|trans }}</a>
                         </li>
@@ -55,27 +55,17 @@
                                 {{ 'base.menu.invoices'|trans }}
                             </a>
                             <ul class="dropdown-menu">
-                                {% for invoice in app.user.invoices %}
-    {#                            {% if invoice.published %}#}
-                                <li>
-                                    <a class="dropdown-item" href="{{ path('invoice_show', {'id': invoice.id}) }}" >
-                                        {{ invoice.subId }} {{ invoice.name }}
-                                    </a>
-                                </li>
-    {#                            {% endif %}#}
+                                {% for invoice in app.user.invoices|filter(invoice => invoice.published) %}
+                                    <li>
+                                        <a class="dropdown-item"
+                                           href="{{ path('invoice_show', {'id': invoice.id}) }}">
+                                            {{ invoice.subId }} {{ invoice.name }}
+                                        </a>
+                                    </li>
                                 {% endfor %}
                             </ul>
                         </li>
                     {% endif %}
-                    {#                    {% for invoice in app.user.invoices %} #}
-                    {#                        {% if invoice.published %} #}
-                    {#                            <li class="nav-item"> #}
-                    {#                                <a class="nav-link" #}
-                    {#                                   href="{{ path('invoice', {'uid': invoice.id}) }}">{{ 'menu.invoice'|trans }} #}
-                    {#                                    : {{ invoice.name }}</a> #}
-                    {#                            </li> #}
-                    {#                        {% endif %} #}
-                    {#                    {% endfor %} #}
                     {% if is_granted('ROLE_ADMIN') %}
                         <li class="nav-item">
                             <a class="nav-link link-warning" href="{{ path('admin_index') }}">{{ 'base.menu.admin'|trans }}</a>
