@@ -1,9 +1,28 @@
 admin:
     title: Admin
+    data:
+        id: ID
+        country: Nation
+        club: Verein
+        officials: O
+        contestants: C
+        itc-selection:
+            title: ITC-Auswahl
+            none: 'keine Teilnahme'
+            pack-A: 'PA'
+            pack-B: 'PB'
+            pack-C: 'PC'
+            1-day: '1T'
+            2-day: '2T'
+            3-day: '3T'
     club:
         confirm-delete: "Bist du sicher, dass du die Anmeldung für {club} und alle seine gemeldeten Teilnehmer löschen möchtest?"
-    invoice:
-        tooltip: "Rechnung: {subId} {name}"
+    action:
+        title: 'Aktion'
+        login: 'Als dieser Nutzer einloggen'
+        invoice:
+            new: 'Neue Rechnung'
+            tooltip: "Rechnung: {subId} {name}"
 base:
     menu:
         admin: Admin
@@ -80,9 +99,9 @@ participants:
             itc-selection:
                 title: ITC-Auswahl
                 none: 'keine Teilnahme'
-                pack-A: 'Paket A'
-                pack-B: 'Paket B'
-                pack-C: 'Paket C'
+                pack-A: 'Paket A (Fr.-Mo.)'
+                pack-B: 'Paket B (Fr.-Di.)'
+                pack-C: 'Paket C (Fr.-Mi.)'
                 1-day: '1 Tag'
                 2-day: '2 Tage'
                 3-day: '3 Tage'

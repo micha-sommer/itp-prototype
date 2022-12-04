@@ -12,22 +12,22 @@
                 <thead class="table-dark">
                 <tr>
                     <td colspan="5" class="table-light"></td>
-                    <td colspan="6" class="text-center">Übernachtungen</td>
+                    <td colspan="6" class="text-center">{{ 'admin.data.itc-selection.title'|trans }}</td>
                     <td colspan="1" class="table-light"></td>
                 </tr>
                 <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col"></th>
-                    <th scope="col">Club</th>
-                    <th scope="col">O</th>
-                    <th scope="col">C</th>
-                    <th scope="col">Paket A</th>
-                    <th scope="col">Paket B</th>
-                    <th scope="col">Paket C</th>
-                    <th scope="col">1 Tag</th>
-                    <th scope="col">2 Tage</th>
-                    <th scope="col">3 Tage</th>
-                    <th scope="col">Aktion</th>
+                    <th scope="col">{{ 'admin.data.id'|trans }}</th>
+                    <th scope="col">{{ 'admin.data.country'|trans }}</th>
+                    <th scope="col">{{ 'admin.data.club'|trans }}</th>
+                    <th scope="col">{{ 'admin.data.officials'|trans }}</th>
+                    <th scope="col">{{ 'admin.data.contestants'|trans }}</th>
+                    <th scope="col">{{ 'admin.data.itc-selection.pack-A'|trans }}</th>
+                    <th scope="col">{{ 'admin.data.itc-selection.pack-B'|trans }}</th>
+                    <th scope="col">{{ 'admin.data.itc-selection.pack-C'|trans }}</th>
+                    <th scope="col">{{ 'admin.data.itc-selection.1-day'|trans }}</th>
+                    <th scope="col">{{ 'admin.data.itc-selection.2-day'|trans }}</th>
+                    <th scope="col">{{ 'admin.data.itc-selection.3-day'|trans }}</th>
+                    <th scope="col">{{ 'admin.action.title'|trans }}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -64,20 +64,20 @@
 {#                                <i class="fas fa-trash" aria-hidden="true"></i></a>#}
                             <a class="btn btn-primary" role="button"
                                data-toggle="tooltip" data-placement="top"
-                               title="Login as user"
+                               title="Als dieser Nutzer einloggen"
                                href="{{ path('welcome', {'_switch_user': registration.email }) }}">
                                 <i class="fas fa-sign-in-alt"></i>
                             </a>
                             <a class="btn btn-info" role="button"
                                data-toggle="tooltip" data-placement="top"
-                               title="New Invoice"
+                               title="{{ 'admin.action.invoice.new'|trans }}"
                                href="{{ path('invoice_new', {'registrationId': registration.id }) }}">
                                 <i class="fas fa-hand-holding-usd"></i>
                             </a>
                             {% for invoice in registration.invoices %}
                                 <a class="btn {{ invoice.published ? "btn-success" : "btn-warning" }}" role="button"
                                    data-toggle="tooltip" data-placement="top"
-                                   title="{{ 'admin.invoice.tooltip'|trans({'subId': invoice.subId, 'name': invoice.name}) }}"
+                                   title="{{ 'admin.action.invoice.tooltip'|trans({'subId': invoice.subId, 'name': invoice.name}) }}"
                                    href="{{ path('invoice_edit', {'id': invoice.id }) }}">
                                     <i class="fas fa-file-invoice-dollar"></i>
                                 </a>

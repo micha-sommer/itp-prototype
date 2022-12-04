@@ -1,9 +1,28 @@
 admin:
     title: Admin
+    data:
+        id: ID
+        country: Nation
+        club: Club
+        officials: O
+        contestants: C
+        itc-selection:
+            title: 'ITC selection'
+            none: 'no participation'
+            pack-A: 'PA'
+            pack-B: 'PB'
+            pack-C: 'PC'
+            1-day: '1d'
+            2-day: '2d'
+            3-day: '3d'
     club:
         confirm-delete: "Are you sure you want to delete {club} and all its registered officials, contestants, and transport ?"
-    invoice:
-        tooltip: "Invoice {subId} {name}"
+    action:
+        title: 'Action'
+        login: 'Login as User'
+        invoice:
+            new: 'New Invoice'
+            tooltip: "Invoice {subId} {name}"
 base:
     menu:
         admin: Admin
@@ -80,9 +99,9 @@ participants:
             itc-selection:
                 title: 'ITC selection'
                 none: 'no participation'
-                pack-A: 'package A'
-                pack-B: 'package B'
-                pack-C: 'package C'
+                pack-A: 'package A (Fri-Mon)'
+                pack-B: 'package B (Fri-Tue)'
+                pack-C: 'package C (Fri-Wed)'
                 1-day: '1 day'
                 2-day: '2 days'
                 3-day: '3 days'
