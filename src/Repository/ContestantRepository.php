@@ -16,7 +16,6 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Contestant|null findOneBy(array $criteria, array $orderBy = null)
  * @method Contestant[]    findAll()
  * @method Contestant[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
- * @method int             count(array $array)
  */
 class ContestantRepository extends ServiceEntityRepository
 {
@@ -53,7 +52,7 @@ class ContestantRepository extends ServiceEntityRepository
             ->andWhere(Criteria::expr()->neq('weightCategory', 'camp_only'))
             ->andWhere(Criteria::expr()->lt('createdAt', $this->deadline));
 
-        return $this->countByCriteria([$criteria]);
+        return $this->countByCriteria($criteria);
     }
 
     public function getLateContestantCount(Registration $registration): int
@@ -63,7 +62,12 @@ class ContestantRepository extends ServiceEntityRepository
             ->andWhere(Criteria::expr()->neq('weightCategory', 'camp_only'))
             ->andWhere(Criteria::expr()->gte('createdAt', $this->deadline));
 
-        return $this->countByCriteria([$criteria]);
+        return $this->countByCriteria($criteria);
+    }
+
+    private function countByCriteria(Criteria $criteria): int
+    {
+        return  $this->_em->getUnitOfWork()->getEntityPersister($this->_entityName)->count($criteria);
     }
 
     public function getPackACount(?Registration $registration): int
