@@ -171,10 +171,6 @@
 
             let unsaved = false;
 
-            $(":input").change(function () {
-                unsaved = true;
-            });
-
             function unloadPage() {
                 if (unsaved) {
                     return "{{ 'global.forms.unsaved-changes-warning'|trans }}";
@@ -186,6 +182,14 @@
             let myForm = document.querySelector('#officials_form');
             myForm.addEventListener("submit", function () {
                 unsaved = false
+            });
+
+            $("input").change(function () {
+                unsaved = true;
+            });
+
+            $("select").change(function () {
+                unsaved = true;
             });
         });
 

@@ -175,11 +175,14 @@
                 addTagForm($collectionHolder, $addTagLink);
             });
 
-            let unsaved = false;
+            $('select').each(function () {
+                let id = $(this).attr('id')
+                if (id.endsWith('ageCategory')) {
+                    let element = $(this).trigger('change')
+                }
+            })
 
-            $(":input").change(function () {
-                unsaved = true;
-            });
+            let unsaved = false;
 
             function unloadPage() {
                 if (unsaved) {
@@ -190,16 +193,18 @@
             window.onbeforeunload = unloadPage;
 
             let myForm = document.querySelector('#contestants_form');
+
             myForm.addEventListener("submit", function () {
                 unsaved = false
             });
 
-            $('select').each(function () {
-                let id = $(this).attr('id')
-                if (id.endsWith('ageCategory')) {
-                    let element = $(this).trigger('change')
-                }
-            })
+            $("input").change(function () {
+                unsaved = true;
+            });
+
+            $("select").change(function () {
+                unsaved = true;
+            });
         });
 
         function addTagForm($collectionHolder) {
