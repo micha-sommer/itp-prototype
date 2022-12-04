@@ -4,7 +4,7 @@
 
 {% block body %}
     <div class="container">
-        {{ form_start(form) }}
+        {{ form_start(form, {'attr': {'id': 'invoice_form'}}) }}
         {{ form_row(form._token) }}
         <div class="p-5 mb-4 bg-light rounded-3">
             <h1 class="display-4">{{ 'invoice.edit.title'|trans }}</h1>
@@ -125,18 +125,45 @@
             addTagFormDeleteLink($(this));
         });
 
-    // count the current form inputs we have (e.g. 2), use that as the new
-    // index when inserting a new item (e.g. 2)
-    collectionHolder.data('index', collectionHolder.find('tr#invoicePosition').length);
+        // count the current form inputs we have (e.g. 2), use that as the new
+        // index when inserting a new item (e.g. 2)
+        collectionHolder.data('index', collectionHolder.find('tr#invoicePosition').length);
 
-    let $addTagLink = $('button.add-a-tag');
-    $addTagLink.on('click', function (e) {
+        let $addTagLink = $('button.add-a-tag');
+        $addTagLink.on('click', function (e) {
             // prevent the link from creating a "#" on the URL
             e.preventDefault();
 
             // add a new tag form (see code block below)
             addTagForm(collectionHolder, $addTagLink);
         });
+
+        let unsaved = false;
+
+        function unloadPage() {
+            if (unsaved) {
+                return "{{ 'global.forms.unsaved-changes-warning'|trans }}";
+            }
+        }
+
+        window.onbeforeunload = unloadPage;
+
+        let myForm = document.querySelector('#invoice_form');
+        myForm.addEventListener("submit", function () {
+            unsaved = false
+        });
+
+        $("input").change(function () {
+            unsaved = true;
+        });
+
+        $("select").change(function () {
+            unsaved = true;
+        });
+
+        $("button#removePositionButton").on("click", function () {
+            unsaved = true;
+        })
     });
 
     function addTagForm(collectionHolder) {
@@ -212,7 +239,6 @@
         // get subtotal of all elements
         collectionHolder.find('tr#invoicePosition').each(function () {
             let index = $(this).data('index');
-            console.log('get subtotals from index: '+index);
             total += stringToNumber($(this).find(`input#invoice_invoicePositions_${index}_totalInHundreds`).val(), locale);
         });
         $('#invoice_totalInHundreds').val(total.toLocaleString(locale, {minimumFractionDigits: 2, maximumFractionDigits: 2}));
@@ -228,15 +254,10 @@
     function removeEmpty() {
         let locale = document.querySelector('html').getAttribute('lang');
 
-        console.log("remove empty")
         $('tr#invoicePosition').each(function () {
             let index = $(this).data('index');
-            console.log("check index: "+index)
             let amount = stringToNumber($(this).find(`input#invoice_invoicePositions_${index}_amountInHundreds`).val(), locale);
-            console.log("amount is: "+amount)
-            console.log(amount === 0)
             if(amount === 0) {
-                console.log("Remove index: "+index)
                 $(this).find('button#removePositionButton').click()
             }
         });
