@@ -57,7 +57,7 @@ class RegistrationController extends AbstractController
             $entityManager->flush();
 
             // generate a signed url and email it to the user
-            $name = $translator->trans('registration.mail.name');
+            $name = $translator->trans('global.tjv-name');
             $subject = $translator->trans('registration.mail.subject');
             $this->emailVerifier->sendEmailConfirmation(
                 'registration_verify_email',
@@ -160,7 +160,7 @@ class RegistrationController extends AbstractController
     ): Response
     {
         $timestamp = new DateTime();
-        $name = $translator->trans('registration.confirmation.name');
+        $name = $translator->trans('global.tjv-name');
         $subject = $translator->trans('registration.confirmation.subject', [
             'club' => $registration->getClub(),
             'timestamp' => $timestamp

@@ -170,7 +170,6 @@ registration:
         telephone: Telefon
         invoice-address: Rechnungsadresse
     mail:
-        name: 'Thüringer Judo-Verband e.V.'
         subject: 'Bitte bestätigen Sie Ihre Email-Adresse.'
         greeting: 'Hallo! Bitte bestätigen Sie Ihre Email-Adresse!'
         link-pre-text: 'Bitte bestätigen Sie Ihre Email-Adresse, indem Sie auf folgenden Link klicken:'
@@ -178,7 +177,6 @@ registration:
         expire: 'Der Link läuft in {expiresText} aus.'
         end-salutation: 'Mit sportlichen Grüßen'
     confirmation:
-        name: 'Thüringer Judo-Verband e.V.'
         subject: 'Meldebestätigung zum Thüringenpokal: {club} ({timestamp, date} {timestamp, time, short})'
         title: 'Bestätigung der Meldung vom {timestamp, date} {timestamp, time, short}'
         greeting: 'Wir freuen uns Sie beim {itpCount}. Internationalen Thüringenpokal bzw. {itcCount}. Internationalen Trainingscamp begrüßen zu dürfen. Eine Übersicht Ihrer Meldung finden Sie in dieser Mail.'

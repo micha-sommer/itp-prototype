@@ -170,7 +170,6 @@ registration:
         telephone: Telephone
         invoice-address: 'Invoice Address'
     mail:
-        name: 'Thuringian Judo Federation'
         subject: 'Please Confirm your Email'
         greeting: 'Hi! Please confirm your email!'
         link-pre-text: 'Please confirm your email address by clicking the following link:'
@@ -178,7 +177,6 @@ registration:
         expire: 'This link will expire in {expiresText}.'
         end-salutation: 'Best regards'
     confirmation:
-        name: 'Thuringian Judo Federation'
         subject: 'Confirmation Thuringia Cup: {club} ({timestamp, date} -  {timestamp, time, short})'
         title: 'Registration confirmation from {timestamp, date} {timestamp, time, short}'
         greeting: 'We are happy to welcome you to {itpCount} International Thuringia Cup and {itcCount} International Training Camp. You find an overview of your data within this mail.'
