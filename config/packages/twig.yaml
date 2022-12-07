@@ -9,9 +9,9 @@ twig:
         year: 2023
         itp_count: 29
         itc_count: 16
-        alertAccommodation: false
         deadline: 'March 8, 2023 23:59'
         endDate: 'March 15, 2023 23:59'
+        accommodation: '@App\Service\AccommodationService'
 
     form_themes: ['bootstrap_5_layout.html.twig']
 

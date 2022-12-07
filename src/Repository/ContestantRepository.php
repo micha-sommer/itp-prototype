@@ -45,6 +45,13 @@ class ContestantRepository extends ServiceEntityRepository
         }
     }
 
+    public function getAccommodationCount(): int
+    {
+        $criteria = Criteria::create()->where(Criteria::expr()->in('itcSelection', ['pack-A', 'pack-B', 'pack-C']));
+
+        return $this->countByCriteria($criteria);
+    }
+
     public function getRegularContestantCount(Registration $registration): int
     {
         $criteria = Criteria::create()
@@ -67,7 +74,7 @@ class ContestantRepository extends ServiceEntityRepository
 
     private function countByCriteria(Criteria $criteria): int
     {
-        return  $this->_em->getUnitOfWork()->getEntityPersister($this->_entityName)->count($criteria);
+        return $this->_em->getUnitOfWork()->getEntityPersister($this->_entityName)->count($criteria);
     }
 
     public function getPackACount(?Registration $registration): int
