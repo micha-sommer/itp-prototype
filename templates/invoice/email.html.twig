@@ -91,10 +91,10 @@
                     <tr>
                         <td>{{ position.description }}</td>
                         <td class="text-right">{{ (position.priceInHundreds/100)|number_format(2,',','.') }} €</td>
-                        {% if position.amountInHundreds%100 != 0 %}
-                            <td class="text-right">{{ (position.amountInHundreds/100)|number_format(0,',','.') }}%</td>
-                        {% else %}
+                        {% if position.amountInHundreds%100 == 0 %}
                             <td class="text-right">{{ (position.amountInHundreds/100)|number_format(0,',','.') }} </td>
+                        {% else %}
+                            <td class="text-right">{{ (position.amountInHundreds)|number_format(0,',','.') }}%</td>
                         {% endif %}
                         <td class="text-right">{{ (position.totalInHundreds/100)|number_format(2,',','.') }} €</td>
                     </tr>
