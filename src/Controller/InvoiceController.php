@@ -122,6 +122,10 @@ class InvoiceController extends AbstractController
     #[Route('/{id}', name: 'invoice_show', methods: "GET")]
     public function show(Invoice $invoice): Response
     {
+        if ($this->getUser() !== $invoice->getRegistration()) {
+            $this->denyAccessUnlessGranted("ROLE_ADMIN");
+        }
+
         $pdf = $this->getInvoicePDF($invoice);
 
         $pdf->Output('Rechnung.pdf');
