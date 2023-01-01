@@ -145,6 +145,8 @@
         let $removeFormButton = $('<button class="btn btn-danger ms-1" type="button"><i class="fa fa-trash" aria-hidden="true"></i></button>');
         let $commentFormButton = $('<button class="btn btn-info" type="button" data-bs-toggle="modal" data-bs-target="#commentModal" data-comment=""><i class="fa fa-comment"></i></button>');
 
+        let unsaved = false;
+
         $(document).ready(function () {
             // Get the ul that holds the collection of tags
             $collectionHolder = $('#officials');
@@ -169,7 +171,6 @@
                 addTagForm($collectionHolder, $addTagLink);
             });
 
-            let unsaved = false;
 
             function unloadPage() {
                 if (unsaved) {
@@ -238,6 +239,7 @@
 
             $thisRemoveFormButton.on('click', function () {
                 // remove the li for the tag form
+                unsaved = true;
                 $tagFormContestant.remove();
             });
         }
