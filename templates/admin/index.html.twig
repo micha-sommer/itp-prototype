@@ -59,6 +59,10 @@
                         <td class="table-active">{{ registration.twoDaysCount }}</td>
                         <td class="table-active">{{ registration.threeDaysCount }}</td>
                         <td>
+                            <form style="display: inline" method="post" action="{{ path('registration_delete', {'id': registration.id}) }}"
+                                  onsubmit="return confirm('{{ 'registration.edit.confirm-delete'|trans({'club': registration.club}) }}');">
+                                <button class="btn btn-danger"><i class="fas fa-trash" aria-hidden="true"></i></button>
+                            </form>
 {#                            <a class="btn btn-danger" href="javascript:void(0)"#}
 {#                               onclick="if(confirm({{ 'admin.club.confirm-delete'|trans }})){window.location='{{ path('registration_delete', {'id': registration.id}) }}';}">#}
 {#                                <i class="fas fa-trash" aria-hidden="true"></i></a>#}

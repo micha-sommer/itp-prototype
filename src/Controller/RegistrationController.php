@@ -95,6 +95,7 @@ class RegistrationController extends AbstractController
         }
 
         return $this->render('registration/edit.html.twig', [
+            'registration' => $registration,
             'registrationForm' => $form->createView(),
         ]);
     }
@@ -153,9 +154,9 @@ class RegistrationController extends AbstractController
      */
     #[Route('/{id}/send_confirmation', name: 'registration_send_confirmation')]
     public function sendConfirmation(
-        Request $request,
-        Registration $registration,
-        MailerInterface $mailer,
+        Request             $request,
+        Registration        $registration,
+        MailerInterface     $mailer,
         TranslatorInterface $translator,
     ): Response
     {
@@ -181,5 +182,18 @@ class RegistrationController extends AbstractController
         $mailer->send($mail);
 
         return $this->redirectToRoute('welcome');
+    }
+
+    #[Route('/{id}', name: 'registration_delete', methods: 'POST')]
+    public function deleteRegistration(Registration $registration, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->getUser() !== $registration) {
+            $this->denyAccessUnlessGranted("ROLE_ADMIN");
+        }
+
+        $entityManager->remove($registration);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('admin_index');
     }
 }

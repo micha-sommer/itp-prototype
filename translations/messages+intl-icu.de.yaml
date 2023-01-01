@@ -155,6 +155,8 @@ registration:
     edit:
         title: 'Kontaktdaten bearbeiten'
         description: 'Tragen Sie hier ihre Kontaktdaten ein. Ihre Emailadresse können Sie leider nicht ändern. Wenn Sie dies wirklich brauchen, kontaktieren Sie uns.'
+        delete: 'Diese Registrierung löschen'
+        confirm-delete: "Bist du sicher, die Registrierung für {club} löschen zu wollen?"
     edit_password:
         title: 'Passwort ändern'
         description: 'Hier können Sie ihr Passwort für den Login ändern. Passwörter müssen mindestens 6 Zeichen lang sein.'

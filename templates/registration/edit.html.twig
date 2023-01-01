@@ -8,6 +8,10 @@
             <h1 class="display-4">{{ 'registration.edit.title'|trans }}</h1>
             <p class="lead">{{ 'registration.edit.description'|trans }}</p>
             <a class="btn btn-outline-primary" href="{{ path('registration_edit_password') }}">Passwort ändern</a>
+            <form style="display: inline" method="post" action="{{ path('registration_delete', {'id': registration.id}) }}"
+                  onsubmit="return confirm('{{ 'registration.edit.confirm-delete'|trans({'club': registration.club}) }}');">
+                <button class="btn btn-danger">{{ 'registration.edit.delete'|trans }}</button>
+            </form>
             <hr class="my-4">
             {{ form_start(registrationForm) }}
             {{ form_row(registrationForm._token) }}
