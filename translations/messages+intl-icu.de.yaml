@@ -25,13 +25,15 @@ admin:
             tooltip: "Rechnung: {subId} {name}"
     contestants:
         title: 'Übersicht Wettkämpferinnen'
+    officials:
+        title: 'Übersicht Offizielle'
 base:
     menu:
         admin:
             title: Admin
             index: Übersicht
             contestants: Wettkämpfer
-            officials: Officials
+            officials: Offizielle
         invoices: Rechnungen
         register: Registrieren
         registration_edit: Kontaktdaten

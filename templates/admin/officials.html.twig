@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'admin.officials.title'|trans }}{% endblock %}
+
+{% block stylesheets %}
+    <link href="{{ asset('styling/bootstrap-table.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('styling/bootstrap-table-filter-control.min.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block headscripts %}
+    <script src="{{ asset('js/bootstrap-table.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/bootstrap-table-filter-control.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/bootstrap-table-%s.min.js'|format(app.request.locale|upper)) }}" type="text/javascript"></script>
+{% endblock %}
+
+{% block javascript %}
+    <script>
+        window.myIcons = {
+            columns: 'fa-th-list',
+        }
+    </script>
+    <script>
+        $(document).ready(function () {
+            let officialsTable = $('#officials-table')
+            let newHeight = $(window).innerHeight() - 220
+            officialsTable.bootstrapTable('resetView', {height: newHeight})
+        })
+    </script>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="p-5 mb-4 bg-light rounded-3">
+            <h1 class="display-4">{{ 'admin.officials.title'|trans }}</h1>
+            <hr class="my-4">
+            <table
+                id="officials-table"
+                data-toggle="table"
+                data-locale="{{ app.request.locale }}"
+                data-icons-prefix="fa"
+                data-icons="myIcons"
+                data-search="true"
+                data-search-align="left"
+                data-search-accent-neutralise="true"
+                data-show-columns="true"
+                data-buttons-align="left"
+                data-buttons-class="primary"
+                data-filter-control="true"
+            >
+                <caption>{{ 'admin.officials.title'|trans }}</caption>
+                <thead>
+                <tr>
+                    <th data-sortable="true">{{ 'participants.officials.data.last-name'|trans }}</th>
+                    <th data-sortable="true">{{ 'participants.officials.data.first-name'|trans }}</th>
+                    <th data-sortable="true" data-filter-control="select">{{ 'admin.data.club'|trans }}</th>
+                    <th data-sortable="true" data-filter-control="select">{{ 'admin.data.country'|trans }}</th>
+                    <th data-sortable="true" data-filter-control="select">{{ 'participants.officials.data.role.title'|trans }}</th>
+                    <th data-sortable="true" data-filter-control="select">{{ 'participants.officials.data.gender.title'|trans }}</th>
+                    <th data-sortable="true" data-filter-control="select">{{ 'participants.officials.data.itc-selection.title'|trans }}</th>
+                    <th data-sortable="true">{{ 'participants.officials.data.comment.for'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for official in officials %}
+                    <tr>
+                        <td>{{ official.firstName }}</td>
+                        <td>{{ official.lastName }}</td>
+                        <td>{{ official.registration.club }}</td>
+                        <td>{{ official.registration.country }}</td>
+                        <td>{{ "participants.officials.data.role.#{ official.role }"|trans }}</td>
+                        <td>{{ "participants.officials.data.gender.#{ official.gender }"|trans }}</td>
+                        <td>{{ "participants.officials.data.itc-selection.#{ official.itcSelection }"|trans }}</td>
+                        <td>{{ official.comment }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

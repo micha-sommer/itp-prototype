@@ -25,6 +25,8 @@ admin:
             tooltip: "Invoice {subId} {name}"
     contestants:
         title: 'Contestants Overview'
+    offizielle:
+        title: 'Officials Overview'
 base:
     menu:
         admin:

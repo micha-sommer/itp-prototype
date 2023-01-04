@@ -35,6 +35,7 @@ security:
     access_control:
         - { path: ^/(%app.supported_locales%)/admin/?$, roles: ROLE_ADMIN }
         - { path: ^/(%app.supported_locales%)/admin/contestants/?$, roles: ROLE_ADMIN }
+        - { path: ^/(%app.supported_locales%)/admin/officials/?$, roles: ROLE_ADMIN }
         - { path: ^/(%app.supported_locales%)/contestants/?$, roles: ROLE_USER }
         - { path: ^/(%app.supported_locales%)/officials/?$, roles: ROLE_USER }
         - { path: ^/(%app.supported_locales%)/invoices/new/?$, roles: ROLE_ADMIN }

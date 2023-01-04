@@ -60,4 +60,12 @@ class AdminController extends AbstractController
         ]);
     }
 
+    #[Route('/officials', name: 'admin_officials')]
+    public function officialsOverview(OfficialRepository $officialRepository): Response
+    {
+        return $this->render('admin/officials.html.twig', [
+            'officials' => $officialRepository->findAll()
+        ]);
+    }
+
 }
