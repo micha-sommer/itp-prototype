@@ -11,6 +11,7 @@
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
     <script src="https://kit.fontawesome.com/f0d5ec1ada.js"></script>
     <script src="{{ asset('js/jquery-3.6.1.slim.min.js') }}" type="text/javascript"></script>
+    {% block headscripts %}{% endblock %}
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary" aria-label="site navigation">
@@ -67,8 +68,23 @@
                         </li>
                     {% endif %}
                     {% if is_granted('ROLE_ADMIN') %}
-                        <li class="nav-item">
-                            <a class="nav-link link-warning" href="{{ path('admin_index') }}">{{ 'base.menu.admin'|trans }}</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link link-warning dropdown-toggle" href="#"
+                               role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                {{ 'base.menu.admin.title'|trans }}
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" href="{{ path('admin_index') }}">
+                                        {{ 'base.menu.admin.index'|trans }}
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ path('admin_contestants') }}">
+                                        {{ 'base.menu.admin.contestants'|trans }}
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                     {% endif %}
                 {% else %}

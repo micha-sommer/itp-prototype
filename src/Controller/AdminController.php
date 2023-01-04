@@ -51,4 +51,13 @@ class AdminController extends AbstractController
             'threeDaysCount' => $threeDaysCount,
         ]);
     }
+
+    #[Route('/contestants', name: 'admin_contestants')]
+    public function contestantsOverview(ContestantRepository $contestantRepository): Response
+    {
+        return $this->render('admin/contestants.html.twig', [
+            'contestants' => $contestantRepository->findAll()
+        ]);
+    }
+
 }

@@ -23,9 +23,15 @@ admin:
         invoice:
             new: 'New Invoice'
             tooltip: "Invoice {subId} {name}"
+    contestants:
+        title: 'Contestants Overview'
 base:
     menu:
-        admin: Admin
+        admin:
+            title: Admin
+            index: Overview
+            contestants: Contestants
+            officials: Officials
         invoices: Invoices
         register: Register
         registration_edit: 'Contact Information'

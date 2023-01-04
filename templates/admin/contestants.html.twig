@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'admin.contestants.title'|trans }}{% endblock %}
+
+{% block stylesheets %}
+    <link href="{{ asset('styling/bootstrap-table.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('styling/bootstrap-table-filter-control.min.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block headscripts %}
+    <script src="{{ asset('js/bootstrap-table.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/bootstrap-table-filter-control.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/bootstrap-table-%s.min.js'|format(app.request.locale|upper)) }}" type="text/javascript"></script>
+{% endblock %}
+
+{% block javascript %}
+    <script>
+        window.myIcons = {
+            columns: 'fa-th-list',
+        }
+    </script>
+    <script>
+        $(document).ready(function () {
+            let contestantsTable = $('#contestants-table')
+            let newHeight = $(window).innerHeight() - 220
+            contestantsTable.bootstrapTable('resetView', {height: newHeight})
+        })
+    </script>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="p-5 mb-4 bg-light rounded-3">
+            <h1 class="display-4">{{ 'admin.contestants.title'|trans }}</h1>
+            <hr class="my-4">
+            <table
+                id="contestants-table"
+                data-toggle="table"
+                data-locale="{{ app.request.locale }}"
+                data-icons-prefix="fa"
+                data-icons="myIcons"
+                data-search="true"
+                data-search-align="left"
+                data-search-accent-neutralise="true"
+                data-show-columns="true"
+                data-buttons-align="left"
+                data-buttons-class="primary"
+                data-filter-control="true"
+            >
+                <caption>{{ 'admin.contestants.title'|trans }}</caption>
+                <thead>
+                <tr>
+                    <th data-sortable="true">{{ 'participants.contestants.data.last-name'|trans }}</th>
+                    <th data-sortable="true">{{ 'participants.contestants.data.first-name'|trans }}</th>
+                    <th data-sortable="true" data-filter-control="select">{{ 'admin.data.club'|trans }}</th>
+                    <th data-sortable="true" data-filter-control="select">{{ 'admin.data.country'|trans }}</th>
+                    <th data-sortable="true" data-filter-control="select">{{ 'participants.contestants.data.year'|trans }}</th>
+                    <th data-sortable="true" data-filter-control="select">{{ 'participants.contestants.data.age-category.title'|trans }}</th>
+                    <th data-sortable="true" data-filter-control="select">{{ 'participants.contestants.data.weight-category'|trans }}</th>
+                    <th data-sortable="true" data-filter-control="select">{{ 'participants.contestants.data.itc-selection.title'|trans }}</th>
+                    <th data-sortable="true">{{ 'participants.contestants.data.comment.for'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for contestant in contestants %}
+                    <tr>
+                        <td>{{ contestant.firstName }}</td>
+                        <td>{{ contestant.lastName }}</td>
+                        <td>{{ contestant.registration.club }}</td>
+                        <td>{{ contestant.registration.country }}</td>
+                        <td>{{ contestant.year }}</td>
+                        <td>{{ contestant.ageCategory }}</td>
+                        <td>{{ contestant.weightCategory }}</td>
+                        <td>{{ contestant.itcSelection }}</td>
+                        <td>{{ contestant.comment }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

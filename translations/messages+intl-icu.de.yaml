@@ -23,9 +23,15 @@ admin:
         invoice:
             new: 'Neue Rechnung'
             tooltip: "Rechnung: {subId} {name}"
+    contestants:
+        title: 'Übersicht Wettkämpferinnen'
 base:
     menu:
-        admin: Admin
+        admin:
+            title: Admin
+            index: Übersicht
+            contestants: Wettkämpfer
+            officials: Officials
         invoices: Rechnungen
         register: Registrieren
         registration_edit: Kontaktdaten
