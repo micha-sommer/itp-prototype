@@ -9,6 +9,9 @@
 
 {% block headscripts %}
     <script src="{{ asset('js/bootstrap-table.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/bootstrap-table-export.js') }}" type="text/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tableexport.jquery.plugin@1.26.0/tableExport.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tableexport.jquery.plugin@1.26.0/libs/js-xlsx/xlsx.core.min.js"></script>
     <script src="{{ asset('js/bootstrap-table-filter-control.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/bootstrap-table-%s.min.js'|format(app.request.locale|upper)) }}" type="text/javascript"></script>
 {% endblock %}
@@ -17,6 +20,7 @@
     <script>
         window.myIcons = {
             columns: 'fa-th-list',
+            export: 'fa-download'
         }
     </script>
     <script>
@@ -46,6 +50,8 @@
                 data-buttons-align="left"
                 data-buttons-class="primary"
                 data-filter-control="true"
+                data-show-export="true"
+                data-export-types="['csv', 'xlsx']"
             >
                 <caption>{{ 'admin.contestants.title'|trans }}</caption>
                 <thead>
@@ -68,9 +74,9 @@
                         <td>{{ contestant.lastName }}</td>
                         <td>{{ contestant.registration.club }}</td>
                         <td>{{ contestant.registration.country }}</td>
-                        <td>{{ contestant.year }}</td>
+                        <td data-tableexport-xlsxformatid="1">{{ contestant.year }}</td>
                         <td>{{ "participants.contestants.data.age-category.#{ contestant.ageCategory }"|trans }}</td>
-                        <td>{{ contestant.weightCategory }}</td>
+                        <td data-tableexport-xlsxformatid="1">{{ contestant.weightCategory }}</td>
                         <td>{{ "participants.contestants.data.itc-selection.#{ contestant.itcSelection }"|trans }}</td>
                         <td>{{ contestant.comment }}</td>
                     </tr>
