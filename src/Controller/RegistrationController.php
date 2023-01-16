@@ -11,6 +11,7 @@ use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
@@ -185,7 +186,7 @@ class RegistrationController extends AbstractController
     }
 
     #[Route('/{id}', name: 'registration_delete', methods: 'POST')]
-    public function deleteRegistration(Registration $registration, EntityManagerInterface $entityManager): Response
+    public function deleteRegistration(Registration $registration, EntityManagerInterface $entityManager, Security $security): Response
     {
         if ($this->getUser() !== $registration) {
             $this->denyAccessUnlessGranted("ROLE_ADMIN");
@@ -194,6 +195,9 @@ class RegistrationController extends AbstractController
         $entityManager->remove($registration);
         $entityManager->flush();
 
-        return $this->redirectToRoute('admin_index');
+        if ($this->isGranted("ROLE_ADMIN")) {
+            return $this->redirectToRoute('admin_index');
+        }
+        return $security->logout(false);
     }
 }
