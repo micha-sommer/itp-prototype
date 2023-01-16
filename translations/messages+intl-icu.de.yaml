@@ -162,7 +162,7 @@ registration:
         action: Register
     edit:
         title: 'Kontaktdaten bearbeiten'
-        description: 'Trage hier deine Kontaktdaten ein. Deine Email-Adresse kannst du leider nicht ändern. Wenn du dies wirklich brauchst, kontaktieren uns.'
+        description: 'Trage hier deine Kontaktdaten ein. Deine Email-Adresse kannst du leider nicht ändern. Wenn du dies wirklich brauchst, kontaktiere uns.'
         delete: 'Diese Registrierung löschen'
         confirm-delete: "Bist du sicher, die Registrierung für {club} löschen zu wollen?"
     edit_password:
