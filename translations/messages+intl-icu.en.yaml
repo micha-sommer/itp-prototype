@@ -197,7 +197,7 @@ welcome:
     active: 'This is the new entry form for the registration process of International Thuringia Cup {year}.'
     end-date-passed: 'Registration period ended. For further changes please tell us personally.'
     contact-us: 'Feel free to contact us:'
-    contestants: '<strong>{total}</strong> registrierte Wettkämpferinnen von <strong>{clubs}</strong> Vereinen/Nationen in den folgenden Klassen:'
+    contestants: '<strong>{total}</strong> registered competitors from <strong>{clubs}</strong> clubs/nations in the following categories:'
     overview:
         send-confirmation: 'Send Confirmation Mail'
         registration: 'Contact Information'
