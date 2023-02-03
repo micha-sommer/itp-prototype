@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PHP8_PATH="/usr/bin/php8.1/bin/php"
+PHP8_PATH="/usr/local/php8.1/bin/php"
 
 cd www.thueringer-judoverband.de/anmeldung
 
