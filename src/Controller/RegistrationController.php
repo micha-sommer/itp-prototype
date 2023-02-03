@@ -37,7 +37,7 @@ class RegistrationController extends AbstractController
         Request                     $request,
         UserPasswordHasherInterface $userPasswordHasher,
         EntityManagerInterface      $entityManager,
-        TranslatorInterface         $translator,
+        Security                    $security,
     ): Response
     {
         $registration = new Registration();
@@ -57,21 +57,9 @@ class RegistrationController extends AbstractController
             $entityManager->persist($registration);
             $entityManager->flush();
 
-            // generate a signed url and email it to the user
-            $name = $translator->trans('global.tjv-name');
-            $subject = $translator->trans('registration.mail.subject');
-            $this->emailVerifier->sendEmailConfirmation(
-                'registration_verify_email',
-                $registration,
-                (new TemplatedEmail())
-                    ->from(new Address('anmeldung@thueringer-judoverband.de', $name))
-                    ->to($registration->getEmail())
-                    ->subject($subject)
-                    ->htmlTemplate('registration/confirmation_email.html.twig')
-            );
-            // do anything else you need here, like send an email
+            $security->login($registration, 'form_login');
 
-            return $this->redirectToRoute('login');
+            return $this->redirectToRoute('welcome');
         }
 
         return $this->render('registration/new.html.twig', [
@@ -147,7 +135,7 @@ class RegistrationController extends AbstractController
 
         $this->addFlash('success', 'Your email address has been verified.');
 
-        return $this->redirectToRoute('login');
+        return $this->redirectToRoute('welcome');
     }
 
     /**
