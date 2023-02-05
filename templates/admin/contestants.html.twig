@@ -25,9 +25,11 @@
     </script>
     <script>
         $(document).ready(function () {
-            let contestantsTable = $('#contestants-table')
-            let newHeight = $(window).innerHeight() - 220
-            contestantsTable.bootstrapTable('resetView', {height: newHeight})
+            let headers = $('#contestants-table thead tr th')
+            headers.each(function () {
+                    $(this).attr("data-tableexport-value", $(this).text())
+                }
+            )
         })
     </script>
 {% endblock %}
@@ -56,15 +58,33 @@
                 <caption>{{ 'admin.contestants.title'|trans }}</caption>
                 <thead>
                 <tr>
-                    <th data-sortable="true">{{ 'participants.contestants.data.last-name'|trans }}</th>
-                    <th data-sortable="true">{{ 'participants.contestants.data.first-name'|trans }}</th>
-                    <th data-sortable="true" data-filter-control="select">{{ 'admin.data.club'|trans }}</th>
-                    <th data-sortable="true" data-filter-control="select">{{ 'admin.data.country'|trans }}</th>
-                    <th data-sortable="true" data-filter-control="select">{{ 'participants.contestants.data.year'|trans }}</th>
-                    <th data-sortable="true" data-filter-control="select">{{ 'participants.contestants.data.age-category.title'|trans }}</th>
-                    <th data-sortable="true" data-filter-control="select">{{ 'participants.contestants.data.weight-category'|trans }}</th>
-                    <th data-sortable="true" data-filter-control="select">{{ 'participants.contestants.data.itc-selection.title'|trans }}</th>
-                    <th data-sortable="true">{{ 'participants.contestants.data.comment.for'|trans }}</th>
+                    <th data-sortable="true" data-field="last-name" data-filter-control="input">
+                        {{ 'participants.contestants.data.last-name'|trans }}
+                    </th>
+                    <th data-sortable="true" data-field="first-name" data-filter-control="input">
+                        {{ 'participants.contestants.data.first-name'|trans }}
+                    </th>
+                    <th data-sortable="true" data-field="club" data-filter-control="select">
+                        {{ 'admin.data.club'|trans }}
+                    </th>
+                    <th data-sortable="true" data-field="country" data-filter-control="select">
+                        {{ 'admin.data.country'|trans }}
+                    </th>
+                    <th data-sortable="true" data-field="year" data-filter-control="select">
+                        {{ 'participants.contestants.data.year'|trans }}
+                    </th>
+                    <th data-sortable="true" data-field="age-category" data-filter-control="select">
+                        {{ 'participants.contestants.data.age-category.title'|trans }}
+                    </th>
+                    <th data-sortable="true" data-field="weight-category" data-filter-control="select">
+                        {{ 'participants.contestants.data.weight-category'|trans }}
+                    </th>
+                    <th data-sortable="true" data-field="itc-selection" data-filter-control="select">
+                        {{ 'participants.contestants.data.itc-selection.title'|trans }}
+                    </th>
+                    <th data-sortable="true" data-field="comment" data-filter-control="input">
+                        {{ 'participants.contestants.data.comment.for'|trans }}
+                    </th>
                 </tr>
                 </thead>
                 <tbody>

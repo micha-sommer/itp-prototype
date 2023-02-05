@@ -25,9 +25,11 @@
     </script>
     <script>
         $(document).ready(function () {
-            let officialsTable = $('#officials-table')
-            let newHeight = $(window).innerHeight() - 220
-            officialsTable.bootstrapTable('resetView', {height: newHeight})
+            let headers = $('#officials-table thead tr th')
+            headers.each(function () {
+                    $(this).attr("data-tableexport-value", $(this).text())
+                }
+            )
         })
     </script>
 {% endblock %}
@@ -56,20 +58,36 @@
                 <caption>{{ 'admin.officials.title'|trans }}</caption>
                 <thead>
                 <tr>
-                    <th data-sortable="true">{{ 'participants.officials.data.last-name'|trans }}</th>
-                    <th data-sortable="true">{{ 'participants.officials.data.first-name'|trans }}</th>
-                    <th data-sortable="true" data-filter-control="select">{{ 'admin.data.club'|trans }}</th>
-                    <th data-sortable="true" data-filter-control="select">{{ 'admin.data.country'|trans }}</th>
-                    <th data-sortable="true" data-filter-control="select">{{ 'participants.officials.data.role.title'|trans }}</th>
-                    <th data-sortable="true" data-filter-control="select">{{ 'participants.officials.data.gender.title'|trans }}</th>
-                    <th data-sortable="true" data-filter-control="select">{{ 'participants.officials.data.itc-selection.title'|trans }}</th>
-                    <th data-sortable="true">{{ 'participants.officials.data.comment.for'|trans }}</th>
+                    <th data-sortable="true" data-field="last-name" data-filter-control="input">
+                        {{ 'participants.officials.data.last-name'|trans }}
+                    </th>
+                    <th data-sortable="true" data-field="first-name" data-filter-control="input">
+                        {{ 'participants.officials.data.first-name'|trans }}
+                    </th>
+                    <th data-sortable="true" data-field="club" data-filter-control="select">
+                        {{ 'admin.data.club'|trans }}
+                    </th>
+                    <th data-sortable="true" data-field="country" data-filter-control="select">
+                        {{ 'admin.data.country'|trans }}
+                    </th>
+                    <th data-sortable="true" data-field="role" data-filter-control="select">
+                        {{ 'participants.officials.data.role.title'|trans }}
+                    </th>
+                    <th data-sortable="true" data-field="gender" data-filter-control="select">
+                        {{ 'participants.officials.data.gender.title'|trans }}
+                    </th>
+                    <th data-sortable="true" data-field="itc-selection" data-filter-control="select">
+                        {{ 'participants.officials.data.itc-selection.title'|trans }}
+                    </th>
+                    <th data-sortable="true" data-field="comment" data-filter-control="input">
+                        {{ 'participants.officials.data.comment.for'|trans }}
+                    </th>
                 </tr>
                 </thead>
                 <tbody>
                 {% for official in officials %}
                     <tr>
-                        <td>{{ official.firstName }}</td>
+                        <td data-tableexport-value="Test">{{ official.firstName }}</td>
                         <td>{{ official.lastName }}</td>
                         <td>{{ official.registration.club }}</td>
                         <td>{{ official.registration.country }}</td>
