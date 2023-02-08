@@ -53,7 +53,7 @@ base:
     navigation:
         home: Start
     alert:
-        accommodation: '<p> Die Anzahl der uns zur Verfügung stehenden Unterkünfte ist auf Grund der hohen Teilnehmerzahl sehr knapp. Solltest du jetzt noch Übernachtungen buchen, können wir diese nicht garantieren. Kontaktiere uns bitte bei Fragen. <br/> <a class="fa fa-phone" href="tel:0049-0361-3731647"> +49 (0) 361 373 16 47</a> oder <a class="fa fa-envelope" href="mailto:info@thueringer-judoverband.de"> info@thueringer-judoverband.de</a> </p>'
+        accommodation: '<p> Die Anzahl der uns zur Verfügung stehenden Unterkünfte ist aufgebraucht. Die Buchung von Übernachtungen ist nicht mehr möglich. Für eventuelle Übernachtungen ab Samstag, kontaktiere uns unter <br/> <a class="fa fa-phone" href="tel:0049-0361-3731647"> +49 (0) 361 373 16 47</a> oder <a class="fa fa-envelope" href="mailto:info@thueringer-judoverband.de"> info@thueringer-judoverband.de</a>. </p>'
         deadline: 'Der Meldeschluss ist verstrichen!!! Beachte, dass das Anmelden weiterer Kämpferinnen mit der Berechnung einer erhöhten Startgebühr einhergeht.'
 global:
     tjv-name: 'Thüringer Judo-Verband e.V.'
@@ -89,6 +89,7 @@ login:
     description: 'Bitte trage deine Email-Adresse und dein Passwort ein, mit welcher du deinen Verband/Verein registriert hast.'
     action: einloggen
 participants:
+    accommodation-alert: 'Du kannst für das Trainingscamp keine weiteren Pakete A-C buchen, da die Anzahl der uns zur Verfügung stehenden Unterkünfte aufgebraucht ist.'
     contestants:
         title: Wettkämpferinnen
         description: 'Bitte trage so viele Informationen ein, wie du kannst.'

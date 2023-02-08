@@ -10,6 +10,12 @@
             <h1 class="display-4">{{ 'participants.contestants.title'|trans }}</h1>
             <p class="lead">{{ 'participants.contestants.description'|trans }}</p>
             <hr class="my-4">
+            {% if accommodation.getCurrentLimit <= 0 %}
+                <div class="alert alert-danger" role="alert">
+                    {{ 'participants.accommodation-alert'|trans|raw }}
+                </div>
+            <hr class="my-4">
+            {% endif %}
             <div class="container">
                 <div class="row justify-content-sm-start">
                     <div class="col-12 col-sm-auto ps-0">
@@ -44,7 +50,7 @@
 {{ '                    <small class="text-muted">'|e }}{{ 'participants.contestants.data.weight-category'|trans }}{{ '</small>'|e }}
                         {{ form_widget(form.contestants.vars.prototype.weightCategory)|e }}
 {{ '                    <small class="text-muted">'|e }}{{ 'participants.contestants.data.itc-selection.title'|trans }}{{ '</small>'|e }}
-                        {{ form_widget(form.contestants.vars.prototype.itcSelection)|e }}
+                        {{ form_widget(form.contestants.vars.prototype.itcSelection, {'attr': {'onclick': 'checkAccommodationLimit(this)'}})|e }}
 {{ '                </div>
                     <div class="card-footer text-danger border-danger">
                         <i class="fas fa-times-circle text-danger"></i> '|e }}{{ 'participants.contestants.status.created'|trans }}{{ '
@@ -77,7 +83,7 @@
                                 {{ form_widget(contestant.weightCategory) }}
                                 <small
                                     class="text-muted">{{ 'participants.contestants.data.itc-selection.title'|trans }}</small>
-                                {{ form_widget(contestant.itcSelection) }}
+                                {{ form_widget(contestant.itcSelection, {'attr': {'onclick': 'checkAccommodationLimit(this)'}}) }}
                             </div>
                             <div class="card-footer border-success text-success">
                                 <i class="fas fa-check-circle text-success"></i> {{ 'participants.contestants.status.saved'|trans }}
@@ -284,6 +290,25 @@
                 $button.removeClass('btn-info').addClass('btn-success');
             $button.attr('data-comment', comment);
             $('#' + id).attr('value', comment);
+        }
+
+        function checkAccommodationLimit(element) {
+            {% if accommodation.getCurrentLimit <= 0 %}
+            let itcSelectionId = element.id
+            let itcSelectionSelect = $(`select#${itcSelectionId}`)
+
+            switch (itcSelectionSelect.val()) {
+                case "pack-A":
+                case "pack-B":
+                case "pack-C":
+                    break
+                default:
+                    itcSelectionSelect.children('option[value="pack-A"]').prop('disabled', true)
+                    itcSelectionSelect.children('option[value="pack-B"]').prop('disabled', true)
+                    itcSelectionSelect.children('option[value="pack-C"]').prop('disabled', true)
+                    break
+            }
+            {% endif %}
         }
 
         function adjustWeightCategory(element) {

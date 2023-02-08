@@ -147,7 +147,7 @@
     </div>
 </nav>
 <main role="main" class="container">
-    {% if accommodation.getCurrentLimit < 50 %}
+    {% if accommodation.getCurrentLimit <= 0 %}
         <div class="alert alert-danger" role="alert">
             {{ 'base.alert.accommodation'|trans|raw }}
         </div>
