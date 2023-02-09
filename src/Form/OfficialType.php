@@ -24,7 +24,7 @@ class OfficialType extends AbstractType
                     'participants.officials.data.role.psycho' => 'psycho',
                     'participants.officials.data.role.referee' => 'referee',
                     'participants.officials.data.role.photo' => 'photo',
-                    'participants.officials.data.role.others' => 'others',
+                    'participants.officials.data.role.other' => 'other',
                 ]
             ])
             ->add('gender', ChoiceType::class, [
