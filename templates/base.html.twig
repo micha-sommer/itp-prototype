@@ -14,7 +14,7 @@
     {% block headscripts %}{% endblock %}
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary" aria-label="site navigation">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary p-0" aria-label="site navigation">
     <div class="container-fluid">
         <a class="navbar-brand" href="{{ path('welcome') }}">
             <img src="{{ asset('images/logo_white.svg') }}" width="100" alt="ITP"/>
@@ -39,12 +39,6 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('contestants') }}">{{ 'base.menu.contestants'|trans }}</a>
                     </li>
-                    {#                    <li class="nav-item"> #}
-                    {#                        <a class="nav-link" href="{{ path('transports') }}">{{ 'menu.transport_edit'|trans }}</a> #}
-                    {#                    </li> #}
-                    {#                    <li class="nav-item"> #}
-                    {#                        <a class="nav-link" href="{{ path('change_password') }}">{{ 'menu.password_edit'|trans }}</a> #}
-                    {#                    </li> #}
                     {% if app.user.invoices|filter(invoice => invoice.published) is empty %}
                         <li class="nav-item">
                             <a class="nav-link disabled">{{ 'base.menu.invoices'|trans }}</a>
@@ -135,15 +129,6 @@
 
             </ul>
         </div>
-
-        {#        {% if is_granted('IS_AUTHENTICATED_FULLY') %} #}
-        {#            <span class="navbar-text"> #}
-        {#                        {{ 'menu.logged_in_as'|trans }} #}
-        {#                {{ app.user.firstname|default('') }} {{ app.user.lastname|default('') }} #}
-        {#            ({{ app.user.club|default('') }}) #}
-        {#        </span> #}
-        {#        {% else %} #}
-        {#        {% endif %} #}
     </div>
 </nav>
 <main role="main" class="container">
