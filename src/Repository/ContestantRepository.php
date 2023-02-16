@@ -72,7 +72,7 @@ class ContestantRepository extends ServiceEntityRepository
         return $this->countByCriteria($criteria);
     }
 
-    private function countByCriteria(Criteria $criteria): int
+    public function countByCriteria(Criteria $criteria): int
     {
         return $this->_em->getUnitOfWork()->getEntityPersister($this->_entityName)->count($criteria);
     }

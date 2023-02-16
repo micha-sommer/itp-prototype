@@ -11,16 +11,6 @@
                 <div class="alert alert-danger" role="alert">{{ 'welcome.end-date-passed'|trans }}</div>
             {% endif %}
             <hr class="my-4">
-{#                <div class="clearfix">#}
-{#                    <a class="btn btn-primary btn-lg float-left mr-1" href="{{ path('registration') }}"#}
-{#                       role="button">{{ 'start'|trans }}</a>#}
-{#                    <div class="alert alert-warning float-left">#}
-{#                        <i class="fas fa-arrow-left" aria-hidden="true">#}
-{#                            {{ 'logins_have_been_reset'|trans }}#}
-{#                        </i>#}
-{#                    </div>#}
-{#                </div>#}
-{#                <hr class="my-4">#}
             <figure class="figure">
                 {% for country in countries %}
                     <img src="{{ asset('images/Flag_of_%s.svg'|format(country)) }}"

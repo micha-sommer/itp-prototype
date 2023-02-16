@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Registration;
 use App\Repository\ContestantRepository;
 use App\Repository\RegistrationRepository;
+use Doctrine\Common\Collections\Criteria;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -87,13 +88,24 @@ class WelcomeController extends AbstractController
             ));
 
 
-        $categories['total'] = $this->contestantRepository->count([]);
+        $categories['total'] = $this->contestantRepository->countByCriteria(
+            Criteria::create()
+                ->where(Criteria::expr()->neq('weightCategory', 'camp_only'))
+        );
 
-        $categories['cadet']['total'] = $this->contestantRepository->count(['ageCategory' => 'cadet']);
-        $categories['junior']['total'] = $this->contestantRepository->count(['ageCategory' => 'junior']);
+        $categories['cadet']['total'] = $this->contestantRepository->countByCriteria(
+            Criteria::create()
+                ->where(Criteria::expr()->eq('ageCategory', 'cadet'))
+                ->andWhere(Criteria::expr()->neq('weightCategory', 'camp_only'))
+        );
+        $categories['junior']['total'] = $this->contestantRepository->countByCriteria(
+            Criteria::create()
+                ->where(Criteria::expr()->eq('ageCategory', 'junior'))
+                ->andWhere(Criteria::expr()->neq('weightCategory', 'camp_only'))
+        );
 
         foreach (['cadet', 'junior'] as $age) {
-            foreach (['-40','-44','-48','-52','-57','-63','-70','+70','-78','+78'] as $weight) {
+            foreach (['-40', '-44', '-48', '-52', '-57', '-63', '-70', '+70', '-78', '+78'] as $weight) {
                 $categories[$age][$weight] =
                     $this->contestantRepository->count(['ageCategory' => $age, 'weightCategory' => $weight]);
             }
