@@ -293,7 +293,7 @@
         }
 
         function checkAccommodationLimit(element) {
-            {% if accommodation.getCurrentLimit <= 0 %}
+            {% if not is_granted('IS_IMPERSONATOR') and accommodation.getCurrentLimit <= 0 %}
             let itcSelectionId = element.id
             let itcSelectionSelect = $(`select#${itcSelectionId}`)
 
