@@ -153,6 +153,7 @@
 
 {% block javascript %}
     <script>
+        {% set accomodationDisabled = not is_granted('IS_IMPERSONATOR') and accommodation.getCurrentLimit <= 0 %}
         let $collectionHolder;
         let $removeFormButton = $('<button class="btn btn-danger ms-1" type="button"><i class="fa fa-trash" aria-hidden="true"></i></button>');
         let $commentFormButton = $('<button class="btn btn-info" type="button" data-bs-toggle="modal" data-bs-target="#commentModal" data-comment=""><i class="fa fa-comment"></i></button>');
@@ -187,6 +188,10 @@
                 let id = $(this).attr('id')
                 if (id.endsWith('ageCategory')) {
                     $(this).trigger('change')
+                }
+
+                if (id.endsWith('itcSelection')) {
+                    checkAccommodationLimit($(this)[0])
                 }
             })
 
@@ -223,6 +228,12 @@
             // Replace '$$name$$' in the prototype's HTML to
             // instead be a number based on how many items we have
             let newForm = prototype.replace(/__name__/g, index);
+
+            {% if accomodationDisabled %}
+            newForm = newForm.replace(/<option value="pack-A">/g, '<option value="pack-A" disabled>')
+            newForm = newForm.replace(/<option value="pack-B">/g, '<option value="pack-B" disabled>')
+            newForm = newForm.replace(/<option value="pack-C">/g, '<option value="pack-C" disabled>')
+            {% endif %}
 
             // increase the index with one for the next item
             $collectionHolder.data('index', index + 1);
@@ -293,7 +304,7 @@
         }
 
         function checkAccommodationLimit(element) {
-            {% if not is_granted('IS_IMPERSONATOR') and accommodation.getCurrentLimit <= 0 %}
+            {% if accomodationDisabled %}
             let itcSelectionId = element.id
             let itcSelectionSelect = $(`select#${itcSelectionId}`)
 
