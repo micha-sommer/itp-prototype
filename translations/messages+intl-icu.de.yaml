@@ -125,6 +125,7 @@ participants:
         description: 'Bitte trage so viele Informationen ein, wie du kannst.'
         data:
             title: Offizieller
+            id: Id
             name: Name
             first-name: Vorname
             last-name: Nachname

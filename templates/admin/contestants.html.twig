@@ -66,6 +66,9 @@
                     <th data-sortable="true" data-field="last-name" data-filter-control="input">
                         {{ 'participants.contestants.data.last-name'|trans }}
                     </th>
+                    <th data-sortable="true" data-field="registration-id" data-filter-control="input">
+                        {{ 'registration.data.id'|trans }}
+                    </th>
                     <th data-sortable="true" data-field="club" data-filter-control="select">
                         {{ 'admin.data.club'|trans }}
                     </th>
@@ -94,6 +97,7 @@
                     <tr>
                         <td>{{ contestant.firstName }}</td>
                         <td>{{ contestant.lastName }}</td>
+                        <td data-tableexport-xlsxformatid="1">{{ contestant.registration.id }}</td>
                         <td>{{ contestant.registration.club }}</td>
                         <td>{{ contestant.registration.country }}</td>
                         <td data-tableexport-xlsxformatid="1">{{ contestant.year }}</td>

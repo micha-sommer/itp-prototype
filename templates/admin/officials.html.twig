@@ -66,6 +66,9 @@
                     <th data-sortable="true" data-field="last-name" data-filter-control="input">
                         {{ 'participants.officials.data.last-name'|trans }}
                     </th>
+                    <th data-sortable="true" data-field="registration-id" data-filter-control="input">
+                        {{ 'registration.data.id'|trans }}
+                    </th>
                     <th data-sortable="true" data-field="club" data-filter-control="select">
                         {{ 'admin.data.club'|trans }}
                     </th>
@@ -89,8 +92,9 @@
                 <tbody>
                 {% for official in officials %}
                     <tr>
-                        <td data-tableexport-value="Test">{{ official.firstName }}</td>
+                        <td>{{ official.firstName }}</td>
                         <td>{{ official.lastName }}</td>
+                        <td data-tableexport-xlsxformatid="1">{{ official.registration.id }}</td>
                         <td>{{ official.registration.club }}</td>
                         <td>{{ official.registration.country }}</td>
                         <td>{{ "participants.officials.data.role.#{ official.role }"|trans }}</td>

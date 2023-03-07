@@ -125,6 +125,7 @@ participants:
         description: 'Please enter as much information as you have available for the time being.'
         data:
             title: Official
+            id: Id
             name: Name
             first-name: 'First name'
             last-name: 'Last name'
