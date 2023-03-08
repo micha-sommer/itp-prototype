@@ -7,9 +7,6 @@
         <div class="p-5 mb-4 bg-light rounded-3">
             <h1 class="display-4">{{ 'welcome.greeting'|trans }}</h1>
             <p class="lead">{{ 'welcome.active'|trans({'year':year}) }}</p>
-            {% if date(endDate, 'Europe/Paris') < date('now', 'Europe/Paris') %}
-                <div class="alert alert-danger" role="alert">{{ 'welcome.end-date-passed'|trans }}</div>
-            {% endif %}
             <hr class="my-4">
             <a class="btn btn-primary float-left"
                href="{{ path('registration_send_confirmation', {'id': registration.id}) }}">

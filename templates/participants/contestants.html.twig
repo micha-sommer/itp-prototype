@@ -4,6 +4,7 @@
 
 {% block body %}
     <div class="container">
+        {% set changesAllowed = is_granted('IS_IMPERSONATOR') or date('now', 'Europe/Berlin') < date(endDate, 'Europe/Berlin') %}
         {{ form_start(form, {'attr': {'id': 'contestants_form'}}) }}
         {{ form_row(form._token) }}
         <div class="p-5 mb-4 bg-light rounded-3">
@@ -16,6 +17,7 @@
                 </div>
             <hr class="my-4">
             {% endif %}
+            {% if changesAllowed %}
             <div class="container">
                 <div class="row justify-content-sm-start">
                     <div class="col-12 col-sm-auto ps-0">
@@ -30,6 +32,7 @@
                 </div>
             </div>
             <hr class="my-4">
+            {% endif %}
             <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3" id="contestants" data-prototype="
 {{ '            <div class="card h-100 border-danger">
                     <div class="card-body pt-2 pb-3">
@@ -86,12 +89,16 @@
                                 {{ form_widget(contestant.itcSelection, {'attr': {'onclick': 'checkAccommodationLimit(this)'}}) }}
                             </div>
                             <div class="card-footer border-success text-success">
-                                <i class="fas fa-check-circle text-success"></i> {{ 'participants.contestants.status.saved'|trans }}
+                                {% if contestant.vars.data.createdAt > date(deadline, 'Europe/Berlin') %}
+                                    <i class="fas fa-check-circle text-warning"></i> {{ 'participants.contestants.status.late'|trans }}
+                                {% else %}
+                                    <i class="fas fa-check-circle text-success"></i> {{ 'participants.contestants.status.saved'|trans }}
+                                {% endif %}
                             </div>
                         </div>
                     </div>
                 {% endfor %}
-                {% if is_granted('IS_IMPERSONATOR') or date(deadline, 'Europe/Paris') > date('now', 'Europe/Paris') %}
+                {% if changesAllowed %}
                     <div class="col mb-4" id="add-new-contestant">
                         <div class="card h-100 text-center align-items-center">
                             <div class="card-body d-flex align-items-center">
@@ -104,6 +111,7 @@
                 {% endif %}
             </div>
             <hr class="mb-4">
+            {% if changesAllowed %}
             <div class="container">
                 <div class="row justify-content-sm-start">
                     <div class="col-12 col-sm-auto ps-0">
@@ -117,6 +125,7 @@
                     </div>
                 </div>
             </div>
+            {% endif %}
         </div>
         <div class="modal fade" id="commentModal" tabindex="-1" role="dialog" aria-labelledby="commentModalLabel">
             <div class="modal-dialog modal-dialog-centered">

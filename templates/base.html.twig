@@ -93,7 +93,9 @@
                 {% endif %}
                 <li class="nav-item">
                     {% if is_granted('IS_IMPERSONATOR') %}
-                        <a class="nav-link link-warning" href="{{ impersonation_exit_path(path('admin_index') ) }}">{{ 'base.menu.exit-impersonation'|trans }}</a>
+                        <a class="nav-link link-warning" href="{{ impersonation_exit_path(path('admin_index') ) }}">
+                            {{ 'base.menu.exit-impersonation'|trans }}
+                        </a>
                     {% elseif is_granted('IS_AUTHENTICATED_FULLY') %}
                         <a class="nav-link" href="{{ path('logout') }}">{{ 'base.menu.logout'|trans }}</a>
                     {% else %}
@@ -134,8 +136,12 @@
             {{ 'base.alert.accommodation'|trans|raw }}
         </div>
     {% endif %}
-    {% if date('now', 'Europe/Paris') > date(deadline, 'Europe/Paris') %}
+    {% if date('now', 'Europe/Berlin') > date(endDate, 'Europe/Berlin') %}
         <div class="alert alert-danger" role="alert">
+            {{ 'base.alert.end-date'|trans|raw }}
+        </div>
+    {% elseif date('now', 'Europe/Berlin') > date(deadline, 'Europe/Berlin') %}
+        <div class="alert alert-warning" role="alert">
             {{ 'base.alert.deadline'|trans }}
         </div>
     {% endif %}
