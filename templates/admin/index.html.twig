@@ -12,7 +12,7 @@
                 <thead class="table-dark">
                 <tr>
                     <td colspan="5" class="table-light"></td>
-                    <td colspan="6" class="text-center">{{ 'admin.data.itc-selection.title'|trans }}</td>
+                    <td colspan="4" class="text-center">{{ 'admin.data.itc-selection.title'|trans }}</td>
                     <td colspan="1" class="table-light"></td>
                 </tr>
                 <tr>
@@ -24,9 +24,7 @@
                     <th scope="col">{{ 'admin.data.itc-selection.pack-A'|trans }}</th>
                     <th scope="col">{{ 'admin.data.itc-selection.pack-B'|trans }}</th>
                     <th scope="col">{{ 'admin.data.itc-selection.pack-C'|trans }}</th>
-                    <th scope="col">{{ 'admin.data.itc-selection.1-day'|trans }}</th>
-                    <th scope="col">{{ 'admin.data.itc-selection.2-day'|trans }}</th>
-                    <th scope="col">{{ 'admin.data.itc-selection.3-day'|trans }}</th>
+                    <th scope="col">{{ 'admin.data.itc-selection.pack-D'|trans }}</th>
                     <th scope="col">{{ 'admin.action.title'|trans }}</th>
                 </tr>
                 </thead>
@@ -40,9 +38,7 @@
                     <td class="table-active">{{ packageACount }}</td>
                     <td class="table-active">{{ packageBCount }}</td>
                     <td class="table-active">{{ packageCCount }}</td>
-                    <td class="table-active">{{ oneDayCount }}</td>
-                    <td class="table-active">{{ twoDaysCount }}</td>
-                    <td class="table-active">{{ threeDaysCount }}</td>
+                    <td class="table-active">{{ packageDCount }}</td>
                     <td></td>
                 </tr>
                 {% for registration in registrations %}
@@ -55,17 +51,12 @@
                         <td class="table-active">{{ registration.packageACount }}</td>
                         <td class="table-active">{{ registration.packageBCount }}</td>
                         <td class="table-active">{{ registration.packageCCount }}</td>
-                        <td class="table-active">{{ registration.oneDayCount }}</td>
-                        <td class="table-active">{{ registration.twoDaysCount }}</td>
-                        <td class="table-active">{{ registration.threeDaysCount }}</td>
+                        <td class="table-active">{{ registration.packageDCount }}</td>
                         <td>
                             <form style="display: inline" method="post" action="{{ path('registration_delete', {'id': registration.id}) }}"
                                   onsubmit="return confirm('{{ 'registration.edit.confirm-delete'|trans({'club': registration.club}) }}');">
                                 <button class="btn btn-danger"><i class="fas fa-trash" aria-hidden="true"></i></button>
                             </form>
-{#                            <a class="btn btn-danger" href="javascript:void(0)"#}
-{#                               onclick="if(confirm({{ 'admin.club.confirm-delete'|trans }})){window.location='{{ path('registration_delete', {'id': registration.id}) }}';}">#}
-{#                                <i class="fas fa-trash" aria-hidden="true"></i></a>#}
                             <a class="btn btn-primary" role="button"
                                data-toggle="tooltip" data-placement="top"
                                title="Als dieser Nutzer einloggen"

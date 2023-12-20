@@ -6,11 +6,11 @@ twig:
         '%kernel.project_dir%/public/images': images
 
     globals:
-        year: 2023
-        itp_count: 29
-        itc_count: 16
-        deadline: 'March 8, 2023 23:59'
-        endDate: 'March 15, 2023 23:59'
+        year: 2024
+        itp_count: 30
+        itc_count: 17
+        deadline: 'March 6, 2024 23:59'
+        endDate: 'March 13, 2024 23:59'
         accommodation: '@App\Service\AccommodationService'
 
     form_themes: ['bootstrap_5_layout.html.twig']

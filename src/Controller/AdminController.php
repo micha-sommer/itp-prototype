@@ -30,12 +30,8 @@ class AdminController extends AbstractController
             + $contestantRepository->count(['itcSelection' => 'pack-B']);
         $packageCCount = $officialRepository->count(['itcSelection' => 'pack-C'])
             + $contestantRepository->count(['itcSelection' => 'pack-C']);
-        $oneDayCount = $officialRepository->count(['itcSelection' => '1-day'])
-            + $contestantRepository->count(['itcSelection' => '1-day']);
-        $twoDaysCount = $officialRepository->count(['itcSelection' => '2-day'])
-            + $contestantRepository->count(['itcSelection' => '2-day']);
-        $threeDaysCount = $officialRepository->count(['itcSelection' => '3-day'])
-            + $contestantRepository->count(['itcSelection' => '3-day']);
+        $packageDCount = $officialRepository->count(['itcSelection' => 'pack-D'])
+            + $contestantRepository->count(['itcSelection' => 'pack-D']);
 
 
         return $this->render('admin/index.html.twig', [
@@ -46,9 +42,7 @@ class AdminController extends AbstractController
             'packageACount' => $packageACount,
             'packageBCount' => $packageBCount,
             'packageCCount' => $packageCCount,
-            'oneDayCount' => $oneDayCount,
-            'twoDaysCount' => $twoDaysCount,
-            'threeDaysCount' => $threeDaysCount,
+            'packageDCount' => $packageDCount,
         ]);
     }
 

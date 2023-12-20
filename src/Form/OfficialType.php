@@ -40,9 +40,7 @@ class OfficialType extends AbstractType
                     'participants.contestants.data.itc-selection.pack-A' => 'pack-A',
                     'participants.contestants.data.itc-selection.pack-B' => 'pack-B',
                     'participants.contestants.data.itc-selection.pack-C' => 'pack-C',
-                    'participants.contestants.data.itc-selection.1-day' => '1-day',
-                    'participants.contestants.data.itc-selection.2-day' => '2-day',
-                    'participants.contestants.data.itc-selection.3-day' => '3-day',
+                    'participants.contestants.data.itc-selection.pack-D' => 'pack-D',
                 ]
             ])
             ->add('comment', HiddenType::class, ['attr' => ['class' => 'hidden-comment']]);

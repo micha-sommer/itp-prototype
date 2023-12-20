@@ -50,30 +50,19 @@ class InvoiceController extends AbstractController
         $this->createInvoicePosition($invoice, 'Startgeld (entry fee)', $contestantCount * 100, 5000);
         $this->createInvoicePosition($invoice, 'erhöhtes Startgeld (increased entry fee)', $lateCount * 100, 8000);
 
-        $this->createInvoicePosition($invoice, 'ITC: Paket A EZ (package A single)', 0, 26000);
-        $this->createInvoicePosition($invoice, 'ITC: Paket B EZ (package B single)', 0, 32000);
-        $this->createInvoicePosition($invoice, 'ITC: Paket C EZ (package C single)', 0, 38000);
+        $this->createInvoicePosition($invoice, 'ITC: Paket A EZ (package A single)', 0, 20000);
+        $this->createInvoicePosition($invoice, 'ITC: Paket B EZ (package B single)', 0, 27000);
+        $this->createInvoicePosition($invoice, 'ITC: Paket C EZ (package C single)', 0, 33500);
+        $this->createInvoicePosition($invoice, 'ITC: Paket D EZ (package D single)', 0, 39500);
 
         $packACount = $contestantRepository->getPackACount($registration) + $officialRepository->getPackACount($registration);
         $packBCount = $contestantRepository->getPackBCount($registration) + $officialRepository->getPackBCount($registration);
         $packCCount = $contestantRepository->getPackCCount($registration) + $officialRepository->getPackCCount($registration);
-        $this->createInvoicePosition($invoice, 'ITC: Paket A DZ/MBZ (package A shared)', $packACount * 100, 24000);
-        $this->createInvoicePosition($invoice, 'ITC: Paket B DZ/MBZ (package B shared)', $packBCount * 100, 30000);
-        $this->createInvoicePosition($invoice, 'ITC: Paket C DZ/MBZ (package C shared)', $packCCount * 100, 36000);
-
-        $contestant1DayCount = $contestantRepository->get1DayCount($registration);
-        $contestant2DaysCount = $contestantRepository->get2DaysCount($registration);
-        $contestant3DaysCCount = $contestantRepository->get3DaysCount($registration);
-        $this->createInvoicePosition($invoice, 'ITC: 1 Tag (1 day)', $contestant1DayCount * 100, 4000);
-        $this->createInvoicePosition($invoice, 'ITC: 2 Tage (2 days)', $contestant2DaysCount * 100, 8000);
-        $this->createInvoicePosition($invoice, 'ITC: 3 Tage (3 days)', $contestant3DaysCCount * 100, 11000);
-
-        $official1DayCount = $officialRepository->get1DayCount($registration);
-        $official2DaysCount = $officialRepository->get2DaysCount($registration);
-        $official3DaysCCount = $officialRepository->get3DaysCount($registration);
-        $this->createInvoicePosition($invoice, 'ITC: 1 Tag Trainer (1 day trainer)', $official1DayCount * 100, 1500);
-        $this->createInvoicePosition($invoice, 'ITC: 2 Tage Trainer (2 days trainer)', $official2DaysCount * 100, 4000);
-        $this->createInvoicePosition($invoice, 'ITC: 3 Tage Trainer (3 days trainer)', $official3DaysCCount * 100, 6000);
+        $packDCount = $contestantRepository->getPackDCount($registration) + $officialRepository->getPackDCount($registration);
+        $this->createInvoicePosition($invoice, 'ITC: Paket A DZ/MBZ (package A shared)', $packACount * 100, 18000);
+        $this->createInvoicePosition($invoice, 'ITC: Paket B DZ/MBZ (package B shared)', $packBCount * 100, 25000);
+        $this->createInvoicePosition($invoice, 'ITC: Paket C DZ/MBZ (package C shared)', $packCCount * 100, 31500);
+        $this->createInvoicePosition($invoice, 'ITC: Paket D DZ/MBZ (package D shared)', $packDCount * 100, 37500);
 
         $this->createInvoicePosition($invoice, 'Transportpauschale (transfer airport)', 0, 8000);
 

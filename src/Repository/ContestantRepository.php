@@ -47,7 +47,7 @@ class ContestantRepository extends ServiceEntityRepository
 
     public function getAccommodationCount(): int
     {
-        $criteria = Criteria::create()->where(Criteria::expr()->in('itcSelection', ['pack-A', 'pack-B', 'pack-C']));
+        $criteria = Criteria::create()->where(Criteria::expr()->in('itcSelection', ['pack-A', 'pack-B', 'pack-C', 'pack-D']));
 
         return $this->countByCriteria($criteria);
     }
@@ -92,18 +92,8 @@ class ContestantRepository extends ServiceEntityRepository
         return $this->count(['registration' => $registration, 'itcSelection' => 'pack-C']);
     }
 
-    public function get1DayCount(?Registration $registration): int
+    public function getPackDCount(?Registration $registration): int
     {
-        return $this->count(['registration' => $registration, 'itcSelection' => '1-day']);
-    }
-
-    public function get2DaysCount(?Registration $registration): int
-    {
-        return $this->count(['registration' => $registration, 'itcSelection' => '2-day']);
-    }
-
-    public function get3DaysCount(?Registration $registration): int
-    {
-        return $this->count(['registration' => $registration, 'itcSelection' => '3-day']);
+        return $this->count(['registration' => $registration, 'itcSelection' => 'pack-D']);
     }
 }
