@@ -8,7 +8,7 @@ parameters:
     app.is_active: true
     app.year: 2024
     app.deadline: '2024-03-06 23:59:59'
-    app.limit.accommodation: 270
+    app.limit.accommodation: 400
 
 services:
     # default configuration for services in *this* file
