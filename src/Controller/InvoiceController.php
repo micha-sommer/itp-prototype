@@ -50,10 +50,10 @@ class InvoiceController extends AbstractController
         $this->createInvoicePosition($invoice, 'Startgeld (entry fee)', $contestantCount * 100, 5000);
         $this->createInvoicePosition($invoice, 'erhöhtes Startgeld (increased entry fee)', $lateCount * 100, 8000);
 
-        $this->createInvoicePosition($invoice, 'ITC: Paket A EZ (package A single)', 0, 20000);
-        $this->createInvoicePosition($invoice, 'ITC: Paket B EZ (package B single)', 0, 27000);
-        $this->createInvoicePosition($invoice, 'ITC: Paket C EZ (package C single)', 0, 33500);
-        $this->createInvoicePosition($invoice, 'ITC: Paket D EZ (package D single)', 0, 39500);
+        $this->createInvoicePosition($invoice, 'ITC: Paket A EZ (package A single)', 0, 22000);
+        $this->createInvoicePosition($invoice, 'ITC: Paket B EZ (package B single)', 0, 29000);
+        $this->createInvoicePosition($invoice, 'ITC: Paket C EZ (package C single)', 0, 36000);
+        $this->createInvoicePosition($invoice, 'ITC: Paket D EZ (package D single)', 0, 45000);
 
         $packACount = $contestantRepository->getPackACount($registration) + $officialRepository->getPackACount($registration);
         $packBCount = $contestantRepository->getPackBCount($registration) + $officialRepository->getPackBCount($registration);
@@ -61,8 +61,8 @@ class InvoiceController extends AbstractController
         $packDCount = $contestantRepository->getPackDCount($registration) + $officialRepository->getPackDCount($registration);
         $this->createInvoicePosition($invoice, 'ITC: Paket A DZ/MBZ (package A shared)', $packACount * 100, 18000);
         $this->createInvoicePosition($invoice, 'ITC: Paket B DZ/MBZ (package B shared)', $packBCount * 100, 25000);
-        $this->createInvoicePosition($invoice, 'ITC: Paket C DZ/MBZ (package C shared)', $packCCount * 100, 31500);
-        $this->createInvoicePosition($invoice, 'ITC: Paket D DZ/MBZ (package D shared)', $packDCount * 100, 37500);
+        $this->createInvoicePosition($invoice, 'ITC: Paket C DZ/MBZ (package C shared)', $packCCount * 100, 32000);
+        $this->createInvoicePosition($invoice, 'ITC: Paket D DZ/MBZ (package D shared)', $packDCount * 100, 39000);
 
         $this->createInvoicePosition($invoice, 'Transportpauschale (transfer airport)', 0, 8000);
 
