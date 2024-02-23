@@ -228,6 +228,7 @@
             newForm = newForm.replace(/<option value="pack-A">/g, '<option value="pack-A" disabled>')
             newForm = newForm.replace(/<option value="pack-B">/g, '<option value="pack-B" disabled>')
             newForm = newForm.replace(/<option value="pack-C">/g, '<option value="pack-C" disabled>')
+            newForm = newForm.replace(/<option value="pack-D">/g, '<option value="pack-D" disabled>')
             {% endif %}
 
             // increase the index with one for the next item
@@ -307,11 +308,13 @@
                 case "pack-A":
                 case "pack-B":
                 case "pack-C":
+                case "pack-D":
                     break
                 default:
                     itcSelectionSelect.children('option[value="pack-A"]').prop('disabled', true)
                     itcSelectionSelect.children('option[value="pack-B"]').prop('disabled', true)
                     itcSelectionSelect.children('option[value="pack-C"]').prop('disabled', true)
+                    itcSelectionSelect.children('option[value="pack-D"]').prop('disabled', true)
                     break
             }
             {% endif %}

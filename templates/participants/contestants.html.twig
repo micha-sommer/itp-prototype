@@ -163,6 +163,7 @@
 {% block javascript %}
     <script>
         {% set accomodationDisabled = not is_granted('IS_IMPERSONATOR') and accommodation.getCurrentLimit <= 0 %}
+        {% set comtestantDisabled = not is_granted('IS_IMPERSONATOR') and contestant.getCurrentLimit <= 0 %}
         let $collectionHolder;
         let $removeFormButton = $('<button class="btn btn-danger ms-1" type="button"><i class="fa fa-trash" aria-hidden="true"></i></button>');
         let $commentFormButton = $('<button class="btn btn-info" type="button" data-bs-toggle="modal" data-bs-target="#commentModal" data-comment=""><i class="fa fa-comment"></i></button>');
@@ -201,6 +202,10 @@
 
                 if (id.endsWith('itcSelection')) {
                     checkAccommodationLimit($(this)[0])
+                }
+
+                if (id.endsWith('weightCategory')) {
+                    checkContestantLimit($(this)[0])
                 }
             })
 
@@ -242,6 +247,20 @@
             newForm = newForm.replace(/<option value="pack-A">/g, '<option value="pack-A" disabled>')
             newForm = newForm.replace(/<option value="pack-B">/g, '<option value="pack-B" disabled>')
             newForm = newForm.replace(/<option value="pack-C">/g, '<option value="pack-C" disabled>')
+            newForm = newForm.replace(/<option value="pack-D">/g, '<option value="pack-D" disabled>')
+            {% endif %}
+
+            {% if comtestantDisabled %}
+            newForm = newForm.replace(/<option value="-40">/g, '<option value="-40" disabled>')
+            newForm = newForm.replace(/<option value="-44">/g, '<option value="-44" disabled>')
+            newForm = newForm.replace(/<option value="-48">/g, '<option value="-48" disabled>')
+            newForm = newForm.replace(/<option value="-52">/g, '<option value="-52" disabled>')
+            newForm = newForm.replace(/<option value="-57">/g, '<option value="-57" disabled>')
+            newForm = newForm.replace(/<option value="-63">/g, '<option value="-63" disabled>')
+            newForm = newForm.replace(/<option value="-70">/g, '<option value="-70" disabled>')
+            newForm = newForm.replace(/<option value="\+70">/g, '<option value="+70" disabled>')
+            newForm = newForm.replace(/<option value="-78">/g, '<option value="-78" disabled>')
+            newForm = newForm.replace(/<option value="\+78">/g, '<option value="+78" disabled>')
             {% endif %}
 
             // increase the index with one for the next item
@@ -321,11 +340,46 @@
                 case "pack-A":
                 case "pack-B":
                 case "pack-C":
+                case "pack-D":
                     break
                 default:
                     itcSelectionSelect.children('option[value="pack-A"]').prop('disabled', true)
                     itcSelectionSelect.children('option[value="pack-B"]').prop('disabled', true)
                     itcSelectionSelect.children('option[value="pack-C"]').prop('disabled', true)
+                    itcSelectionSelect.children('option[value="pack-D"]').prop('disabled', true)
+                    break
+            }
+            {% endif %}
+        }
+
+        function checkContestantLimit(element) {
+            {% if comtestantDisabled %}
+            let weightCategorySelectionId = element.id
+            let weightCategorySelectionSelect = $(`select#${weightCategorySelectionId}`)
+
+            switch (weightCategorySelectionSelect.val()) {
+                case "-40":
+                case "-44":
+                case "-48":
+                case "-52":
+                case "-57":
+                case "-63":
+                case "-70":
+                case "+70":
+                case "-78":
+                case "+78":
+                    break
+                default:
+                    weightCategorySelectionSelect.children('option value="-40">').prop('disabled', true)
+                    weightCategorySelectionSelect.children('option value="-44">').prop('disabled', true)
+                    weightCategorySelectionSelect.children('option value="-48">').prop('disabled', true)
+                    weightCategorySelectionSelect.children('option value="-52">').prop('disabled', true)
+                    weightCategorySelectionSelect.children('option value="-57">').prop('disabled', true)
+                    weightCategorySelectionSelect.children('option value="-63">').prop('disabled', true)
+                    weightCategorySelectionSelect.children('option value="-70">').prop('disabled', true)
+                    weightCategorySelectionSelect.children('option value="+70">').prop('disabled', true)
+                    weightCategorySelectionSelect.children('option value="-78">').prop('disabled', true)
+                    weightCategorySelectionSelect.children('option value="+78">').prop('disabled', true)
                     break
             }
             {% endif %}

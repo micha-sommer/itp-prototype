@@ -52,6 +52,14 @@ class ContestantRepository extends ServiceEntityRepository
         return $this->countByCriteria($criteria);
     }
 
+    public function getContestantCount(): int
+    {
+        $criteria = Criteria::create()
+            ->where(Criteria::expr()->neq('weightCategory', 'camp_only'));
+
+        return $this->countByCriteria($criteria);
+    }
+
     public function getRegularContestantCount(Registration $registration): int
     {
         $criteria = Criteria::create()

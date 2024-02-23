@@ -12,6 +12,9 @@ twig:
         deadline: 'March 6, 2024 23:59'
         endDate: 'March 13, 2024 23:59'
         accommodation: '@App\Service\AccommodationService'
+        contestant: '@App\Service\ContestantService'
+        accommodation_limit: '%app.limit.accommodation%'
+        contestant_limit: '%app.limit.competition%'
 
     form_themes: ['bootstrap_5_layout.html.twig']
 

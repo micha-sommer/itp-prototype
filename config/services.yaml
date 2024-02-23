@@ -9,6 +9,7 @@ parameters:
     app.year: 2024
     app.deadline: '2024-03-06 23:59:59'
     app.limit.accommodation: 470
+    app.limit.competition: 450
 
 services:
     # default configuration for services in *this* file
@@ -34,3 +35,7 @@ services:
     App\Service\AccommodationService:
         arguments:
             $limit: '%app.limit.accommodation%'
+
+    App\Service\ContestantService:
+        arguments:
+            $limit: '%app.limit.competition%'

@@ -14,7 +14,18 @@
                          class="rounded float-left mb-2 ml-2" height="50" alt="{{ country }}">
                 {% endfor %}
             </figure>
-            <p>{{ 'welcome.contestants'|trans({'total':categories['total'],'clubs':clubsCount})|raw }}</p>
+            <hr class="my-2">
+            <h4>{{ 'welcome.overview.limit.contestants'|trans }}</h4>
+            <div class="progress" style="height: 20px; --bs-progress-bg: white">
+                {% set capacity = ((contestant_limit - contestant.getCurrentLimit)/contestant_limit*100)|round %}
+                {% set barColor = capacity > 90 ? "bg-danger" : capacity > 75 ? "bg-warning" : "bg-success" %}
+                <div class="progress-bar {{ barColor }}" style="width: {{ capacity }}%; --bs-progress-bg: white" role="progressbar"
+                     aria-valuenow="{{ contestant_limit - contestant.getCurrentLimit }}" aria-valuemin="0" aria-valuemax="{{ contestant_limit }}"
+                     aria-label="{{ 'welcome.overview.limit.contestants'|trans }}">
+                    {{ contestant_limit - contestant.getCurrentLimit }}
+                </div>
+            </div>
+            <p class="mt-2">{{ 'welcome.contestants'|trans({'total':categories['total'],'clubs':clubsCount})|raw }}</p>
             <div class="card-group">
                 <div class="card text-bg-dark">
                     <div class="card-body">
@@ -157,6 +168,17 @@
                         </h5>
                         <h5><span class="badge bg-primary">{{ categories['junior']['+78'] }}</span></h5>
                     </div>
+                </div>
+            </div>
+            <hr class="my-4">
+            <h4>{{ 'welcome.overview.limit.accommodation'|trans }}</h4>
+            <div class="progress" style="height: 20px; --bs-progress-bg: white">
+                {% set capacity = ((accommodation_limit - accommodation.getCurrentLimit)/accommodation_limit*100)|round %}
+                {% set barColor = capacity > 90 ? "bg-danger" : capacity > 75 ? "bg-warning" : "bg-success" %}
+                <div class="progress-bar {{ barColor }}" style="width: {{ capacity }}%; --bs-progress-bg: white" role="progressbar"
+                     aria-valuenow="{{ accommodation_limit - accommodation.getCurrentLimit }}" aria-valuemin="0" aria-valuemax="{{ accommodation_limit }}"
+                     aria-label="{{ 'welcome.overview.limit.contestants'|trans }}">
+                    {{ accommodation_limit - accommodation.getCurrentLimit }}
                 </div>
             </div>
             <hr class="my-4">

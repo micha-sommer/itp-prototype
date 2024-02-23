@@ -204,3 +204,6 @@ welcome:
         age-category:
             cadet: U18
             junior: U21
+        limit:
+            contestants: Wettkämpferinnen
+            accommodation: Übernachtungsanzahl
