@@ -88,7 +88,7 @@ login:
     description: 'Bitte trage deine Email-Adresse und dein Passwort ein, mit welcher du deinen Verband/Verein registriert hast.'
     action: einloggen
 participants:
-    accommodation-alert: 'Du kannst für das Trainingscamp keine weiteren Pakete A-C buchen, da die Anzahl der uns zur Verfügung stehenden Unterkünfte aufgebraucht ist.'
+    accommodation-alert: 'Du kannst für das Trainingscamp keine weiteren Pakete A-D buchen, da die Anzahl der uns zur Verfügung stehenden Unterkünfte aufgebraucht ist.'
     contestants:
         title: Wettkämpferinnen
         description: 'Bitte trage so viele Informationen ein, wie du kannst.'

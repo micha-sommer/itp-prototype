@@ -91,7 +91,7 @@ login:
     description: 'Please enter the email address and password that have been used to register your club/association/union.'
     action: login
 participants:
-    accommodation-alert: 'You cannot add packages A to C for the international training camp, because there is no more accommodation available.'
+    accommodation-alert: 'You cannot add packages A to D for the international training camp, because there is no more accommodation available.'
     contestants:
         title: Contestants
         description: 'Please enter as much information as you have available for the time being.'
