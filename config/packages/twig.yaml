@@ -6,11 +6,11 @@ twig:
         '%kernel.project_dir%/public/images': images
 
     globals:
-        year: 2024
-        itp_count: 30
-        itc_count: 17
-        deadline: 'March 6, 2024 23:59'
-        endDate: 'March 13, 2024 23:59'
+        year: 2025
+        itp_count: 31
+        itc_count: 18
+        deadline: 'March 8, 2025 23:59'
+        endDate: 'March 20, 2025 23:59'
         accommodation: '@App\Service\AccommodationService'
         contestant: '@App\Service\ContestantService'
         accommodation_limit: '%app.limit.accommodation%'

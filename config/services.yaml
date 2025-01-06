@@ -6,9 +6,9 @@
 parameters:
     app.supported_locales: 'de|en'
     app.is_active: false
-    app.year: 2024
-    app.deadline: '2024-03-06 23:59:59'
-    app.limit.accommodation: 496
+    app.year: 2025
+    app.deadline: '2025-03-05 23:59:59'
+    app.limit.accommodation: 500
     app.limit.competition: 450
 
 services:
