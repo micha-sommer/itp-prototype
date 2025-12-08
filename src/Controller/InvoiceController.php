@@ -64,7 +64,7 @@ class InvoiceController extends AbstractController
         $this->createInvoicePosition($invoice, 'ITC: Paket C DZ/MBZ (package C shared)', $packCCount * 100, 37000);
         $this->createInvoicePosition($invoice, 'ITC: Paket D DZ/MBZ (package D shared)', $packDCount * 100, 45000);
 
-        $this->createInvoicePosition($invoice, 'Transportpauschale (transfer airport)', 0, 8000);
+        $this->createInvoicePosition($invoice, 'Transportpauschale (transfer airport)', 0, 10000);
 
         $entityManager->persist($invoice);
         $entityManager->flush();
